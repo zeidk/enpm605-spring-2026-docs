@@ -31,8 +31,12 @@ Modular programming breaks a large task into smaller, manageable subtasks called
         :class-card: sd-border-info
 
         - A folder containing ``.py`` files.
-        - May include ``__init__.py``.
+        - Must include ``__init__.py`` (can be empty).
         - Example: ``shape/``
+
+.. note::
+
+   Since Python 3.3, ``__init__.py`` is technically optional (namespace packages), but it is **required** for regular packages and should always be included.
 
 .. note::
 
@@ -42,7 +46,10 @@ Modular programming breaks a large task into smaller, manageable subtasks called
 Making Packages Discoverable
 -----------------------------
 
-Python can only import packages that are on its **module search path** (``sys.path``). If your script and package live in **sibling directories**, Python may not find the package by default.
+Adding to ``sys.path``
+^^^^^^^^^^^^^^^^^^^^^^
+
+Python can only import packages that are on its **module search path** (``sys.path``). If your script and package live in **sibling directories** (e.g., ``lecture2/`` and ``shape/``), Python may not find the package by default.
 
 .. code-block:: python
 
@@ -121,6 +128,147 @@ Why Avoid Wildcard Imports?
       from shape.circle import compute_area as circle_area
 
 
+Importing Packages from Anywhere
+----------------------------------
+
+So far we have seen how to import **sibling packages** using ``sys.path.insert()``. But what if the package is located **somewhere else** on the system?
+
+Python provides several methods to make packages discoverable. In all cases, the path you add should be the **parent directory** of the package, not the package directory itself.
+
+.. list-table::
+   :widths: 40 30
+   :header-rows: 1
+   :class: compact-table
+
+   * - Package location
+     - Path to add
+   * - ``/opt/libs/my_utils/``
+     - ``/opt/libs``
+   * - ``/home/alice/projects/common/shared_tools/``
+     - ``/home/alice/projects/common``
+
+
+Method 1: ``PYTHONPATH`` Environment Variable
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Set the ``PYTHONPATH`` environment variable in your shell **before** running the script. Python adds every directory in ``PYTHONPATH`` to ``sys.path`` automatically at startup.
+
+.. code-block:: console
+
+   # Add one directory (append to existing PYTHONPATH)
+   export PYTHONPATH="/opt/libs:$PYTHONPATH"
+   python3 my_script.py
+
+   # Add multiple directories
+   export PYTHONPATH="/opt/libs:/home/alice/projects/common:$PYTHONPATH"
+   python3 my_script.py
+
+Now your script can import directly with no code changes:
+
+.. code-block:: python
+
+   import my_utils            # Found in /opt/libs/
+   import shared_tools        # Found in /home/alice/projects/common/
+
+.. warning::
+
+   ``PYTHONPATH`` is session-specific — it resets when you close the terminal. Add it to your ``~/.bashrc`` to make it permanent.
+
+
+Method 2: ``.pth`` Files
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Drop a ``.pth`` file into Python's ``site-packages`` directory. Each line is a path that gets added to ``sys.path`` automatically at startup.
+
+First, find your ``site-packages`` directory:
+
+.. code-block:: console
+
+   python3 -c "import site; print(site.getsitepackages())"
+
+Then create a ``.pth`` file in that directory:
+
+.. code-block:: text
+
+   # /usr/lib/python3.12/site-packages/enpm605.pth
+   /opt/libs
+   /home/alice/projects/common
+
+Now every Python script on the system can import from those paths:
+
+.. code-block:: python
+
+   import my_utils        # Found in /opt/libs/
+   import shared_tools    # Found in /home/alice/projects/common/
+
+.. tip::
+
+   This is a system-wide change. Use this for packages you want available to **all** your projects.
+
+
+Method 3: Editable Install (``pip3 install -e .``)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The most robust approach. Add a ``pyproject.toml`` to your package and install it in **editable mode**.
+
+.. code-block:: toml
+   :caption: shape/pyproject.toml
+
+   [build-system]
+   requires = ["setuptools"]
+   build-backend = "setuptools.backends._legacy:_Backend"
+
+   [project]
+   name = "shape"
+   version = "0.1.0"
+   description = "Simple shape geometry utilities for ENPM605"
+   requires-python = ">=3.10"
+
+Then install it:
+
+.. code-block:: console
+
+   cd <path to shape>
+   pip3 install -e .
+
+- Works from **anywhere** — no path manipulation needed.
+- The ``-e`` flag means changes take effect **immediately** without reinstalling.
+- This is how real Python projects manage dependencies.
+
+.. tip::
+
+   **Recommended**: This is the most portable and professional approach.
+
+
+Summary of Discovery Approaches
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :widths: 25 20 30
+   :header-rows: 1
+   :class: compact-table
+
+   * - Method
+     - Scope
+     - Best for
+   * - ``sys.path.insert()``
+     - Single script
+     - Quick fixes, sibling packages
+   * - ``PYTHONPATH``
+     - Terminal session
+     - Development and testing
+   * - ``.pth`` files
+     - System-wide
+     - Shared libraries across projects
+   * - ``pip install -e .``
+     - System-wide
+     - Reusable packages (recommended)
+
+.. note::
+
+   For this course, we will primarily use ``sys.path.insert()`` and ``pip install -e .``
+
+
 The ``__name__`` Guard
 -----------------------
 
@@ -175,15 +323,64 @@ Unlike C++ or Java which use braces ``{}``, Python uses **indentation** to defin
         .. code-block:: cpp
 
            void greeting(std::string name) {
-               std::cout << "Hello " << name;
+               std::cout << "Hello " << name << '\n';
                if (name == "Alice") {
-                   std::cout << "Welcome back!";
+                   std::cout << "Welcome back!\n";
                }
            }
 
 .. warning::
 
    Mixing tabs and spaces causes ``IndentationError``. Configure your editor to use **4 spaces** per indent level (PEP 8 standard).
+
+
+Boolean Type
+====================================================
+
+Truth values, truthiness, and the ``bool()`` function.
+
+Create a file called ``boolean_demo.py`` to follow along with the examples below.
+
+
+The ``bool`` Type
+-----------------
+
+Python provides the Boolean type ``bool`` with exactly two values: ``True`` and ``False``.
+
+- ``bool`` is a subclass of ``int``: ``True`` is ``1`` and ``False`` is ``0``.
+- In a condition, any non-zero value or non-empty sequence evaluates to ``True``.
+- The built-in ``bool()`` function converts a value to a Boolean.
+
+.. grid:: 1 2 2 2
+    :gutter: 3
+
+    .. grid-item-card:: ❌ Falsy Values
+        :class-card: sd-border-danger
+
+        .. code-block:: python
+
+           print(bool(0))       # False
+           print(bool(0.0))     # False
+           print(bool(""))      # False
+           print(bool([]))      # False
+           print(bool({}))      # False
+           print(bool(None))    # False
+
+    .. grid-item-card:: ✅ Truthy Values
+        :class-card: sd-border-success
+
+        .. code-block:: python
+
+           print(bool(1))       # True
+           print(bool(-2))      # True
+           print(bool("hi"))    # True
+           print(bool([1, 2]))  # True
+           print(bool(" "))     # True (space!)
+           print(bool(0.001))   # True
+
+.. tip::
+
+   **Pythonic idiom**: Use truthiness directly in conditions — write ``if my_list:`` instead of ``if len(my_list) > 0:``.
 
 
 Operators
@@ -322,10 +519,33 @@ Let ``a = True`` and ``b = False``:
    print(x > 10 or x == 5)    # True
    print(not (x == 5))        # False
 
-   # Logical operators with non-boolean values
-   print("hello" and 0)       # 0 (returns last evaluated operand)
-   print("hello" or 0)        # "hello"
-   print(not "")              # True (empty string is falsy)
+
+Logical Operators with Non-Boolean Values
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Python's ``and`` and ``or`` don't always return ``True`` or ``False`` — they return **one of the actual operands**.
+
+- ``and`` — Returns the **first falsy** value. If all truthy, returns the **last** value.
+- ``or`` — Returns the **first truthy** value. If all falsy, returns the **last** value.
+- ``not`` — Always returns a ``bool``.
+
+.. code-block:: python
+
+   # and: returns first falsy, or last value if all truthy
+   print("hello" and 0)          # 0 ("hello" is truthy, so check 0 -> falsy)
+   print("hello" and "world")    # "world" (both truthy, return last)
+
+   # or: returns first truthy, or last value if all falsy
+   print("hello" or 0)           # "hello" (truthy, stop immediately)
+   print(0 or "default")         # "default" (0 is falsy, check next)
+
+   # not: always returns a bool
+   print(not "")                  # True (empty string is falsy)
+   print(not "hello")             # False (non-empty string is truthy)
+
+.. tip::
+
+   **Common pattern**: Use ``or`` to provide default values. Example: ``name = user_input or "Anonymous"`` assigns ``"Anonymous"`` when ``user_input`` is empty or falsy.
 
 
 Membership and Identity Operators
@@ -391,57 +611,13 @@ Membership and Identity Operators
    **Rule**: Use ``==`` for value comparison. Use ``is`` only for ``None`` checks.
 
 
-Boolean Type
-====================================================
-
-Truth values, truthiness, and the ``bool()`` function.
-
-Create a file called ``boolean_demo.py`` to follow along with the examples below.
-
-
-The ``bool`` Type
------------------
-
-Python provides the Boolean type ``bool`` with exactly two values: ``True`` and ``False``.
-
-- ``bool`` is a subclass of ``int``: ``True`` is ``1`` and ``False`` is ``0``.
-- In a condition, any non-zero value or non-empty sequence evaluates to ``True``.
-- The built-in ``bool()`` function converts a value to a Boolean.
-
-.. grid:: 1 2 2 2
-    :gutter: 3
-
-    .. grid-item-card:: ❌ Falsy Values
-        :class-card: sd-border-danger
-
-        .. code-block:: python
-
-           print(bool(0))       # False
-           print(bool(0.0))     # False
-           print(bool(""))      # False
-           print(bool([]))      # False
-           print(bool({}))      # False
-           print(bool(None))    # False
-
-    .. grid-item-card:: ✅ Truthy Values
-        :class-card: sd-border-success
-
-        .. code-block:: python
-
-           print(bool(1))       # True
-           print(bool(-2))      # True
-           print(bool("hi"))    # True
-           print(bool([1, 2]))  # True
-           print(bool(" "))     # True (space!)
-           print(bool(0.001))   # True
-
-.. tip::
-
-   **Pythonic idiom**: Use truthiness directly in conditions — write ``if my_list:`` instead of ``if len(my_list) > 0:``.
-
-
 Numeric Types
 ====================================================
+
+Integers, floats, precision pitfalls, and interning.
+
+Create a file called ``numeric_types_demo.py`` to follow along with the examples below.
+
 
 Integers and Floats
 -------------------
@@ -614,8 +790,8 @@ There are three ways to format strings in Python.
 
    print(f"Name: {name}, Age: {age}")
    print(f"Next year: {age + 1}")
-   print(f"Pi: {3.14159:.2f}")     # Format specifier: 3.14
-   print(f"{'hello':>20}")          # Right-align in 20 chars
+   print(F"Pi: {3.14159:.2f}")      # Format specifier: 3.14. Note: uppercase F works as well
+   print(f"{'hello':>20}")           # Right-align in 20 chars
 
 .. tip::
 
@@ -711,8 +887,8 @@ Strings are ordered sequences, so each character has a positional index.
    print(greeting[-5])   # 'h'
 
    # Common errors
-   # print(greeting[5])    # IndexError: string index out of range
-   # greeting[0] = 'H'    # TypeError: strings are immutable
+   # print(greeting[5])    # What is the output?
+   # greeting[0] = 'H'    # What is the output?
 
 
 Slicing
@@ -721,18 +897,18 @@ Slicing
 The slice syntax is ``[start:stop:stride]``:
 
 - ``start``: Starting index (**inclusive**), defaults to 0.
-- ``stop``: Ending index (**exclusive**), defaults to end.
+- ``stop``: Ending index (**exclusive**), defaults to end of string.
 - ``stride``: Step size, defaults to 1.
 
 .. code-block:: python
 
-   greeting = "hello"
+   greeting = "hello"  # 'h':0:-5, 'e':+1:-4, 'l':+2:-3, 'l':+3:-2, 'o':+4:-1
 
    # Basic slicing
    print(greeting[0:3])   # "hel"
    print(greeting[:3])    # "hel" (start defaults to 0)
    print(greeting[2:])    # "llo" (stop defaults to end)
-   print(greeting[:])     # "hello" (full copy)
+   print(greeting[:])     # "hello" (entire string)
 
    # Negative indices
    print(greeting[-5:-2]) # "hel"

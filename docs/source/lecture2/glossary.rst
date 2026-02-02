@@ -2,7 +2,7 @@
 Glossary
 ====================================================
 
-:ref:`A <l2-glossary-a>` · :ref:`B <l2-glossary-b>` · :ref:`C <l2-glossary-c>` · :ref:`E <l2-glossary-e>` · :ref:`F <l2-glossary-f>` · :ref:`I <l2-glossary-i>` · :ref:`L <l2-glossary-l>` · :ref:`M <l2-glossary-m>` · :ref:`N <l2-glossary-n>` · :ref:`O <l2-glossary-o>` · :ref:`P <l2-glossary-p>` · :ref:`R <l2-glossary-r>` · :ref:`S <l2-glossary-s>` · :ref:`T <l2-glossary-t>` · :ref:`W <l2-glossary-w>`
+:ref:`A <l2-glossary-a>` · :ref:`B <l2-glossary-b>` · :ref:`C <l2-glossary-c>` · :ref:`D <l2-glossary-d>` · :ref:`E <l2-glossary-e>` · :ref:`F <l2-glossary-f>` · :ref:`I <l2-glossary-i>` · :ref:`L <l2-glossary-l>` · :ref:`M <l2-glossary-m>` · :ref:`N <l2-glossary-n>` · :ref:`O <l2-glossary-o>` · :ref:`P <l2-glossary-p>` · :ref:`R <l2-glossary-r>` · :ref:`S <l2-glossary-s>` · :ref:`T <l2-glossary-t>` · :ref:`W <l2-glossary-w>`
 
 ----
 
@@ -66,12 +66,32 @@ C
       many strings efficiently.
 
 
+.. _l2-glossary-d:
+
+D
+=
+
+.. glossary::
+
+   Default Value Pattern
+      A common Python idiom using ``or`` to provide fallback values:
+      ``name = user_input or "Anonymous"``. When ``user_input`` is
+      empty or falsy, ``"Anonymous"`` is assigned instead.
+
+
 .. _l2-glossary-e:
 
 E
 =
 
 .. glossary::
+
+   Editable Install
+      Installing a Python package in development mode using
+      ``pip install -e .``. Changes to the source code take effect
+      immediately without reinstalling. Requires a ``pyproject.toml``
+      file. The most portable and professional approach for making
+      packages discoverable.
 
    Escape Sequence
       A backslash-prefixed character combination inside a string
@@ -148,7 +168,10 @@ L
    Logical Operator
       The ``and``, ``or``, and ``not`` operators, which combine or
       negate Boolean expressions. Python's logical operators use
-      :term:`short-circuit evaluation`.
+      :term:`short-circuit evaluation`. With non-boolean values,
+      ``and`` returns the first falsy value (or the last value if all
+      truthy), and ``or`` returns the first truthy value (or the last
+      value if all falsy). ``not`` always returns a ``bool``.
 
 
 .. _l2-glossary-m:
@@ -230,6 +253,24 @@ P
       ``__init__.py`` file. Packages allow hierarchical organization of
       modules, e.g., ``shape.square``.
 
+   ``.pth`` File
+      A text file placed in Python's :term:`site-packages` directory
+      where each line is a path added to ``sys.path`` at startup.
+      Provides a system-wide way to make packages discoverable without
+      modifying code.
+
+   ``PYTHONPATH``
+      An environment variable listing directories that Python adds to
+      ``sys.path`` at startup. Session-specific by default; add to
+      ``~/.bashrc`` for persistence. Useful during development and
+      testing.
+
+   ``pyproject.toml``
+      A configuration file used by Python packaging tools. Defines
+      build system requirements, project metadata (name, version,
+      description), and dependencies. Required for
+      :term:`editable installs <Editable Install>`.
+
 
 .. _l2-glossary-r:
 
@@ -262,6 +303,13 @@ S
       determined. ``and`` stops at the first falsy value; ``or`` stops
       at the first truthy value.
 
+   ``site-packages``
+      The directory where Python installs third-party packages. Its
+      location can be found with
+      ``python3 -c "import site; print(site.getsitepackages())"``.
+      :term:`.pth files <.pth File>` placed here are processed at
+      startup.
+
    Slicing
       Extracting a subsequence from a sequence using the syntax
       ``[start:stop:stride]``. ``start`` is inclusive, ``stop`` is
@@ -274,7 +322,8 @@ S
    sys.path
       A list of directory paths that Python searches when resolving
       ``import`` statements. Modify with ``sys.path.insert()`` to
-      add custom directories.
+      add custom directories. Also populated automatically from
+      :term:`PYTHONPATH` and :term:`.pth files <.pth File>`.
 
 
 .. _l2-glossary-t:

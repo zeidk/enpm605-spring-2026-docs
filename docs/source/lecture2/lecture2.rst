@@ -43,5 +43,5 @@ Next Steps
   - Loops (``for``, ``while``).
   - List comprehensions.
 
-- Review and experiment with all code snippets from today's lecture.
-- Read `Python Official Tutorial <https://docs.python.org/3/tutorial/>`_ — Sections 3, 4, and 5.
+- Review and experiment with all code snippets and exercises from today's lecture.
+- Start reading `Python Official Tutorial <https://docs.python.org/3/tutorial/>`_ — Sections 3, 4, and 5.

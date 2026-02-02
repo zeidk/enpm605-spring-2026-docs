@@ -11,7 +11,7 @@ References
 
         **ENPM605 — L2: Python Fundamentals — Part I**
 
-        Covers packages and modules, indentation, operators (arithmetic, relational, logical, membership, identity), Boolean type and truthiness, numeric types and interning, strings (formatting, methods, indexing, slicing), and control flow.
+        Covers packages and modules, indentation, Boolean type and truthiness, operators (arithmetic, relational, logical, membership, identity), numeric types and interning, strings (formatting, methods, indexing, slicing), and control flow.
 
 
 .. dropdown:: 🐍 Python Language References
@@ -34,6 +34,20 @@ References
             - Package structure
             - Module search path
 
+        .. grid-item-card:: 📦 The Import System
+            :link: https://docs.python.org/3/reference/import.html
+            :class-card: sd-border-secondary
+
+            **Language Reference — Import**
+
+            Complete reference for Python's import machinery.
+
+            +++
+
+            - Module search path
+            - Finders and loaders
+            - Namespace packages
+
         .. grid-item-card:: 📘 Expressions and Operators
             :link: https://docs.python.org/3/reference/expressions.html
             :class-card: sd-border-secondary
@@ -47,6 +61,20 @@ References
             - Arithmetic operators
             - Comparison chaining
             - Boolean operations
+
+        .. grid-item-card:: ✅ Truth Value Testing
+            :link: https://docs.python.org/3/library/stdtypes.html#truth-value-testing
+            :class-card: sd-border-secondary
+
+            **Standard Library — Truth Value Testing**
+
+            Rules for which objects are truthy and falsy.
+
+            +++
+
+            - Falsy values
+            - ``bool()`` function
+            - Custom truthiness
 
         .. grid-item-card:: 🔤 String Methods
             :link: https://docs.python.org/3/library/stdtypes.html#string-methods
@@ -90,6 +118,20 @@ References
             - IEEE 754 floating-point
             - ``math.isclose()``
 
+        .. grid-item-card:: 🔢 Floating-Point Arithmetic
+            :link: https://docs.python.org/3/tutorial/floatingpoint.html
+            :class-card: sd-border-secondary
+
+            **Tutorial — Floating-Point Issues**
+
+            Why ``0.1 + 0.2 != 0.3`` and how to handle it.
+
+            +++
+
+            - IEEE 754 representation
+            - Precision limitations
+            - ``decimal`` module
+
         .. grid-item-card:: 🔀 Control Flow
             :link: https://docs.python.org/3/tutorial/controlflow.html
             :class-card: sd-border-secondary
@@ -125,6 +167,20 @@ References
             - Import grouping
             - Whitespace conventions
 
+        .. grid-item-card:: 📝 PEP 328 — Imports
+            :link: https://peps.python.org/pep-0328/
+            :class-card: sd-border-secondary
+
+            **Multi-Line and Absolute/Relative Imports**
+
+            The PEP that formalized Python's import system conventions.
+
+            +++
+
+            - Absolute imports
+            - Relative imports
+            - Multi-line imports
+
         .. grid-item-card:: 📝 PEP 498 — f-strings
             :link: https://peps.python.org/pep-0498/
             :class-card: sd-border-secondary
@@ -138,20 +194,6 @@ References
             - Rationale and syntax
             - Expression evaluation
             - Format specifiers
-
-        .. grid-item-card:: 📝 PEP 526 — Variable Annotations
-            :link: https://peps.python.org/pep-0526/
-            :class-card: sd-border-secondary
-
-            **Syntax for Variable Annotations**
-
-            How to annotate variable types: ``name: str = "Alice"``.
-
-            +++
-
-            - Variable annotations
-            - Class variable annotations
-            - ``__annotations__`` dict
 
 
 .. dropdown:: 📚 Recommended Reading
