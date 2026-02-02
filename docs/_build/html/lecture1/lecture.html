@@ -1,0 +1,1918 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Exercises" href="exercises.html"><link rel="prev" title="L1: Course Introduction" href="lecture1.html">
+        <link rel="prefetch" href="../_static/images/enpm605_logo_light.png" as="image">
+        <link rel="prefetch" href="../_static/images/enpm605_logo_dark.png" as="image">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Lecture - ENPM702 Fall 2025 v1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=22df6ef9" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ENPM702 Fall 2025 v1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/images/enpm605_logo_light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/images/enpm605_logo_dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="lecture1.html">L1: Course Introduction</a><input aria-label="Toggle navigation of L1: Course Introduction" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Lecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/zeidk/enpm702-fall-2025/blob/main/lecture1/lecture.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/zeidk/enpm702-fall-2025/edit/main/lecture1/lecture.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="lecture">
+<h1>Lecture<a class="headerlink" href="#lecture" title="Link to this heading">¶</a></h1>
+<section id="course-overview">
+<h2>Course Overview<a class="headerlink" href="#course-overview" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-success docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>What You Will Learn</strong></p>
+<ul class="simple">
+<li><p class="sd-card-text">Specifically designed for students who want to learn robotics with direct applications.</p></li>
+<li><p class="sd-card-text">Focus on Python programming and its applications with mobile robots using ROS 2.</p></li>
+<li><p class="sd-card-text">Students will perform small hands-on exercises in class to gain a deeper understanding of how the application of Python to ROS can be used in real-world challenges.</p></li>
+<li><p class="sd-card-text">The final project will be to control one or multiple mobile robots in a Gazebo environment using Nav2 and behavior trees.</p></li>
+</ul>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Key Questions</strong>: Do you need robotics knowledge for this course? Do you need prior programming knowledge to take this course?</p>
+</div>
+</section>
+<section id="course-structure">
+<h2>Course Structure<a class="headerlink" href="#course-structure" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-3 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📖 Before Class</div>
+<ul class="simple">
+<li><p class="sd-card-text">Get the lecture materials from Canvas and/or Github.</p></li>
+<li><p class="sd-card-text">Complete pre-work activities.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🏫 During Class</div>
+<ul class="simple">
+<li><p class="sd-card-text">Questions and discussions on the previous lecture(s).</p></li>
+<li><p class="sd-card-text">Quiz (if any).</p></li>
+<li><p class="sd-card-text">Lecture — attend class with your laptop and required software installed.</p></li>
+<li><p class="sd-card-text">Participation is very important.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📝 After Class</div>
+<ul class="simple">
+<li><p class="sd-card-text">Review the slides.</p></li>
+<li><p class="sd-card-text">Re-run the code provided to you.</p></li>
+<li><p class="sd-card-text">Start working on the next assignment (if any).</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="grading-structure">
+<h2>Grading Structure<a class="headerlink" href="#grading-structure" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 75.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Weight</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Individual Assignments (2)</p></td>
+<td><p>30%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Quizzes (5)</p></td>
+<td><p>15%</p></td>
+</tr>
+<tr class="row-even"><td><p>Participation/Engagement</p></td>
+<td><p>5%</p></td>
+</tr>
+<tr class="row-odd"><td><p>Team Projects (2)</p></td>
+<td><p>30%</p></td>
+</tr>
+<tr class="row-even"><td><p>Final Project</p></td>
+<td><p>20%</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Total</strong></p></td>
+<td><p><strong>100%</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>No Final Exam</strong></p>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-warning docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+⏰ Late Policy</div>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>10%</strong> deduction per calendar day late</p></li>
+<li><p class="sd-card-text">Maximum <strong>30%</strong> reduction (3 days)</p></li>
+<li><p class="sd-card-text">Work submitted more than 3 days late earns <strong>zero</strong></p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-warning docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🤖 AI Policy</div>
+<ul class="simple">
+<li><p class="sd-card-text">AI tools <strong>NOT permitted</strong> for individual assignments</p></li>
+<li><p class="sd-card-text">AI tools <strong>permitted</strong> for team projects and final project with documentation</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="course-schedule">
+<h2>Course Schedule<a class="headerlink" href="#course-schedule" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 5.6%" />
+<col style="width: 55.6%" />
+<col style="width: 38.9%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Wk</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Deliverable</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Course Introduction</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Python Fundamentals — Part I</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Python Fundamentals — Part II</p></td>
+<td><p>Assignment 1 Handed Out</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Python Functions</p></td>
+<td><p>Quiz 1</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Object-Oriented Programming — Part I</p></td>
+<td><p>Assignment 1 Due, Assignment 2 Handed Out</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Object-Oriented Programming — Part II</p></td>
+<td><p>Quiz 2</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>ROS 2 Foundations</p></td>
+<td><p>Assignment 2 Due</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p><em>Spring Break</em></p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>ROS 2 Executors and Custom Messages</p></td>
+<td><p>Quiz 3, Project 1 Handed Out</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>ROS 2 Services and Parameters</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>Transforms, Coordinate Frames, and Sensor Integration</p></td>
+<td><p>Project 1 Due, Project 2 Handed Out</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>ROS 2 Actions and Lifecycle Nodes</p></td>
+<td><p>Quiz 4</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>Navigation Stack Foundations (Nav2)</p></td>
+<td><p>Project 2 Due, Final Project Handed Out</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>Behavior Trees</p></td>
+<td><p>Quiz 5</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>Final Project Work Session and Status Check</p></td>
+<td><p>Final Project Due (May 08)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="quiz-policy">
+<h2>Quiz Policy<a class="headerlink" href="#quiz-policy" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Quizzes are taken during class hours between 7:00pm and 7:20pm.</p></li>
+<li><p>If you are not a remote/online student and you cannot come to class:</p>
+<ul>
+<li><p>Do not take the quiz.</p></li>
+<li><p>Take the quiz another day with a 10% penalty.</p></li>
+<li><p>No penalty if you are excused (doctor’s note, supervisor’s note, etc).</p></li>
+</ul>
+</li>
+<li><p>No proctor needed.</p></li>
+<li><p>Closed-notes quizzes only (no slides and no software to test code).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Online/Remote Students</strong>: Email the instructor with day and time you plan to take quizzes.</p>
+</div>
+</section>
+<section id="peer-reviews">
+<h2>Peer Reviews<a class="headerlink" href="#peer-reviews" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>After team projects and the final project are submitted, you will give your teammates a score from 1-10 indicating their productive involvement.</p>
+<ul>
+<li><p>You cannot rate yourself.</p></li>
+<li><p>You get 1 pt by just emailing your peer reviews for your teammates.</p></li>
+</ul>
+</li>
+<li><p>60% of your overall score will be based on your assignment/project grade and 40% will be based on your peer reviews from your group.</p></li>
+</ul>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-table" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25ZM6.5 6.5v8h7.75a.25.25 0 0 0 .25-.25V6.5Zm8-1.5V1.75a.25.25 0 0 0-.25-.25H6.5V5Zm-13 1.5v7.75c0 .138.112.25.25.25H5v-8ZM5 5V1.5H1.75a.25.25 0 0 0-.25.25V5Z"></path></svg></span><span class="sd-summary-text">📊 Peer Review Example</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">Your group got 30/30 pts on an assignment/project.</p></li>
+<li><p class="sd-card-text">Your average peer review from your teammates is 4/10 pts.</p></li>
+<li><p class="sd-card-text">You emailed your peer review for your teammates: Your average peer review becomes 5/10 pts (50%).</p></li>
+</ul>
+<p class="sd-card-text"><strong>Grade breakdown:</strong></p>
+<ul class="simple">
+<li><p class="sd-card-text">Assignment portion: 60% of 30 = 18 pts</p></li>
+<li><p class="sd-card-text">Peer review portion: 40% of 30 = 12 pts × 50% = 6 pts</p></li>
+<li><p class="sd-card-text">Your final grade: 18 + 6 = <strong>24/30 pts</strong></p></li>
+</ul>
+</div>
+</details></section>
+<section id="final-project">
+<h2>Final Project<a class="headerlink" href="#final-project" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-primary sd-border-3 docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Autonomous Mobile Robot Navigation</strong></p>
+<p class="sd-card-text">The final project involves developing a ROS 2 package that enables a mobile robot to autonomously navigate through a simulated environment in Gazebo Harmonic.</p>
+<p class="sd-card-text">The project integrates:</p>
+<ul class="simple">
+<li><p class="sd-card-text">Sensor processing</p></li>
+<li><p class="sd-card-text">Coordinate transforms</p></li>
+<li><p class="sd-card-text">Nav2 navigation</p></li>
+<li><p class="sd-card-text">Application-level behavior trees using <em>py_trees</em></p></li>
+</ul>
+</div>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+⚙️ What Nav2 Handles (You Configure)</div>
+<ul class="simple">
+<li><p class="sd-card-text">Path planning and trajectory following</p></li>
+<li><p class="sd-card-text">Obstacle avoidance via costmaps (subscribes to sensor topics directly)</p></li>
+<li><p class="sd-card-text">Recovery behaviors (spin, backup, wait)</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🌳 What You Build with py_trees</div>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>Application-level behavior tree</strong> that coordinates high-level tasks:</p>
+<ul>
+<li><p class="sd-card-text">Patrol a sequence of waypoints (calls <code class="docutils literal notranslate"><span class="pre">/navigate_to_pose</span></code> action)</p></li>
+<li><p class="sd-card-text">React to events (e.g., object detected → investigate)</p></li>
+<li><p class="sd-card-text">Handle task priorities (high-priority task interrupts patrol)</p></li>
+</ul>
+</li>
+<li><p class="sd-card-text">Your behavior tree calls Nav2 action servers — it does <strong>not</strong> replace Nav2’s internal navigation logic.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Week 15 is reserved as a work session and status check.</p>
+</div>
+<section id="software-hardware">
+<h3>Software &amp; Hardware<a class="headerlink" href="#software-hardware" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="operating-system">
+<h2>Operating System<a class="headerlink" href="#operating-system" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Ubuntu 24.04 LTS (Noble Numbat)</strong></p>
+<p class="sd-card-text">Use this course as an opportunity to learn Linux. You should at least know the following shell commands (terminal):</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">ls</span></code>, <code class="docutils literal notranslate"><span class="pre">pwd</span></code>, <code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">mv</span></code>, <code class="docutils literal notranslate"><span class="pre">mkdir</span></code>, <code class="docutils literal notranslate"><span class="pre">rm</span></code>, <code class="docutils literal notranslate"><span class="pre">source</span></code>, <code class="docutils literal notranslate"><span class="pre">touch</span></code>, <code class="docutils literal notranslate"><span class="pre">man</span></code>, and <code class="docutils literal notranslate"><span class="pre">grep</span></code>.</p>
+</div>
+</div>
+</section>
+<section id="minimum-hardware">
+<h2>Minimum Hardware<a class="headerlink" href="#minimum-hardware" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>CPU</strong></p></td>
+<td><p>Intel i5 or equivalent, 4+ cores</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>RAM</strong></p></td>
+<td><p>8 GB minimum, 16 GB recommended</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Storage</strong></p></td>
+<td><p>50 GB free space</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Docker containers will be provided to ensure a consistent development environment across all platforms.</p>
+</div>
+</section>
+<section id="development-tools">
+<h2>Development Tools<a class="headerlink" href="#development-tools" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 37.5%" />
+<col style="width: 37.5%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Software</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Download/Install</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Visual Studio Code</p></td>
+<td><p>Light, cross-platform IDE</p></td>
+<td><p><a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Docker Desktop</p></td>
+<td><p>Containerized development</p></td>
+<td><p><a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a></p></td>
+</tr>
+<tr class="row-even"><td><p>ROS 2 Jazzy</p></td>
+<td><p>Robot Operating System</p></td>
+<td><p><a class="reference external" href="https://docs.ros.org/en/jazzy/">ROS Jazzy</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Gazebo Harmonic</p></td>
+<td><p>Simulation environment</p></td>
+<td><p><a class="reference external" href="https://gazebosim.org/docs/harmonic/getstarted/">Gazebo Harmonic</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>To Do</strong>: Install Visual Studio Code and Docker Desktop before the in-class exercise.</p>
+</div>
+<section id="environment-setup">
+<h3>Environment Setup<a class="headerlink" href="#environment-setup" title="Link to this heading">¶</a></h3>
+<p>This section walks through configuring Visual Studio Code and Docker for Python development.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-3 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+1️⃣ Install VS Code</div>
+<p class="sd-card-text">Download and install from <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a>. Available for Windows, macOS, and Linux.</p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+2️⃣ Install Docker</div>
+<p class="sd-card-text">Download and install <a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>. Verify installation with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">--version</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+3️⃣ Install Extensions</div>
+<p class="sd-card-text">Install the required VS Code extensions (see below).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>Visual Studio Code<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-column docutils">
+<p><strong>Download &amp; Install</strong></p>
+<ul class="simple">
+<li><p>Download from <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a></p></li>
+<li><p>Available for Windows, macOS, Linux</p></li>
+<li><p>Lightweight, extensible, free</p></li>
+</ul>
+</div>
+<div class="sd-col sd-d-flex-column docutils">
+<p><strong>Required Extensions</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python (Microsoft)</a> — Python language support</p></li>
+<li><p><a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Dev Containers (Microsoft)</a> — Development in containers</p></li>
+<li><p><a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-containers">Container Tools (Microsoft)</a> — Build, manage, and deploy containers</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="docker-installation">
+<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-success docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Installing Docker Desktop</strong></p>
+<ol class="arabic">
+<li><p class="sd-card-text">Download and install <a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>.</p></li>
+<li><p class="sd-card-text">Verify your installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>--version
+</pre></div>
+</div>
+</li>
+<li><p class="sd-card-text">Docker allows us to run isolated containers with all dependencies pre-installed.</p></li>
+<li><p class="sd-card-text">We will use Dev Containers in VS Code to develop inside Docker containers.</p></li>
+</ol>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Linux Users</strong>: You may need to add your user to the docker group:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span>
+</pre></div>
+</div>
+<p>Log out and log back in for changes to take effect.</p>
+</div>
+</section>
+<section id="creating-a-workspace">
+<h2>Creating a Workspace<a class="headerlink" href="#creating-a-workspace" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>Create a workspace where you will host all Python code for this course.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">~/enpm605/py_ws</span></code></p></li>
+</ul>
+</li>
+<li><p>Open a terminal and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;path<span class="w"> </span>to<span class="w"> </span>workspace&gt;
+code<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p>By starting VS Code in a folder, that folder becomes your “workspace”.</p></li>
+<li><p>VS Code stores workspace-specific settings in <code class="docutils literal notranslate"><span class="pre">.vscode/settings.json</span></code>.</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Any <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file in a nested folder takes precedence over other <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> files.</p>
+</div>
+<section id="running-python-in-vs-code">
+<h3>Running Python in VS Code<a class="headerlink" href="#running-python-in-vs-code" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="selecting-the-python-interpreter">
+<h2>Selecting the Python Interpreter<a class="headerlink" href="#selecting-the-python-interpreter" title="Link to this heading">¶</a></h2>
+<p>In order to run Python code and get Python IntelliSense, you must tell VS Code which interpreter to use.</p>
+<ol class="arabic simple">
+<li><p>Open <strong>Command Palette</strong> with <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code></p></li>
+<li><p>Start typing <strong>Python: Select Interpreter</strong></p></li>
+<li><p>Select a Python 3 interpreter.</p></li>
+</ol>
+</section>
+<section id="creating-a-python-file">
+<h2>Creating a Python File<a class="headerlink" href="#creating-a-python-file" title="Link to this heading">¶</a></h2>
+<p>Create the file <code class="docutils literal notranslate"><span class="pre">running_demo.py</span></code> inside the <code class="docutils literal notranslate"><span class="pre">lecture1</span></code> folder and add the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="linenos">2</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">greet</span><span class="p">(</span><span class="s1">&#39;Bob&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="execution-methods">
+<h2>Execution Methods<a class="headerlink" href="#execution-methods" title="Link to this heading">¶</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Run Button</label><div class="sd-tab-content docutils">
+<p>Click the <strong>Run Python File</strong> button (top-right triangle icon).</p>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Context Menu</label><div class="sd-tab-content docutils">
+<p>Right-click on the Python file and select <strong>Run Python File in Terminal</strong>.</p>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Integrated Terminal</label><div class="sd-tab-content docutils">
+<p>Open terminal with <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">j</span></code> and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>running_demo.py
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Interactive Mode (REPL)</label><div class="sd-tab-content docutils">
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code> → Type <strong>REPL</strong> → Select <strong>Python: Start Native Python REPL</strong></p></li>
+<li><p>Select code and press <code class="docutils literal notranslate"><span class="pre">Shift+Enter</span></code> to execute in REPL.</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="debugging-python-code">
+<h2>Debugging Python Code<a class="headerlink" href="#debugging-python-code" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-info docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔧 Setup</div>
+<ol class="arabic simple">
+<li><p class="sd-card-text"><strong>Set a breakpoint</strong>: Click in the gutter or place your cursor on a line and press <code class="docutils literal notranslate"><span class="pre">F9</span></code></p></li>
+<li><p class="sd-card-text">Expand top-right triangle and select <strong>Debug Python File</strong> or press <code class="docutils literal notranslate"><span class="pre">F5</span></code></p></li>
+<li><p class="sd-card-text">Since this is your first time debugging this file, a configuration menu will open: Select <strong>Python Debugger</strong> then <strong>Python File</strong>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-info docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔍 Inspect</div>
+<ol class="arabic simple" start="4">
+<li><p class="sd-card-text">Use the debug toolbar to step through code, inspect variables, and evaluate expressions.</p></li>
+<li><p class="sd-card-text">You can also work with variables in the <strong>Debug Console</strong> using the <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> field at the bottom.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="python-linters">
+<h3>Python Linters<a class="headerlink" href="#python-linters" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="what-is-a-linter">
+<h2>What is a Linter?<a class="headerlink" href="#what-is-a-linter" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Definition</strong></p>
+<p class="sd-card-text">A <strong>linter</strong> analyzes your code for potential errors, style violations, and code smells (<em>“Refactoring: Improving the Design of Existing Code”</em> — M. Fowler <em>et al.</em>). Linters help enforce coding standards and catch bugs <strong>before</strong> runtime. The name comes from the original <code class="docutils literal notranslate"><span class="pre">lint</span></code> tool for C (1978).</p>
+</div>
+</div>
+</section>
+<section id="popular-python-linters">
+<h2>Popular Python Linters<a class="headerlink" href="#popular-python-linters" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Speed</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Ruff</strong></p></td>
+<td><p>Linter + Formatter</p></td>
+<td><p>Extremely Fast</p></td>
+<td><p>Written in Rust, replaces multiple tools</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flake8</p></td>
+<td><p>Linter</p></td>
+<td><p>Fast</p></td>
+<td><p>Lightweight, plugin ecosystem</p></td>
+</tr>
+<tr class="row-even"><td><p>Pylint</p></td>
+<td><p>Linter</p></td>
+<td><p>Slow</p></td>
+<td><p>Deep analysis, very thorough</p></td>
+</tr>
+<tr class="row-odd"><td><p>Black</p></td>
+<td><p>Formatter</p></td>
+<td><p>Fast</p></td>
+<td><p>Opinionated, no configuration</p></td>
+</tr>
+<tr class="row-even"><td><p>isort</p></td>
+<td><p>Import Sorter</p></td>
+<td><p>Fast</p></td>
+<td><p>Sorts imports alphabetically</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Recommendation</strong>: Use <strong>Ruff</strong> — it combines linting, formatting, and import sorting in one tool, and is 10–100× faster than alternatives.</p>
+</div>
+</section>
+<section id="ruff-the-modern-python-linter">
+<h2>Ruff — The Modern Python Linter<a class="headerlink" href="#ruff-the-modern-python-linter" title="Link to this heading">¶</a></h2>
+<p><strong>Why Ruff?</strong></p>
+<ul class="simple">
+<li><p><strong>Blazingly fast</strong> — Written in Rust, runs in milliseconds.</p></li>
+<li><p><strong>All-in-one</strong> — Replaces Flake8, Black, isort, and many plugins.</p></li>
+<li><p><strong>Auto-fix</strong> — Can automatically fix many issues with <code class="docutils literal notranslate"><span class="pre">--fix</span></code>.</p></li>
+<li><p><strong>Drop-in replacement</strong> — Compatible with existing Flake8/Black configurations.</p></li>
+<li><p><strong>Adopted by major projects</strong> — FastAPI, pandas, Apache Airflow, pydantic.</p></li>
+</ul>
+</section>
+<section id="ruff-in-action">
+<h2>Ruff in Action<a class="headerlink" href="#ruff-in-action" title="Link to this heading">¶</a></h2>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-4">
+Code with Issues</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">math</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">def</span> <span class="nf">calculate_area</span><span class="p">(</span><span class="n">radius</span><span class="p">):</span>
+<span class="linenos"> 6</span>    <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159</span>  <span class="c1"># Magic number</span>
+<span class="linenos"> 7</span>    <span class="n">area</span><span class="o">=</span><span class="n">pi</span><span class="o">*</span><span class="n">radius</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># No spaces</span>
+<span class="linenos"> 8</span>    <span class="k">return</span> <span class="n">area</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="linenos">11</span><span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>  <span class="c1"># Compare to True</span>
+<span class="linenos">12</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-5">
+Ruff Output</label><div class="sd-tab-content docutils">
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ ruff check example.py
+example.py:1:8: F401 `os` imported but unused
+example.py:3:8: F401 `math` imported but unused
+example.py:6:10: PLR2004 Magic value used in comparison
+example.py:7:9: E225 Missing whitespace around operator
+example.py:11:6: E712 Comparison to `True` should be `if x:`
+Found 5 errors.
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-6" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-6">
+Auto-fix</label><div class="sd-tab-content docutils">
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ ruff check --fix example.py  # Removes unused imports automatically
+Found 5 errors (2 fixed, 3 remaining).
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ruff-in-vs-code">
+<h2>Ruff in VS Code<a class="headerlink" href="#ruff-in-vs-code" title="Link to this heading">¶</a></h2>
+<p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff">Ruff extension</a> from the VS Code marketplace and configure in <code class="docutils literal notranslate"><span class="pre">.vscode/settings.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;editor.formatOnSave&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;editor.defaultFormatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;charliermarsh.ruff&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;editor.codeActionsOnSave&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;source.fixAll.ruff&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;explicit&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;source.organizeImports.ruff&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;explicit&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;ruff.lineLength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>What This Does:</strong></p>
+<ul class="simple">
+<li><p><strong>Format on save</strong> — Automatically formats code when you save.</p></li>
+<li><p><strong>Fix all</strong> — Applies safe auto-fixes on save.</p></li>
+<li><p><strong>Organize imports</strong> — Sorts and removes unused imports on save.</p></li>
+</ul>
+<section id="environment-verification">
+<h3>Environment Verification<a class="headerlink" href="#environment-verification" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="verify-your-setup">
+<h2>Verify Your Setup<a class="headerlink" href="#verify-your-setup" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Open VS Code in your workspace.</p></li>
+<li><p>Create a file called <code class="docutils literal notranslate"><span class="pre">verify_setup.py</span></code>.</p></li>
+<li><p>Add the following code:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos"> 4</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="linenos"> 5</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Environment Verification&quot;</span><span class="p">)</span>
+<span class="linenos"> 6</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="linenos"> 7</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python Version: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos"> 8</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Setup successful!&quot;</span><span class="p">)</span>
+<span class="linenos"> 9</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">12</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Run the file using any of the methods discussed.</p></li>
+<li><p>Verify you see the Python version and success message.</p></li>
+</ol>
+</section>
+<section id="expected-output">
+<h2>Expected Output<a class="headerlink" href="#expected-output" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-bg-light docutils">
+<div class="sd-card-body docutils">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python3<span class="w"> </span>verify_setup.py
+
+<span class="go">========================================</span>
+<span class="go">Environment Verification</span>
+<span class="go">========================================</span>
+<span class="go">Python Version: 3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]</span>
+<span class="go">Setup successful!</span>
+<span class="go">========================================</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Troubleshooting</strong>: If you encounter errors, verify: (1) Python is installed, (2) VS Code Python extension is installed, (3) Correct interpreter is selected.</p>
+</div>
+<section id="python-execution-pipeline">
+<h3>Python Execution Pipeline<a class="headerlink" href="#python-execution-pipeline" title="Link to this heading">¶</a></h3>
+<p>Understanding how Python code is executed from source to output.</p>
+</section>
+</section>
+<section id="python-is-an-interpreted-language">
+<h2>Python is an Interpreted Language<a class="headerlink" href="#python-is-an-interpreted-language" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Pipeline Stages</strong></p>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>Source code</strong> — Human-readable code written in Python syntax (<code class="docutils literal notranslate"><span class="pre">.py</span></code> files).</p></li>
+<li><p class="sd-card-text"><strong>Lexer (Tokenizer)</strong> — Breaks source code into tokens (keywords, identifiers, operators, literals).</p></li>
+<li><p class="sd-card-text"><strong>Parser</strong> — Analyzes token sequence, validates syntax, and builds a parse tree.</p></li>
+<li><p class="sd-card-text"><strong>Abstract Syntax Tree (AST)</strong> — Simplified tree representation focusing on semantic meaning.</p></li>
+<li><p class="sd-card-text"><strong>Bytecode Compiler</strong> — Converts AST to low-level instructions (<code class="docutils literal notranslate"><span class="pre">.pyc</span></code> files in <code class="docutils literal notranslate"><span class="pre">__pycache__</span></code>).</p>
+<ul>
+<li><p class="sd-card-text">Bytecode is generated in memory for executed scripts.</p></li>
+<li><p class="sd-card-text">For imported modules, bytecode is cached in <code class="docutils literal notranslate"><span class="pre">__pycache__</span></code> to speed up future imports.</p></li>
+</ul>
+</li>
+<li><p class="sd-card-text"><strong>Interpreter Loop</strong> — Executes bytecode instructions via a fetch-decode-execute cycle.</p></li>
+</ul>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Pipeline Flow</strong>: Source Code → Lexer → Parser → AST → Bytecode Compiler → Interpreter Loop → Output</p>
+</div>
+</section>
+<section id="compilation-vs-runtime-phases">
+<h2>Compilation vs. Runtime Phases<a class="headerlink" href="#compilation-vs-runtime-phases" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-info docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔨 Compilation Phase</div>
+<ul class="simple">
+<li><p class="sd-card-text">Happens once when module is first imported or run.</p></li>
+<li><p class="sd-card-text">Lexer → Parser → AST → Bytecode</p></li>
+<li><p class="sd-card-text"><strong>Syntax errors</strong> caught here (before any code runs).</p></li>
+<li><p class="sd-card-text">Recompilation only if source file changes.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-info docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+▶️ Runtime Phase</div>
+<ul class="simple">
+<li><p class="sd-card-text">Happens every time the code executes.</p></li>
+<li><p class="sd-card-text">Interpreter loop reads and executes bytecode.</p></li>
+<li><p class="sd-card-text"><strong>Runtime errors</strong> occur here (<code class="docutils literal notranslate"><span class="pre">NameError</span></code>, <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>, etc.).</p></li>
+<li><p class="sd-card-text">Stack-based execution model.</p></li>
+<li><p class="sd-card-text">Manages memory and garbage collection.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="compiled-vs-interpreted-languages">
+<h2>Compiled vs. Interpreted Languages<a class="headerlink" href="#compiled-vs-interpreted-languages" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+⚙️ Compiled Languages</div>
+<p class="sd-card-text">A compiler translates source code directly into native machine code. The CPU executes the binary directly — no intermediary.</p>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>Advantage</strong>: Faster execution; optimizations applied at compile time.</p></li>
+<li><p class="sd-card-text"><strong>Disadvantage</strong>: Platform-specific binaries; longer compile times.</p></li>
+<li><p class="sd-card-text"><strong>Examples</strong>: C, C++, Rust, Go</p></li>
+</ul>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">Source</span> <span class="pre">→</span> <span class="pre">Compiler</span> <span class="pre">→</span> <span class="pre">Machine</span> <span class="pre">Code</span> <span class="pre">→</span> <span class="pre">CPU</span></code></p>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🐍 Interpreted Languages</div>
+<p class="sd-card-text">Source code is compiled to intermediate bytecode. An interpreter executes bytecode instruction by instruction.</p>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>Advantage</strong>: Portable; same bytecode runs on any platform with the interpreter.</p></li>
+<li><p class="sd-card-text"><strong>Disadvantage</strong>: Slower; interpreter overhead on each instruction.</p></li>
+<li><p class="sd-card-text"><strong>Examples</strong>: Python, JavaScript, Ruby</p></li>
+</ul>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">Source</span> <span class="pre">→</span> <span class="pre">Compiler</span> <span class="pre">→</span> <span class="pre">Bytecode</span> <span class="pre">→</span> <span class="pre">Interpreter</span> <span class="pre">→</span> <span class="pre">CPU</span></code></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Python is sometimes called a “compiled interpreted language”: it compiles to bytecode, then interprets that bytecode. The bytecode is not native machine code.</p>
+</div>
+</section>
+<section id="cpython-the-reference-implementation">
+<h2>CPython — The Reference Implementation<a class="headerlink" href="#cpython-the-reference-implementation" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-warning sd-border-3 docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>What is CPython?</strong></p>
+<ul class="simple">
+<li><p class="sd-card-text"><strong>CPython</strong> is the reference (default) implementation of Python.</p></li>
+<li><p class="sd-card-text">The interpreter itself is written in C — hence the name “CPython”.</p></li>
+<li><p class="sd-card-text">When you run <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code>, you are running a C program that:</p>
+<ul>
+<li><p class="sd-card-text">Lexes, parses, and compiles your code to bytecode.</p></li>
+<li><p class="sd-card-text">Executes bytecode via an evaluation loop (<code class="docutils literal notranslate"><span class="pre">_PyEval_EvalFrameDefault</span></code> in <code class="docutils literal notranslate"><span class="pre">ceval.c</span></code>).</p></li>
+</ul>
+</li>
+<li><p class="sd-card-text">The “Python Virtual Machine” (PVM) is not a separate program — it’s the interpreter loop inside CPython.</p></li>
+</ul>
+</div>
+</div>
+<p><strong>Key Characteristics:</strong></p>
+<ul class="simple">
+<li><p>Best compatibility with C extensions — libraries like NumPy, pandas, and TensorFlow are partially written in C for performance and only fully support CPython.</p></li>
+<li><p>Has the <strong>Global Interpreter Lock (GIL)</strong> — limits true multi-threaded parallelism.</p></li>
+<li><p>CPython 3.13 introduced experimental free-threaded builds (no GIL).</p></li>
+<li><p>CPython 3.14 promotes free-threading to <strong>officially supported</strong> (but still optional).</p>
+<ul>
+<li><p>Install with: <code class="docutils literal notranslate"><span class="pre">python3.14t</span></code> (the “t” suffix indicates free-threaded)</p></li>
+<li><p>Single-threaded overhead reduced from ~40% to ~5-10%</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Check your implementation:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>--version<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import sys; print(sys.implementation)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="inspecting-the-pipeline">
+<h2>Inspecting the Pipeline<a class="headerlink" href="#inspecting-the-pipeline" title="Link to this heading">¶</a></h2>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">internals_demo.py</span></code> to explore Python’s internals.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-7" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-7">
+View Tokens (Lexer Output)</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">io</span>
+<span class="linenos">2</span><span class="kn">import</span> <span class="nn">tokenize</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;x = 5 + 3&quot;</span>
+<span class="linenos">5</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">generate_tokens</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">)</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+<span class="linenos">8</span>    <span class="nb">print</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-8" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-8">
+View AST (Parser Output)</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;x = 5 + 3&quot;</span>
+<span class="linenos">4</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+<span class="linenos">5</span><span class="nb">print</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-9">
+View Bytecode (Compiler Output)</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="kn">import</span> <span class="nn">dis</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span><span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+<span class="linenos">4</span>    <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="linenos">5</span>    <span class="k">return</span> <span class="n">x</span>
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Sample Output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>27    RESUME                0
+28    LOAD_SMALL_INT        8
+      STORE_FAST            0 (x)
+29    LOAD_FAST_BORROW      0 (x)
+      RETURN_VALUE
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">+</span> <span class="pre">3</span></code> becomes <code class="docutils literal notranslate"><span class="pre">LOAD_SMALL_INT</span> <span class="pre">8</span></code>: the compiler optimizes constant expressions!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="alternative-python-implementations">
+<h2>Alternative Python Implementations<a class="headerlink" href="#alternative-python-implementations" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>PyPy</strong></p></td>
+<td><p>Written in RPython; uses JIT compilation for 4–10× speedup on long-running code.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Jython</strong></p></td>
+<td><p>Compiles to Java bytecode; runs on the JVM; access to Java libraries; no GIL.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>IronPython</strong></p></td>
+<td><p>Compiles to .NET IL; runs on the CLR; access to .NET libraries; no GIL.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>MicroPython</strong></p></td>
+<td><p>Optimized for microcontrollers (ESP32, Raspberry Pi Pico); minimal RAM (~256KB).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GraalPy</strong></p></td>
+<td><p>Runs on GraalVM with JIT; polyglot interoperability with other languages.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Cython</strong></p></td>
+<td><p>Superset of Python that compiles to C, then to native binaries.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 15.0%" />
+<col style="width: 55.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Use Case</p></th>
+<th class="head"><p>Best Choice</p></th>
+<th class="head"><p>Why</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>General development</p></td>
+<td><p>CPython</p></td>
+<td><p>Best compatibility, largest ecosystem</p></td>
+</tr>
+<tr class="row-odd"><td><p>Performance-critical long-running apps</p></td>
+<td><p>PyPy</p></td>
+<td><p>JIT compilation speeds up hot paths</p></td>
+</tr>
+<tr class="row-even"><td><p>Integration with Java ecosystem</p></td>
+<td><p>Jython</p></td>
+<td><p>Direct Java library access</p></td>
+</tr>
+<tr class="row-odd"><td><p>Integration with .NET ecosystem</p></td>
+<td><p>IronPython</p></td>
+<td><p>Direct .NET library access</p></td>
+</tr>
+<tr class="row-even"><td><p>Embedded systems / IoT</p></td>
+<td><p>MicroPython</p></td>
+<td><p>Minimal footprint, hardware access</p></td>
+</tr>
+<tr class="row-odd"><td><p>Data science / ML</p></td>
+<td><p>CPython</p></td>
+<td><p>NumPy, pandas, TensorFlow require C extensions</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="introduction-to-python-variables">
+<h3>Introduction to Python Variables<a class="headerlink" href="#introduction-to-python-variables" title="Link to this heading">¶</a></h3>
+<p>A preview of Python fundamentals — covered in depth next week.</p>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">variables_demo.py</span></code> to follow along with the examples below.</p>
+</section>
+</section>
+<section id="what-is-a-variable">
+<h2>What is a Variable?<a class="headerlink" href="#what-is-a-variable" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Variables in Python</strong></p>
+<ul class="simple">
+<li><p class="sd-card-text">A <strong>variable</strong> is a name that refers to a value stored in memory.</p></li>
+<li><p class="sd-card-text">Variables are created using the <strong>assignment operator</strong> (<code class="docutils literal notranslate"><span class="pre">=</span></code>).</p></li>
+<li><p class="sd-card-text">No need to declare the type — Python figures it out automatically.</p></li>
+</ul>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-10" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-10">
+🐍 Python (Dynamic)</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># No type declaration needed</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Alice&quot;</span>
+<span class="n">age</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">gpa</span> <span class="o">=</span> <span class="mf">3.85</span>
+<span class="n">is_student</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-11" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-11">
+⚙️ C++ (Static)</label><div class="sd-tab-content docutils">
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Must declare types</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Alice&quot;</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">25</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="n">gpa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.85</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="n">is_student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Python is <strong>dynamically typed</strong> — variable types are determined at runtime, not compile time.</p>
+</div>
+</section>
+<section id="assignment-styles">
+<h2>Assignment Styles<a class="headerlink" href="#assignment-styles" title="Link to this heading">¶</a></h2>
+<p>The assignment operator (<code class="docutils literal notranslate"><span class="pre">=</span></code>) binds a name to an object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard assignment</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Guido van Rossum&quot;</span>
+
+<span class="c1"># Chained assignment (same object, multiple names)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># Multiple assignment (unpacking)</span>
+<span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">role</span> <span class="o">=</span> <span class="s2">&quot;Guido van Rossum&quot;</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="s2">&quot;BDFL Emeritus&quot;</span>
+
+<span class="c1"># Swapping values (no temp variable needed!)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>  <span class="c1"># a=2, b=1</span>
+</pre></div>
+</div>
+</section>
+<section id="everything-is-an-object">
+<h2>Everything is an Object<a class="headerlink" href="#everything-is-an-object" title="Link to this heading">¶</a></h2>
+<p>In Python, <strong>everything is an object</strong>. Variables are references (names) bound to objects in memory, not direct storage locations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> is a <strong>name</strong> (reference)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code> is an <strong>object</strong> in memory</p></li>
+<li><p>The name <code class="docutils literal notranslate"><span class="pre">x</span></code> is bound to the object <code class="docutils literal notranslate"><span class="pre">2</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>       <span class="c1"># &lt;class &#39;int&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mf">3.14</span><span class="p">))</span>     <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="nb">print</span><span class="p">))</span>    <span class="c1"># &lt;class &#39;builtin_function_or_method&#39;&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="object-identity">
+<h2>Object Identity<a class="headerlink" href="#object-identity" title="Link to this heading">¶</a></h2>
+<p>Every object has a unique identity — an integer representing its memory address. Use <code class="docutils literal notranslate"><span class="pre">id()</span></code> to inspect it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">10.5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>  <span class="c1"># e.g., 9793376</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>  <span class="c1"># e.g., 140409546886992</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>  <span class="c1"># e.g., 140409536180784</span>
+
+<span class="c1"># What about literals?</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>      <span class="c1"># Same as id(a)?</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">))</span> <span class="c1"># Same as id(c)?</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The actual <code class="docutils literal notranslate"><span class="pre">id()</span></code> values change each time you run the program, but they remain constant for each object during its lifetime.</p>
+</div>
+</section>
+<section id="dynamic-typing">
+<h2>Dynamic Typing<a class="headerlink" href="#dynamic-typing" title="Link to this heading">¶</a></h2>
+<p><strong>What is Dynamic Typing?</strong></p>
+<ul class="simple">
+<li><p>The type is associated with the <strong>value (object)</strong>, not the variable name.</p></li>
+<li><p>A variable can be rebound to objects of different types during execution.</p></li>
+<li><p>Types are checked at <strong>runtime</strong>, not compile time.</p></li>
+</ul>
+<p><strong>Variable Rebinding:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;str&#39;&gt;</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mf">10.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># &lt;class &#39;float&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>While flexible, rebinding to different types can lead to bugs. We’ll discuss <strong>type hints</strong> in L2 to make code safer.</p>
+</div>
+</section>
+<section id="basic-data-types">
+<h2>Basic Data Types<a class="headerlink" href="#basic-data-types" title="Link to this heading">¶</a></h2>
+<div class="table-wrapper colwidths-given compact-table docutils container">
+<table class="compact-table docutils align-default">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 12.5%" />
+<col style="width: 25.0%" />
+<col style="width: 37.5%" />
+<col style="width: 10.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Examples</p></th>
+<th class="head"><p>Notes</p></th>
+<th class="head"><p>Mutable</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Numeric</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">42</span></code>, <code class="docutils literal notranslate"><span class="pre">-7</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Unlimited precision</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Numeric</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3.14</span></code>, <code class="docutils literal notranslate"><span class="pre">-0.001</span></code></p></td>
+<td><p>64-bit (IEEE 754)</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>Numeric</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+<td><p>Subclass of <code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Text</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">str</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;hello&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">'world'</span></code></p></td>
+<td><p>Immutable sequence</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>Null</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NoneType</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Singleton object</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sequence</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">list</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></code></p></td>
+<td><p>Ordered, changeable</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Sequence</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tuple</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code></p></td>
+<td><p>Ordered, unchangeable</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mapping</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dict</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{&quot;a&quot;:</span> <span class="pre">1}</span></code></p></td>
+<td><p>Key-value pairs</p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Set</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">set</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{1,</span> <span class="pre">2,</span> <span class="pre">3}</span></code></p></td>
+<td><p>Unordered, unique</p></td>
+<td><p>Yes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We’ll cover sequence types (<code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">tuple</span></code>), mappings (<code class="docutils literal notranslate"><span class="pre">dict</span></code>), and sets in detail in L3.</p>
+</div>
+</section>
+<section id="mutable-vs-immutable-objects">
+<h2>Mutable vs. Immutable Objects<a class="headerlink" href="#mutable-vs-immutable-objects" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-info docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔒 Immutable Objects</div>
+<ul class="simple">
+<li><p class="sd-card-text">Cannot be changed after creation</p></li>
+<li><p class="sd-card-text">Modifying creates a <strong>new</strong> object</p></li>
+<li><p class="sd-card-text">Examples: <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">tuple</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># 9793376</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>     <span class="c1"># New object created!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># 9793408 (different)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-info docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+🔓 Mutable Objects</div>
+<ul class="simple">
+<li><p class="sd-card-text">Can be changed in place</p></li>
+<li><p class="sd-card-text">Same object, modified content</p></li>
+<li><p class="sd-card-text">Examples: <code class="docutils literal notranslate"><span class="pre">list</span></code>, <code class="docutils literal notranslate"><span class="pre">dict</span></code>, <code class="docutils literal notranslate"><span class="pre">set</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">my_list</span><span class="p">))</span>  <span class="c1"># 140234567890</span>
+
+<span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>   <span class="c1"># Same object!</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">my_list</span><span class="p">))</span>  <span class="c1"># 140234567890 (same)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Understanding mutability is crucial for avoiding bugs when passing objects to functions or assigning variables.</p>
+</div>
+</section>
+<section id="variables-are-references">
+<h2>Variables are References<a class="headerlink" href="#variables-are-references" title="Link to this heading">¶</a></h2>
+<p><strong>Aliasing: Multiple Names, Same Object</strong></p>
+<p>When you assign one variable to another, both names reference the <strong>same object</strong>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>  <span class="c1"># b references same list</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>  <span class="c1"># e.g., 140234567890</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>  <span class="c1"># Same address!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># True</span>
+
+<span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>  <span class="c1"># [1, 2, 3, 4] -- both changed!</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This behavior with mutable objects is a common source of bugs! To create an independent copy, use <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">a.copy()</span></code> or <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">list(a)</span></code>.</p>
+</div>
+</section>
+<section id="the-none-type">
+<h2>The <code class="docutils literal notranslate"><span class="pre">None</span></code> Type<a class="headerlink" href="#the-none-type" title="Link to this heading">¶</a></h2>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-border-secondary docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>What is None?</strong></p>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">None</span></code> represents the <strong>absence of a value</strong> or a null value.</p></li>
+<li><p class="sd-card-text">It is the sole instance of the <code class="docutils literal notranslate"><span class="pre">NoneType</span></code> class: a <strong>singleton</strong>.</p></li>
+<li><p class="sd-card-text">Common uses: default function arguments, uninitialized variables, indicating “no result”.</p></li>
+</ul>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Declaring a variable with no value yet</span>
+<span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Function that doesn&#39;t explicitly return anything</span>
+<span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">greet</span><span class="p">(</span><span class="s2">&quot;Alice&quot;</span><span class="p">)</span>  <span class="c1"># Prints &quot;Hello, Alice&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>            <span class="c1"># None</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>      <span class="c1"># &lt;class &#39;NoneType&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Always use <code class="docutils literal notranslate"><span class="pre">is</span></code> (not <code class="docutils literal notranslate"><span class="pre">==</span></code>) to compare with <code class="docutils literal notranslate"><span class="pre">None</span></code>:</p>
+<p>✅ <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">is</span> <span class="pre">None:</span></code></p>
+<p>❌ <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">None:</span></code></p>
+</div>
+</section>
+<section id="identity-vs-equality">
+<h2>Identity vs. Equality<a class="headerlink" href="#identity-vs-equality" title="Link to this heading">¶</a></h2>
+<p><strong>The</strong> <code class="docutils literal notranslate"><span class="pre">is</span></code> <strong>vs.</strong> <code class="docutils literal notranslate"><span class="pre">==</span></code> <strong>Operators</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">==</span></code> compares <strong>values</strong> (equality)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is</span></code> compares <strong>identity</strong> (same object in memory)</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># True  (same values)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># False (different objects)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">c</span><span class="p">)</span>  <span class="c1"># True  (same object)</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Rule of thumb</strong>: Use <code class="docutils literal notranslate"><span class="pre">==</span></code> for value comparison. Use <code class="docutils literal notranslate"><span class="pre">is</span></code> only for <code class="docutils literal notranslate"><span class="pre">None</span></code> checks or when you specifically need identity comparison.</p>
+</div>
+</section>
+<section id="variable-naming-rules">
+<h2>Variable Naming Rules<a class="headerlink" href="#variable-naming-rules" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-success docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+✅ Rules (Must Follow)</div>
+<ul class="simple">
+<li><p class="sd-card-text">Must start with letter or underscore</p></li>
+<li><p class="sd-card-text">Can contain letters, digits, underscores</p></li>
+<li><p class="sd-card-text">Case-sensitive (<code class="docutils literal notranslate"><span class="pre">Name</span></code> ≠ <code class="docutils literal notranslate"><span class="pre">name</span></code>)</p></li>
+<li><p class="sd-card-text">Cannot be a reserved keyword</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valid names</span>
+<span class="n">my_variable</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">_private</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">camelCase</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">var123</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># Invalid names</span>
+<span class="c1"># 2fast = 10      # starts with digit</span>
+<span class="c1"># my-var = 5      # contains hyphen</span>
+<span class="c1"># class = &quot;test&quot;  # reserved keyword</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-success docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📏 Conventions (PEP 8)</div>
+<ul class="simple">
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">snake_case</span></code> for variables/functions</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">UPPER_CASE</span></code> for constants</p></li>
+<li><p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">PascalCase</span></code> for classes</p></li>
+<li><p class="sd-card-text">Be descriptive but concise</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Good style (PEP 8)</span>
+<span class="n">student_name</span> <span class="o">=</span> <span class="s2">&quot;Alice&quot;</span>
+<span class="n">MAX_RETRIES</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">total_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Avoid</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Alice&quot;</span>  <span class="c1"># Too vague</span>
+<span class="n">studentName</span> <span class="o">=</span> <span class="s2">&quot;Alice&quot;</span>  <span class="c1"># camelCase</span>
+<span class="n">STUDENTNAME</span> <span class="o">=</span> <span class="s2">&quot;Alice&quot;</span>  <span class="c1"># ALL CAPS</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Follow <a class="reference external" href="https://peps.python.org/pep-0008/">PEP 8</a> — Python’s official style guide. We’ll enforce it in assignments.</p>
+</div>
+</section>
+<section id="reserved-keywords">
+<h2>Reserved Keywords<a class="headerlink" href="#reserved-keywords" title="Link to this heading">¶</a></h2>
+<p>These words have special meaning and <strong>cannot</strong> be used as variable names.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>False     None      True      and       as        assert
+async     await     break     class     continue  def
+del       elif      else      except    finally   for
+from      global    if        import    in        is
+lambda    nonlocal  not       or        pass      raise
+return    try       while     with      yield
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check keywords programmatically</span>
+<span class="kn">import</span> <span class="nn">keyword</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="s2">&quot;if&quot;</span><span class="p">))</span>  <span class="c1"># True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">iskeyword</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">))</span>  <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">kwlist</span><span class="p">)</span>  <span class="c1"># List of all Python keywords</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you accidentally use a keyword as a variable name, Python will raise a <code class="docutils literal notranslate"><span class="pre">SyntaxError</span></code>.</p>
+</div>
+</section>
+<section id="the-print-function">
+<h2>The <code class="docutils literal notranslate"><span class="pre">print()</span></code> Function<a class="headerlink" href="#the-print-function" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">print()</span></code> function outputs to the screen. It’s a <strong>variadic function</strong>: accepts any number of arguments.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print literals</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>          <span class="c1"># Hello</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                <span class="c1"># 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="mf">2.4</span><span class="p">)</span>              <span class="c1"># 2.4</span>
+
+<span class="c1"># Print expressions</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span>            <span class="c1"># 5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>         <span class="c1"># **********</span>
+
+<span class="c1"># Multiple arguments (separated by space by default)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Welcome&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;ENPM&quot;</span><span class="p">,</span> <span class="mi">605</span><span class="p">)</span>  <span class="c1"># Welcome to ENPM 605</span>
+
+<span class="c1"># Custom separator and end</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>        <span class="c1"># a-b-c</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No newline&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>          <span class="c1"># No newline after</span>
+</pre></div>
+</div>
+</section>
+<section id="preview-what-s-next-in-l2">
+<h2>Preview: What’s Next in L2<a class="headerlink" href="#preview-what-s-next-in-l2" title="Link to this heading">¶</a></h2>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📖 L2: Python Basics — Part I</div>
+<ul class="simple">
+<li><p class="sd-card-text">Packages and modules</p></li>
+<li><p class="sd-card-text">Importing (<code class="docutils literal notranslate"><span class="pre">import</span></code>, <code class="docutils literal notranslate"><span class="pre">from</span></code>)</p></li>
+<li><p class="sd-card-text">Operators (arithmetic, relational, logical)</p></li>
+<li><p class="sd-card-text">Boolean type and truth testing</p></li>
+<li><p class="sd-card-text">String operations and methods</p></li>
+<li><p class="sd-card-text">Indexing and slicing</p></li>
+<li><p class="sd-card-text">Control flow (<code class="docutils literal notranslate"><span class="pre">if</span></code>/<code class="docutils literal notranslate"><span class="pre">elif</span></code>/<code class="docutils literal notranslate"><span class="pre">else</span></code>)</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-border-primary docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+📘 L3: Python Basics — Part II</div>
+<ul class="simple">
+<li><p class="sd-card-text">Lists and list methods</p></li>
+<li><p class="sd-card-text">Tuples and unpacking</p></li>
+<li><p class="sd-card-text">Dictionaries</p></li>
+<li><p class="sd-card-text">Sets</p></li>
+<li><p class="sd-card-text">Loops (<code class="docutils literal notranslate"><span class="pre">for</span></code>, <code class="docutils literal notranslate"><span class="pre">while</span></code>)</p></li>
+<li><p class="sd-card-text">List comprehensions</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Today’s introduction gives you enough to start experimenting. L2 will build on these concepts systematically.</p>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="exercises.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Exercises</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="lecture1.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">L1: Course Introduction</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Z. Kootbally
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Lecture</a><ul>
+<li><a class="reference internal" href="#course-overview">Course Overview</a></li>
+<li><a class="reference internal" href="#course-structure">Course Structure</a></li>
+<li><a class="reference internal" href="#grading-structure">Grading Structure</a></li>
+<li><a class="reference internal" href="#course-schedule">Course Schedule</a></li>
+<li><a class="reference internal" href="#quiz-policy">Quiz Policy</a></li>
+<li><a class="reference internal" href="#peer-reviews">Peer Reviews</a></li>
+<li><a class="reference internal" href="#final-project">Final Project</a><ul>
+<li><a class="reference internal" href="#software-hardware">Software &amp; Hardware</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operating-system">Operating System</a></li>
+<li><a class="reference internal" href="#minimum-hardware">Minimum Hardware</a></li>
+<li><a class="reference internal" href="#development-tools">Development Tools</a><ul>
+<li><a class="reference internal" href="#environment-setup">Environment Setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">Visual Studio Code</a></li>
+<li><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
+<li><a class="reference internal" href="#creating-a-workspace">Creating a Workspace</a><ul>
+<li><a class="reference internal" href="#running-python-in-vs-code">Running Python in VS Code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#selecting-the-python-interpreter">Selecting the Python Interpreter</a></li>
+<li><a class="reference internal" href="#creating-a-python-file">Creating a Python File</a></li>
+<li><a class="reference internal" href="#execution-methods">Execution Methods</a></li>
+<li><a class="reference internal" href="#debugging-python-code">Debugging Python Code</a><ul>
+<li><a class="reference internal" href="#python-linters">Python Linters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-a-linter">What is a Linter?</a></li>
+<li><a class="reference internal" href="#popular-python-linters">Popular Python Linters</a></li>
+<li><a class="reference internal" href="#ruff-the-modern-python-linter">Ruff — The Modern Python Linter</a></li>
+<li><a class="reference internal" href="#ruff-in-action">Ruff in Action</a></li>
+<li><a class="reference internal" href="#ruff-in-vs-code">Ruff in VS Code</a><ul>
+<li><a class="reference internal" href="#environment-verification">Environment Verification</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#verify-your-setup">Verify Your Setup</a></li>
+<li><a class="reference internal" href="#expected-output">Expected Output</a><ul>
+<li><a class="reference internal" href="#python-execution-pipeline">Python Execution Pipeline</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-is-an-interpreted-language">Python is an Interpreted Language</a></li>
+<li><a class="reference internal" href="#compilation-vs-runtime-phases">Compilation vs. Runtime Phases</a></li>
+<li><a class="reference internal" href="#compiled-vs-interpreted-languages">Compiled vs. Interpreted Languages</a></li>
+<li><a class="reference internal" href="#cpython-the-reference-implementation">CPython — The Reference Implementation</a></li>
+<li><a class="reference internal" href="#inspecting-the-pipeline">Inspecting the Pipeline</a></li>
+<li><a class="reference internal" href="#alternative-python-implementations">Alternative Python Implementations</a><ul>
+<li><a class="reference internal" href="#introduction-to-python-variables">Introduction to Python Variables</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-a-variable">What is a Variable?</a></li>
+<li><a class="reference internal" href="#assignment-styles">Assignment Styles</a></li>
+<li><a class="reference internal" href="#everything-is-an-object">Everything is an Object</a></li>
+<li><a class="reference internal" href="#object-identity">Object Identity</a></li>
+<li><a class="reference internal" href="#dynamic-typing">Dynamic Typing</a></li>
+<li><a class="reference internal" href="#basic-data-types">Basic Data Types</a></li>
+<li><a class="reference internal" href="#mutable-vs-immutable-objects">Mutable vs. Immutable Objects</a></li>
+<li><a class="reference internal" href="#variables-are-references">Variables are References</a></li>
+<li><a class="reference internal" href="#the-none-type">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Type</a></li>
+<li><a class="reference internal" href="#identity-vs-equality">Identity vs. Equality</a></li>
+<li><a class="reference internal" href="#variable-naming-rules">Variable Naming Rules</a></li>
+<li><a class="reference internal" href="#reserved-keywords">Reserved Keywords</a></li>
+<li><a class="reference internal" href="#the-print-function">The <code class="docutils literal notranslate"><span class="pre">print()</span></code> Function</a></li>
+<li><a class="reference internal" href="#preview-what-s-next-in-l2">Preview: What’s Next in L2</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

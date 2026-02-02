@@ -1,0 +1,1066 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Core OOP Principles" href="../core_principles.html"><link rel="prev" title="Requirements Analysis" href="requirement_analysis.html">
+        <link rel="prefetch" href="../../_static/enpm702light.png" as="image">
+        <link rel="prefetch" href="../../_static/enpm702dark.png" as="image">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Modeling Phase - ENPM702 Fall 2025 v1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=3b0936a1" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">ENPM702 Fall 2025 v1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../_static/enpm702light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../_static/enpm702dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">ENPM702 Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecture6/lecture6.html">L6 - Functions (Advanced Topics)</a><input aria-label="Toggle navigation of L6 - Functions (Advanced Topics)" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../lecture6/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture6/struct.html">struct</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../lecture6/templates.html">Templates</a><input aria-label="Toggle navigation of Templates" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/templates/overview.html">Templates — Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/templates/syntax.html">Template Syntax &amp; Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/templates/specialization.html">Template Specialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/templates/deduction.html">Type Deduction &amp; Failures</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../lecture6/function_specifiers.html">Operators, Specifiers, and Attributes</a><input aria-label="Toggle navigation of Operators, Specifiers, and Attributes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/function_specifiers/decltype.html"><code class="docutils literal notranslate"><span class="pre">decltype</span></code> Operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/function_specifiers/trailing_return.html">Trailing Return Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/function_specifiers/attributes.html">Function Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/function_specifiers/constexpr.html"><code class="docutils literal notranslate"><span class="pre">constexpr</span></code> Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/function_specifiers/inline.html"><code class="docutils literal notranslate"><span class="pre">inline</span></code> and the ODR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/function_specifiers/noexcept.html"><code class="docutils literal notranslate"><span class="pre">noexcept</span></code> Specifier &amp; Operator</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../lecture6/callables.html">Callables in Modern C++</a><input aria-label="Toggle navigation of Callables in Modern C++" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/callables/function_pointers.html">Function Pointers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/callables/functors.html">Functors (Function Objects)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/callables/lambdas.html">Lambdas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture6/callables/std_function.html"><code class="docutils literal notranslate"><span class="pre">std::function</span></code> and Type Erasure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture6/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture6/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture6/notes.html">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture6/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecture7/lecture7.html">L7 - Move Semantics and Smart Pointers</a><input aria-label="Toggle navigation of L7 - Move Semantics and Smart Pointers" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../lecture7/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture7/move_semantics.html">Move Semantics</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../lecture7/smart_pointers.html">Smart Pointers</a><input aria-label="Toggle navigation of Smart Pointers" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture7/smart_pointers/unique_pointers.html"><code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture7/smart_pointers/shared_pointers.html"><code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../lecture7/smart_pointers/weak_pointers.html"><code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture7/exercises.html">Exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture7/glossary.html">Glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture7/notes.html">Important Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture7/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture7/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture7/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../lecture8.html">L8 - OOP (Basics)</a><input aria-label="Toggle navigation of L8 - OOP (Basics)" checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 current has-children"><a class="reference internal" href="../design.html">Design Phase</a><input aria-label="Toggle navigation of Design Phase" checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="requirement_analysis.html">Requirements Analysis</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">Modeling Phase</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../core_principles.html">Core OOP Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modern_cpp_features.html">Modern C++ Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classes_and_objects.html">Classes and Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../encapsulation.html">Encapsulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../constructors.html">Constructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../static_member.html">Static Members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../this_pointer.html">The this Pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecture9/lecture9.html">L9: OOP (Advanced Topics)</a><input aria-label="Toggle navigation of L9: OOP (Advanced Topics)" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../lecture9/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture9/class_relationships.html">Class Relationships</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture9/polymorphism.html">Polymorphism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture9/destructors.html">Destructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture9/abstraction.html">Abstraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture9/final_keyword.html">The <code class="docutils literal notranslate"><span class="pre">final</span></code> Keyword</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture9/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecture10/lecture10.html">L10: ROS 2 (Introduction)</a><input aria-label="Toggle navigation of L10: ROS 2 (Introduction)" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../lecture10/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/ros2_fundamentals.html">ROS 2 - Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/workspace_and_devenv.html">Workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/first_node.html">Writing a Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/node_spinning.html">Node Spinning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/messages.html">Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/publishers.html">Publishers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture10/subscribers.html">Subscribers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture10/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture10/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../lecture11/index.html">L11: ROS 2 (Advanced Topics)</a><input aria-label="Toggle navigation of L11: ROS 2 (Advanced Topics)" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../lecture11/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture11/qos.html">Quality of Service (QoS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture11/executors.html">Executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture11/launch_files.html">Launch Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../lecture11/interfaces.html">Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture11/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../lecture11/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../assignments.html">Assignments</a><input aria-label="Toggle navigation of Assignments" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/rwaIII.html">Assignment 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/rwaIV.html">Assignment 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/final.html">Final Project</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/zeidk/enpm702-fall-2025/blob/main/lecture8/design/modeling.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/zeidk/enpm702-fall-2025/edit/main/lecture8/design/modeling.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="modeling-phase">
+<h1>Modeling Phase<a class="headerlink" href="#modeling-phase" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The <strong>Modeling Phase</strong> focuses on defining <em>how</em> a system is structured and behaves to satisfy
+its requirements. It bridges the gap between the problem domain and the implementation domain,
+providing visual representations that make complex designs easier to understand, communicate,
+and maintain.</p>
+<p>During this phase, several diagrams are used to represent different perspectives of the system:</p>
+<ul class="simple">
+<li><p><strong>Class Diagrams</strong> – Depict the static structure of the system, including its classes,
+attributes, methods, and relationships.</p></li>
+<li><p><strong>Sequence Diagrams</strong> – Illustrate the dynamic flow of interactions between objects over time.</p></li>
+</ul>
+<p>Each diagram contributes to a comprehensive understanding of both the <strong>structural</strong> and
+<strong>behavioral</strong> aspects of the system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The naming conventions for <strong>classes</strong>, <strong>attributes</strong>, and <strong>methods</strong> used in these diagrams
+are <strong>language-agnostic</strong>.
+The same applies to data types (for example, <code class="docutils literal notranslate"><span class="pre">String</span></code> is used instead of <code class="docutils literal notranslate"><span class="pre">std::string</span></code> or
+<code class="docutils literal notranslate"><span class="pre">string</span></code>). This abstraction ensures that the design can be applied across multiple programming
+languages and paradigms without being tied to a specific implementation syntax.</p>
+</div>
+</section>
+<section id="class-diagram">
+<h2>Class Diagram<a class="headerlink" href="#class-diagram" title="Link to this heading">¶</a></h2>
+<figure class="align-center">
+<a class="only-light reference internal image-reference" href="../../_images/class_diagram_light.png"><img alt="Class Diagram" class="only-light" src="../../_images/class_diagram_light.png" style="width: 100%;" /></a>
+</figure>
+<figure class="align-center">
+<a class="only-dark reference internal image-reference" href="../../_images/class_diagram_dark.png"><img alt="Class Diagram" class="only-dark" src="../../_images/class_diagram_dark.png" style="width: 100%;" /></a>
+</figure>
+<p>This class diagram represents a <strong>transportation system</strong> that includes both autonomous robotaxis
+and traditional human-driven taxis. It shows how various entities interact and relate to each other
+through inheritance, composition, aggregation, and association. The model captures the structural
+organization of a ride-hailing service supporting both autonomous and human-operated vehicles.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All classes in the domain layer are organized within the <code class="docutils literal notranslate"><span class="pre">transportation</span></code> namespace, providing
+logical grouping and preventing naming conflicts with other system components.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>UML and modeling tools use diverse notations to express specific characteristics of classes, methods, and attributes. Understanding these conventions ensures that diagrams convey both <strong>structure</strong> and <strong>semantics</strong> accurately.</p>
+<ul>
+<li><p><strong>Abstract Classes:</strong>
+In PlantUML, an abstract class is represented by the letter <em>A</em> inside a circle. Other modeling tools may use different notations; for instance, Mermaid uses the <code class="docutils literal notranslate"><span class="pre">&lt;&lt;abstract&gt;&gt;</span></code> stereotype (see <a class="reference external" href="https://mermaid.js.org/syntax/classDiagram.html">Mermaid class diagrams</a>).
+Regardless of the notation style, abstract classes must always be explicitly indicated in class diagrams to distinguish them from concrete classes. Example of an abstract class in PlantUML:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">abstract</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Dummy</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Abstract Methods:</strong>
+Abstract methods (called <em>pure virtual functions</em> in C++) are typically displayed in <em>italics</em> or annotated with the <code class="docutils literal notranslate"><span class="pre">{abstract}</span></code> label. In PlantUML, abstract methods are explicitly marked with <code class="docutils literal notranslate"><span class="pre">{abstract}</span></code> preceding the method name. These methods have no implementation in the abstract class and must be overridden by concrete subclasses. Example of an abstract method in PlantUML:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Dummy</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="kd">abstract</span><span class="p">}</span><span class="w"> </span><span class="n">method</span><span class="p">():</span><span class="w"> </span><span class="kt">void</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Virtual Methods:</strong>
+Virtual methods (those that can be overridden by derived classes) may not have distinct notations in every tool. They are often documented textually or marked with a stereotype. In C++, these correspond to methods declared with the <code class="docutils literal notranslate"><span class="pre">virtual</span></code> keyword that have a base implementation but may be redefined by subclasses.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Dummy</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="n">virtual</span><span class="p">}</span><span class="w"> </span><span class="n">method</span><span class="p">():</span><span class="w"> </span><span class="kt">void</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Static Attributes:</strong>
+Static (class-level) attributes shared by all instances are shown <strong>underlined</strong> in standard UML notation. In PlantUML, the same can be expressed using the <code class="docutils literal notranslate"><span class="pre">{static}</span></code> modifier or underlining the attribute name. Static attributes belong to the class itself, not to any individual instance. Example of a static attribute in PlantUML:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Dummy</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="kd">static</span><span class="p">}</span><span class="w"> </span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="n">String</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Static Methods:</strong>
+Static methods—class-level operations that do not require an instance—are also shown <strong>underlined</strong> in UML. In PlantUML, they can be denoted with <code class="docutils literal notranslate"><span class="pre">{static}</span></code> or by underlining the method name. Static methods can be invoked directly from the class.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Dummy</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="kd">static</span><span class="p">}</span><span class="w"> </span><span class="n">method</span><span class="p">():</span><span class="w"> </span><span class="kt">void</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Constant Attributes:</strong>
+Constants or read-only attributes are frequently marked with <code class="docutils literal notranslate"><span class="pre">{readOnly}</span></code> or written in uppercase (e.g., <code class="docutils literal notranslate"><span class="pre">MAX_PASSENGERS</span></code>). In C++, these correspond to <code class="docutils literal notranslate"><span class="pre">const</span></code> or <code class="docutils literal notranslate"><span class="pre">static</span> <span class="pre">const</span></code> members that cannot be modified after initialization.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nc">Dummy</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="n">readOnly</span><span class="p">}</span><span class="w"> </span><span class="n">max_passengers</span><span class="p">:</span><span class="w"> </span><span class="n">Integer</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Visibility Modifiers:</strong>
+UML applies standardized symbols to denote access levels:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code> → <strong>Public</strong> (accessible from anywhere)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-</span></code> → <strong>Private</strong> (accessible only within the class)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#</span></code> → <strong>Protected</strong> (accessible within the class and its subclasses)</p></li>
+</ul>
+</li>
+</ul>
+<p>These conventions ensure that class diagrams communicate not only the <em>structure</em> of a design but also the <em>intended behavior</em> and <em>scope</em> of its members: clarifying which methods can be invoked, which attributes are shared, and how access is controlled across classes.</p>
+</div>
+<section id="key-components">
+<h3>Key Components<a class="headerlink" href="#key-components" title="Link to this heading">¶</a></h3>
+<section id="vehicle-abstract-class">
+<h4><strong>Vehicle (Abstract Class)</strong><a class="headerlink" href="#vehicle-abstract-class" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Defines the general structure and behavior common to all vehicle types in the transportation system.</p></li>
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">:</span> <span class="pre">String</span></code> - Unique vehicle identifier for tracking and fleet management</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">currentLocation</span> <span class="pre">:</span> <span class="pre">Location</span></code> - Current geographic position of the vehicle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">:</span> <span class="pre">VehicleStatus</span></code> - Current operational state (IDLE, IN_SERVICE, EN_ROUTE, CHARGING, MAINTENANCE, OUT_OF_SERVICE)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">route</span> <span class="pre">:</span> <span class="pre">Route</span></code> - Navigation route the vehicle is currently following (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">maxPassengers</span> <span class="pre">:</span> <span class="pre">Integer</span></code> - Maximum number of passengers the vehicle can accommodate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">currentPassengerCount</span> <span class="pre">:</span> <span class="pre">Integer</span></code> - Number of passengers currently in the vehicle</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">{abstract}</span> <span class="pre">drive()</span> <span class="pre">:</span> <span class="pre">void</span></code> — Executes vehicle movement; must be implemented by subclasses to define type-specific driving behavior</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">updateLocation(location</span> <span class="pre">:</span> <span class="pre">Location)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Updates the vehicle’s current geographic position</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getStatus()</span> <span class="pre">:</span> <span class="pre">VehicleStatus</span></code> — Returns the current operational status of the vehicle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">setRoute(route</span> <span class="pre">:</span> <span class="pre">Route)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Assigns a navigation route to the vehicle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getRoute()</span> <span class="pre">:</span> <span class="pre">Route</span></code> — Retrieves the currently assigned route</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pickupPassenger(passenger</span> <span class="pre">:</span> <span class="pre">Passenger)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Adds a passenger to the vehicle and updates passenger count</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dropoffPassenger(passenger</span> <span class="pre">:</span> <span class="pre">Passenger)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Removes a passenger from the vehicle and updates passenger count</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> class is abstract, meaning it cannot be instantiated directly. It provides a consistent interface for all concrete vehicle types and manages core operations like passenger handling and route following.</p></li>
+</ul>
+</div>
+</section>
+<section id="concrete-vehicle-types">
+<h4><strong>Concrete Vehicle Types</strong><a class="headerlink" href="#concrete-vehicle-types" title="Link to this heading">¶</a></h4>
+<p>All concrete vehicle types reside in the <code class="docutils literal notranslate"><span class="pre">transportation</span></code> namespace and inherit from <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code>.</p>
+<ol class="arabic">
+<li><p><strong>RoboTaxi</strong></p>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Represents an autonomous, self-driving taxi that uses sensors for navigation and operation.</p></li>
+<li><p><strong>Additional Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensors</span> <span class="pre">:</span> <span class="pre">List&lt;Sensor&gt;</span></code> – Collection of sensors for autonomous navigation and safety (composition)</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">drive()</span> <span class="pre">:</span> <span class="pre">void</span></code> – Implements autonomous driving behavior using sensor data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">addSensor(sensor</span> <span class="pre">:</span> <span class="pre">Sensor)</span> <span class="pre">:</span> <span class="pre">void</span></code> – Adds a sensor to the robotaxi’s sensor array</p></li>
+</ul>
+</li>
+</ul>
+<p>The RoboTaxi specializes the <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> class by adding autonomous capabilities through
+integrated sensor systems. It manages its own navigation without human intervention.</p>
+</li>
+<li><p><strong>Taxi</strong></p>
+<ul class="simple">
+<li><p><strong>Purpose:</strong> Represents a traditional human-operated taxi with a driver.</p></li>
+<li><p><strong>Additional Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">driver</span> <span class="pre">:</span> <span class="pre">Driver</span></code> – The human driver operating this taxi</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">drive()</span> <span class="pre">:</span> <span class="pre">void</span></code> – Implements human-driven operation behavior</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assignDriver(driver</span> <span class="pre">:</span> <span class="pre">Driver)</span> <span class="pre">:</span> <span class="pre">void</span></code> – Assigns a driver to this taxi</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">removeDriver()</span> <span class="pre">:</span> <span class="pre">void</span></code> – Removes the current driver from this taxi</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getDriver()</span> <span class="pre">:</span> <span class="pre">Driver</span></code> – Returns the driver currently assigned to this taxi</p></li>
+</ul>
+</li>
+</ul>
+<p>The Taxi specializes the <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> class by adding driver management capabilities.
+It requires a human driver for operation.</p>
+</li>
+</ol>
+</section>
+<section id="driver">
+<h4><strong>Driver</strong><a class="headerlink" href="#driver" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Purpose:</strong> Represents a human driver who operates traditional Taxi vehicles.</p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">:</span> <span class="pre">String</span></code> – Unique driver identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">:</span> <span class="pre">String</span></code> – Driver’s full name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">licenseNumber</span> <span class="pre">:</span> <span class="pre">String</span></code> – Driver’s license number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rating</span> <span class="pre">:</span> <span class="pre">Float</span></code> – Driver’s performance rating</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">getId()</span> <span class="pre">:</span> <span class="pre">String</span></code> – Returns the unique driver identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getName()</span> <span class="pre">:</span> <span class="pre">String</span></code> – Returns the driver’s name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getLicenseNumber()</span> <span class="pre">:</span> <span class="pre">String</span></code> – Returns the driver’s license number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getRating()</span> <span class="pre">:</span> <span class="pre">Float</span></code> – Returns the driver’s rating</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Association (<code class="docutils literal notranslate"><span class="pre">--&gt;</span></code>) with <code class="docutils literal notranslate"><span class="pre">Taxi</span></code>.
+A Taxi is operated by a Driver. The relationship indicates that a Taxi may have 0 or 1 Driver
+at any given time, supporting scenarios where taxis are temporarily unassigned.</p></li>
+</ul>
+</section>
+<section id="sensor">
+<h4><strong>Sensor</strong><a class="headerlink" href="#sensor" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensorId</span> <span class="pre">:</span> <span class="pre">String</span></code> – Unique sensor identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensorType</span> <span class="pre">:</span> <span class="pre">SensorType</span></code> – Type of sensor (LIDAR, CAMERA, RADAR, GPS, IMU)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">positionOnVehicle</span> <span class="pre">:</span> <span class="pre">Position</span></code> – Physical mounting position on the vehicle (composition)</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">readData()</span> <span class="pre">:</span> <span class="pre">SensorData</span></code> – Reads current sensor data for navigation and obstacle detection</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calibrate()</span> <span class="pre">:</span> <span class="pre">void</span></code> – Performs sensor calibration procedure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getType()</span> <span class="pre">:</span> <span class="pre">SensorType</span></code> – Returns the type of sensor</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getSensorId()</span> <span class="pre">:</span> <span class="pre">String</span></code> – Returns the unique sensor identifier</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Composition (<code class="docutils literal notranslate"><span class="pre">*--</span></code>) with <code class="docutils literal notranslate"><span class="pre">RoboTaxi</span></code>.
+A robotaxi contains one or more sensors; if the robotaxi is destroyed,
+the sensors are destroyed as well. This enforces that autonomous vehicles have
+integrated sensor systems for navigation and safety.</p></li>
+<li><p><strong>Purpose:</strong> Represents sensor hardware for autonomous navigation, obstacle detection,
+and situational awareness in robotaxis.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Encapsulation Rule:</strong> External actors cannot interact directly with
+Sensors. All sensor operations are managed internally by the RoboTaxi, which
+processes sensor data for navigation decisions.</p>
+</div>
+</section>
+<section id="position-struct">
+<h4><strong>Position (Struct)</strong><a class="headerlink" href="#position-struct" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">:</span> <span class="pre">Double</span></code> – X-coordinate of the sensor mounting position on the vehicle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Y-coordinate of the sensor mounting position on the vehicle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Z-coordinate of the sensor mounting position on the vehicle</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Composition (<code class="docutils literal notranslate"><span class="pre">*--</span></code>) with <code class="docutils literal notranslate"><span class="pre">Sensor</span></code>.
+Each sensor has a position that defines where it is mounted on the vehicle.</p></li>
+<li><p><strong>Purpose:</strong> Represents the 3D mounting location of sensors on the vehicle body for
+precise sensor fusion and calibration.</p></li>
+</ul>
+</section>
+<section id="fleet">
+<h4><strong>Fleet</strong><a class="headerlink" href="#fleet" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">:</span> <span class="pre">String</span></code> – Unique fleet identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">operatorName</span> <span class="pre">:</span> <span class="pre">String</span></code> – Name of the fleet operating company</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">serviceArea</span> <span class="pre">:</span> <span class="pre">List&lt;Location&gt;</span></code> – Geographic regions where fleet operates</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vehicles</span> <span class="pre">:</span> <span class="pre">List&lt;Vehicle&gt;</span></code> – Collection of vehicles managed by the fleet (both RoboTaxi and Taxi)</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">addVehicle(vehicle</span> <span class="pre">:</span> <span class="pre">Vehicle)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Adds a vehicle to the fleet inventory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">removeVehicle(vehicle</span> <span class="pre">:</span> <span class="pre">Vehicle)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Removes a vehicle from the fleet</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getAvailableVehicles()</span> <span class="pre">:</span> <span class="pre">List&lt;Vehicle&gt;</span></code> — Returns all idle vehicles ready for dispatch</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dispatchVehicle(pickup</span> <span class="pre">:</span> <span class="pre">Location,</span> <span class="pre">dropoff</span> <span class="pre">:</span> <span class="pre">Location)</span> <span class="pre">:</span> <span class="pre">Vehicle</span></code> — Assigns an available vehicle to service a ride request</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getId()</span> <span class="pre">:</span> <span class="pre">String</span></code> — Returns the unique fleet identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getOperatorName()</span> <span class="pre">:</span> <span class="pre">String</span></code> — Returns the name of the fleet operator</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Aggregation (<code class="docutils literal notranslate"><span class="pre">o--</span></code>) with <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code>.
+The fleet manages vehicles but does not own them; vehicles exist independently
+and can be transferred between fleets or operate independently. This applies to
+both autonomous RoboTaxis and human-driven Taxis.</p></li>
+</ul>
+</section>
+<section id="passenger">
+<h4><strong>Passenger</strong><a class="headerlink" href="#passenger" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">:</span> <span class="pre">String</span></code> – Unique passenger identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">:</span> <span class="pre">String</span></code> – Passenger’s name</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phoneNumber</span> <span class="pre">:</span> <span class="pre">String</span></code> – Contact phone number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">currentVehicle</span> <span class="pre">:</span> <span class="pre">Vehicle</span></code> – The vehicle the passenger is currently riding in (if any)</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">requestRide(pickup</span> <span class="pre">:</span> <span class="pre">Location,</span> <span class="pre">dropoff</span> <span class="pre">:</span> <span class="pre">Location)</span> <span class="pre">:</span> <span class="pre">void</span></code> — Requests a ride from the fleet specifying pickup and dropoff locations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getId()</span> <span class="pre">:</span> <span class="pre">String</span></code> — Returns the unique passenger identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getName()</span> <span class="pre">:</span> <span class="pre">String</span></code> — Returns the passenger’s name</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Association (<code class="docutils literal notranslate"><span class="pre">--&gt;</span></code>) with <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> and <code class="docutils literal notranslate"><span class="pre">Fleet</span></code>.
+A passenger rides in zero or one vehicle at any given time (temporary relationship).
+A passenger requests rides from a fleet (zero or more passengers can make requests).</p></li>
+</ul>
+</section>
+<section id="route">
+<h4><strong>Route</strong><a class="headerlink" href="#route" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span> <span class="pre">:</span> <span class="pre">String</span></code> – Unique route identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">waypoints</span> <span class="pre">:</span> <span class="pre">List&lt;Location&gt;</span></code> – Ordered list of locations defining the navigation path</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">addWaypoint(location</span> <span class="pre">:</span> <span class="pre">Location)</span> <span class="pre">:</span> <span class="pre">void</span></code> – Adds a waypoint to the route</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">optimizeRoute()</span> <span class="pre">:</span> <span class="pre">void</span></code> – Optimizes the route for efficiency</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getDistance()</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Calculates and returns total route distance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getId()</span> <span class="pre">:</span> <span class="pre">String</span></code> – Returns the unique route identifier</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getWaypointCount()</span> <span class="pre">:</span> <span class="pre">Integer</span></code> – Returns the number of waypoints in the route</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Composition (<code class="docutils literal notranslate"><span class="pre">*--</span></code>) with <code class="docutils literal notranslate"><span class="pre">Location</span></code> for waypoints.
+A route consists of one or more waypoints; waypoints are integral to the route definition.
+Association (<code class="docutils literal notranslate"><span class="pre">--&gt;</span></code>) with <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> – a vehicle may follow zero or one route at any time.</p></li>
+<li><p><strong>Purpose:</strong> Defines navigation paths for vehicles, supporting both single trips and multi-stop routes.</p></li>
+</ul>
+</section>
+<section id="location">
+<h4><strong>Location</strong><a class="headerlink" href="#location" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Namespace:</strong> <code class="docutils literal notranslate"><span class="pre">transportation</span></code></p></li>
+<li><p><strong>Attributes:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">latitude</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Geographic latitude coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">longitude</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Geographic longitude coordinate</p></li>
+</ul>
+</li>
+<li><p><strong>Operations:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">distanceTo(other</span> <span class="pre">:</span> <span class="pre">Location)</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Calculates distance to another location</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getLatitude()</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Returns the latitude coordinate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">getLongitude()</span> <span class="pre">:</span> <span class="pre">Double</span></code> – Returns the longitude coordinate</p></li>
+</ul>
+</li>
+<li><p><strong>Relationship:</strong> Used by Route (waypoints), Vehicle (currentLocation), and Fleet (serviceArea).</p></li>
+<li><p><strong>Purpose:</strong> Represents geographic coordinates for navigation, service boundaries, and positioning.</p></li>
+</ul>
+</section>
+<section id="enumerations">
+<h4><strong>Enumerations</strong><a class="headerlink" href="#enumerations" title="Link to this heading">¶</a></h4>
+<ol class="arabic simple">
+<li><p><strong>SensorType</strong></p>
+<ul class="simple">
+<li><p><strong>Values:</strong> LIDAR, CAMERA, RADAR, GPS, IMU</p></li>
+<li><p><strong>Purpose:</strong> Defines the types of sensors that can be installed on a RoboTaxi</p></li>
+<li><p><strong>Relationship:</strong> Each Sensor has a SensorType that determines its data format and capabilities</p></li>
+</ul>
+</li>
+<li><p><strong>VehicleStatus</strong></p>
+<ul class="simple">
+<li><p><strong>Values:</strong> IDLE, IN_SERVICE, EN_ROUTE, CHARGING, MAINTENANCE, OUT_OF_SERVICE</p></li>
+<li><p><strong>Purpose:</strong> Defines the operational states a vehicle can be in</p></li>
+<li><p><strong>Relationship:</strong> Each Vehicle has a VehicleStatus that determines its availability and current operation</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="conceptual-analysis">
+<h3>Conceptual Analysis<a class="headerlink" href="#conceptual-analysis" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Dual Vehicle Types:</strong>
+The design supports both autonomous (RoboTaxi) and human-operated (Taxi) vehicles through
+a common <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> abstraction. This enables mixed fleets and flexible deployment strategies.</p></li>
+<li><p><strong>Encapsulation of Behavior:</strong>
+The <code class="docutils literal notranslate"><span class="pre">RoboTaxi</span></code> encapsulates sensor management internally. External actors (Passenger, Fleet) only
+interact with the <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> interface, never with <code class="docutils literal notranslate"><span class="pre">Sensors</span></code> directly. This promotes abstraction
+and separation of concerns, and enforces the technical constraint that sensors cannot be accessed directly.</p></li>
+<li><p><strong>Polymorphism:</strong>
+Concrete vehicles (RoboTaxi, Taxi) provide type-specific implementations of <code class="docutils literal notranslate"><span class="pre">drive()</span></code>
+and specialized operations, enabling dynamic behavior depending on the vehicle type at runtime.
+The Fleet can manage both vehicle types uniformly through the Vehicle interface.</p></li>
+<li><p><strong>Optional Relationships:</strong>
+The <code class="docutils literal notranslate"><span class="pre">Route</span></code> association is optional; a vehicle can operate without being assigned a route
+(e.g., idle, charging). Similarly, a <code class="docutils literal notranslate"><span class="pre">Passenger</span></code> may or may not be riding in a vehicle at a given time. For instance, a <code class="docutils literal notranslate"><span class="pre">Passenger</span></code> waiting for the vehicle to arrive is not currently riding the vehicle.
+A <code class="docutils literal notranslate"><span class="pre">Taxi</span></code> may not have a <code class="docutils literal notranslate"><span class="pre">Driver</span></code> during off-hours or between shifts.</p></li>
+<li><p><strong>Ownership Hierarchy:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">RoboTaxi</span></code> <strong>owns</strong> <code class="docutils literal notranslate"><span class="pre">Sensors</span></code> — composition (sensors are integral parts of the autonomous vehicle).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Sensor</span></code> <strong>owns</strong> <code class="docutils literal notranslate"><span class="pre">Position</span></code> — composition (position is an integral property of sensor placement).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Route</span></code> <strong>owns</strong> <code class="docutils literal notranslate"><span class="pre">Waypoints</span></code> (Locations) — composition (waypoints define the route).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Fleet</span></code> <strong>manages</strong> <code class="docutils literal notranslate"><span class="pre">Vehicles</span></code> — aggregation (vehicles can exist independently of fleet).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> <strong>follows</strong> <code class="docutils literal notranslate"><span class="pre">Route</span></code> — association (optional relationship).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Passenger</span></code> <strong>rides in</strong> <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> — association (temporary relationship).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Taxi</span></code> <strong>operated by</strong> <code class="docutils literal notranslate"><span class="pre">Driver</span></code> — association (driver can be assigned/unassigned).</p></li>
+</ul>
+</li>
+<li><p><strong>Fleet Management:</strong>
+The <code class="docutils literal notranslate"><span class="pre">Fleet</span></code> provides centralized management of all vehicle types, including dispatch logic, availability
+tracking, and service area management. This separates vehicle lifecycle from ride operations and enables
+unified management of heterogeneous vehicle types.</p></li>
+</ul>
+</section>
+<section id="performance-requirements">
+<h3>Performance Requirements<a class="headerlink" href="#performance-requirements" title="Link to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Performance Constraints:</strong></p>
+<ul class="simple">
+<li><p>Sensor <code class="docutils literal notranslate"><span class="pre">readData()</span></code> operations complete within <strong>50 ms per sensor</strong></p></li>
+<li><p>Route <code class="docutils literal notranslate"><span class="pre">optimizeRoute()</span></code> completes within <strong>500 ms for routes with up to 20 waypoints</strong></p></li>
+<li><p>Fleet dispatch operations complete within <strong>100 ms</strong></p></li>
+<li><p>Fleet maintains <strong>99.9% availability</strong> during operational hours</p></li>
+<li><p>All ride events (requests, dispatches, passenger boarding/exiting) are logged with timestamps and location data</p></li>
+</ul>
+</div>
+</section>
+<section id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h3>
+<p>This class diagram demonstrates several key object-oriented principles:</p>
+<ul class="simple">
+<li><p><strong>Abstraction</strong> through the abstract <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> class supporting multiple vehicle types.</p></li>
+<li><p><strong>Inheritance</strong> and <strong>polymorphism</strong> in specialized vehicle types (RoboTaxi, Taxi).</p></li>
+<li><p><strong>Encapsulation</strong> of functionality within cohesive classes.</p></li>
+<li><p><strong>Composition</strong> for sensors that are integral parts of robotaxis and for sensor positions.</p></li>
+<li><p><strong>Aggregation</strong> for fleet management where vehicles maintain independent lifecycles.</p></li>
+<li><p><strong>Association</strong> for optional relationships (routes, passengers, drivers).</p></li>
+<li><p><strong>Clear separation of concerns</strong> between passengers, fleet management, vehicle operations,
+driver management, navigation, and sensing.</p></li>
+<li><p><strong>Support for hybrid fleets</strong> containing both autonomous and human-driven vehicles.</p></li>
+</ul>
+<p>Overall, the design offers modularity, flexibility for extension to new vehicle types, and
+a realistic mapping between software classes and transportation entities, while satisfying
+both functional and non-functional requirements.</p>
+</section>
+</section>
+<section id="sequence-diagram">
+<h2>Sequence Diagram<a class="headerlink" href="#sequence-diagram" title="Link to this heading">¶</a></h2>
+<p>The <strong>Sequence Diagram</strong> captures the dynamic interaction between objects over time.
+It illustrates how messages are passed, which operations are invoked, and how control
+flows through the system to accomplish a specific ride request and completion.</p>
+<figure class="align-center">
+<a class="only-light reference internal image-reference" href="../../_images/sequence_diagram_light.png"><img alt="Sequence Diagram" class="only-light" src="../../_images/sequence_diagram_light.png" style="width: 100%;" /></a>
+</figure>
+<figure class="align-center">
+<a class="only-dark reference internal image-reference" href="../../_images/sequence_diagram_dark.png"><img alt="Sequence Diagram" class="only-dark" src="../../_images/sequence_diagram_dark.png" style="width: 100%;" /></a>
+</figure>
+<section id="participants">
+<h3>Participants<a class="headerlink" href="#participants" title="Link to this heading">¶</a></h3>
+<p>All participants belong to the <code class="docutils literal notranslate"><span class="pre">transportation</span></code> namespace in the implementation:</p>
+<ul class="simple">
+<li><p><strong>Passenger</strong> – Customer requesting and using ride services; initiates ride requests.</p></li>
+<li><p><strong>Fleet</strong> – Manages vehicle inventory and dispatches vehicles to service ride requests.</p></li>
+<li><p><strong>RoboTaxi</strong> (Vehicle) – Autonomous vehicle that navigates routes and transports passengers.</p></li>
+<li><p><strong>Route</strong> – Provides navigation path with waypoints for vehicle to follow.</p></li>
+<li><p><strong>Sensor</strong> – Continuously provides data for navigation and obstacle detection.</p></li>
+<li><p><strong>Location</strong> – Represents geographic coordinates (pickupLoc, dropoffLoc) for pickup, dropoff, and navigation waypoints.</p></li>
+</ul>
+</section>
+<section id="message-flow">
+<h3>Message Flow<a class="headerlink" href="#message-flow" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Passenger requests a ride</strong> from the Fleet.</p>
+<ul class="simple">
+<li><p>Passenger calls <code class="docutils literal notranslate"><span class="pre">dispatchVehicle(pickupLoc,</span> <span class="pre">dropoffLoc)</span></code> on the Fleet.</p></li>
+<li><p>Fleet queries available vehicles by calling <code class="docutils literal notranslate"><span class="pre">getAvailableVehicles()</span></code> on itself.</p></li>
+<li><p>Fleet checks vehicle status by calling <code class="docutils literal notranslate"><span class="pre">getStatus()</span></code> on the RoboTaxi.</p></li>
+<li><p>RoboTaxi returns its status (IDLE), indicating availability.</p></li>
+</ul>
+</li>
+<li><p><strong>Fleet creates and assigns a route</strong>.</p>
+<ul class="simple">
+<li><p>Fleet creates a new Route object with a unique route ID.</p></li>
+<li><p>Fleet adds the pickup location as a waypoint: <code class="docutils literal notranslate"><span class="pre">addWaypoint(pickupLoc)</span></code>.</p></li>
+<li><p>Fleet adds the dropoff location as a waypoint: <code class="docutils literal notranslate"><span class="pre">addWaypoint(dropoffLoc)</span></code>.</p></li>
+<li><p>Fleet optimizes the route by calling <code class="docutils literal notranslate"><span class="pre">optimizeRoute()</span></code>.</p></li>
+<li><p>Route calculates distances using <code class="docutils literal notranslate"><span class="pre">distanceTo()</span></code> method on Location objects.</p></li>
+<li><p>Fleet assigns the optimized route to the RoboTaxi via <code class="docutils literal notranslate"><span class="pre">setRoute(route)</span></code>.</p></li>
+<li><p>Fleet returns the dispatched taxi to the Passenger.</p></li>
+</ul>
+</li>
+<li><p><strong>RoboTaxi navigates to pickup location</strong>.</p>
+<ul class="simple">
+<li><p>While en route to pickup (loop construct):</p>
+<ul>
+<li><p>RoboTaxi continuously reads sensor data by calling <code class="docutils literal notranslate"><span class="pre">readData()</span></code> on each Sensor.</p></li>
+<li><p>Sensor returns SensorData for navigation and obstacle detection.</p></li>
+<li><p>RoboTaxi updates its current location by calling <code class="docutils literal notranslate"><span class="pre">updateLocation(newLocation)</span></code> on itself.</p></li>
+<li><p>RoboTaxi executes driving behavior by calling <code class="docutils literal notranslate"><span class="pre">drive()</span></code> on itself.</p></li>
+</ul>
+</li>
+<li><p>Loop continues until RoboTaxi arrives at pickup location.</p></li>
+<li><p>RoboTaxi notifies Passenger of arrival.</p></li>
+</ul>
+</li>
+<li><p><strong>Passenger boards the vehicle</strong>.</p>
+<ul class="simple">
+<li><p>Passenger physically boards the vehicle (actor action).</p></li>
+<li><p>RoboTaxi calls <code class="docutils literal notranslate"><span class="pre">pickupPassenger(Passenger)</span></code> on itself to update its state.</p></li>
+<li><p>Vehicle status updates to IN_SERVICE and passenger count increments.</p></li>
+<li><p>RoboTaxi confirms readiness to Passenger.</p></li>
+</ul>
+</li>
+<li><p><strong>RoboTaxi navigates to dropoff location</strong>.</p>
+<ul class="simple">
+<li><p>While en route to dropoff (loop construct):</p>
+<ul>
+<li><p>RoboTaxi continues reading sensor data via <code class="docutils literal notranslate"><span class="pre">readData()</span></code>.</p></li>
+<li><p>Sensor returns SensorData for continued safe navigation.</p></li>
+<li><p>RoboTaxi updates its location via <code class="docutils literal notranslate"><span class="pre">updateLocation(newLocation)</span></code>.</p></li>
+<li><p>RoboTaxi executes driving behavior via <code class="docutils literal notranslate"><span class="pre">drive()</span></code>.</p></li>
+<li><p>RoboTaxi queries route distance via <code class="docutils literal notranslate"><span class="pre">getDistance()</span></code> to monitor progress.</p></li>
+<li><p>Route returns the distance value.</p></li>
+</ul>
+</li>
+<li><p>Loop continues until RoboTaxi arrives at dropoff location.</p></li>
+<li><p>RoboTaxi notifies Passenger of arrival at destination.</p></li>
+</ul>
+</li>
+<li><p><strong>Passenger exits and trip completes</strong>.</p>
+<ul class="simple">
+<li><p>Passenger physically exits the vehicle (actor action).</p></li>
+<li><p>RoboTaxi calls <code class="docutils literal notranslate"><span class="pre">dropoffPassenger(Passenger)</span></code> on itself to update its state.</p></li>
+<li><p>Passenger count decrements and vehicle prepares for next assignment.</p></li>
+<li><p>RoboTaxi confirms trip completion to Passenger.</p></li>
+<li><p>RoboTaxi notifies Fleet that trip is completed.</p></li>
+<li><p>Fleet updates vehicle status to IDLE by calling <code class="docutils literal notranslate"><span class="pre">setStatus(IDLE)</span></code> on the RoboTaxi.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="control-constructs">
+<h3>Control Constructs<a class="headerlink" href="#control-constructs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>loop [While en route to pickup]</strong>: RoboTaxi continuously reads sensor data and updates location until it reaches the pickup point.</p></li>
+<li><p><strong>loop [While en route to dropoff]</strong>: RoboTaxi navigates to the destination, reading sensors, updating location, and monitoring route progress.</p></li>
+<li><p><strong>object creation</strong>: Route object is created dynamically during the ride request process.</p></li>
+<li><p><strong>activation boxes</strong>: Show when objects are actively processing operations (fleet dispatch, route optimization, sensor reading, vehicle navigation).</p></li>
+</ul>
+</section>
+<section id="key-interactions">
+<h3>Key Interactions<a class="headerlink" href="#key-interactions" title="Link to this heading">¶</a></h3>
+<p>The sequence diagram highlights several important interactions:</p>
+<ul class="simple">
+<li><p><strong>Synchronous communication</strong>: Most operations are synchronous with immediate return values (getStatus, setRoute, addWaypoint).</p></li>
+<li><p><strong>Continuous monitoring</strong>: Sensor reading and location updates occur continuously in loops during navigation.</p></li>
+<li><p><strong>State transitions</strong>: Vehicle status changes from IDLE → EN_ROUTE → IN_SERVICE → IDLE throughout the trip lifecycle.</p></li>
+<li><p><strong>Self-collaboration</strong>: RoboTaxi frequently calls methods on itself (updateLocation, drive, pickupPassenger, dropoffPassenger) to manage its internal state.</p></li>
+<li><p><strong>Distance calculation</strong>: Route optimization uses Location’s <code class="docutils literal notranslate"><span class="pre">distanceTo()</span></code> method to calculate optimal paths.</p></li>
+<li><p><strong>Passenger-initiated actions</strong>: Boarding and exiting are physical actions by the Passenger that trigger state updates in the RoboTaxi.</p></li>
+</ul>
+</section>
+<section id="observability">
+<h3>Observability<a class="headerlink" href="#observability" title="Link to this heading">¶</a></h3>
+<p>All key lifecycle events are logged with structured information:</p>
+<ul class="simple">
+<li><p>Ride requests (passenger ID, pickup/dropoff locations, timestamp)</p></li>
+<li><p>Vehicle dispatches (fleet ID, vehicle ID, route ID, timestamp)</p></li>
+<li><p>Route creation and optimization (route ID, waypoint count, optimization time)</p></li>
+<li><p>Passenger boarding/exiting (passenger ID, vehicle ID, location, timestamp)</p></li>
+<li><p>Sensor readings (vehicle ID, sensor type, timestamp, data quality metrics)</p></li>
+<li><p>Trip completion (vehicle ID, route ID, total distance, duration)</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Summary<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>The sequence diagram complements the class diagram by showing the <strong>runtime collaboration</strong>
+of objects during a complete ride lifecycle. It clarifies the responsibilities of each component:</p>
+<ul class="simple">
+<li><p>The <strong>Passenger</strong> initiates ride requests and physically boards/exits vehicles.</p></li>
+<li><p>The <strong>Fleet</strong> manages vehicle dispatch, route creation, optimization, and post-trip status updates.</p></li>
+<li><p>The <strong>RoboTaxi</strong> (Vehicle) executes autonomous navigation using sensor data, follows assigned routes, and manages passenger state transitions.</p></li>
+<li><p>The <strong>Sensor</strong> provides continuous data for safe autonomous navigation.</p></li>
+<li><p>The <strong>Route</strong> defines the navigation path through waypoints and supports distance calculations.</p></li>
+<li><p>The <strong>Location</strong> represents geographic coordinates for all spatial operations.</p></li>
+</ul>
+<p>The interaction pattern demonstrates proper encapsulation (sensors only accessed by RoboTaxi),
+clear separation of concerns (fleet management vs. vehicle operations), and realistic
+autonomous vehicle behavior patterns. Together, the class and sequence diagrams provide a complete behavioral
+and structural model of the transportation system that satisfies both functional requirements
+and non-functional requirements (performance, safety, observability).</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../core_principles.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Core OOP Principles</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="requirement_analysis.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Requirements Analysis</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Z. Kootbally
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Modeling Phase</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#class-diagram">Class Diagram</a><ul>
+<li><a class="reference internal" href="#key-components">Key Components</a><ul>
+<li><a class="reference internal" href="#vehicle-abstract-class"><strong>Vehicle (Abstract Class)</strong></a></li>
+<li><a class="reference internal" href="#concrete-vehicle-types"><strong>Concrete Vehicle Types</strong></a></li>
+<li><a class="reference internal" href="#driver"><strong>Driver</strong></a></li>
+<li><a class="reference internal" href="#sensor"><strong>Sensor</strong></a></li>
+<li><a class="reference internal" href="#position-struct"><strong>Position (Struct)</strong></a></li>
+<li><a class="reference internal" href="#fleet"><strong>Fleet</strong></a></li>
+<li><a class="reference internal" href="#passenger"><strong>Passenger</strong></a></li>
+<li><a class="reference internal" href="#route"><strong>Route</strong></a></li>
+<li><a class="reference internal" href="#location"><strong>Location</strong></a></li>
+<li><a class="reference internal" href="#enumerations"><strong>Enumerations</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conceptual-analysis">Conceptual Analysis</a></li>
+<li><a class="reference internal" href="#performance-requirements">Performance Requirements</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sequence-diagram">Sequence Diagram</a><ul>
+<li><a class="reference internal" href="#participants">Participants</a></li>
+<li><a class="reference internal" href="#message-flow">Message Flow</a></li>
+<li><a class="reference internal" href="#control-constructs">Control Constructs</a></li>
+<li><a class="reference internal" href="#key-interactions">Key Interactions</a></li>
+<li><a class="reference internal" href="#observability">Observability</a></li>
+<li><a class="reference internal" href="#id1">Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

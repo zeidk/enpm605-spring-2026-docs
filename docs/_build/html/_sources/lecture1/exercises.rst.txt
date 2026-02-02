@@ -1,0 +1,202 @@
+====================================================
+Exercises
+====================================================
+
+This page contains two exercises that reinforce the concepts introduced
+in Lecture 1: Course Introduction.
+
+Each exercise is designed to be small but concrete, so that you can
+practice both the conceptual and hands-on aspects of Python variables
+and the object model.
+
+
+Exercise 1 – Variable Binding and Identity
+==========================================
+
+Goal
+----
+
+Explore how Python variables work as references to objects, and
+understand the difference between identity (``is``) and equality (``==``)
+using a robotics-themed scenario.
+
+Task
+----
+
+1. Create a file ``lecture1/binding_lab.py``.
+
+2. **Part A — Immutable rebinding**: Add the following code. Before
+   running it, predict whether each ``is`` check will be ``True`` or
+   ``False``.
+
+   .. code-block:: python
+
+      # Sensor reading stored as a float
+      temperature = 22.5
+      temp_id_before = id(temperature)
+
+      # Simulate a new reading overwriting the old one
+      temperature = temperature + 0.3
+      temp_id_after = id(temperature)
+
+      print(f"Before ID: {temp_id_before}")
+      print(f"After  ID: {temp_id_after}")
+      print(f"Same object? {temp_id_before == temp_id_after}")
+
+3. **Part B — Mutable aliasing with dictionaries**: Append the
+   following code.
+
+   .. code-block:: python
+
+      # A waypoint represented as a dict
+      waypoint_a = {"x": 1.0, "y": 2.0, "label": "start"}
+      waypoint_b = waypoint_a  # alias — or independent copy?
+
+      waypoint_b["label"] = "modified_start"
+
+      print(f"waypoint_a label: {waypoint_a['label']}")
+      print(f"Same object? {waypoint_a is waypoint_b}")
+
+4. **Part C — Breaking the alias**: Append code that creates a truly
+   independent copy of ``waypoint_a`` using ``.copy()`` and show that
+   changing the copy leaves the original untouched.
+
+   .. code-block:: python
+
+      waypoint_c = waypoint_a.copy()
+      waypoint_c["label"] = "end"
+
+      print(f"waypoint_a label: {waypoint_a['label']}")
+      print(f"waypoint_c label: {waypoint_c['label']}")
+      print(f"Same object? {waypoint_a is waypoint_c}")
+
+5. **Part D — Tuple identity**: Append the following and predict the
+   output.
+
+   .. code-block:: python
+
+      # Two tuples with the same values
+      pose_1 = (3.0, 4.0, 0.0)
+      pose_2 = (3.0, 4.0, 0.0)
+
+      print(f"pose_1 == pose_2: {pose_1 == pose_2}")
+      print(f"pose_1 is pose_2: {pose_1 is pose_2}")
+
+      # Can we modify a tuple?
+      # pose_1[0] = 5.0  # Uncomment and observe the error
+
+6. Run the complete file and compare your predictions to the actual
+   output. Make sure you understand **why** each result is what it is.
+
+.. dropdown:: 💡 Hints
+    :icon: light-bulb
+
+    - Floats are immutable — arithmetic always creates a new object.
+    - ``dict`` is mutable — assigning one dict variable to another
+      creates an alias, not a copy.
+    - ``.copy()`` creates a **shallow** copy (sufficient here since all
+      values are immutable).
+    - Whether two tuples with identical content share the same ``id``
+      is an implementation detail — do not rely on it.
+
+
+Exercise 2 – Dynamic Typing and Rebinding
+==========================================
+
+Goal
+----
+
+Observe dynamic typing behavior and practice using ``type()`` and
+``id()`` to track how Python handles variable rebinding, using a robot
+configuration scenario.
+
+Task
+----
+
+1. Create a file ``lecture1/typing_lab.py``.
+
+2. **Part A — Tracking rebinding**: A single variable goes through
+   several types as we build up a robot's configuration. After each
+   assignment, print the value, type, and id.
+
+   .. code-block:: python
+
+      config = 7                         # number of sensors
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+      config = 9.81                      # gravity constant
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+      config = "differential_drive"      # locomotion type
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+      config = True                      # simulation mode enabled
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+      config = (0.0, 0.0, 1.57)         # initial pose (x, y, theta)
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+      config = {"max_speed": 1.2, "radius": 0.15}  # parameters
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+      config = None                      # reset / no configuration
+      print(f"Value: {config!r:>30}  Type: {type(config).__name__:<10}  ID: {id(config)}")
+
+3. **Part B — None as a sentinel value**: Write a small function
+   ``get_sensor_reading`` that takes a ``sensor_name`` string. If the
+   name is ``"lidar"``, return ``360``; otherwise return ``None``.
+   Then demonstrate proper ``None`` checking on the result.
+
+   .. code-block:: python
+
+      def get_sensor_reading(sensor_name):
+          if sensor_name == "lidar":
+              return 360
+          # No explicit return → Python returns None
+
+      reading = get_sensor_reading("camera")
+
+      if reading is None:
+          print("Sensor not available — no data returned")
+      else:
+          print(f"Got {reading} data points")
+
+      reading = get_sensor_reading("lidar")
+
+      if reading is None:
+          print("Sensor not available — no data returned")
+      else:
+          print(f"Got {reading} data points")
+
+4. **Part C — The None singleton**: Verify that every ``None`` in
+   Python is the exact same object, regardless of how it was obtained.
+
+   .. code-block:: python
+
+      a = None
+      b = None
+      c = get_sensor_reading("camera")  # also returns None
+
+      print(f"a is b: {a is b}")
+      print(f"a is c: {a is c}")
+      print(f"id(a): {id(a)}, id(b): {id(b)}, id(c): {id(c)}")
+
+5. Run the complete file. After running, answer these questions for
+   yourself:
+
+   - Did any two consecutive assignments in Part A share the same
+     ``id``? Why or why not?
+   - Why does ``get_sensor_reading("camera")`` return ``None`` even
+     though there is no ``return None`` statement?
+   - Why should you use ``is None`` instead of ``== None``?
+
+.. dropdown:: 💡 Hints
+    :icon: light-bulb
+
+    - Each assignment in Part A binds ``config`` to a brand-new object
+      of a different type, so every ``id`` should be different.
+    - A function that "falls off the end" without a ``return`` statement
+      implicitly returns ``None``.
+    - ``is`` checks identity (same object in memory). Since ``None`` is
+      a singleton, ``is`` is both faster and more correct than ``==``,
+      which invokes ``__eq__`` and could be overridden by a custom class.

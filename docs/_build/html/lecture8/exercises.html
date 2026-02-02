@@ -1,0 +1,824 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="References" href="references.html"><link rel="prev" title="The this Pointer" href="this_pointer.html">
+        <link rel="prefetch" href="../_static/enpm702light.png" as="image">
+        <link rel="prefetch" href="../_static/enpm702dark.png" as="image">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Exercises - ENPM702 Fall 2025 v1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=acfd86a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3b0936a1" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ENPM702 Fall 2025 v1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/enpm702light.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/enpm702dark.png" alt="Dark Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">ENPM702 Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecture6/lecture6.html">L6 - Functions (Advanced Topics)</a><input aria-label="Toggle navigation of L6 - Functions (Advanced Topics)" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../lecture6/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lecture6/struct.html">struct</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../lecture6/templates.html">Templates</a><input aria-label="Toggle navigation of Templates" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/templates/overview.html">Templates — Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/templates/syntax.html">Template Syntax &amp; Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/templates/specialization.html">Template Specialization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/templates/deduction.html">Type Deduction &amp; Failures</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../lecture6/function_specifiers.html">Operators, Specifiers, and Attributes</a><input aria-label="Toggle navigation of Operators, Specifiers, and Attributes" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/function_specifiers/decltype.html"><code class="docutils literal notranslate"><span class="pre">decltype</span></code> Operator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/function_specifiers/trailing_return.html">Trailing Return Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/function_specifiers/attributes.html">Function Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/function_specifiers/constexpr.html"><code class="docutils literal notranslate"><span class="pre">constexpr</span></code> Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/function_specifiers/inline.html"><code class="docutils literal notranslate"><span class="pre">inline</span></code> and the ODR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/function_specifiers/noexcept.html"><code class="docutils literal notranslate"><span class="pre">noexcept</span></code> Specifier &amp; Operator</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../lecture6/callables.html">Callables in Modern C++</a><input aria-label="Toggle navigation of Callables in Modern C++" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/callables/function_pointers.html">Function Pointers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/callables/functors.html">Functors (Function Objects)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/callables/lambdas.html">Lambdas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture6/callables/std_function.html"><code class="docutils literal notranslate"><span class="pre">std::function</span></code> and Type Erasure</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture6/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture6/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture6/notes.html">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture6/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecture7/lecture7.html">L7 - Move Semantics and Smart Pointers</a><input aria-label="Toggle navigation of L7 - Move Semantics and Smart Pointers" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../lecture7/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lecture7/move_semantics.html">Move Semantics</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../lecture7/smart_pointers.html">Smart Pointers</a><input aria-label="Toggle navigation of Smart Pointers" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../lecture7/smart_pointers/unique_pointers.html"><code class="docutils literal notranslate"><span class="pre">std::unique_ptr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture7/smart_pointers/shared_pointers.html"><code class="docutils literal notranslate"><span class="pre">std::shared_ptr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../lecture7/smart_pointers/weak_pointers.html"><code class="docutils literal notranslate"><span class="pre">std::weak_ptr</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture7/exercises.html">Exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture7/glossary.html">Glossary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture7/notes.html">Important Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture7/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture7/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture7/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="lecture8.html">L8 - OOP (Basics)</a><input aria-label="Toggle navigation of L8 - OOP (Basics)" checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="design.html">Design Phase</a><input aria-label="Toggle navigation of Design Phase" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="design/requirement_analysis.html">Requirements Analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="design/modeling.html">Modeling Phase</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="core_principles.html">Core OOP Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modern_cpp_features.html">Modern C++ Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes_and_objects.html">Classes and Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="encapsulation.html">Encapsulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constructors.html">Constructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="static_member.html">Static Members</a></li>
+<li class="toctree-l3"><a class="reference internal" href="this_pointer.html">The this Pointer</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecture9/lecture9.html">L9: OOP (Advanced Topics)</a><input aria-label="Toggle navigation of L9: OOP (Advanced Topics)" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../lecture9/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lecture9/class_relationships.html">Class Relationships</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture9/polymorphism.html">Polymorphism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture9/destructors.html">Destructors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture9/abstraction.html">Abstraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture9/final_keyword.html">The <code class="docutils literal notranslate"><span class="pre">final</span></code> Keyword</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture9/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecture10/lecture10.html">L10: ROS 2 (Introduction)</a><input aria-label="Toggle navigation of L10: ROS 2 (Introduction)" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../lecture10/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/ros2_fundamentals.html">ROS 2 - Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/workspace_and_devenv.html">Workspace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/first_node.html">Writing a Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/node_spinning.html">Node Spinning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/messages.html">Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/publishers.html">Publishers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture10/subscribers.html">Subscribers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture10/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture10/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecture11/index.html">L11: ROS 2 (Advanced Topics)</a><input aria-label="Toggle navigation of L11: ROS 2 (Advanced Topics)" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../lecture11/lecture.html">Lecture</a><input aria-label="Toggle navigation of Lecture" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../lecture11/qos.html">Quality of Service (QoS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture11/executors.html">Executors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture11/launch_files.html">Launch Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lecture11/interfaces.html">Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture11/exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture11/references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../assignments.html">Assignments</a><input aria-label="Toggle navigation of Assignments" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/rwaIII.html">Assignment 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/rwaIV.html">Assignment 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/final.html">Final Project</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/zeidk/enpm702-fall-2025/blob/main/lecture8/exercises.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/zeidk/enpm702-fall-2025/edit/main/lecture8/exercises.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Link to this heading">¶</a></h1>
+<section id="basic-class-implementation-with-encapsulation">
+<h2>1. Basic Class Implementation with Encapsulation<a class="headerlink" href="#basic-class-implementation-with-encapsulation" title="Link to this heading">¶</a></h2>
+<p>Create a complete <code class="docutils literal notranslate"><span class="pre">BankAccount</span></code> class demonstrating proper encapsulation and member initialization.</p>
+<p><strong>Requirements:</strong></p>
+<ul class="simple">
+<li><p>Define a class <code class="docutils literal notranslate"><span class="pre">BankAccount</span></code> in the <code class="docutils literal notranslate"><span class="pre">banking</span></code> namespace with private attributes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">account_number_</span></code> (<code class="docutils literal notranslate"><span class="pre">std::string</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">balance_</span></code> (<code class="docutils literal notranslate"><span class="pre">double</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_active_</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, default <code class="docutils literal notranslate"><span class="pre">true</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Implement:</p>
+<ul>
+<li><p>Default constructor: account number “UNKNOWN”, balance 0.0</p></li>
+<li><p>Parameterized constructor: takes account number and initial balance</p></li>
+<li><p>Use <strong>member initializer lists</strong> for both constructors</p></li>
+</ul>
+</li>
+<li><p>Provide accessors (all <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">noexcept</span></code> with <code class="docutils literal notranslate"><span class="pre">[[nodiscard]]</span></code>):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_account_number()</span></code> returns <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_balance()</span></code> returns <code class="docutils literal notranslate"><span class="pre">double</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_active()</span></code> returns <code class="docutils literal notranslate"><span class="pre">bool</span></code></p></li>
+</ul>
+</li>
+<li><p>Provide mutators:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">deposit(double</span> <span class="pre">amount)</span></code> — validate <code class="docutils literal notranslate"><span class="pre">amount</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, throw <code class="docutils literal notranslate"><span class="pre">std::invalid_argument</span></code> if not</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">withdraw(double</span> <span class="pre">amount)</span></code> — validate sufficient balance and <code class="docutils literal notranslate"><span class="pre">amount</span> <span class="pre">&gt;</span> <span class="pre">0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deactivate()</span></code> — sets <code class="docutils literal notranslate"><span class="pre">is_active_</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> (<code class="docutils literal notranslate"><span class="pre">noexcept</span></code>)</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ul class="simple">
+<li><p>Create a project with <code class="docutils literal notranslate"><span class="pre">include/bank_account.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">src/bank_account.cpp</span></code></p></li>
+<li><p>Write <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> demonstrating all operations</p></li>
+<li><p>Add Doxygen comments to all public members</p></li>
+<li><p>Compile with <code class="docutils literal notranslate"><span class="pre">-Wall</span> <span class="pre">-Wextra</span> <span class="pre">-pedantic-errors</span> <span class="pre">-Werror</span></code></p></li>
+<li><p><strong>Verify:</strong> Attempting to access private members directly fails to compile</p></li>
+</ul>
+</section>
+<section id="using-std-optional-for-safe-search-operations">
+<h2>2. Using <code class="docutils literal notranslate"><span class="pre">std::optional</span></code> for Safe Search Operations<a class="headerlink" href="#using-std-optional-for-safe-search-operations" title="Link to this heading">¶</a></h2>
+<p>Implement search functions that return <code class="docutils literal notranslate"><span class="pre">std::optional</span></code> instead of magic values.</p>
+<p><strong>Requirements:</strong></p>
+<ul class="simple">
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">std::optional&lt;size_t&gt;</span> <span class="pre">find_first_vowel(std::string_view</span> <span class="pre">text)</span></code> that:</p>
+<ul>
+<li><p>Returns the index of the first vowel (a, e, i, o, u, case-insensitive)</p></li>
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> if no vowel found</p></li>
+<li><p>Mark as <code class="docutils literal notranslate"><span class="pre">[[nodiscard]]</span> <span class="pre">noexcept</span></code></p></li>
+</ul>
+</li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">std::optional&lt;int&gt;</span> <span class="pre">parse_int(std::string_view</span> <span class="pre">str)</span></code> that:</p>
+<ul>
+<li><p>Safely converts a string to <code class="docutils literal notranslate"><span class="pre">int</span></code></p></li>
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> for invalid input (non-numeric, overflow)</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">std::stoi</span></code> in a try-catch block</p></li>
+</ul>
+</li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">std::optional&lt;double&gt;</span> <span class="pre">safe_divide(double</span> <span class="pre">numerator,</span> <span class="pre">double</span> <span class="pre">denominator)</span></code> that:</p>
+<ul>
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> if <code class="docutils literal notranslate"><span class="pre">denominator</span> <span class="pre">==</span> <span class="pre">0.0</span></code></p></li>
+<li><p>Otherwise returns the result</p></li>
+<li><p>Mark as <code class="docutils literal notranslate"><span class="pre">[[nodiscard]]</span> <span class="pre">noexcept</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ul class="simple">
+<li><p>Create test cases demonstrating all three functions</p></li>
+<li><p>Show three different ways to check for values (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(opt)</span></code>, <code class="docutils literal notranslate"><span class="pre">has_value()</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span> <span class="pre">nullopt</span></code>)</p></li>
+<li><p>Demonstrate all three access methods (<code class="docutils literal notranslate"><span class="pre">*opt</span></code>, <code class="docutils literal notranslate"><span class="pre">value()</span></code>, <code class="docutils literal notranslate"><span class="pre">value_or()</span></code>)</p></li>
+<li><p>Write a function that chains optionals: parse a string to int, then divide by another parsed int</p></li>
+</ul>
+</section>
+<section id="constructor-best-practices-avoiding-two-step-initialization">
+<h2>3. Constructor Best Practices: Avoiding Two-Step Initialization<a class="headerlink" href="#constructor-best-practices-avoiding-two-step-initialization" title="Link to this heading">¶</a></h2>
+<p>Refactor poorly written classes to use member initializer lists correctly.</p>
+<p><strong>Given this inefficient code:</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Engine</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">horsepower_</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">fuel_type_</span><span class="p">;</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">components_</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Engine</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">horsepower_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">fuel_type_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Unknown&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">components_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;Pistons&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Crankshaft&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Valves&quot;</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Engine</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">hp</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">fuel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">horsepower_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hp</span><span class="p">;</span>
+<span class="w">        </span><span class="n">fuel_type_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fuel</span><span class="p">;</span>
+<span class="w">        </span><span class="n">components_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;Pistons&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Crankshaft&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Valves&quot;</span><span class="p">};</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Tasks:</strong></p>
+<ul class="simple">
+<li><p>Rewrite both constructors using member initializer lists</p></li>
+<li><p>Add a third constructor taking <code class="docutils literal notranslate"><span class="pre">hp</span></code>, <code class="docutils literal notranslate"><span class="pre">fuel</span></code>, and <code class="docutils literal notranslate"><span class="pre">components</span></code> vector</p></li>
+<li><p>Measure performance difference (create 100,000 objects in a loop, time both versions)</p></li>
+<li><p>Explain why the original version is inefficient (hint: count constructor calls for <code class="docutils literal notranslate"><span class="pre">std::vector</span></code>)</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string</span> <span class="pre">serial_number_</span></code> member and show why it <strong>requires</strong> initializer list</p></li>
+<li><p>Bonus: Add a reference member <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">Engine&amp;</span> <span class="pre">base_model_</span></code> and initialize it properly</p></li>
+</ul>
+</section>
+<section id="std-string-view-vs-const-std-string-performance">
+<h2>4. <code class="docutils literal notranslate"><span class="pre">std::string_view</span></code> vs. <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code> Performance<a class="headerlink" href="#std-string-view-vs-const-std-string-performance" title="Link to this heading">¶</a></h2>
+<p>Compare the performance and flexibility of different string parameter types.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li><p>Implement three versions of <code class="docutils literal notranslate"><span class="pre">count_spaces</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Version 1</span>
+<span class="kt">size_t</span><span class="w"> </span><span class="nf">count_spaces_ref</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">text</span><span class="p">);</span>
+
+<span class="c1">// Version 2</span>
+<span class="kt">size_t</span><span class="w"> </span><span class="nf">count_spaces_view</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">text</span><span class="p">);</span>
+
+<span class="c1">// Version 3 (substring version)</span>
+<span class="kt">size_t</span><span class="w"> </span><span class="nf">count_spaces_substr</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ul>
+<li><p>Test all versions with:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">std::string</span></code> objects</p></li>
+<li><p>String literals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">char*</span></code> pointers</p></li>
+<li><p>Substrings (using <code class="docutils literal notranslate"><span class="pre">substr()</span></code> for Version 1, <code class="docutils literal notranslate"><span class="pre">substr()</span></code> for Version 2)</p></li>
+</ul>
+</li>
+<li><p>Time each version processing a large file (1 MB text, 1000 iterations)</p></li>
+<li><p>Show that Version 2 accepts all inputs without conversion overhead</p></li>
+<li><p>Demonstrate that Version 3 can extract substrings without allocation</p></li>
+<li><p><strong>Anti-pattern:</strong> Show why using <code class="docutils literal notranslate"><span class="pre">string_view</span></code> in a constructor that stores <code class="docutils literal notranslate"><span class="pre">std::string</span></code> is wrong:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// ❌ Wrong</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Document</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">title_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Document</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">title_</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="w"> </span><span class="p">{}</span><span class="w">  </span><span class="c1">// Still copies!</span>
+<span class="p">};</span>
+
+<span class="c1">// ✓ Correct</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Document</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">title_</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Document</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">title_</span><span class="p">{</span><span class="n">title</span><span class="p">}</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="complete-vehicle-system-implementation">
+<h2>5. Complete Vehicle System Implementation<a class="headerlink" href="#complete-vehicle-system-implementation" title="Link to this heading">¶</a></h2>
+<p>Design and implement a complete class following all lecture best practices.</p>
+<p><strong>Requirements:</strong></p>
+<p>Implement a <code class="docutils literal notranslate"><span class="pre">Bicycle</span></code> class in the <code class="docutils literal notranslate"><span class="pre">transportation</span></code> namespace with:</p>
+<p><strong>Attributes (all private):</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">brand_</span></code> (<code class="docutils literal notranslate"><span class="pre">std::string</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gear_count_</span></code> (<code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">current_gear_</span></code> (<code class="docutils literal notranslate"><span class="pre">int</span></code>, default 1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_locked_</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, default <code class="docutils literal notranslate"><span class="pre">true</span></code>)</p></li>
+</ul>
+<p><strong>Constructors:</strong></p>
+<ul class="simple">
+<li><p>Default: brand=”Generic”, gear_count=1</p></li>
+<li><p>Parameterized: takes brand and gear_count, validates <code class="docutils literal notranslate"><span class="pre">gear_count</span> <span class="pre">&gt;</span> <span class="pre">0</span></code></p></li>
+<li><p>Use member initializer lists for both</p></li>
+</ul>
+<p><strong>Methods:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">shift_up()</span></code> — increases gear if <code class="docutils literal notranslate"><span class="pre">current_gear_</span> <span class="pre">&lt;</span> <span class="pre">gear_count_</span></code> and not locked</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shift_down()</span></code> — decreases gear if <code class="docutils literal notranslate"><span class="pre">current_gear_</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> and not locked</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lock()</span></code> / <code class="docutils literal notranslate"><span class="pre">unlock()</span></code> — toggle lock state (<code class="docutils literal notranslate"><span class="pre">noexcept</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_current_gear()</span></code> — accessor (<code class="docutils literal notranslate"><span class="pre">[[nodiscard]]</span> <span class="pre">const</span> <span class="pre">noexcept</span></code>)</p></li>
+</ul>
+<p><strong>Advanced:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">get_gear_ratio()</span></code> — returns <code class="docutils literal notranslate"><span class="pre">std::optional&lt;double&gt;</span></code> calculating ratio based on current gear</p>
+<ul>
+<li><p>Returns <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> if locked</p></li>
+<li><p>Formula: <code class="docutils literal notranslate"><span class="pre">2.0</span> <span class="pre">+</span> <span class="pre">(current_gear_</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">*</span> <span class="pre">0.5</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Tasks:</strong></p>
+<ul class="simple">
+<li><p>Create complete project structure: <code class="docutils literal notranslate"><span class="pre">include/</span></code>, <code class="docutils literal notranslate"><span class="pre">src/</span></code>, <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></p></li>
+<li><p>Add full Doxygen documentation</p></li>
+<li><p>Write <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> with comprehensive test cases:</p>
+<ul>
+<li><p>Create bicycles with stack and heap allocation</p></li>
+<li><p>Test all methods including error cases</p></li>
+<li><p>Demonstrate <code class="docutils literal notranslate"><span class="pre">optional</span></code> usage with <code class="docutils literal notranslate"><span class="pre">value_or()</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Validation tests:</strong></p>
+<ul>
+<li><p>Verify shifting when locked returns <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Verify cannot shift beyond gear limits</p></li>
+<li><p>Verify <code class="docutils literal notranslate"><span class="pre">get_gear_ratio()</span></code> returns <code class="docutils literal notranslate"><span class="pre">nullopt</span></code> when locked</p></li>
+</ul>
+</li>
+<li><p>Create a simple UML class diagram showing:</p>
+<ul>
+<li><p>Class name (<code class="docutils literal notranslate"><span class="pre">Bicycle</span></code>)</p></li>
+<li><p>All attributes with types and visibility</p></li>
+<li><p>All methods with return types and visibility</p></li>
+<li><p>Mark <code class="docutils literal notranslate"><span class="pre">const</span></code> methods appropriately</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="scoped-enums-enum-class-for-type-safe-presets">
+<h2>6. Scoped Enums (<code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">class</span></code>) for Type-Safe Presets<a class="headerlink" href="#scoped-enums-enum-class-for-type-safe-presets" title="Link to this heading">¶</a></h2>
+<p>Replace fragile string fields with <strong>strongly typed</strong> scoped enums and provide conversion utilities.</p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p>In namespace <code class="docutils literal notranslate"><span class="pre">transportation</span></code>, define:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Red</span><span class="p">,</span><span class="w"> </span><span class="n">Blue</span><span class="p">,</span><span class="w"> </span><span class="n">Green</span><span class="p">,</span><span class="w"> </span><span class="n">Black</span><span class="p">,</span><span class="w"> </span><span class="n">White</span><span class="p">,</span><span class="w"> </span><span class="n">Silver</span><span class="p">,</span><span class="w"> </span><span class="n">Unknown</span><span class="w"> </span><span class="p">};</span>
+<span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Model</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Sedan</span><span class="p">,</span><span class="w"> </span><span class="n">SUV</span><span class="p">,</span><span class="w"> </span><span class="n">Truck</span><span class="p">,</span><span class="w"> </span><span class="n">Coupe</span><span class="p">,</span><span class="w"> </span><span class="n">Hatchback</span><span class="p">,</span><span class="w"> </span><span class="n">Unknown</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p>Refactor a class <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> to use these enums:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Vehicle</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Color</span><span class="w"> </span><span class="n">color_</span><span class="p">{</span><span class="n">Color</span><span class="o">::</span><span class="n">Unknown</span><span class="p">};</span>
+<span class="w">    </span><span class="n">Model</span><span class="w"> </span><span class="n">model_</span><span class="p">{</span><span class="n">Model</span><span class="o">::</span><span class="n">Unknown</span><span class="p">};</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w">  </span><span class="n">is_running_</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+<span class="w">    </span><span class="kt">int</span><span class="w">   </span><span class="n">max_speed_</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="n">Vehicle</span><span class="p">(</span><span class="n">Color</span><span class="w"> </span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">max_speed</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">start_engine</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">stop_engine</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">drive</span><span class="p">();</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="n">color</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">model</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">nodiscard</span><span class="p">]]</span><span class="w"> </span><span class="kt">int</span><span class="w">   </span><span class="n">max_speed</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Implement the constructor with a member initializer list and validate <code class="docutils literal notranslate"><span class="pre">max_speed</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> (throw <code class="docutils literal notranslate"><span class="pre">std::invalid_argument</span></code> otherwise).</p></li>
+<li><p>All accessors must be <code class="docutils literal notranslate"><span class="pre">[[nodiscard]]</span></code> and <code class="docutils literal notranslate"><span class="pre">noexcept</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Provide readable conversions:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">to_string</span><span class="p">(</span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">to_string</span><span class="p">(</span><span class="n">Model</span><span class="w"> </span><span class="n">m</span><span class="p">);</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Implement via <code class="docutils literal notranslate"><span class="pre">switch</span></code> with <strong>no default</strong> and an explicit <code class="docutils literal notranslate"><span class="pre">return</span></code> for each enumerator.</p></li>
+<li><p>Optionally add a <code class="docutils literal notranslate"><span class="pre">default:</span></code> returning <code class="docutils literal notranslate"><span class="pre">&quot;Unknown&quot;</span></code> if your compiler warns for missing cases.</p></li>
+</ul>
+</li>
+<li><p>Provide parsing helpers that <strong>do not throw</strong>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="w"> </span><span class="n">parse_color</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">Model</span><span class="o">&gt;</span><span class="w"> </span><span class="n">parse_model</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Accept case-insensitive inputs such as <code class="docutils literal notranslate"><span class="pre">&quot;red&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;RED&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;Red&quot;</span></code>.</p></li>
+<li><p>Return <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> for unknown tokens.</p></li>
+</ul>
+</li>
+<li><p>Overload stream insertion for quick debugging:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">os</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">os</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="w"> </span><span class="n">os</span><span class="p">,</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">os</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">m</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Header/Source split:</strong></p>
+<ul class="simple">
+<li><p>Place enum declarations and conversions in <code class="docutils literal notranslate"><span class="pre">include/transportation/types.hpp</span></code> and their definitions in <code class="docutils literal notranslate"><span class="pre">src/types.cpp</span></code>.</p></li>
+<li><p>Implement <code class="docutils literal notranslate"><span class="pre">Vehicle</span></code> in <code class="docutils literal notranslate"><span class="pre">include/vehicle.hpp</span></code> and <code class="docutils literal notranslate"><span class="pre">src/vehicle.cpp</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Factory function:</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">Vehicle</span><span class="o">&gt;</span><span class="w"> </span><span class="n">make_vehicle</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">color</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">model</span><span class="p">,</span>
+<span class="w">                                    </span><span class="kt">int</span><span class="w"> </span><span class="n">max_speed</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">parse_color</span></code> and <code class="docutils literal notranslate"><span class="pre">parse_model</span></code>.</p></li>
+<li><p>Return <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> if parsing fails or <code class="docutils literal notranslate"><span class="pre">max_speed</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Compile-time checks:</strong></p>
+<ul>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">static_assert(std::is_enum_v&lt;Color&gt;</span> <span class="pre">&amp;&amp;</span> <span class="pre">std::is_enum_v&lt;Model&gt;);</span></code></p></li>
+<li><p>Optionally fix the underlying type:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">};</span>
+<span class="k">enum</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">Model</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Demonstration program (``main.cpp``):</strong></p>
+<ul class="simple">
+<li><p>Construct vehicles using both enums directly and via <code class="docutils literal notranslate"><span class="pre">make_vehicle(&quot;Red&quot;,</span> <span class="pre">&quot;SUV&quot;,</span> <span class="pre">180)</span></code>.</p></li>
+<li><p>Print them using <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code>.</p></li>
+<li><p>Show behavior for invalid input (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;Purple&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;Spaceship&quot;</span></code>) and handle <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> using <code class="docutils literal notranslate"><span class="pre">value_or</span></code> or conditional checks.</p></li>
+<li><p>Verify that accidental assignments like <code class="docutils literal notranslate"><span class="pre">color_</span> <span class="pre">=</span> <span class="pre">&quot;Red&quot;;</span></code> no longer compile.</p></li>
+</ul>
+</li>
+<li><p><strong>Doxygen:</strong></p>
+<ul class="simple">
+<li><p>Document each enumerator and all conversion functions.</p></li>
+<li><p>Mark non-throwing functions as <code class="docutils literal notranslate"><span class="pre">noexcept</span></code> and add <code class="docutils literal notranslate"><span class="pre">\\warning</span></code> on parsing about accepted spellings and case-insensitivity.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="validation-criteria">
+<h3>Validation Criteria<a class="headerlink" href="#validation-criteria" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Assigning a string literal to <code class="docutils literal notranslate"><span class="pre">color_</span></code> or <code class="docutils literal notranslate"><span class="pre">model_</span></code> <strong>does not compile</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_string</span></code> covers all enumerators; missing cases trigger warnings under <code class="docutils literal notranslate"><span class="pre">-Wall</span> <span class="pre">-Wextra</span> <span class="pre">-Werror</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_color</span></code> and <code class="docutils literal notranslate"><span class="pre">parse_model</span></code> return <code class="docutils literal notranslate"><span class="pre">std::nullopt</span></code> for unknown tokens and never throw.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make_vehicle</span></code> returns a disengaged <code class="docutils literal notranslate"><span class="pre">std::optional</span></code> for invalid input.</p></li>
+<li><p>All public methods and conversion helpers are documented and pass basic unit tests.</p></li>
+</ul>
+</section>
+<section id="bonus">
+<h3>Bonus<a class="headerlink" href="#bonus" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Serialization:</strong></p>
+<p>Implement <code class="docutils literal notranslate"><span class="pre">to_json</span></code> / <code class="docutils literal notranslate"><span class="pre">from_json</span></code> adapters for <code class="docutils literal notranslate"><span class="pre">nlohmann::json</span></code> mapping enums to strings via your conversion helpers.</p>
+</li>
+<li><p><strong>Hashing:</strong></p>
+<p>Provide a hasher for use in unordered containers:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">ColorHash</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="nf">operator</span><span class="p">()(</span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Underlying type control:</strong></p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">class</span> <span class="pre">Color</span> <span class="pre">:</span> <span class="pre">std::uint8_t</span></code> and <code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">class</span> <span class="pre">Model</span> <span class="pre">:</span> <span class="pre">std::uint8_t</span></code> to reduce footprint, and explain trade-offs in your report.</p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="references.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">References</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="this_pointer.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">The this Pointer</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, Z. Kootbally
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Exercises</a><ul>
+<li><a class="reference internal" href="#basic-class-implementation-with-encapsulation">1. Basic Class Implementation with Encapsulation</a></li>
+<li><a class="reference internal" href="#using-std-optional-for-safe-search-operations">2. Using <code class="docutils literal notranslate"><span class="pre">std::optional</span></code> for Safe Search Operations</a></li>
+<li><a class="reference internal" href="#constructor-best-practices-avoiding-two-step-initialization">3. Constructor Best Practices: Avoiding Two-Step Initialization</a></li>
+<li><a class="reference internal" href="#std-string-view-vs-const-std-string-performance">4. <code class="docutils literal notranslate"><span class="pre">std::string_view</span></code> vs. <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">std::string&amp;</span></code> Performance</a></li>
+<li><a class="reference internal" href="#complete-vehicle-system-implementation">5. Complete Vehicle System Implementation</a></li>
+<li><a class="reference internal" href="#scoped-enums-enum-class-for-type-safe-presets">6. Scoped Enums (<code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">class</span></code>) for Type-Safe Presets</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a></li>
+<li><a class="reference internal" href="#validation-criteria">Validation Criteria</a></li>
+<li><a class="reference internal" href="#bonus">Bonus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>
