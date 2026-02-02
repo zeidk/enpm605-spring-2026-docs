@@ -206,7 +206,7 @@ Now every Python script on the system can import from those paths:
    This is a system-wide change. Use this for packages you want available to **all** your projects.
 
 
-Method 3: Editable Install (``pip3 install -e .``)
+Method 3: Editable Install (``pip3 install``)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The most robust approach. Add a ``pyproject.toml`` to your package and install it in **editable mode**.
@@ -216,10 +216,10 @@ The most robust approach. Add a ``pyproject.toml`` to your package and install i
 
    [build-system]
    requires = ["setuptools"]
-   build-backend = "setuptools.backends._legacy:_Backend"
+   build-backend = "setuptools.build_meta"
 
    [project]
-   name = "shape"
+   name = "shape2"
    version = "0.1.0"
    description = "Simple shape geometry utilities for ENPM605"
    requires-python = ">=3.10"
@@ -229,7 +229,7 @@ Then install it:
 .. code-block:: console
 
    cd <path to shape>
-   pip3 install -e .
+   pip3 install -e . --break-system-packages
 
 - Works from **anywhere** — no path manipulation needed.
 - The ``-e`` flag means changes take effect **immediately** without reinstalling.
@@ -260,13 +260,13 @@ Summary of Discovery Approaches
    * - ``.pth`` files
      - System-wide
      - Shared libraries across projects
-   * - ``pip install -e .``
+   * - ``pip3 install``
      - System-wide
      - Reusable packages (recommended)
 
 .. note::
 
-   For this course, we will primarily use ``sys.path.insert()`` and ``pip install -e .``
+   For this course, we will primarily use ``sys.path.insert()`` and ``pip3 install``
 
 
 The ``__name__`` Guard
@@ -276,20 +276,9 @@ When a module is run directly, its ``__name__`` is set to ``"__main__"``. When i
 
 .. code-block:: python
 
-   import math
+   from shape.triangle import compute_area
 
-   def compute_area(base: float, height: float) -> float:
-       return 0.5 * base * height
-
-   def compute_perimeter(side1: float, side2: float, side3: float) -> float:
-       return side1 + side2 + side3
-
-   if __name__ == '__main__':
-       # Only runs when executed directly, not when imported
-       print(compute_area(4.5, 5.6))
-       print(compute_area(4.7, 6.0))
-       print(compute_area(4.8, 7.1))
-       print(compute_area(4.9, 8.45))
+   print(compute_area(3, 2))
 
 .. note::
 
@@ -298,12 +287,6 @@ When a module is run directly, its ``__name__`` is set to ``"__main__"``. When i
 
 Indentation
 ====================================================
-
-Create a file called ``indentation_demo.py`` to follow along.
-
-
-Python's Block Structure
-------------------------
 
 Unlike C++ or Java which use braces ``{}``, Python uses **indentation** to define blocks of code.
 
@@ -332,6 +315,8 @@ Unlike C++ or Java which use braces ``{}``, Python uses **indentation** to defin
 .. warning::
 
    Mixing tabs and spaces causes ``IndentationError``. Configure your editor to use **4 spaces** per indent level (PEP 8 standard).
+
+Create a file called ``indentation_demo.py`` to follow along.
 
 
 Boolean Type
@@ -609,6 +594,30 @@ Membership and Identity Operators
 .. important::
 
    **Rule**: Use ``==`` for value comparison. Use ``is`` only for ``None`` checks.
+
+
+Exercise 1: Operators (5 min)
+------------------------------
+
+Predict the output of each expression **before** running the code.
+
+.. code-block:: python
+
+   # Arithmetic
+   print(17 // 5)
+   print(17 % 5)
+   print(2 ** 0.5)
+   print(-7 // 2)
+
+   # Logical with non-boolean values
+   print(0 or "default")
+   print("hello" and "world")
+   print(not [])
+
+   # Chained comparison
+   x = 15
+   print(10 < x < 20)
+   print(10 < x > 20)
 
 
 Numeric Types
@@ -894,7 +903,7 @@ Strings are ordered sequences, so each character has a positional index.
 Slicing
 -------
 
-The slice syntax is ``[start:stop:stride]``:
+Slicing extracts a **substring** by specifying a range of indices using the syntax ``[start:stop:stride]``:
 
 - ``start``: Starting index (**inclusive**), defaults to 0.
 - ``stop``: Ending index (**exclusive**), defaults to end of string.
@@ -918,6 +927,34 @@ The slice syntax is ``[start:stop:stride]``:
    print(greeting[::2])   # "hlo" (every 2nd character)
    print(greeting[::-1])  # "olleh" (reverse!)
    print(greeting[4:1:-1])# "oll"
+
+
+Exercise 2: Strings (10 min)
+------------------------------
+
+**Part A**: Predict the outputs before running.
+
+.. code-block:: python
+
+   text = "Learn Python, be happy!"
+   print(text[6:12])
+   print(text[-6:])
+   print(text[::3])
+
+**Part B**: Using the variable ``quote = "Learn Python, be happy!"``
+
+- Task 1: Extract ``"Python"`` using only positive indices.
+- Task 2: Extract ``"Python"`` using only negative indices.
+- Task 3: Reverse ``"Python"`` to get ``"nohtyP"`` using slicing.
+- Task 4: Reverse the entire string.
+
+**Part C**: Print only the second half of a string.
+
+.. code-block:: python
+
+   text = "HelloWorld"
+   # second_half = ??
+   # print(second_half)  # Expected: World
 
 
 Control Flow
@@ -1011,8 +1048,83 @@ Nested Conditions
        print("Cool")
 
 
+Exercise 3: Control Flow (10 min)
+----------------------------------
+
+Write a program that determines if a year is a leap year.
+
+.. code-block:: python
+
+   year = 2024
+
+   # A year is a leap year if:
+   # - Divisible by 4 AND not divisible by 100
+   # - OR divisible by 400
+   # Print "Leap year" or "Not a leap year"
+
+.. tip::
+
+   Use ``%`` (modulus) to check divisibility. ``year % 4 == 0`` means divisible by 4.
+
+
 Putting It All Together
 ====================================================
+
+
+Exercise 4: Robot Status Monitor (15 min)
+------------------------------------------
+
+Write a program that monitors a robot's status using concepts from today's lecture.
+
+.. code-block:: python
+
+   # Robot parameters
+   robot_name = "Waffle_01"
+   battery = 65
+   speed = 0.8
+   status_log = "IDLE:MOVING:CHARGING:MOVING:IDLE"
+
+   # 1. Use an f-string to print: "Robot Waffle_01 | Battery: 65%"
+
+   # 2. Classify battery level using if/elif/else:
+   #    >= 80: "OK", 50-79: "LOW", 20-49: "WARNING", < 20: "CRITICAL"
+
+   # 3. Use string methods to:
+   #    a) Count how many times "MOVING" appears in status_log
+   #    b) Split status_log by ":" into a list
+   #    c) Check if the last status is "IDLE"
+
+   # 4. Use slicing to extract the first status entry from status_log
+
+   # 5. Create a formatted status message:
+   #    "Waffle_01 | Battery: LOW | Speed: 0.80 m/s | States: 5"
+
+
+Summary
+--------
+
+.. grid:: 1 2 2 2
+    :gutter: 3
+
+    .. grid-item-card::
+        :class-card: sd-border-primary
+
+        - **Packages & Modules** — Organize code; use ``from ... import ...`` (Approach 3)
+        - **Indentation** — Defines code blocks; use 4 spaces
+        - **Operators** — Arithmetic, relational, logical, membership, identity
+        - **Boolean Type** — Truthiness, falsy values, ``bool()``
+
+    .. grid-item-card::
+        :class-card: sd-border-primary
+
+        - **Numeric Types** — ``int`` (unlimited), ``float`` (IEEE 754), interning
+        - **Strings** — Immutable sequences; f-strings, methods, indexing, slicing
+        - **Control Flow** — ``if``/``elif``/``else``, ternary expressions
+
+.. note::
+
+   **Reminder**: Review and experiment with all provided code before next class.
+
 
 Preview: What's Next in L3
 ---------------------------
