@@ -51,3 +51,4 @@ After successfully completing this course, you will be able to:
    :titlesonly:
 
    lecture1/lecture1
+   lecture2/lecture2
