@@ -52,3 +52,4 @@ After successfully completing this course, you will be able to:
 
    lecture1/index
    lecture2/index
+   lecture3/index
