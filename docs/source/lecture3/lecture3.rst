@@ -542,6 +542,21 @@ Create a file called ``lists_demo.py`` to follow along with the examples below.
               print(a)  # [1, [2, 3, 4]]
               print(b)  # [99, [2, 3, 4]]
 
+           .. only:: html
+            
+           .. raw:: html
+
+               <div style="display:flex; justify-content:center; align-items:center; gap:1rem;">
+                  <img src="../_static/images/L3/shallow_light.png"
+                     alt="Example of a shallow copy"
+                     class="only-light"
+                     style="width:100%; border-radius:8px;">
+                  <img src="../_static/images/L3/shallow_dark.png"
+                     alt="Example of a shallow copy"
+                     class="only-dark"
+                     style="width:100%; border-radius:8px;">
+               </div>
+
        .. grid-item-card:: Deep Copy
            :class-card: sd-border-success
 
@@ -560,6 +575,21 @@ Create a file called ``lists_demo.py`` to follow along with the examples below.
 
               print(a)  # [1, [2, 3]]
               print(b)  # [99, [2, 3, 4]]
+
+           .. only:: html
+            
+           .. raw:: html
+
+               <div style="display:flex; justify-content:center; align-items:center; gap:1rem;">
+                  <img src="../_static/images/L3/deep_light.png"
+                     alt="Example of a deep copy"
+                     class="only-light"
+                     style="width:100%; border-radius:8px;">
+                  <img src="../_static/images/L3/deep_dark.png"
+                     alt="Example of a deep copy"
+                     class="only-dark"
+                     style="width:100%; border-radius:8px;">
+               </div>
 
    .. warning::
 
