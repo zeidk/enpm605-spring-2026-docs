@@ -38,7 +38,7 @@ Contents
 Next Steps
 ----------
 
-- In the next lecture, we will cover Functions — Part I:
+- In the next lecture, we will cover Functions:
 
   - Defining and calling functions
   - Parameters and arguments
