@@ -204,11 +204,6 @@ M
       type in Python is :term:`dict`. Mappings support key-based
       access (``d[key]``) and key membership testing (``key in d``).
 
-   Mutable
-      An object whose value can be changed after creation. Lists,
-      dictionaries, and sets are mutable. Integers, strings, and
-      tuples are :term:`immutable <Immutable>`.
-
 
 .. _l3-glossary-o:
 
@@ -261,17 +256,6 @@ S
       A concise syntax for creating sets:
       ``{expression for item in iterable if condition}``. Automatically
       removes duplicates.
-
-   Shallow Copy
-      A copy operation that creates a new object but copies references
-      to nested objects (not the nested objects themselves). Performed
-      using ``copy.copy()``, ``list.copy()``, or slicing ``[:]``.
-      Contrast with :term:`Deep Copy`.
-
-   Slicing
-      Extracting a subsequence from a sequence using the syntax
-      ``[start:stop:step]``. ``start`` is inclusive, ``stop`` is
-      exclusive. Works on lists, tuples, strings, and ranges.
 
    Symmetric Difference
       A set operation returning elements in either set but not in both.
@@ -346,8 +330,3 @@ W
       ``True``. Syntax: ``while condition:``. Must include logic to
       eventually make the condition ``False``, or the loop runs forever
       (infinite loop).
-
-   Immutable
-      An object whose value cannot be changed after creation. Integers,
-      floats, strings, tuples, and frozensets are immutable. Attempting
-      to modify an immutable object creates a new object instead.
