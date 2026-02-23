@@ -45,3 +45,4 @@ Contents
    lecture2/index
    lecture3/index
    lecture4/index
+   lecture5/index
