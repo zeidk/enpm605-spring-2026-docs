@@ -31,11 +31,11 @@ Contents
    :maxdepth: 2
    :titlesonly:
 
-   lecture5
-   exercises
-   quiz
-   glossary
-   references
+   l5_lecture
+   l5_exercises
+   l5_quiz
+   l5_glossary
+   l5_references
 
 Next Steps
 ----------

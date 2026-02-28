@@ -9,7 +9,8 @@ based on a specification — no starter code is provided.
 All files should be created inside your ``lecture2/`` workspace folder.
 
 
-.. dropdown:: 🧮 Exercise 1 – Operator Expressions
+.. dropdown:: Exercise 1 – Operator Expressions
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -19,7 +20,11 @@ All files should be created inside your ``lecture2/`` workspace folder.
     membership operators by writing a program that computes and reports
     mission statistics for an autonomous drone.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -67,7 +72,11 @@ All files should be created inside your ``lecture2/`` workspace folder.
        Altitude approved:      False
        All conditions met:     True
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -76,7 +85,8 @@ All files should be created inside your ``lecture2/`` workspace folder.
       the expected values above.
 
 
-.. dropdown:: 🔤 Exercise 2 – String Processing
+.. dropdown:: Exercise 2 – String Processing
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -85,7 +95,11 @@ All files should be created inside your ``lecture2/`` workspace folder.
     Practice string indexing, slicing, methods, and f-string formatting by
     writing a program that parses and reformats raw sensor log messages.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -134,7 +148,11 @@ All files should be created inside your ``lecture2/`` workspace folder.
        Reversed level: GNINRAW
        =====================
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -145,7 +163,8 @@ All files should be created inside your ``lecture2/`` workspace folder.
       acceptable).
 
 
-.. dropdown:: 🔀 Exercise 3 – Control Flow
+.. dropdown:: Exercise 3 – Control Flow
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -154,7 +173,11 @@ All files should be created inside your ``lecture2/`` workspace folder.
     Write conditional logic from scratch to implement a multi-factor
     decision system for an autonomous forklift operating in a warehouse.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -226,7 +249,11 @@ All files should be created inside your ``lecture2/`` workspace folder.
        Per-side clearance: 0.80 m — Acceptable: True
        DECISION: PROCEED
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 

@@ -9,7 +9,8 @@ based on a specification — no starter code is provided.
 All files should be created inside your ``lecture3/`` workspace folder.
 
 
-.. dropdown:: 🔄 Exercise 1 – Loop Challenges
+.. dropdown:: Exercise 1 – Loop Challenges
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -19,7 +20,11 @@ All files should be created inside your ``lecture3/`` workspace folder.
     and loop control statements (``break``, ``continue``, ``else``) by
     implementing several algorithmic patterns.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -85,7 +90,11 @@ All files should be created inside your ``lecture3/`` workspace folder.
        Task 5 - Countdown (skip multiples of 3):
        20 19 17 16 14 13 11 10 8 7 5 4 2 1
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -94,7 +103,8 @@ All files should be created inside your ``lecture3/`` workspace folder.
       expected format above.
 
 
-.. dropdown:: 📋 Exercise 2 – Collection Manipulations
+.. dropdown:: Exercise 2 – Collection Manipulations
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -104,7 +114,11 @@ All files should be created inside your ``lecture3/`` workspace folder.
     and sets by implementing a simple inventory management system for a
     robot parts warehouse.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -181,7 +195,11 @@ All files should be created inside your ``lecture3/`` workspace folder.
        === Part Lookup ===
        gps_module not found in inventory (default: 0 units @ $0.00)
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -191,7 +209,8 @@ All files should be created inside your ``lecture3/`` workspace folder.
     - Use appropriate data structures for each task (no hard-coding results).
 
 
-.. dropdown:: 🤖 Exercise 3 – Robot Fleet Analyzer
+.. dropdown:: Exercise 3 – Robot Fleet Analyzer
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -201,7 +220,11 @@ All files should be created inside your ``lecture3/`` workspace folder.
     sets, and comprehensions — to build a data analysis tool for a fleet of
     autonomous delivery robots.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -295,7 +318,11 @@ All files should be created inside your ``lecture3/`` workspace folder.
        R003: 18 deliveries, 91% battery
        R005: 14 deliveries, 67% battery
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 

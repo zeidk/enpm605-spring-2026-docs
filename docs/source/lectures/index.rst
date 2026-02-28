@@ -41,8 +41,8 @@ Contents
    :maxdepth: 3
    :titlesonly:
 
-   lecture1/index
-   lecture2/index
-   lecture3/index
-   lecture4/index
-   lecture5/index
+   lecture1/l1_index
+   lecture2/l2_index
+   lecture3/l3_index
+   lecture4/l4_index
+   lecture5/l5_index

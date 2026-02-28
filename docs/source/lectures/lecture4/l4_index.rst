@@ -29,11 +29,11 @@ Contents
    :maxdepth: 2
    :titlesonly:
 
-   lecture4
-   exercises
-   quiz
-   glossary
-   references
+   l4_lecture
+   l4_exercises
+   l4_quiz
+   l4_glossary
+   l4_references
 
 Next Steps
 ----------

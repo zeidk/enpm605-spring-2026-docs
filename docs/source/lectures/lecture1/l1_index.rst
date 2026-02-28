@@ -28,10 +28,10 @@ Contents
    :maxdepth: 2
    :titlesonly:
 
-   lecture1
-   quiz
-   glossary
-   references
+   l1_lecture
+   l1_quiz
+   l1_glossary
+   l1_references
 
 Next Steps
 ----------

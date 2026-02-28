@@ -9,7 +9,8 @@ based on a specification -- no starter code is provided.
 All files should be created inside your ``lecture5/`` workspace folder.
 
 
-.. dropdown:: 🔧 Exercise 1 -- First-Class Functions and Lambdas
+.. dropdown:: Exercise 1 -- First-Class Functions and Lambdas
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -19,7 +20,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
     expressions, and built-in higher-order functions (``map``, ``filter``,
     ``sorted``).
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -70,7 +75,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
        By age: [('Bob', 25), ('Alice', 30), ('Charlie', 35)]
        By name length: [('Bob', 25), ('Alice', 30), ('Charlie', 35)]
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -79,7 +88,8 @@ All files should be created inside your ``lecture5/`` workspace folder.
       expected format above.
 
 
-.. dropdown:: 🔍 Exercise 2 -- Write Your Own Decorators
+.. dropdown:: Exercise 2 -- Write Your Own Decorators
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -88,7 +98,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
     Practice writing decorators with ``*args``/``**kwargs``, using
     ``functools.wraps``, and transforming return values.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -130,7 +144,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
        === uppercase_result decorator ===
        get_name() returned: ALICE
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -139,7 +157,8 @@ All files should be created inside your ``lecture5/`` workspace folder.
       expected format above.
 
 
-.. dropdown:: 🔬 Exercise 3 -- Closures, Callables, and Partials
+.. dropdown:: Exercise 3 -- Closures, Callables, and Partials
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -148,7 +167,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
     Practice closures with ``nonlocal``, the ``callable()`` built-in, and
     ``functools.partial`` for argument freezing.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -188,7 +211,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
        log_info("System started"): [INFO] System started
        log_info("Sensor ready"): [INFO] Sensor ready
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -197,7 +224,8 @@ All files should be created inside your ``lecture5/`` workspace folder.
       expected format above.
 
 
-.. dropdown:: 🤖 Exercise 4 -- Data Processing Pipeline
+.. dropdown:: Exercise 4 -- Data Processing Pipeline
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -206,7 +234,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
     Combine decorators, closures, partials, and higher-order functions to
     build a simple data processing pipeline for sensor readings.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -250,7 +282,11 @@ All files should be created inside your ``lecture5/`` workspace folder.
        Converted to Fahrenheit: [59.36, 73.04, 46.58, 86.0, 63.68]
        Sorted (ascending): [46.58, 59.36, 63.68, 73.04, 86.0]
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 

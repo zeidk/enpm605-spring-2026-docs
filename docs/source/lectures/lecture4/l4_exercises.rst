@@ -9,7 +9,8 @@ based on a specification -- no starter code is provided.
 All files should be created inside your ``lecture4/`` workspace folder.
 
 
-.. dropdown:: 🔧 Exercise 1 -- Function Basics and Arguments
+.. dropdown:: Exercise 1 -- Function Basics and Arguments
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -19,7 +20,11 @@ All files should be created inside your ``lecture4/`` workspace folder.
     values, default arguments, keyword arguments, ``*args``, and ``**kwargs``
     by implementing a set of utility functions for robot configuration.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -78,7 +83,11 @@ All files should be created inside your ``lecture4/`` workspace folder.
        Before: a=(1, 2), b=(3, 4)
        After:  a=(3, 4), b=(1, 2)
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -87,7 +96,8 @@ All files should be created inside your ``lecture4/`` workspace folder.
       expected format above.
 
 
-.. dropdown:: 🔍 Exercise 2 -- Scope and Pass-by-Assignment
+.. dropdown:: Exercise 2 -- Scope and Pass-by-Assignment
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -97,7 +107,11 @@ All files should be created inside your ``lecture4/`` workspace folder.
     keywords, and pass-by-assignment behavior with mutable and immutable
     objects.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -165,7 +179,11 @@ All files should be created inside your ``lecture4/`` workspace folder.
        Inside function: [99, 99, 99]
        Outside after call: [1, 2, 3]
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 
@@ -174,7 +192,8 @@ All files should be created inside your ``lecture4/`` workspace folder.
       expected format above.
 
 
-.. dropdown:: 🤖 Exercise 3 -- Robot Toolkit
+.. dropdown:: Exercise 3 -- Robot Toolkit
+    :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
@@ -184,7 +203,11 @@ All files should be created inside your ``lecture4/`` workspace folder.
     scope, pass-by-assignment, type hints, docstrings, and recursion -- to
     build a toolkit of reusable functions for a robot navigation system.
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Specification**
 
@@ -254,7 +277,11 @@ All files should be created inside your ``lecture4/`` workspace folder.
        Distances: [5.0, 3.0, 4.0]
        Recursive sum: 12.0
 
-    ----
+
+    .. raw:: html
+
+       <hr>
+
 
     **Deliverables**
 

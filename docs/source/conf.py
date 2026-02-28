@@ -1,6 +1,5 @@
 import os, sys
 from datetime import date
-import json
 
 project = "ENPM605 Spring 2026"
 author = "Z. Kootbally"
@@ -23,10 +22,8 @@ extensions = [
     "sphinx.ext.viewcode",
 ]
 
-
 # Prerender options for better performance
 katex_prerender = True
-
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
@@ -42,39 +39,61 @@ todo_include_todos = True
 
 templates_path = ["_templates"]
 exclude_patterns = []
-# html_theme = 'sphinx_rtd_theme'
-html_theme = "furo"
-# Furo-specific options (all optional)
+
+# ---------------------------------------------------------------------------
+# PyData Sphinx Theme
+# ---------------------------------------------------------------------------
+html_theme = "pydata_sphinx_theme"
+
 html_theme_options = {
-    "sidebar_hide_name": True,  # hides large project name in sidebar
-    "source_repository": "https://github.com/zeidk/enpm605-spring-2026-docs",
-    "source_branch": "main",
-    # "source_directory": "docs/source/",
-    "light_logo": "images/enpm605_logo_light.png",
-    "dark_logo": "images/enpm605_logo_dark.png",
+    # Logo (place files in _static/images/)
+    "logo": {
+        "text": "ENPM605 Spring 2026",
+        "image_light": "_static/images/enpm605_logo_light.png",
+        "image_dark": "_static/images/enpm605_logo_dark.png",
+    },
+    # Header / navbar icon links
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/zeidk/enpm605-spring-2026-docs",
+            "icon": "fa-brands fa-github",
+            "type": "fontawesome",
+        },
+    ],
+    "back_to_top_button": True,
+    # Light/dark mode toggle
+    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    # Navigation
+    "navigation_depth": 3,
+    "show_nav_level": 1,
+    "show_toc_level": 2,
+    "show_prev_next": True,
+    # Footer
+    "footer_start": ["copyright"],
+    "footer_end": ["theme-version"],
+    # Syntax highlighting for light and dark modes
+    "pygments_light_style": "igor",
+    "pygments_dark_style": "nord",
+}
+
+# Edit on GitHub button
+html_context = {
+    "github_user": "zeidk",
+    "github_repo": "enpm818t-spring-2026-docs",
+    "github_version": "main",
+    "doc_path": "docs/source",
+    "default_mode": "dark",
 }
 
 numfig = True
 numfig_format = {
-    "pseudocode": "Algorithm %s"  # This is what sphinxcontrib-pseudocode uses
+    "pseudocode": "Algorithm %s",
 }
 
 html_static_path = ["_static"]
 master_doc = "index"
 
 html_css_files = [
-    "custom.css",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
 ]
-# html_js_files = ['custom.js']
-
-# ----------------------------------------------------------------------
-# Custom CSS for Furo Theme
-# ----------------------------------------------------------------------
-
-
-# def setup(app):
-#     app.add_css_file(
-#         "custom.css",
-#         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css",
-#     )
