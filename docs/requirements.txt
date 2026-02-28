@@ -4,7 +4,7 @@
 
 # Core
 sphinx>=7.3
-furo
+pydata-sphinx-theme
 
 # Markdown & rich content
 myst-parser
