@@ -32,6 +32,15 @@ Schedule
    * - L3
      - Python Fundamentals, Part II
      - Lists, tuples, dictionaries, sets, loops, list comprehensions, copying
+   * - L4
+     - Introduction to Functions
+     - Function definition, arguments (positional, default, keyword, ``*args``, ``**kwargs``), scopes (LEGB), pass-by-assignment, type hints, recursion
+   * - L5
+     - Advanced Functions
+     - Programming paradigms, first-class functions, lambda expressions, closures, decorators, ``functools.wraps``, ``functools.partial``
+   * - L6
+     - Object-Oriented Programming, Part I
+     - OOP design phase, classes and objects, dunder methods, operator overloading, abstraction, encapsulation, ``@property``
 
 
 Contents
