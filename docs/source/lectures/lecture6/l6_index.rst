@@ -1,5 +1,5 @@
 ====================================================
-L6: Object-Oriented Programming, Part I
+L6: Object-Oriented Programming — Part I
 ====================================================
 
 Overview
