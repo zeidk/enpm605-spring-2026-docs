@@ -20,7 +20,6 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
-    'sphinxcontrib.plantuml',
 ]
 
 plantuml = 'https://www.plantuml.com/plantuml/png/'
