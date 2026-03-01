@@ -28,3 +28,4 @@ Contents
    :titlesonly:
 
    rwa1
+   rwa2

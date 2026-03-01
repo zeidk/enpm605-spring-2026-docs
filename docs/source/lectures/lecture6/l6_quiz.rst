@@ -647,7 +647,7 @@ Essay Questions
 .. admonition:: Question 30
    :class: hint
 
-   **Explain the difference between operator overloading and method overriding.** Provide a brief example of each.
+   **What is operator overloading?** 
 
    *(2-4 sentences)*
 
@@ -657,6 +657,4 @@ Essay Questions
    *Key points to include:*
 
    - Operator overloading teaches Python what an existing operator (like ``+`` or ``==``) should do when applied to your class, by implementing the corresponding dunder method (e.g., ``__add__``, ``__eq__``).
-   - Method overriding occurs when a child class provides its own version of a method that the parent class already has, replacing the inherited behavior.
    - Overloading example: implementing ``__add__`` on ``Sensor`` so that ``lidar + camera`` returns a new fused sensor.
-   - Overriding example: a ``Scout`` subclass of ``Robot`` replacing the ``status()`` method to return ``"patrolling"`` instead of ``"idle"``.
