@@ -46,3 +46,4 @@ Contents
    lecture3/l3_index
    lecture4/l4_index
    lecture5/l5_index
+   lecture6/l6_index
