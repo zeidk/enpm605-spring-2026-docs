@@ -20,7 +20,11 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
+    'sphinxcontrib.plantuml',
 ]
+
+plantuml = 'https://www.plantuml.com/plantuml/png/'
+plantuml_output_format = 'png'
 
 # Prerender options for better performance
 katex_prerender = True

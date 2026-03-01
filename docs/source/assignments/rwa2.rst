@@ -3,7 +3,6 @@ RWA 2: Search and Rescue Mission Planner
 ====================================================
 
 
-
 Overview
 ========
 
