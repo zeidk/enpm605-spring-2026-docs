@@ -592,8 +592,10 @@ Phase 2: Implementation (44 pts)
           ========================================
 
 
-----
 
+
+Grading, Submission, and Policies
+==================================
 
 .. dropdown:: Grading Rubric
    :open:
