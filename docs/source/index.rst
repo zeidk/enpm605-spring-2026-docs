@@ -50,5 +50,6 @@ After successfully completing this course, you will be able to:
    :maxdepth: 3
    :titlesonly:
 
+   changelog/changelog
    lectures/index
    assignments/index
