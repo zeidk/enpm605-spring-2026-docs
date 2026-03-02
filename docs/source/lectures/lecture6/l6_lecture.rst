@@ -9,7 +9,6 @@ Introduction to OOP
 
 Core principles of object-oriented programming.
 
-Refer to ``L6_oop_intro.py`` to follow along with the examples below.
 
 
 .. dropdown:: What Is OOP?
