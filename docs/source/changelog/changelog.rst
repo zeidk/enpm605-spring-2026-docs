@@ -5,6 +5,42 @@ Changelog
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
 
+.. dropdown:: v1.2.0 -- L6 Lecture, Exercises, and Quiz Updated (2026-03-02)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Lecture Notes (l6_lecture.rst)
+
+   - Added "How Do We Achieve Abstraction?" dropdown with three levels (Documentation, Public Interface, Abstract Classes as L7 preview)
+   - Added "How to Achieve Encapsulation" summary dropdown
+   - Split ``@property`` dropdown into four separate sections: intro, Defining a Getter, Defining a Setter with Validation, and Using Properties
+   - Added "Encapsulation Summary" dropdown after Read-Only Properties
+   - Updated Class Attributes dropdown: removed ``max_reach`` for clarity, added shadowing warning (``self`` vs class name)
+   - Added full **Appendix: Exception Handling** section with 12 dropdowns covering: runtime errors, common built-in exceptions, ``try``/``except``, accessing the exception object, handling multiple exception types, ``else`` clause, ``finally`` clause, full ``try`` statement, ``raise`` statement, why ``raise`` matters for OOP, and ``return NotImplemented`` vs ``raise NotImplementedError``
+
+   .. rubric:: Exercises (l6_exercises.rst)
+
+   - Exercises 1, 2, and 3: added full ``if __name__ == "__main__"`` blocks from ``L6_exercises.py``
+   - Updated expected output for all three exercises to match the provided main blocks
+
+   .. rubric:: Quiz (l6_quiz.rst)
+
+   - Updated quiz description to reference the exception handling appendix
+   - Added 3 new questions (Q31--Q33) in a new "Exception Handling (Appendix)" section covering ``try``/``except`` output, ``else`` clause purpose, and ``ValueError`` vs ``TypeError``
+
+   .. rubric:: Slides (ENPM605-L6-v1_0.tex)
+
+   - Bumped version to v1.2
+   - Restructured lecture into Design Phase and Implementation Phase sections
+   - Added "Before We Start" slide referencing the appendix
+   - Added Class Attributes slide with shadowing warning
+   - Added "How Do We Achieve Abstraction?" slide (3 levels)
+   - Added "How to Achieve Encapsulation" summary slide
+   - Split ``@property`` content across separate slides (Pythonic Way, Getter, Setter, Using, Read-Only, Summary)
+   - Added Exercise 1, 2, and 3 slides with specifications
+   - Added full Appendix: Exception Handling section (overview, try/except, else, finally, full try, raise, raise for OOP, NotImplemented vs NotImplementedError)
+
+
 .. dropdown:: v1.1.0 -- RWA 2 Released (2026-03-01)
    :icon: tag
    :class-container: sd-border-warning
