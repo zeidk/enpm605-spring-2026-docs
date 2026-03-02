@@ -6,7 +6,8 @@ This quiz covers the key concepts from Lecture 6: Object-Oriented
 Programming I, including OOP principles, design phase (requirement
 analysis, business rules, noun/verb analysis), classes and objects,
 ``self``, ``__init__``, instance and class attributes, dunder methods,
-operator overloading, abstraction, encapsulation, and ``@property``.
+operator overloading, abstraction, encapsulation, ``@property``, and
+exception handling (appendix).
 
 .. note::
 
@@ -658,3 +659,83 @@ Essay Questions
 
    - Operator overloading teaches Python what an existing operator (like ``+`` or ``==``) should do when applied to your class, by implementing the corresponding dunder method (e.g., ``__add__``, ``__eq__``).
    - Overloading example: implementing ``__add__`` on ``Sensor`` so that ``lidar + camera`` returns a new fused sensor.
+
+
+----
+
+
+Exception Handling (Appendix)
+=============================
+
+.. admonition:: Question 31
+   :class: hint
+
+   What is the output of the following code?
+
+   .. code-block:: python
+
+      def compute_speed(distance: float, time: float) -> float:
+          return distance / time
+
+      try:
+          speed = compute_speed(100.0, 0.0)
+          print(f"Speed: {speed}")
+      except ZeroDivisionError:
+          print("Cannot divide by zero")
+
+   A. ``Speed: inf``
+
+   B. ``Cannot divide by zero``
+
+   C. ``ZeroDivisionError: float division by zero``
+
+   D. ``None``
+
+.. dropdown:: Answer
+   :class-container: sd-border-success
+
+   **B** -- ``Cannot divide by zero``
+
+   Dividing by ``0.0`` raises a ``ZeroDivisionError``. The ``except`` block catches it and prints the error message instead of crashing.
+
+
+.. admonition:: Question 32
+   :class: hint
+
+   What is the purpose of the ``else`` clause in a ``try``/``except`` block?
+
+   A. It runs when an exception is raised.
+
+   B. It runs only when the ``try`` block completes without raising an exception.
+
+   C. It runs regardless of whether an exception occurred.
+
+   D. It replaces the ``except`` block for unknown exception types.
+
+.. dropdown:: Answer
+   :class-container: sd-border-success
+
+   **B** -- It runs only when the ``try`` block completes without raising an exception.
+
+   The ``else`` clause separates the code that might fail (inside ``try``) from the code that should only run on success. The ``finally`` clause is the one that runs unconditionally.
+
+
+.. admonition:: Question 33
+   :class: hint
+
+   Which exception type should you raise when a function receives an argument of the correct type but with an invalid value (e.g., a negative battery level)?
+
+   A. ``TypeError``
+
+   B. ``ValueError``
+
+   C. ``AttributeError``
+
+   D. ``NotImplementedError``
+
+.. dropdown:: Answer
+   :class-container: sd-border-success
+
+   **B** -- ``ValueError``
+
+   ``ValueError`` is used when the type is correct but the value is invalid. ``TypeError`` is used when the type itself is wrong. For example, passing ``-10`` (an ``int``) when only positive integers are allowed is a ``ValueError``, but passing ``"full"`` (a ``str``) when an ``int`` is expected is a ``TypeError``.

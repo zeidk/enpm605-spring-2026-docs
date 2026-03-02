@@ -428,12 +428,11 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
 .. dropdown:: Class Attributes
    :open:
 
-   Class attributes are shared by all instances. They are defined inside the class body but outside any method.
+   Class attributes are defined directly in the class body, outside any method. They are shared by all instances and accessed through the class name.
 
    .. code-block:: python
 
       class RobotArm:
-          max_reach = 1.2         # Class attribute (shared)
           total_arms = 0          # Class attribute (shared)
 
           def __init__(self, station: int):
@@ -446,9 +445,12 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
           arm_1 = RobotArm(station=1)
           arm_2 = RobotArm(station=2)
           print(RobotArm.total_arms)    # 2 (accessed via class)
-          print(arm_1.max_reach)        # 1.2 (accessed via instance)
-          print(arm_1.station)          # 1
-          # print(RobotArm.station)     # AttributeError!
+          print(arm_1.total_arms)       # 2 (accessed via instance)
+          print(arm_2.total_arms)       # 2
+
+   - Class attributes are defined outside ``__init__``, directly in the class body.
+   - All instances share the same class attribute. Modifying it via ``RobotArm.total_arms`` is visible everywhere.
+   - Always modify class attributes through the **class name** (``RobotArm.total_arms += 1``), not through ``self``. Using ``self.total_arms += 1`` creates a new instance attribute that shadows the class attribute.
 
 
 Implementation Phase: Dunder Methods
@@ -757,6 +759,55 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
       **Separation of Concerns**: Abstraction separates *what* an object does from *how* it does it. This makes code easier to maintain and extend.
 
 
+.. dropdown:: How Do We Achieve Abstraction?
+   :open:
+
+   Abstraction in Python is achieved at multiple levels. In this lecture we focus on the first two. The third level uses inheritance, which we cover in L7.
+
+   .. code-block:: python
+
+      class Robot:
+          """A robot that performs tasks.
+
+          The caller only needs to know that recharge() restores
+          the battery. How it works internally is hidden.
+          """
+
+          def __init__(self, name: str, battery: int = 100):
+              self.name = name
+              self.battery = battery
+
+          def recharge(self):
+              """Restore battery to full."""
+              # Internal details hidden:
+              # - validate current state
+              # - reset drain counter
+              # - log the recharge event
+              self.battery = 100
+
+      if __name__ == "__main__":
+          scout = Robot("Scout")
+          scout.recharge()        # Simple interface
+          print(scout.battery)    # 100
+
+   **Level 1: Documentation**
+
+   - A docstring describes *what* a class or method does without exposing *how*.
+   - The end-user reads the docstring, not the source code.
+
+   **Level 2: Public Interface**
+
+   - Public methods (e.g., ``recharge()``) define what the object can do.
+   - Internal logic (validation, logging, state management) is hidden inside the method body.
+   - The end-user only sees a simple interface.
+
+   **Level 3: Abstract Classes (L7)**
+
+   - Python's ``abc`` module lets you define abstract methods that subclasses **must** implement.
+   - This enforces a contract: every subclass guarantees the same interface.
+   - We will cover this in Lecture 7.
+
+
 .. dropdown:: What Is Encapsulation?
    :open:
 
@@ -782,6 +833,13 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
    .. warning::
 
       Without encapsulation, external code can set ``battery`` to a string, causing methods to break. Encapsulation prevents this by controlling how attributes are accessed and modified.
+
+
+.. dropdown:: How to Achieve Encapsulation
+   :open:
+
+   - Prefix all attributes with a leading underscore to signal they are non-public.
+   - Provide controlled access through getter and setter decorators (``@property``).
 
 
 .. dropdown:: Public vs. Non-Public Members
@@ -850,6 +908,22 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
 
       class Robot:
           def __init__(self, name: str, battery: int = 100):
+              self._name = name       # non-public attribute
+              self._battery = battery  # non-public attribute
+
+   - Attributes prefixed with ``_`` signal that they should not be accessed directly.
+   - External code interacts with these attributes through properties instead.
+
+
+.. dropdown:: Defining a Getter
+   :open:
+
+   Applying ``@property`` to a method turns it into a getter. When external code accesses ``robot.battery``, Python automatically calls this method and returns its result.
+
+   .. code-block:: python
+
+      class Robot:
+          def __init__(self, name: str, battery: int = 100):
               self._name = name
               self._battery = battery
 
@@ -858,15 +932,33 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
               """The battery level of the robot."""
               return self._battery
 
-          @battery.setter
-          def battery(self, value: int):
-              if not isinstance(value, int) or not (0 <= value <= 100):
-                  raise ValueError(
-                      "Battery must be an integer between 0 and 100"
-                  )
-              self._battery = value
+   - The method name (``battery``) becomes the attribute name used by external code.
+   - Accessing ``robot.battery`` calls this method behind the scenes.
+   - Without a setter, the attribute is read-only.
 
-   **Using Properties**
+
+.. dropdown:: Defining a Setter with Validation
+   :open:
+
+   The ``@battery.setter`` decorator defines what happens when external code assigns a value to ``robot.battery``. This is where you enforce constraints on incoming data.
+
+   .. code-block:: python
+
+      @battery.setter
+      def battery(self, value: int):
+          if not isinstance(value, int) or not (0 <= value <= 100):
+              raise ValueError(
+                  "Battery must be an integer between 0 and 100"
+              )
+          self._battery = value
+
+   - The decorator name must match the property: ``@battery.setter``.
+   - Invalid values raise an exception before the attribute is modified.
+   - The non-public attribute ``_battery`` is only updated if validation passes.
+
+
+.. dropdown:: Using Properties
+   :open:
 
    From the caller's perspective, properties look and feel exactly like regular attributes. The validation logic is completely hidden behind the assignment syntax.
 
@@ -876,6 +968,7 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
           scout = Robot("Scout")
           print(scout.battery)      # 100  (calls the getter)
           scout.battery = 80         # OK   (calls the setter with validation)
+          print(scout.battery)       # 80   (calls the getter)
           # scout.battery = "full"  # ValueError!
 
    - ``scout.battery`` on the right side of an expression triggers the getter.
@@ -906,6 +999,14 @@ Refer to ``L6_classes_objects.py`` to follow along with the examples below.
       scout = Robot("Scout")
       print(scout.name)      # Scout
       # scout.name = "Bob"   # AttributeError: Cannot rename a robot after creation
+
+
+.. dropdown:: Encapsulation Summary
+   :open:
+
+   - Prefix non-public attributes with an underscore (``_name``).
+   - Use ``@property`` for controlled access instead of explicit getters/setters.
+   - While the ``property()`` built-in function works, the decorator syntax is preferred.
 
 
 Putting It All Together
@@ -984,3 +1085,315 @@ Preview: What's Next in L7
 .. note::
 
    Today's lecture gives you the OOP fundamentals that are essential for understanding relationships, inheritance, and polymorphism in the next lecture.
+
+
+Appendix: Exception Handling
+====================================================
+
+This appendix introduces exception handling, a prerequisite for understanding how classes validate their own data. The ``raise`` statement and ``try``/``except`` blocks are used throughout the OOP implementation to enforce business rules and keep objects in a valid state.
+
+
+
+.. dropdown:: What Happens When Things Go Wrong?
+   :open:
+
+   Programs encounter errors at runtime: invalid input, missing files, impossible calculations. Without a mechanism to handle these errors, the program crashes immediately.
+
+   .. code-block:: python
+
+      def compute_speed(distance: float, time: float) -> float:
+          return distance / time
+
+      speed = compute_speed(100.0, 0.0)  # ZeroDivisionError!
+      print(f"Speed: {speed}")  # This line never runs
+
+   Python uses **exceptions** to signal that something went wrong. An unhandled exception terminates the program and prints a traceback.
+
+
+.. dropdown:: Common Built-in Exceptions
+   :open:
+
+   .. list-table:: Common built-in exceptions in Python
+      :widths: 25 55
+      :header-rows: 1
+      :class: compact-table
+
+      * - Exception
+        - Raised When
+      * - ``ZeroDivisionError``
+        - Dividing by zero
+      * - ``TypeError``
+        - Wrong type for an operation
+      * - ``ValueError``
+        - Right type but invalid value
+      * - ``IndexError``
+        - List index out of range
+      * - ``KeyError``
+        - Dictionary key not found
+      * - ``FileNotFoundError``
+        - File does not exist
+      * - ``AttributeError``
+        - Accessing a nonexistent attribute
+      * - ``NotImplementedError``
+        - Method not yet implemented
+
+   .. note::
+
+      All exceptions inherit from ``BaseException``. The ones we typically catch inherit from ``Exception``.
+
+
+.. dropdown:: The ``try``/``except`` Block
+   :open:
+
+   A ``try``/``except`` block lets you catch an exception and respond to it instead of letting the program crash.
+
+   .. code-block:: python
+
+      def compute_speed(distance: float, time: float) -> float:
+          return distance / time
+
+      try:
+          speed = compute_speed(100.0, 0.0)
+          print(f"Speed: {speed}")
+      except ZeroDivisionError:
+          print("Error: time cannot be zero")
+
+   - Code inside ``try`` runs normally until an exception occurs.
+   - If the exception matches the type in ``except``, that block runs instead of crashing.
+   - If no exception occurs, the ``except`` block is skipped entirely.
+
+
+.. dropdown:: Accessing the Exception Object
+   :open:
+
+   You can capture the exception object using ``as`` to inspect its message or pass it along.
+
+   .. code-block:: python
+
+      values = [10, 20, 30]
+
+      try:
+          print(values[5])
+      except IndexError as e:
+          print(f"Caught an error: {e}")
+
+   - The variable ``e`` holds the exception instance.
+   - Printing ``e`` displays the error message.
+   - This is useful for logging errors or displaying user-friendly messages.
+
+
+.. dropdown:: Handling Multiple Exception Types
+   :open:
+
+   You can handle different exceptions separately, or group them in a single ``except`` clause.
+
+   **Separate Handlers**
+
+   .. code-block:: python
+
+      try:
+          result = int("abc") / 0
+      except ValueError:
+          print("Invalid value")
+      except ZeroDivisionError:
+          print("Cannot divide by 0")
+
+   **Grouped Handler**
+
+   .. code-block:: python
+
+      try:
+          result = int("abc") / 0
+      except (ValueError, ZeroDivisionError) as e:
+          print(f"Error: {e}")
+
+   .. warning::
+
+      Avoid catching bare ``except:`` or ``except Exception:`` unless you have a good reason. Overly broad handlers can hide bugs by silently swallowing unexpected errors.
+
+
+.. dropdown:: The ``else`` Clause
+   :open:
+
+   The ``else`` clause runs only when the ``try`` block completes without raising an exception. It separates the code that might fail from the code that should only run on success.
+
+   .. code-block:: python
+
+      def parse_battery(value: str) -> int:
+          try:
+              level = int(value)
+          except ValueError:
+              print(f"Cannot parse '{value}' as an integer")
+              return -1
+          else:
+              print(f"Successfully parsed battery level: {level}")
+              return level
+
+      parse_battery("85")     # Successfully parsed battery level: 85
+      parse_battery("full")   # Cannot parse 'full' as an integer
+
+   - Code in ``else`` only executes if ``try`` raised no exception.
+   - This keeps the ``try`` block minimal: only wrap the code that might fail.
+   - Without ``else``, you would place the success logic inside ``try``, which risks accidentally catching exceptions from that logic too.
+
+
+.. dropdown:: The ``finally`` Clause
+   :open:
+
+   The ``finally`` clause runs unconditionally, whether an exception occurred or not. It is used for cleanup actions that must always execute.
+
+   .. code-block:: python
+
+      def read_config(filename: str):
+          file = None
+          try:
+              file = open(filename)
+              data = file.read()
+              print(f"Loaded {len(data)} characters")
+          except FileNotFoundError:
+              print(f"'{filename}' not found")
+          finally:
+              if file is not None:
+                  file.close()
+              print("Cleanup complete")
+
+      read_config("robot.cfg")
+      # 'robot.cfg' not found
+      # Cleanup complete
+
+   - ``finally`` executes after ``try``, ``except``, and ``else``, regardless of the outcome.
+   - Common use cases: closing files, releasing network connections, resetting hardware.
+   - The ``finally`` block runs even if a ``return`` statement is reached inside ``try`` or ``except``.
+
+
+.. dropdown:: The Full ``try`` Statement
+   :open:
+
+   All four clauses can be combined. The execution order is always: ``try``, then ``except`` or ``else``, then ``finally``.
+
+   .. code-block:: python
+
+      def read_sensor(value: str) -> float:
+          try:
+              reading = float(value)
+          except ValueError:
+              print(f"Invalid: {value}")
+              reading = 0.0
+          else:
+              print(f"Valid: {reading}")
+          finally:
+              print("Read attempt complete")
+          return reading
+
+      read_sensor("42.5")
+      # Valid: 42.5
+      # Read attempt complete
+
+      read_sensor("bad")
+      # Invalid: bad
+      # Read attempt complete
+
+   .. note::
+
+      **Rule of thumb**: Use ``else`` to keep the ``try`` block minimal. Use ``finally`` for cleanup that must happen regardless of success or failure. Neither clause is required, but both improve code clarity when used appropriately.
+
+
+.. dropdown:: The ``raise`` Statement
+   :open:
+
+   The ``raise`` statement lets you **signal an error explicitly** when your code detects an invalid condition. This is how you enforce rules and constraints in your own functions and classes.
+
+   .. code-block:: python
+
+      def set_battery(level: int):
+          if not isinstance(level, int):
+              raise TypeError("Battery level must be an integer")
+          if not (0 <= level <= 100):
+              raise ValueError("Battery level must be between 0 and 100")
+          print(f"Battery set to {level}%")
+
+      set_battery(80)       # Battery set to 80%
+      set_battery("full")   # TypeError: Battery level must be an integer
+      set_battery(150)      # ValueError: Battery level must be between 0 and 100
+
+   - ``raise ExceptionType("message")`` creates an exception object and immediately stops normal execution.
+   - Choose the exception type that best describes the problem: ``TypeError`` for wrong types, ``ValueError`` for invalid values.
+   - The caller can catch these exceptions with ``try``/``except``.
+
+
+.. dropdown:: Why ``raise`` Matters for OOP
+   :open:
+
+   Later in this lecture, we write classes that validate their own data. The ``raise`` statement is the mechanism that makes this possible.
+
+   .. code-block:: python
+
+      class Robot:
+          def __init__(self, name: str, battery: int = 100):
+              if not isinstance(battery, int) or not (0 <= battery <= 100):
+                  raise ValueError("Battery must be an integer between 0 and 100")
+              self._name = name
+              self._battery = battery
+
+      robot = Robot("Scout", 80)   # OK
+      robot = Robot("Scout", 200)  # ValueError!
+
+   .. note::
+
+      **Key Idea**: Classes use ``raise`` to reject invalid data at the point of entry. This keeps objects in a valid state and prevents bugs from propagating through the rest of the program.
+
+
+.. dropdown:: ``return NotImplemented`` vs. ``raise NotImplementedError``
+   :open:
+
+   These look similar but serve completely different purposes.
+
+   **``return NotImplemented``**
+
+   - ``NotImplemented`` is a **value**, not an exception. You ``return`` it, never ``raise`` it.
+   - Used inside dunder methods (``__eq__``, ``__gt__``, ``__add__``, etc.).
+   - When Python receives ``NotImplemented``, it tries the reflected method on the other operand (e.g., ``other.__eq__(self)``).
+
+   .. code-block:: python
+
+      class Sensor:
+          def __init__(self, sensor_type: str, range_m: float):
+              self.sensor_type = sensor_type
+              self.range_m = range_m
+
+          def __eq__(self, other):
+              if isinstance(other, Sensor):
+                  return self.range_m == other.range_m
+              return NotImplemented
+
+      if __name__ == "__main__":
+          lidar = Sensor("lidar", 50.0)
+          camera = Sensor("camera", 50.0)
+          ultrasonic = Sensor("ultrasonic", 30.0)
+          print(lidar == camera)      # True
+          print(lidar == ultrasonic)  # False
+          print(lidar == "lidar")     # False
+
+   **``raise NotImplementedError``**
+
+   - ``NotImplementedError`` is an **exception**. You ``raise`` it, never ``return`` it.
+   - Used in methods that are meant to be overridden by subclasses (covered in L7).
+   - Calling the method without overriding it crashes immediately with a clear error message.
+
+   .. code-block:: python
+
+      class Robot:
+          def __init__(self, name: str):
+              self.name = name
+
+          def move(self, direction: str):
+              raise NotImplementedError("Subclasses must implement move()")
+
+      if __name__ == "__main__":
+          robot = Robot("Base")
+          robot.move("north")
+          # NotImplementedError: Subclasses must implement move()
+
+   .. warning::
+
+      A common mistake is writing ``raise NotImplemented`` (without "Error"). This technically works but raises a confusing ``TypeError`` instead. Always use ``raise NotImplementedError``.

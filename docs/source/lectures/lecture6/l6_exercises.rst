@@ -57,20 +57,56 @@ All files should be created inside your ``lecture6/`` workspace folder.
          tasks.
        - Print ``Robot.total_robots``.
 
+    .. code-block:: python
+
+       if __name__ == '__main__':
+           # Create two Robot instances
+           robot1 = Robot("Atlas")
+           robot2 = Robot("Spot", 50)
+
+           # Have them perform several tasks
+           robot1.perform_task("welding")
+           robot1.perform_task("painting")
+           robot1.perform_task("inspection")
+
+           robot2.perform_task("delivery")
+           robot2.perform_task("sorting")
+           robot2.perform_task("scanning")
+           robot2.perform_task("lifting")
+           robot2.perform_task("packing")
+           robot2.perform_task("cleaning")  # battery hits 0 after this
+
+           # This one should trigger the recharge warning
+           robot2.perform_task("assembly")
+
+           # Recharge and continue
+           robot2.recharge()
+           robot2.perform_task("assembly")
+
+           # Print final state
+           print(f"\n{robot1.name}: tasks={robot1.tasks_completed}, battery={robot1.battery}")
+           print(f"{robot2.name}: tasks={robot2.tasks_completed}, battery={robot2.battery}")
+           print(f"Total robots created: {Robot.total_robots}")
+
     **Expected output:**
 
     .. code-block:: text
 
-       === Robot 1 ===
-       Scout performing: pick widget
-       Scout performing: deliver widget
-       Scout: tasks_completed=2, battery=80
+       Atlas performing: welding
+       Atlas performing: painting
+       Atlas performing: inspection
+       Spot performing: delivery
+       Spot performing: sorting
+       Spot performing: scanning
+       Spot performing: lifting
+       Spot performing: packing
+       Spot performing: cleaning
+       Spot needs recharging!
+       Spot fully recharged!
+       Spot performing: assembly
 
-       === Robot 2 ===
-       Hauler performing: transport crate
-       Hauler: tasks_completed=1, battery=90
-
-       === Class Attribute ===
+       Atlas: tasks=3, battery=70
+       Spot: tasks=6, battery=90
        Total robots created: 2
 
 
@@ -140,25 +176,49 @@ All files should be created inside your ``lecture6/`` workspace folder.
     6. In the ``if __name__ == "__main__"`` block, test all dunder
        methods:
 
+    .. code-block:: python
+
+       if __name__ == "__main__":
+           scout = Robot("Scout", 60)
+           hauler = Robot("Hauler", 60)
+
+           # __str__: human-readable output
+           print(scout)  # Scout [60%]
+
+           # __repr__: developer output, looks like valid Python
+           print(repr(scout))  # Robot('Scout', 60)
+
+           # __eq__: compare by battery level
+           print(scout == hauler)  # True  (both have battery 60)
+           print(scout == Robot("X", 90))  # False (different battery)
+
+           # __add__: merge two robots, battery capped at 100
+           print(scout + hauler)  # merged [100%]  (60 + 60 = 120, capped to 100)
+           print(scout + Robot("X", 20))  # merged [80%]   (60 + 20 = 80, no cap needed)
+
+           # __gt__: compare by battery level
+           print(scout > Robot("X", 40))  # True  (60 > 40)
+           print(scout > hauler)  # False (60 > 60 is False)
+
+           # __len__: number of tasks completed
+           scout.tasks_completed = 3
+           print(len(scout))  # 3
+           print(len(hauler))  # 0  (default, no tasks performed yet)
+
     **Expected output:**
 
     .. code-block:: text
 
-       === String Representations ===
-       str:  Scout [60%]
-       repr: Robot('Scout', 60)
-
-       === Comparison ===
-       scout == hauler: True
-       scout > Robot('X', 40): True
-
-       === Arithmetic ===
-       scout + hauler: merged [100%]
-       scout + Robot('X', 20): merged [80%]
-
-       === Length ===
-       len(scout): 0
-       len(hauler): 0
+       Scout [60%]
+       Robot('Scout', 60)
+       True
+       False
+       merged [100%]
+       merged [80%]
+       True
+       False
+       3
+       0
 
 
     .. raw:: html
@@ -219,22 +279,23 @@ All files should be created inside your ``lecture6/`` workspace folder.
 
     6. In the ``if __name__ == "__main__"`` block:
 
+    .. code-block:: python
+
+       if __name__ == "__main__":
+           lidar = Sensor("lidar", 50.0)
+           print(lidar)            # Sensor(lidar): range=50.0m
+           lidar.calibrate(2.5)
+           print(lidar)            # Sensor(lidar): range=52.5m
+           lidar.calibrate(-5.0)
+           print(lidar)            # Sensor(lidar): range=47.5m
+
     **Expected output:**
 
     .. code-block:: text
 
-       === Sensor Creation ===
        Sensor(lidar): range=50.0m
-
-       === Calibration ===
        Sensor(lidar): range=52.5m
-
-       === Read-Only Type ===
-       Cannot change sensor type: Cannot change sensor type after creation
-
-       === Validation ===
-       Negative range error: range_m must be positive
-       Type error: range_m must be int or float
+       Sensor(lidar): range=47.5m
 
 
     .. raw:: html
