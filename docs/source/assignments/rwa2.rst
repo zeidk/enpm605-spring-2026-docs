@@ -204,7 +204,7 @@ Overview
         - Implement ``main.py``. Wire everything together and demonstrate all OOP concepts (polymorphism, sorting, ``__contains__``, report).
       * - **Week 3**
         - Days 20--21
-        - Code quality pass: add/review docstrings, type hints, and inline comments. Run ``ruff check``. Test the full program end to end. Package and submit.
+        - Code quality pass: add/review docstrings, type hints, and inline comments. Test the full program end to end. Package and submit.
 
    .. tip::
 
@@ -700,11 +700,6 @@ Grading, Submission, and Policies
    **Linting**
 
    - ☐ Ruff is enabled in VS Code and no linting errors or warnings appear in any Python file.
-
-   .. code-block:: bash
-
-      cd firstname_lastname_rwa2/
-      ruff check sensor_payload.py robot.py sector.py mission.py disaster_zone.py main.py
 
 
    **File Headers**
