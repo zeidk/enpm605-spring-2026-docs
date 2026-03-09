@@ -41,7 +41,9 @@ Schedule
    * - L6
      - Object-Oriented Programming, Part I
      - OOP design phase, classes and objects, dunder methods, operator overloading, abstraction, encapsulation, ``@property``
-
+   * - L7
+     - Object-Oriented Programming, Part II
+     - Class and static methods, association, aggregation, composition, inheritance, ``super()``, polymorphism, duck typing, abstract base classes, ``@dataclass``, ``__slots__``, ``typing.Protocol``
 
 Contents
 --------
@@ -56,3 +58,4 @@ Contents
    lecture4/l4_index
    lecture5/l5_index
    lecture6/l6_index
+   lecture7/l7_index
