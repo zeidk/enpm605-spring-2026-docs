@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="0.9872581"
-     inkscape:cx="1313.2331"
-     inkscape:cy="1755.3667"
+     inkscape:zoom="1.3961938"
+     inkscape:cx="503.15365"
+     inkscape:cy="1354.3965"
      inkscape:window-width="3840"
      inkscape:window-height="941"
      inkscape:window-x="0"
@@ -3052,8 +3052,8 @@
      id="rect277"
      width="785.08252"
      height="505.13788"
-     x="-2264.4468"
-     y="580.54779"
+     x="-1438.9281"
+     y="890.49713"
      rx="5.0658765"
      ry="5.1306734" /><rect
      fill="#ffffff"
@@ -3064,7 +3064,10 @@
      width="146.20309"
      x="-2027.5104"
      y="602.27167"
-     id="rect278" /><circle
+     id="rect278"
+     inkscape:export-filename="../../images/L7/abstract_concrete_class_diagram_dark.png"
+     inkscape:export-xdpi="300"
+     inkscape:export-ydpi="300" /><circle
      cx="-1981.2379"
      cy="615.27167"
      fill="#ffffff"
@@ -3777,9 +3780,9 @@
      x="971.96576"
      y="1160.8654"
      id="rect1-7"
-     inkscape:export-filename="../../images/L7/inheritance5_light.png"
-     inkscape:export-xdpi="300"
-     inkscape:export-ydpi="300" /><circle
+     inkscape:export-filename="/home/zeid/Desktop/specialization1.png"
+     inkscape:export-xdpi="600"
+     inkscape:export-ydpi="600" /><circle
      cx="1028.3955"
      cy="1173.8654"
      fill="#ffffff"
@@ -3988,9 +3991,9 @@
      x="-2014.6182"
      y="1132.2841"
      id="rect2"
-     inkscape:export-filename="abstract_concrete_class_diagram.png"
-     inkscape:export-xdpi="600"
-     inkscape:export-ydpi="600" /><circle
+     inkscape:export-filename="../../images/L7/abstract_concrete_class_diagram_light.png"
+     inkscape:export-xdpi="300"
+     inkscape:export-ydpi="300" /><circle
      cx="-1968.3457"
      cy="1145.2841"
      fill="#ffffff"
@@ -5121,7 +5124,7 @@
        sodipodi:role="line"
        id="tspan76">inheritance1</tspan><tspan
        sodipodi:role="line"
-       id="tspan78"></tspan></text><rect
+       id="tspan78" /></text><rect
      fill="#ffffff"
      height="231.5938"
      rx="2.5"
@@ -5687,7 +5690,7 @@
        sodipodi:role="line"
        id="tspan365">inheritance2</tspan><tspan
        sodipodi:role="line"
-       id="tspan366"></tspan></text><path
+       id="tspan366" /></text><path
      d="m 244.86125,1201.0456 q -0.5156,0.2812 -1.0781,0.4062 -0.5625,0.1406 -1.1719,0.1406 -1.8281,0 -2.8906,-1.0156 -1.0625,-1.0156 -1.0625,-2.7656 0,-1.75 1.0625,-2.7656 1.0625,-1.0157 2.8906,-1.0157 0.6094,0 1.1719,0.1407 0.5625,0.125 1.0781,0.4062 v 1.5 q -0.5312,-0.3594 -1.0469,-0.5156 -0.5,-0.1719 -1.0625,-0.1719 -1,0 -1.5781,0.6563 -0.5781,0.6406 -0.5781,1.7656 0,1.125 0.5781,1.7812 0.5781,0.6407 1.5781,0.6407 0.5625,0 1.0625,-0.1563 0.5157,-0.1719 1.0469,-0.5312 z"
      fill="#000000"
      id="path366"
@@ -5700,7 +5703,7 @@
        sodipodi:role="line"
        id="tspan368">inheritance4</tspan><tspan
        sodipodi:role="line"
-       id="tspan369"></tspan></text><rect
+       id="tspan369" /></text><rect
      fill="#ffffff"
      height="189.6875"
      rx="2.5"
@@ -5949,7 +5952,7 @@
        sodipodi:role="line"
        id="tspan384">inheritance5</tspan><tspan
        sodipodi:role="line"
-       id="tspan385"></tspan></text><rect
+       id="tspan385" /></text><rect
      fill="#ffffff"
      height="301.4375"
      rx="2.5"

@@ -1431,28 +1431,13 @@ Refer to ``L7_abstract_classes.py`` to follow along with the examples below.
          **UML notation**: ``Animal`` is an abstract base class. Abstract class name appears in italics with a circled A; concrete subclasses carry a circled C. Abstract methods are also italicized.
 
 
-.. dropdown:: Defining an Abstract Class
+.. dropdown:: The ``abc`` Module and ``@abstractmethod``
 
-   Import ``ABC`` from ``abc``. Inheriting from ``ABC`` alone marks the class as
-   abstract and prevents direct instantiation, but does not yet enforce any interface.
-
-   .. code-block:: python
-
-      from abc import ABC
-
-      class Animal(ABC):
-          def __init__(self, name: str, age: int, weight: float):
-              self._name = name
-              self._age = age
-              self._weight = weight
-
-          def eat(self) -> None:
-              print(f"{self._name} is eating")
-
-      # animal = Animal("Generic", 1, 1.0)
-      # TypeError: cannot instantiate abstract class
-
-   Adding ``@abstractmethod`` creates the contract that subclasses must fulfill.
+   Import ``ABC`` and ``abstractmethod`` from ``abc``. Inheriting from ``ABC``
+   marks the class as abstract, but on its own it does **not** prevent
+   instantiation and does not enforce any interface. ``TypeError`` is only raised
+   when at least one ``@abstractmethod`` is declared and a subclass fails to
+   implement it.
 
    .. code-block:: python
 
@@ -1463,14 +1448,10 @@ Refer to ``L7_abstract_classes.py`` to follow along with the examples below.
               self._name = name
 
           @abstractmethod
-          def make_sound(self) -> None:
-              """Every subclass must implement this."""
-              pass
+          def make_sound(self) -> None: ...
 
           @abstractmethod
-          def move(self) -> None:
-              """Every subclass must implement this."""
-              pass
+          def move(self) -> None: ...
 
       class Cat(Animal):
           def make_sound(self) -> None:
@@ -1479,18 +1460,20 @@ Refer to ``L7_abstract_classes.py`` to follow along with the examples below.
           def move(self) -> None:
               print(f"{self._name} walks gracefully")
 
-      # OK: all @abstractmethod implemented
+      # OK: all abstract methods implemented
       kitty = Cat("Kitty")
       kitty.make_sound()   # Kitty says: Meow
 
    .. note::
 
       ``@abstractmethod`` declares that a method **must** be overridden in every
-      concrete subclass. A subclass that does not implement all abstract methods
-      cannot be instantiated. An abstract method can have a body -- the subclass
-      can call it via ``super().make_sound()`` -- but an empty body is the norm.
-      ``ABC`` is simply a helper class that sets ``ABCMeta`` as the metaclass.
-      You can also write ``class Animal(metaclass=ABCMeta)`` but
+      concrete subclass. A subclass that omits any abstract method cannot be
+      instantiated -- Python raises ``TypeError`` at instantiation time, not at
+      the point where the missing method would be called. An abstract method can
+      have a body (callable via ``super().make_sound()``), but an empty body is
+      the norm. ``ABC`` alone does **not** prevent instantiation; it is
+      ``@abstractmethod`` that enforces the contract. ``ABC`` sets ``ABCMeta``
+      as the metaclass; ``class Animal(metaclass=ABCMeta)`` is equivalent but
       ``class Animal(ABC)`` is the preferred style.
 
 
@@ -1506,7 +1489,7 @@ Refer to ``L7_abstract_classes.py`` to follow along with the examples below.
 
       .. figure:: /_static/images/L7/abstract_concrete_class_diagram_light.png
          :alt: Abstract Animal with concrete Cat, Dog, and Bird subclasses
-         :width: 70%
+         :width: 60%
          :align: center
          :class: only-light
 
@@ -1514,7 +1497,7 @@ Refer to ``L7_abstract_classes.py`` to follow along with the examples below.
 
       .. figure:: /_static/images/L7/abstract_concrete_class_diagram_dark.png
          :alt: Abstract Animal with concrete Cat, Dog, and Bird subclasses
-         :width: 70%
+         :width: 60%
          :align: center
          :class: only-dark
 
@@ -1522,7 +1505,7 @@ Refer to ``L7_abstract_classes.py`` to follow along with the examples below.
 
       .. figure:: /_static/images/L7/abstract_concrete_class_diagram_light.png
          :alt: Abstract Animal with concrete Cat, Dog, and Bird subclasses
-         :width: 70%
+         :width: 60%
          :align: center
 
          Abstract ``Animal`` with concrete subclasses ``Cat``, ``Dog``, and ``Bird``.
