@@ -65,7 +65,7 @@ code in this lecture.
    .. code-block:: console
  
       code --install-extension ranch-hand-robotics.rde-ros-2
-      
+
 What Is ROS?
 ====================================================
 
@@ -295,7 +295,7 @@ exactly one thing.
 
       .. figure:: /_static/images/L8/distributed_light.png
          :alt: Distributed design diagram
-         :width: 60%
+         :width: 80%
          :align: center
          :class: only-light
 
@@ -303,7 +303,7 @@ exactly one thing.
 
       .. figure:: /_static/images/L8/distributed_dark.png
          :alt: Distributed design diagram
-         :width: 60%
+         :width: 80%
          :align: center
          :class: only-dark
 
