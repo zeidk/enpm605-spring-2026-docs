@@ -46,7 +46,6 @@ Contents
    l7_lecture
    l7_exercises
    l7_quiz
-   l7_glossary
    l7_references
 
 

@@ -32,7 +32,6 @@ Contents
    l4_lecture
    l4_exercises
    l4_quiz
-   l4_glossary
    l4_references
 
 Next Steps

@@ -34,7 +34,6 @@ Contents
    l5_lecture
    l5_exercises
    l5_quiz
-   l5_glossary
    l5_references
 
 Next Steps

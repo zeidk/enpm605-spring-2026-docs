@@ -5946,13 +5946,11 @@
      style="fill:#ffffff;fill-opacity:1" /><text
      xml:space="preserve"
      style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:42.6667px;font-family:Roboto;-inkscape-font-specification:'Roboto, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#aa4400;stroke:#1a1a1a;stroke-opacity:0.839216"
-     x="1191.1475"
-     y="1320.3687"
+     x="942.61462"
+     y="1513.7516"
      id="text384"><tspan
        sodipodi:role="line"
-       id="tspan384">inheritance5</tspan><tspan
-       sodipodi:role="line"
-       id="tspan385" /></text><rect
+       id="tspan1">specialization1</tspan></text><rect
      fill="#ffffff"
      height="301.4375"
      rx="2.5"

@@ -59,3 +59,4 @@ Contents
    lecture5/l5_index
    lecture6/l6_index
    lecture7/l7_index
+   lecture8/l8_index

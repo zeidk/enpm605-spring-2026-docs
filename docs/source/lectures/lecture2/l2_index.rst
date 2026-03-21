@@ -30,7 +30,6 @@ Contents
    l2_lecture
    l2_exercises
    l2_quiz
-   l2_glossary
    l2_references
 
 Next Steps

@@ -32,7 +32,6 @@ Contents
    l3_lecture
    l3_exercises
    l3_quiz
-   l3_glossary
    l3_references
 
 Next Steps

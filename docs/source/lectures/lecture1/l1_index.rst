@@ -30,7 +30,6 @@ Contents
 
    l1_lecture
    l1_quiz
-   l1_glossary
    l1_references
 
 Next Steps

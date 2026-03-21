@@ -35,7 +35,6 @@ Contents
    l6_lecture
    l6_exercises
    l6_quiz
-   l6_glossary
    l6_references
 
 Next Steps

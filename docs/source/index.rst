@@ -53,3 +53,4 @@ After successfully completing this course, you will be able to:
    changelog/changelog
    lectures/index
    assignments/index
+   glossary/glossary
