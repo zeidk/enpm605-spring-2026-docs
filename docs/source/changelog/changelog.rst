@@ -5,6 +5,124 @@ Changelog
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
 
+.. dropdown:: v1.4.0 -- L9 Documentation Released (2026-03-28)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Lecture Notes (l9_lecture.rst)
+
+   - Added "Prerequisites" section: workspace clone, shell setup,
+     and build commands for all three demo packages
+     (``launch_files_demo``, ``parameters_demo``, ``executors_demo``).
+   - Added "Launch Files" section: why use launch files (six reasons),
+     anatomy (imports, ``generate_launch_description``, node
+     configuration, naming convention, two equivalent patterns with
+     code examples), and demonstration commands.
+   - Added "Advanced Features" section: including other launch files
+     (``IncludeLaunchDescription``, ``FindPackageShare``,
+     ``PathJoinSubstitution``), conditional launching
+     (``IfCondition``, ``DeclareLaunchArgument``,
+     ``LaunchConfiguration``, ``--show-args``), and node grouping
+     (``GroupAction``, conditional group with example).
+   - Added "Parameters" section: characteristics (supported types,
+     node-local scope warning, CLI reference and quick inspection
+     commands), and sensor node parameter tables (camera and LiDAR)
+     with light/dark figure placeholders.
+   - Added "Declaring Parameters" section: three approaches (basic
+     declaration, declaration with ``ParameterDescriptor`` and
+     ``IntegerRange``, and ``declare_parameters`` for batch
+     declaration) each with code examples.
+   - Added "Retrieving Parameters" section: when and why to retrieve,
+     retrieval API with typed field accessors.
+   - Added "Using Parameters" section: camera_name in logs and
+     camera_rate as timer period control, with note on bandwidth
+     measurement and performance gap.
+   - Added "Setting Parameters" section: six methods (CLI, launch
+     file, YAML file, programmatic, ``ros2 param set`` with callback,
+     and launch file arguments) each with code examples and
+     demonstration commands. Includes full on-set-parameters callback
+     implementation and timer frequency update pattern.
+   - Added "Executors" section: overview of multi-task robotic
+     requirements and concurrency vs. parallelism definition.
+   - Added "Single-Threaded Executor" section: key concepts, execution
+     timeline with light/dark figure placeholders, phase offset table,
+     and ``rclpy.spin()`` vs. explicit executor comparison.
+   - Added "Multi-Threaded Executor" section: overview, benefits
+     (performance, scalability, responsiveness), challenges (race
+     conditions, overhead), concurrency vs. parallelism with hot dog
+     stand figures (light/dark), and the Python GIL explanation with
+     impact on ROS 2 and conditions for true parallelism.
+   - Added "Callback Groups" section: overview with summary figure
+     (light/dark), mutually exclusive group (declaration, effect of
+     ``num_threads``, execution timeline with light/dark figures, and
+     timestamp table), reentrant group (declaration, fast callback
+     timeline, slow/blocked callback timeline with light/dark figures,
+     multiple concurrent instances warning), and comparison table.
+
+   .. rubric:: Index (l9_index.rst)
+
+   - Overview, learning objectives, toctree, and next steps for L9.
+
+   .. rubric:: Exercises (l9_exercises.rst)
+
+   - Exercise 1: Configurable Publisher -- parameter declaration,
+     CLI override, ``Float64`` publisher controlled by ``publish_rate``
+     and ``topic_name`` parameters.
+   - Exercise 2: Parameter File Node -- YAML config file, sensor node
+     with on-set-parameters callback, and a launch file that loads the
+     YAML.
+   - Exercise 3: Mutex vs Single-Threaded Comparison -- slow callback
+     demo comparing ``rclpy.spin()`` against
+     ``MultiThreadedExecutor(num_threads=4)`` with a
+     ``MutuallyExclusiveCallbackGroup``; observation questions as
+     code comments.
+   - Exercise 4: Reentrant Pipeline -- two independent 5 Hz callbacks
+     sharing a log list, deliberate race condition introduction and fix
+     with ``threading.Lock``, written reflection on CPython list
+     safety.
+
+   .. rubric:: Quiz (l9_quiz.rst)
+
+   - 10 multiple choice questions covering launch file structure,
+     ``FindPackageShare``, parameter type inference, on-set callback
+     behavior, parameter retrieval API, executor types, mutex group
+     semantics, reentrant group timing, the GIL, and timer frequency
+     update patterns.
+   - 10 true/false questions covering ``--symlink-install`` and launch
+     files, ``ParameterDescriptor`` immutability, multi-node YAML
+     files, multi-node executors, GIL release during sleep, reentrant
+     safety, ``IfCondition`` behavior, ``ros2 param set`` persistence,
+     ``GroupAction`` conditions, and ``num_threads`` with a mutex
+     group.
+   - 4 essay questions: parameter lifecycle, single vs. multi-threaded
+     executor comparison, the Python GIL, and mutually exclusive vs.
+     reentrant callback group comparison with concrete robotic
+     examples.
+
+   .. rubric:: Glossary (glossary.rst)
+
+   - 12 new terms added: Callback Group, ColCon Symlink Install,
+     Conditional Launch, ``DeclareLaunchArgument``,
+     ``generate_launch_description``, Global Interpreter Lock (GIL),
+     ``GroupAction``, ``IfCondition``, ``LaunchConfiguration``,
+     Mutually Exclusive Callback Group, Parameter Descriptor,
+     Reentrant Callback Group.
+
+   .. rubric:: References (l9_references.rst)
+
+   - Lecture 9 card summarizing all topics covered.
+   - ROS 2 Official Documentation: launch tutorials, parameters
+     concept, parameters tutorial, ros2 param how-to, executors
+     concept, callback groups how-to.
+   - Launch File API: launch package API, launch_ros package API,
+     YAML.org specification, launch file formats comparison.
+   - Python Threading and the GIL: threading module, Real Python GIL
+     article, multiprocessing module.
+   - External Tutorials: Articulated Robotics, The Construct.
+   - Recommended Reading: Koubaa ROS 2 series, Programming Robots with
+     ROS 2, Silberschatz OS Concepts, David Beazley GIL talk.
+
+
 .. dropdown:: v1.3.0 -- L8 Documentation Released (2026-03-21)
    :icon: tag
    :class-container: sd-border-warning

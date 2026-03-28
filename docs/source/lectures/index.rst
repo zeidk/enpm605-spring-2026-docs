@@ -44,6 +44,12 @@ Schedule
    * - L7
      - Object-Oriented Programming, Part II
      - Class and static methods, association, aggregation, composition, inheritance, ``super()``, polymorphism, duck typing, abstract base classes, ``@dataclass``, ``__slots__``, ``typing.Protocol``
+   * - L8
+     - Introduction to ROS 2
+     - Distributed architecture, DDS middleware, QoS policies, pub/sub model (nodes, topics, messages), workspace setup, ``colcon`` builds, Python package creation, minimal and OOP-based nodes, spinning, timers, publishers, subscribers, communication timing scenarios
+   * - L9
+     - Launch Files, Parameters, & Executors
+     - Python launch files, advanced launch features (includes, conditionals, grouping, arguments), parameter lifecycle (declaration, retrieval, setting, runtime callbacks), single-threaded and multi-threaded executors, callback groups (mutually exclusive and reentrant), Python GIL
 
 Contents
 --------
@@ -60,3 +66,4 @@ Contents
    lecture6/l6_index
    lecture7/l7_index
    lecture8/l8_index
+   lecture9/l9_index
