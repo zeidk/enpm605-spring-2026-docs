@@ -1417,7 +1417,7 @@ callbacks are handled in terms of execution and threading.
 
          Reentrant group -- all fast callbacks fire on schedule.
 
-   **Blocked callback (600 ms execution, 500 ms period):**
+   **Blocked callback (2 s execution, 500 ms period):**
 
    With a ``ReentrantCallbackGroup``, a new callback instance fires at
    its scheduled time even if a previous instance is still executing
@@ -1434,7 +1434,7 @@ callbacks are handled in terms of execution and threading.
          :align: center
          :class: only-light
 
-         Reentrant group with a callback whose execution (600 ms)
+         Reentrant group with a callback whose execution (2 s)
          exceeds its period (500 ms). New instances fire on schedule
          regardless of prior instances still running.
 
@@ -1451,7 +1451,7 @@ callbacks are handled in terms of execution and threading.
          :width: 100%
          :align: center
 
-         Reentrant group with a slow callback (600 ms, 500 ms period).
+         Reentrant group with a slow callback (2 s, 500 ms period).
 
 
 .. dropdown:: Choosing Between Mutex and Reentrant
