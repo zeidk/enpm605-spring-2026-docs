@@ -9,18 +9,13 @@ References
     .. card::
         :class-card: sd-border-secondary
 
-        **ENPM605 -- L9: Launch Files, Parameters, & Executors**
+        **ENPM605 -- L9: Launch Files & Executors**
 
         Covers Python launch files (anatomy, ``generate_launch_description``,
         two configuration patterns), advanced launch features (including
         other launch files, conditional launching with ``IfCondition``,
         node grouping with ``GroupAction``, and parameterized launch
-        arguments), the ROS 2 parameter lifecycle (declaration with
-        ``declare_parameter`` and ``declare_parameters``, constraints
-        and metadata via ``ParameterDescriptor``, retrieval with
-        ``get_parameter``, six methods for setting parameters, and
-        runtime callbacks with ``add_on_set_parameters_callback``),
-        executors (single-threaded vs. multi-threaded, the
+        arguments), executors (single-threaded vs. multi-threaded, the
         concurrency-vs-parallelism distinction, the Python GIL and its
         impact on ROS 2), and callback groups
         (``MutuallyExclusiveCallbackGroup`` and
@@ -48,50 +43,6 @@ References
             - Creating launch files
             - Passing arguments
             - Using substitutions
-
-        .. grid-item-card:: About Parameters
-            :link: https://docs.ros.org/en/jazzy/Concepts/Basic/About-Parameters.html
-            :class-card: sd-border-secondary
-
-            **ROS 2 Parameters Concept**
-
-            Conceptual overview of the ROS 2 parameter system,
-            supported types, and how parameters differ from topics.
-
-            +++
-
-            - Parameter types
-            - Node-local scope
-            - Runtime modification
-
-        .. grid-item-card:: Using Parameters in a Class (Python)
-            :link: https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html
-            :class-card: sd-border-secondary
-
-            **Beginner Tutorial: Parameters**
-
-            Step-by-step guide to declaring, retrieving, and setting
-            parameters in a Python ROS 2 node.
-
-            +++
-
-            - ``declare_parameter``
-            - ``get_parameter``
-            - CLI and launch file usage
-
-        .. grid-item-card:: Using ros2 param
-            :link: https://docs.ros.org/en/jazzy/How-To-Guides/Using-ros2-param.html
-            :class-card: sd-border-secondary
-
-            **ros2 param How-To**
-
-            Reference for all ``ros2 param`` subcommands with examples.
-
-            +++
-
-            - ``get``, ``set``, ``list``
-            - ``describe``, ``dump``, ``load``
-            - Parameter files
 
         .. grid-item-card:: About Executors
             :link: https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Executors.html
@@ -160,23 +111,6 @@ References
             - ``Node`` action
             - ``FindPackageShare`` substitution
             - Namespace management
-
-        .. grid-item-card:: YAML.org
-            :link: https://yaml.org/
-            :class-card: sd-border-secondary
-
-            **YAML Specification**
-
-            Official YAML specification. Parameter files use YAML 1.1
-            syntax. Understanding the format helps avoid subtle
-            parsing issues (e.g., unquoted strings that look like
-            booleans).
-
-            +++
-
-            - Scalar types
-            - Mappings and sequences
-            - Quoting rules
 
         .. grid-item-card:: Launch File Formats
             :link: https://docs.ros.org/en/jazzy/How-To-Guides/Launch-file-different-formats.html
@@ -261,13 +195,12 @@ References
 
             **Articulated Robotics**
 
-            Video and written tutorials for ROS 2 launch files,
-            parameters, and executors with practical robot examples.
+            Video and written tutorials for ROS 2 launch files and
+            executors with practical robot examples.
 
             +++
 
             - Launch file deep dives
-            - Parameter YAML files
             - Executor comparisons
 
         .. grid-item-card:: The Construct: ROS 2 Executors
@@ -298,16 +231,16 @@ References
             **Robot Operating System (ROS): The Complete Reference
             (Vol. 1-7)**
 
-            Relevant chapters cover ROS 2 launch systems, parameter
-            servers, and the executor concurrency model.
+            Relevant chapters cover ROS 2 launch systems and the
+            executor concurrency model.
 
         .. grid-item-card:: Open Robotics
             :class-card: sd-border-secondary
 
             **Programming Robots with ROS 2**
 
-            Chapters on launch files, parameters, and the threading
-            model provide applied coverage of this lecture's topics.
+            Chapters on launch files and the threading model provide
+            applied coverage of this lecture's topics.
 
         .. grid-item-card:: Silberschatz, Galvin, and Gagne
             :class-card: sd-border-secondary

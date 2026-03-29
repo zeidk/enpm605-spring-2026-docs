@@ -29,3 +29,4 @@ Contents
 
    rwa1
    rwa2
+   gp1/gp1

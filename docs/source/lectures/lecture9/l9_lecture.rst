@@ -57,13 +57,11 @@ code in this lecture.
 
 .. dropdown:: Build the Demo Packages
 
-   Build all three demo packages used in this lecture before proceeding.
+   Build both demo packages used in this lecture before proceeding.
 
    .. code-block:: console
 
-      colcon build --symlink-install --packages-select launch_files_demo
-      colcon build --symlink-install --packages-select parameters_demo
-      colcon build --symlink-install --packages-select executors_demo
+      colcon build --symlink-install --packages-select launch_demo executor_demo
 
    Source the workspace after each build:
 
@@ -298,545 +296,6 @@ configurable robot systems.
       ros2 launch launch_files_demo demo6.launch.py enable_chatter:=true
 
 
-Parameters
-====================================================
-
-A **parameter** is a configurable value that can be used to customize
-the behavior of a node at runtime without modifying the code. Parameters
-allow nodes to store and retrieve data such as tuning constants, file
-paths, or robot-specific settings.
-
-
-.. dropdown:: Characteristics
-
-   - Parameters can be set or updated during runtime using the CLI or
-     within the node itself.
-   - Nodes can declare and retrieve parameters, making them useful for
-     settings that do not change frequently.
-   - Supported types: ``bool``, ``bool[]``, ``int``, ``int[]``,
-     ``double``, ``double[]``, ``string``, ``string[]``, and ``byte[]``.
-
-   .. warning::
-
-      Each parameter belongs to a specific node and cannot be accessed
-      globally by other nodes.
-
-   **CLI reference**
-
-   .. code-block:: console
-
-      ros2 param -h
-
-   Available subcommands: ``delete``, ``describe``, ``dump``, ``get``,
-   ``list``, ``load``, ``set``.
-
-   **Quick inspection**
-
-   .. code-block:: console
-
-      ros2 run demo_nodes_py talker
-      ros2 param list /talker
-      ros2 param get /talker use_sim_time
-
-   **Resources**
-
-   - `Using Parameters in a Class (Python)
-     <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html>`_
-   - `About Parameters
-     <https://docs.ros.org/en/jazzy/Concepts/Basic/About-Parameters.html>`_
-   - `Using ros2 param
-     <https://docs.ros.org/en/jazzy/How-To-Guides/Using-ros2-param.html>`_
-
-
-.. dropdown:: Sensor Node Parameters Example
-
-   Real sensor nodes expose many parameters that control their
-   behavior. The tables below illustrate camera and LiDAR node
-   parameters categorized by how they can be updated at runtime.
-
-   .. only:: html
-
-      .. figure:: /_static/images/L9/sensor_params_light.png
-         :alt: Camera and LiDAR node parameter tables
-         :width: 100%
-         :align: center
-         :class: only-light
-
-         Camera and LiDAR node parameters with runtime-update categories
-
-      .. figure:: /_static/images/L9/sensor_params_dark.png
-         :alt: Camera and LiDAR node parameter tables
-         :width: 100%
-         :align: center
-         :class: only-dark
-
-   .. only:: latex
-
-      .. figure:: /_static/images/L9/sensor_params_light.png
-         :alt: Camera and LiDAR node parameter tables
-         :width: 100%
-         :align: center
-
-         Camera and LiDAR node parameters with runtime-update categories
-
-   **Camera node parameters (selected)**
-
-   .. list-table::
-      :widths: 35 15 30 20
-      :header-rows: 1
-      :class: compact-table
-
-      * - Parameter
-        - Type
-        - Default
-        - Writable
-      * - ``camera_name``
-        - str
-        - ``"front_cam"``
-        - Freely writable
-      * - ``fps``
-        - int
-        - ``30``
-        - Timer rebuild required
-      * - ``image_width``
-        - int
-        - ``1920``
-        - Node restart required
-      * - ``image_height``
-        - int
-        - ``1080``
-        - Node restart required
-      * - ``encoding``
-        - str
-        - ``"bgr8"``
-        - Node restart required
-
-   **LiDAR node parameters (selected)**
-
-   .. list-table::
-      :widths: 35 15 30 20
-      :header-rows: 1
-      :class: compact-table
-
-      * - Parameter
-        - Type
-        - Default
-        - Writable
-      * - ``lidar_name``
-        - str
-        - ``"top_lidar"``
-        - Freely writable
-      * - ``min_range``
-        - float
-        - ``0.1``
-        - Freely writable
-      * - ``scan_frequency``
-        - int
-        - ``10``
-        - Timer rebuild required
-      * - ``port``
-        - str
-        - ``"/dev/lidar0"``
-        - Node restart required
-
-
-Declaring Parameters
-====================================================
-
-Parameters **must be explicitly declared** before they can be accessed
-within a node. If you try to access a parameter without declaring it
-first, ROS 2 will raise an error.
-
-
-.. dropdown:: Approach 1 -- Basic Declaration
-
-   The simplest form provides a name and a default value. The type is
-   inferred from the default value.
-
-   .. code-block:: python
-
-      self.declare_parameter("camera_name", "camera")
-      self.declare_parameter("camera_rate", 60)
-
-   - ``camera_name`` is given the default value ``"camera"``
-     (type: ``string``).
-   - ``camera_rate`` is given the default value ``60``
-     (type: ``integer``).
-
-
-.. dropdown:: Approach 2 -- Declaration with Constraints and Metadata
-
-   Use ``ParameterDescriptor`` to attach a description and range
-   constraints. Constraints are enforced by the CLI and exposed via
-   ``ros2 param describe``.
-
-   .. code-block:: python
-
-      from rcl_interfaces.msg import ParameterDescriptor, IntegerRange
-
-      self.declare_parameter(
-          "camera_name", "camera",
-          descriptor=ParameterDescriptor(description="Name of the camera")
-      )
-      self.declare_parameter(
-          "camera_rate", 60,
-          descriptor=ParameterDescriptor(
-              description="Camera frame rate in Hz",
-              integer_range=[IntegerRange(from_value=10, to_value=60, step=10)]
-          )
-      )
-
-   Inspect the constraint at runtime:
-
-   .. code-block:: console
-
-      ros2 param describe /camera_demo camera_rate
-
-   Expected output::
-
-      Parameter name: camera_rate
-        Type: integer
-        Description: Camera frame rate in Hz
-        Constraints:
-          Min value: 10
-          Max value: 60
-          Step: 10
-
-
-.. dropdown:: Approach 3 -- Declaring Multiple Parameters at Once
-
-   Use ``declare_parameters`` to declare several parameters in a single
-   call. All parameters share the same namespace.
-
-   .. code-block:: python
-
-      from rcl_interfaces.msg import ParameterDescriptor, IntegerRange
-
-      self.declare_parameters(
-          namespace="",
-          parameters=[
-              (
-                  "camera_name", "camera",
-                  ParameterDescriptor(description="Camera name"),
-              ),
-              (
-                  "camera_rate", 60,
-                  ParameterDescriptor(
-                      description="Camera frame rate in Hz",
-                      integer_range=[
-                          IntegerRange(from_value=10, to_value=80, step=10)
-                      ],
-                  ),
-              ),
-          ],
-      )
-
-
-Retrieving Parameters
-====================================================
-
-After declaring a parameter, retrieve its value to initialize node
-attributes or respond to configuration changes.
-
-
-.. dropdown:: When and Why to Retrieve
-
-   - **Initialization**: Parameters are declared with default values,
-     but the actual value (possibly overridden by a launch file or CLI)
-     must be read to initialize node attributes correctly.
-   - **Dynamic reconfiguration**: Parameters can be changed at runtime.
-     Retrieving the parameter inside a callback allows the node to
-     respond to configuration changes without restarting.
-   - **Operational tuning**: Parameters are frequently used to tune
-     algorithms or adjust sensor and actuator settings.
-
-
-.. dropdown:: Retrieval API
-
-   .. code-block:: python
-
-      # Retrieve camera_name (string)
-      self._camera_name = (
-          self.get_parameter("camera_name")
-          .get_parameter_value()
-          .string_value
-      )
-
-      # Retrieve camera_rate (integer)
-      self._camera_rate = (
-          self.get_parameter("camera_rate")
-          .get_parameter_value()
-          .integer_value
-      )
-
-   The ``.get_parameter_value()`` method returns a ``ParameterValue``
-   message. Access the typed field that matches the declared type:
-   ``.string_value``, ``.integer_value``, ``.double_value``,
-   ``.bool_value``, and so on.
-
-
-Using Parameters
-====================================================
-
-Implement parameters as functional class attributes to control node
-behavior and provide meaningful context.
-
-
-.. dropdown:: Parameters as Behavioral Controls
-
-   The ``camera_name`` parameter provides meaningful context in logs:
-
-   .. code-block:: python
-
-      self.get_logger().info(f"Image published from: {self._camera_name}")
-
-   The ``camera_rate`` parameter directly controls publishing frequency:
-
-   .. code-block:: python
-
-      self._data_camera_timer = self.create_timer(
-          1.0 / self._camera_rate, self._data_camera_pub_callback
-      )
-
-   .. note::
-
-      Even with ``camera_rate`` set to 60 Hz, ``ros2 topic hz
-      /camera/image_color`` may reveal a significantly lower actual
-      rate. Image transmission has a high bandwidth cost. Use
-      ``ros2 topic bw /camera/image_color`` to measure it. This
-      illustrates the important distinction between requested
-      performance and system-constrained reality -- always measure the
-      actual publishing frequency of your nodes.
-
-
-Setting Parameters
-====================================================
-
-Setting parameters involves modifying the value of a declared parameter
-either prior to or during node execution. This allows dynamic node
-configuration without requiring code modifications or recompilation.
-
-There are several ways to set parameters:
-
-1. Configure individual parameters using the CLI.
-2. Define individual parameters within a launch file.
-3. Use a parameter file (YAML file).
-4. Set parameters programmatically.
-5. Set parameters with ``ros2 param set``.
-6. Use parameters as launch file arguments.
-
-
-.. dropdown:: Method 1 -- Configure Individual Parameters via CLI
-
-   Use ``--ros-args`` and ``-p <name>:=<value>`` to override parameters
-   at node startup.
-
-   .. code-block:: console
-
-      # Default: camera_name is "camera"
-      ros2 run parameters_demo camera_demo
-
-      # Override: camera_name becomes "front_camera"
-      ros2 run parameters_demo camera_demo --ros-args -p camera_name:='front_camera'
-
-   **Think:** Assign different values to ``camera_rate``: try 5, 15,
-   70, and 90. What do you observe?
-
-
-.. dropdown:: Method 2 -- Individual Parameters in Launch Files
-
-   Pass a ``parameters`` list to the ``Node`` action directly.
-
-   .. code-block:: python
-
-      camera_node = Node(
-          package='parameters_demo',
-          executable='camera_demo',
-          parameters=[
-              {'camera_name': 'front_camera'},
-              {'camera_rate': 30}
-          ],
-          output='screen',
-          emulate_tty=True
-      )
-
-   .. code-block:: console
-
-      ros2 launch parameters_demo demo1.launch.py
-
-
-.. dropdown:: Method 3 -- Parameter Files (YAML)
-
-   A **parameter file** is a YAML configuration file that stores
-   parameters for one or more nodes.
-
-   .. code-block:: yaml
-
-      camera_demo:           # node name
-        ros__parameters:
-          camera_name: 'front_camera'
-          camera_rate: 30
-
-      lidar_demo:            # node name
-        ros__parameters:
-          lidar_name: 'top_lidar'
-          lidar_rate: 20
-
-   - YAML files are typically placed in the ``config/`` directory
-     (best practice).
-   - Edit ``setup.py`` to install the ``config/`` folder.
-
-   **Use with CLI:**
-
-   .. code-block:: console
-
-      ros2 run parameters_demo camera_demo \
-          --ros-args --params-file <path_to_yaml>
-
-   **Use with launch file:**
-
-   .. code-block:: python
-
-      from launch.substitutions import PathJoinSubstitution
-      from launch_ros.substitutions import FindPackageShare
-
-      parameters_demo_file = PathJoinSubstitution(
-          [FindPackageShare("parameters_demo"), "config", "parameters_demo.yaml"]
-      )
-
-      camera_node = Node(
-          package="parameters_demo",
-          executable="camera_demo",
-          parameters=[parameters_demo_file],
-          output="screen",
-          emulate_tty=True,
-      )
-
-   .. code-block:: console
-
-      ros2 launch parameters_demo demo2.launch.py
-
-
-.. dropdown:: Method 4 -- Set Parameters Programmatically
-
-   Parameters can be defined and modified directly within the node.
-   This enables dynamic adjustments where different values are assigned
-   based on runtime conditions.
-
-   .. code-block:: python
-
-      from rclpy.parameter import Parameter
-
-      self.set_parameters([Parameter("camera_rate", Parameter.Type.INTEGER, 70)])
-
-   This is useful when the node needs to adjust its own behavior based
-   on runtime conditions -- for example, reducing the camera rate when
-   CPU usage is high.
-
-
-.. dropdown:: Method 5 -- Dynamic Update with ``ros2 param set``
-
-   Parameters can be updated while a node is running:
-
-   .. code-block:: console
-
-      ros2 launch parameters_demo demo2.launch.py
-      ros2 param get camera_demo camera_name      # String value is: front_camera
-      ros2 param set camera_demo camera_name 'front_facing_camera'
-      ros2 param get camera_demo camera_name      # Still: front_camera
-
-   **Why did the value not change?**
-
-   After a parameter is read during initialization, the node does not
-   observe subsequent updates unless it is explicitly notified. The
-   value of the attribute in the code still reflects the initialization
-   value.
-
-   **Solution -- add a parameter change callback:**
-
-   Register the callback in ``__init__``:
-
-   .. code-block:: python
-
-      self.add_on_set_parameters_callback(self._parameter_update_cb)
-
-   Define the callback:
-
-   .. code-block:: python
-
-      def _parameter_update_cb(self, params):
-          success = False
-          for param in params:
-              if param.name == "camera_name":
-                  if param.type_ == Parameter.Type.STRING:
-                      success = True
-                      self._camera_name = param.value
-              elif param.name == "camera_rate":
-                  if param.type_ == Parameter.Type.INTEGER:
-                      self._camera_rate = param.value
-                      success = True
-          return SetParametersResult(successful=success)
-
-   **Updating timer frequency**
-
-   A timer is initialized when the node is created. To modify its
-   frequency at runtime, cancel it and recreate it with the new period:
-
-   .. code-block:: python
-
-      self._data_camera_timer.cancel()
-      self._data_camera_timer = self.create_timer(
-          1 / self._camera_rate, self._data_camera_pub_callback
-      )
-
-   .. code-block:: console
-
-      ros2 run parameters_demo camera_demo
-      ros2 topic hz /camera/image_color
-      ros2 param set camera_demo camera_rate 10
-
-
-.. dropdown:: Method 6 -- Parameters as Launch File Arguments
-
-   Parameters are typically hardcoded in a YAML file, but they can also
-   be exposed as launch file arguments. This lets the caller override
-   specific parameter values at launch time without modifying the YAML
-   file or the node source code.
-
-   **Declare the overridable parameter in the node:**
-
-   .. code-block:: python
-
-      # lidar_demo.py
-      self.declare_parameter("lidar_model", "default_lidar")
-
-   **Declare a launch argument and forward it to the node:**
-
-   .. code-block:: python
-
-      # demo3.launch.py
-      from launch.actions import DeclareLaunchArgument
-      from launch.substitutions import LaunchConfiguration
-
-      lidar_model = LaunchConfiguration("lidar_model")
-      lidar_model_arg = DeclareLaunchArgument(
-          "lidar_model", default_value="velodyne"
-      )
-      lidar_node = Node(
-          package="parameters_demo",
-          executable="lidar_demo",
-          parameters=[parameters_demo_file, {"lidar_model": lidar_model}],
-          output="screen",
-          emulate_tty=True,
-      )
-      ld.add_action(lidar_model_arg)
-      ld.add_action(lidar_node)
-
-   .. code-block:: console
-
-      ros2 launch parameters_demo demo3.launch.py lidar_model:=ouster
-
-
 Executors
 ====================================================
 
@@ -875,7 +334,7 @@ multi-task robotic systems.
 
 
 Single-Threaded Executor
-====================================================
+----------------------------------------------------
 
 Processes all callbacks sequentially in a single OS thread.
 
@@ -927,6 +386,11 @@ Processes all callbacks sequentially in a single OS thread.
          :width: 100%
          :align: center
          :class: only-dark
+
+         Single-threaded executor timeline over 1 s. All callbacks share
+         one thread and execute sequentially. cb2 incurs a fixed +30 ms
+         phase offset and cb3 a fixed +50 ms offset whenever co-scheduled
+         with cb1.
 
    .. only:: latex
 
@@ -1035,7 +499,7 @@ Processes all callbacks sequentially in a single OS thread.
 
 
 Multi-Threaded Executor
-====================================================
+----------------------------------------------------
 
 Manages and executes callbacks across multiple threads, allowing for
 concurrent processing of tasks.
@@ -1093,7 +557,7 @@ concurrent processing of tasks.
 
       .. figure:: /_static/images/L9/concurrency_light.png
          :alt: Concurrency illustration
-         :width: 90%
+         :width: 60%
          :align: center
          :class: only-light
 
@@ -1102,13 +566,16 @@ concurrent processing of tasks.
 
       .. figure:: /_static/images/L9/concurrency_dark.png
          :alt: Concurrency illustration
-         :width: 90%
+         :width: 60%
          :align: center
          :class: only-dark
 
+         Concurrency: two queues, one hot dog stand. Both groups are in
+         progress, but only one customer is served at a time.
+
       .. figure:: /_static/images/L9/parallelism_light.png
          :alt: Parallelism illustration
-         :width: 90%
+         :width: 60%
          :align: center
          :class: only-light
 
@@ -1117,9 +584,12 @@ concurrent processing of tasks.
 
       .. figure:: /_static/images/L9/parallelism_dark.png
          :alt: Parallelism illustration
-         :width: 90%
+         :width: 60%
          :align: center
          :class: only-dark
+
+         Parallelism: two queues, two hot dog stands. Both groups are
+         served simultaneously with no waiting on each other.
 
    .. only:: latex
 
@@ -1169,7 +639,7 @@ concurrent processing of tasks.
 
 
 Callback Groups
-====================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A **callback group** is a container within a node that holds callbacks
 for subscriptions, timers, or services. Each group defines how its
@@ -1268,7 +738,7 @@ callbacks are handled in terms of execution and threading.
 
    .. only:: html
 
-      .. figure:: /_static/images/L9/mutex_timeline_light.png
+      .. figure:: /_static/images/L9/mutex2_timeline_light.png
          :alt: Mutually exclusive callback group timeline
          :width: 100%
          :align: center
@@ -1278,15 +748,19 @@ callbacks are handled in terms of execution and threading.
          ``MutuallyExclusiveCallbackGroup``. Despite 4 threads, the
          mutex gate serializes all callbacks.
 
-      .. figure:: /_static/images/L9/mutex_timeline_dark.png
+      .. figure:: /_static/images/L9/mutex2_timeline_dark.png
          :alt: Mutually exclusive callback group timeline
          :width: 100%
          :align: center
          :class: only-dark
 
+         ``MultiThreadedExecutor(num_threads=4)`` with one
+         ``MutuallyExclusiveCallbackGroup``. Despite 4 threads, the
+         mutex gate serializes all callbacks.
+
    .. only:: latex
 
-      .. figure:: /_static/images/L9/mutex_timeline_light.png
+      .. figure:: /_static/images/L9/mutex2_timeline_light.png
          :alt: Mutually exclusive callback group timeline
          :width: 100%
          :align: center
@@ -1393,7 +867,7 @@ callbacks are handled in terms of execution and threading.
 
    .. only:: html
 
-      .. figure:: /_static/images/L9/reentrant_fast_timeline_light.png
+      .. figure:: /_static/images/L9/reentrant1_timeline_light.png
          :alt: Reentrant callback group timeline -- fast callbacks
          :width: 100%
          :align: center
@@ -1402,15 +876,18 @@ callbacks are handled in terms of execution and threading.
          All callbacks complete within their periods -- each fires
          exactly on schedule with no overlap.
 
-      .. figure:: /_static/images/L9/reentrant_fast_timeline_dark.png
+      .. figure:: /_static/images/L9/reentrant1_timeline_dark.png
          :alt: Reentrant callback group timeline -- fast callbacks
          :width: 100%
          :align: center
          :class: only-dark
 
+         All callbacks complete within their periods -- each fires
+         exactly on schedule with no overlap.
+
    .. only:: latex
 
-      .. figure:: /_static/images/L9/reentrant_fast_timeline_light.png
+      .. figure:: /_static/images/L9/reentrant1_timeline_light.png
          :alt: Reentrant callback group timeline -- fast callbacks
          :width: 100%
          :align: center
@@ -1428,7 +905,7 @@ callbacks are handled in terms of execution and threading.
 
    .. only:: html
 
-      .. figure:: /_static/images/L9/reentrant_slow_timeline_light.png
+      .. figure:: /_static/images/L9/reentrant2_timeline_light.png
          :alt: Reentrant callback group timeline -- slow callback
          :width: 100%
          :align: center
@@ -1438,7 +915,7 @@ callbacks are handled in terms of execution and threading.
          exceeds its period (500 ms). New instances fire on schedule
          regardless of prior instances still running.
 
-      .. figure:: /_static/images/L9/reentrant_slow_timeline_dark.png
+      .. figure:: /_static/images/L9/reentrant2_timeline_dark.png
          :alt: Reentrant callback group timeline -- slow callback
          :width: 100%
          :align: center
@@ -1446,7 +923,7 @@ callbacks are handled in terms of execution and threading.
 
    .. only:: latex
 
-      .. figure:: /_static/images/L9/reentrant_slow_timeline_light.png
+      .. figure:: /_static/images/L9/reentrant2_timeline_light.png
          :alt: Reentrant callback group timeline -- slow callback
          :width: 100%
          :align: center

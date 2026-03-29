@@ -2,13 +2,12 @@
 Quiz
 ====================================================
 
-This quiz covers the key concepts from Lecture 9: Launch Files,
-Parameters, and Executors, including Python launch file structure,
-advanced launch features (includes, conditionals, grouping, arguments),
-the ROS 2 parameter lifecycle (declaration, retrieval, setting, and
-callbacks), single-threaded and multi-threaded executors, and callback
-groups (mutually exclusive and reentrant). The GIL and its implications
-for Python parallelism are also covered.
+This quiz covers the key concepts from Lecture 9: Launch Files and
+Executors, including Python launch file structure, advanced launch
+features (includes, conditionals, grouping, arguments), single-threaded
+and multi-threaded executors, and callback groups (mutually exclusive
+and reentrant). The GIL and its implications for Python parallelism are
+also covered.
 
 .. note::
 
@@ -83,85 +82,6 @@ Multiple Choice
 .. admonition:: Question 3
    :class: hint
 
-   A parameter is declared with ``self.declare_parameter("rate", 10)``
-   but no descriptor. What is the inferred parameter type?
-
-   A. ``double``
-
-   B. ``string``
-
-   C. ``integer``
-
-   D. ``byte[]``
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **C** -- ``integer``.
-
-   ROS 2 infers the parameter type from the Python type of the default
-   value. The literal ``10`` is a Python ``int``, so the parameter type
-   is ``integer``. If the default value were ``10.0``, the type would
-   be ``double``. Use ``ParameterDescriptor`` to add constraints and
-   documentation.
-
-
-.. admonition:: Question 4
-   :class: hint
-
-   After calling ``ros2 param set /camera_demo camera_name 'new_name'``,
-   a node still logs the old name. What is the most likely cause?
-
-   A. The parameter file overrides the CLI value.
-
-   B. The node did not register an on-set-parameters callback and
-      therefore never updated its stored attribute.
-
-   C. ``ros2 param set`` only works with integer and double types.
-
-   D. The node must be rebuilt before parameter changes take effect.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **B** -- The node did not register an on-set-parameters callback.
-
-   ``ros2 param set`` updates the parameter value in the ROS 2 parameter
-   server for that node. However, the node's Python attribute
-   (``self._camera_name``) is only set during initialization. Without a
-   registered callback via ``add_on_set_parameters_callback()``, the
-   attribute is never updated after startup.
-
-
-.. admonition:: Question 5
-   :class: hint
-
-   What is the correct accessor to retrieve an integer parameter value
-   from a ``Parameter`` object returned by ``get_parameter()``?
-
-   A. ``.value``
-
-   B. ``.get_parameter_value().integer_value``
-
-   C. ``.data``
-
-   D. ``.get_value().as_int()``
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **B** -- ``.get_parameter_value().integer_value``.
-
-   ``get_parameter("name")`` returns a ``Parameter`` object. Calling
-   ``.get_parameter_value()`` returns a ``ParameterValue`` message.
-   Access the appropriate typed field: ``.integer_value``,
-   ``.double_value``, ``.string_value``, ``.bool_value``, etc. The
-   field must match the declared parameter type.
-
-
-.. admonition:: Question 6
-   :class: hint
-
    Which executor type is implicitly created by ``rclpy.spin(node)``?
 
    A. ``MultiThreadedExecutor``
@@ -184,7 +104,7 @@ Multiple Choice
    multiple nodes or switching executor types.
 
 
-.. admonition:: Question 7
+.. admonition:: Question 4
    :class: hint
 
    Node A has three timers all assigned to the same
@@ -213,7 +133,7 @@ Multiple Choice
    remain idle for this group.
 
 
-.. admonition:: Question 8
+.. admonition:: Question 5
    :class: hint
 
    A ``ReentrantCallbackGroup`` callback has a period of 200 ms and an
@@ -243,7 +163,7 @@ Multiple Choice
    overlapping instances are undesirable.
 
 
-.. admonition:: Question 9
+.. admonition:: Question 6
    :class: hint
 
    Why does adding more threads to a ``MultiThreadedExecutor`` via
@@ -271,41 +191,13 @@ Multiple Choice
    native libraries such as NumPy or OpenCV.
 
 
-.. admonition:: Question 10
-   :class: hint
-
-   You must modify a timer's firing period at runtime after a parameter
-   change. Which approach is correct?
-
-   A. Call ``self._timer.set_period(new_period)`` directly.
-
-   B. Cancel the existing timer and create a new one with the updated
-      period.
-
-   C. Change the parameter value; the timer period updates automatically.
-
-   D. Restart the node with the new parameter value.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **B** -- Cancel the existing timer and create a new one.
-
-   ROS 2 timers do not expose a ``set_period()`` method. The correct
-   pattern is to cancel the existing timer with
-   ``self._timer.cancel()`` and then call
-   ``self.create_timer(new_period, callback)`` to create a replacement.
-   This must be done inside the on-set-parameters callback so it
-   triggers automatically when the parameter is updated.
-
-
 ----
 
 
 True/False
 ==========
 
-.. admonition:: Question 11
+.. admonition:: Question 7
    :class: hint
 
    **True or False:** The ``--symlink-install`` flag means you never
@@ -325,43 +217,7 @@ True/False
    rebuilding.
 
 
-.. admonition:: Question 12
-   :class: hint
-
-   **True or False:** A parameter declared in a node's ``__init__``
-   without a ``ParameterDescriptor`` cannot have constraints applied
-   to it later.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **True**
-
-   Constraints and metadata are attached to a parameter at declaration
-   time via ``ParameterDescriptor``. Once a parameter is declared
-   without a descriptor (or with an empty descriptor), its constraints
-   cannot be changed at runtime. Plan your parameter metadata during
-   node design.
-
-
-.. admonition:: Question 13
-   :class: hint
-
-   **True or False:** A YAML parameter file can configure parameters
-   for multiple nodes in a single file.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **True**
-
-   A YAML parameter file maps node names to their ``ros__parameters``
-   blocks at the top level. Multiple node blocks can appear in the same
-   file. Each ``Node`` action in the launch file that loads the file
-   will only apply the parameters belonging to its own node name.
-
-
-.. admonition:: Question 14
+.. admonition:: Question 8
    :class: hint
 
    **True or False:** A ``SingleThreadedExecutor`` can manage callbacks
@@ -378,7 +234,7 @@ True/False
    processed sequentially on the single thread.
 
 
-.. admonition:: Question 15
+.. admonition:: Question 9
    :class: hint
 
    **True or False:** The Python GIL is released during
@@ -398,7 +254,7 @@ True/False
    calls.
 
 
-.. admonition:: Question 16
+.. admonition:: Question 10
    :class: hint
 
    **True or False:** A ``ReentrantCallbackGroup`` is always safer than
@@ -418,7 +274,7 @@ True/False
    involved.
 
 
-.. admonition:: Question 17
+.. admonition:: Question 11
    :class: hint
 
    **True or False:** Passing ``condition=IfCondition(...)`` to a
@@ -436,25 +292,7 @@ True/False
    then paused; it simply does not start.
 
 
-.. admonition:: Question 18
-   :class: hint
-
-   **True or False:** ``ros2 param set`` permanently changes the
-   parameter default value so it persists after the node is restarted.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **False**
-
-   ``ros2 param set`` updates the in-memory parameter value for a
-   running node. When the node is stopped and restarted, it reverts to
-   the default declared in the source code (or the value from a YAML
-   file or CLI argument if provided). To make changes permanent,
-   update the YAML file or the default value in the code.
-
-
-.. admonition:: Question 19
+.. admonition:: Question 12
    :class: hint
 
    **True or False:** ``GroupAction`` in a launch file allows applying
@@ -471,7 +309,7 @@ True/False
    condition to each individual ``Node`` action.
 
 
-.. admonition:: Question 20
+.. admonition:: Question 13
    :class: hint
 
    **True or False:** A ``MutuallyExclusiveCallbackGroup`` with
@@ -497,38 +335,7 @@ True/False
 Essay Questions
 ===============
 
-.. admonition:: Question 21
-   :class: hint
-
-   **Explain the ROS 2 parameter lifecycle.** Starting from declaration,
-   describe each stage a parameter goes through and what can happen at
-   each stage.
-
-   *(2-4 sentences)*
-
-.. dropdown:: Answer Guidelines
-   :class-container: sd-border-success
-
-   *Key points to include:*
-
-   - **Declaration**: the node calls ``declare_parameter()`` in
-     ``__init__``, establishing the parameter name, type (inferred
-     from the default value), default value, and optional descriptor.
-     Accessing an undeclared parameter raises an error.
-   - **Retrieval**: the node calls ``get_parameter().get_parameter_value()``
-     to read the current value into a Python attribute. This is
-     typically done once during initialization.
-   - **Setting**: the value can be overridden via the CLI (``--ros-args
-     -p``), a launch file, a YAML file, programmatically with
-     ``set_parameters()``, or at runtime with ``ros2 param set``.
-   - **Callback notification**: if ``add_on_set_parameters_callback()``
-     is registered, the callback fires whenever a set operation is
-     attempted. The callback validates the new values, updates stored
-     attributes, and returns ``SetParametersResult(successful=...)``
-     to accept or reject the change.
-
-
-.. admonition:: Question 22
+.. admonition:: Question 14
    :class: hint
 
    **Describe the difference between a single-threaded executor and a
@@ -557,7 +364,7 @@ Essay Questions
      tasks benefit most from multi-threading due to GIL release).
 
 
-.. admonition:: Question 23
+.. admonition:: Question 15
    :class: hint
 
    **Explain what the Python GIL is and how it limits parallelism in
@@ -587,7 +394,7 @@ Essay Questions
      released during matrix operations.
 
 
-.. admonition:: Question 24
+.. admonition:: Question 16
    :class: hint
 
    **Compare ``MutuallyExclusiveCallbackGroup`` and
