@@ -46,21 +46,21 @@ Overview
    ``README.md`` explaining your design decisions.
 
 
-.. dropdown:: AI and Academic Integrity Policy
-   :open:
+.. .. dropdown:: AI and Academic Integrity Policy
+..    :open:
 
-   .. note::
+..    .. note::
 
-      **AI tools are permitted** for this group project, subject to the
-      following rules:
+..       **AI tools are permitted** for this group project, subject to the
+..       following rules:
 
-      - You **must** include a file named ``AI_USAGE.md`` in your package
-        root documenting every AI interaction: the tool used, the prompt
-        given, and how the output was modified.
-      - AI-generated code that is submitted without documentation will be
-        treated as an academic integrity violation.
-      - You are responsible for understanding and being able to explain
-        every line of code you submit.
+..       - You **must** include a file named ``AI_USAGE.md`` in your package
+..         root documenting every AI interaction: the tool used, the prompt
+..         given, and how the output was modified.
+..       - AI-generated code that is submitted without documentation will be
+..         treated as an academic integrity violation.
+..       - You are responsible for understanding and being able to explain
+..         every line of code you submit.
 
 
 .. dropdown:: Learning Objectives
