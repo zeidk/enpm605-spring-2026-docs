@@ -341,9 +341,7 @@ specific requirements are listed in each scenario page.
 Scenarios
 =========
 
-Choose **one** of the three scenarios below. Each group must select a
-different scenario from the other groups in the class (first-come,
-first-served on Canvas). Each scenario page includes its own detailed
+Choose **one** of the three scenarios below. Each scenario page includes its own detailed
 grading rubric.
 
 .. toctree::
