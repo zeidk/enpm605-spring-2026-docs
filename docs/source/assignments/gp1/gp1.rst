@@ -17,7 +17,7 @@ Overview
    * - **Submission**
      - Canvas (ZIP file: ``group<N>_gp1.zip`` containing the ROS 2 package)
    * - **Collaboration**
-     - Groups of 2. AI tools are permitted with proper documentation.
+     - Groups of 2.
    * - **Late Policy**
      - 10% deduction per calendar day, up to 3 days. Zero after 3 days.
    * - **Peer Review**
@@ -140,7 +140,7 @@ Overview
           conditionals). Test the full system end to end.
       * - **Week 2**
         - Days 13--14
-        - Write ``README.md``, ``AI_USAGE.md``, and code quality pass
+        - Write ``README.md`` and code quality pass
           (docstrings, type hints, comments). Package and submit.
 
    .. tip::
@@ -187,7 +187,6 @@ specific requirements are listed in each scenario page.
       |-- setup.py
       |-- setup.cfg
       |-- README.md
-      |-- AI_USAGE.md
 
    Each node class must live in its own Python file (e.g.,
    ``aggregator.py``, ``watchdog.py``). Do not place multiple node
@@ -304,8 +303,6 @@ specific requirements are listed in each scenario page.
    **Documentation**
 
    - |box| ``README.md`` includes all required sections.
-   - |box| ``AI_USAGE.md`` documents all AI tool usage (or states "No AI
-     tools were used").
 
    **Code Quality**
 
@@ -329,7 +326,7 @@ specific requirements are listed in each scenario page.
    - Submit a ZIP file named ``group<N>_gp1.zip`` on Canvas (e.g.,
      ``group3_gp1.zip``).
    - The ZIP must contain the ROS 2 package folder with all source files,
-     launch files, ``README.md``, and ``AI_USAGE.md``.
+     launch files, and ``README.md``.
    - The ZIP must not contain ``build/``, ``install/``, ``log/``,
      ``__pycache__/``, or ``.pyc`` files.
    - Both group members must submit the same ZIP file on Canvas.
