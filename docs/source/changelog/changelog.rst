@@ -5,6 +5,19 @@ Changelog
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
 
+.. dropdown:: v1.4.1 -- GP1 AI Policy Removed (2026-04-01)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: GP 1 (gp1.rst)
+
+   - Removed AI tools permission from the Collaboration field.
+   - Removed ``AI_USAGE.md`` from the package structure, suggested timeline,
+     pre-submission checklist, and submission requirements.
+   - The AI and Academic Integrity Policy dropdown was already commented out
+     in a prior update.
+
+
 .. dropdown:: v1.4.0 -- L9 Documentation Released (2026-03-28)
    :icon: tag
    :class-container: sd-border-warning
