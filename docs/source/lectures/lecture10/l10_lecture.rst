@@ -963,6 +963,11 @@ Services
 Services implement synchronous request/response communication between
 nodes.
 
+.. note::
+
+   All demos in this section are **text-based** -- no robot or simulator
+   is needed. Service calls are simulated with log messages.
+
 
 .. dropdown:: Service Communication Model
 
@@ -1010,7 +1015,9 @@ nodes.
 .. dropdown:: Writing a Service Server
 
    A service server registers a callback that runs when a client sends
-   a request.
+   a request. In this demo, the server **simulates** trajectory
+   computation -- it logs the request and returns a success message
+   without actually computing a path.
 
    .. code-block:: python
 
@@ -1176,6 +1183,12 @@ Actions
 Actions extend services with feedback and cancellation for
 long-running tasks.
 
+.. note::
+
+   All demos in this section are **text-based** -- robot movement is
+   simulated with log messages and ``time.sleep()``. No robot or
+   simulator is needed.
+
 
 .. dropdown:: Action Communication Model
 
@@ -1232,7 +1245,9 @@ long-running tasks.
 .. dropdown:: Writing an Action Server
 
    An action server handles incoming goals, publishes feedback during
-   execution, and returns a result.
+   execution, and returns a result. In this demo, navigation is
+   **simulated** with a countdown loop using ``time.sleep()`` -- no
+   actual robot is moving.
 
    .. code-block:: python
 
