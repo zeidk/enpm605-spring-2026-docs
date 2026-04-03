@@ -50,11 +50,24 @@ Schedule
    * - L9
      - Launch Files, Parameters, & Executors
      - Python launch files, advanced launch features (includes, conditionals, grouping, arguments), parameter lifecycle (declaration, retrieval, setting, runtime callbacks), single-threaded and multi-threaded executors, callback groups (mutually exclusive and reentrant), Python GIL
+   * - L10
+     - Parameters, Custom Interfaces, Services & Actions
+     - Parameter declaration, descriptors, callbacks, YAML parameter files, custom ``.msg``/``.srv``/``.action`` definitions, CMake interface packages, service servers and clients (sync vs async), action servers and clients, feedback, cancellation, communication pattern selection
+   * - L11
+     - Simulation and Mobile Robot Control
+     - Gazebo Harmonic architecture, SDF world and model files, sensors (lidar, camera, IMU), ``ros_gz_bridge`` configuration, spawning robots, TF2 coordinate frames, static and dynamic transforms, broadcasters and listeners, ``cmd_vel``/Twist, differential drive plugin, teleop, reading sensor data
+   * - L12
+     - Nav2 and Lifecycle Nodes
+     - Nav2 navigation stack, lifecycle (managed) nodes, state transitions, Nav2 goal dispatch
+   * - L13
+     - Behavior Trees and Project Integration
+     - Behavior tree fundamentals, ``py_trees`` library, Blackboard, ``py_trees_ros``, lifecycle management from BTs, Nav2 integration, full-system coordination
 
 Contents
 --------
 
 .. toctree::
+   :hidden:
    :maxdepth: 3
    :titlesonly:
 
@@ -67,3 +80,4 @@ Contents
    lecture7/l7_index
    lecture8/l8_index
    lecture9/l9_index
+   lecture10/l10_index

@@ -47,10 +47,12 @@ After successfully completing this course, you will be able to:
 - Analyze and visualize robotic performance data.
 
 .. toctree::
+   :hidden:
    :maxdepth: 3
    :titlesonly:
 
    changelog/changelog
    lectures/index
    assignments/index
+   simulation/simulation
    glossary/glossary
