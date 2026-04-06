@@ -1826,7 +1826,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_goal_response_callback_sequence_light.png
          :alt: Sequence diagram for _goal_response_callback
-         :width: 50%
+         :width: 70%
          :align: center
          :class: only-light
 
@@ -1836,7 +1836,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_goal_response_callback_sequence_dark.png
          :alt: Sequence diagram for _goal_response_callback
-         :width: 50%
+         :width: 70%
          :align: center
          :class: only-dark
 
@@ -1904,7 +1904,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_feedback_callback_sequence_light.png
          :alt: Sequence diagram for _feedback_callback
-         :width: 50%
+         :width: 70%
          :align: center
          :class: only-light
 
@@ -1914,7 +1914,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_feedback_callback_sequence_dark.png
          :alt: Sequence diagram for _feedback_callback
-         :width: 50%
+         :width: 70%
          :align: center
          :class: only-dark
 
@@ -1969,7 +1969,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_cancel_done_callback_light.png
          :alt: Sequence diagram for _cancel_done_callback
-         :width: 40%
+         :width: 70%
          :align: center
          :class: only-light
 
@@ -1979,7 +1979,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_cancel_done_callback_dark.png
          :alt: Sequence diagram for _cancel_done_callback
-         :width: 40%
+         :width: 70%
          :align: center
          :class: only-dark
 
@@ -2018,7 +2018,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_result_callback_sequence_light.png
          :alt: Sequence diagram for _result_callback
-         :width: 30%
+         :width: 60%
          :align: center
          :class: only-light
 
@@ -2028,7 +2028,7 @@ the final result. The entire flow is asynchronous: each step returns a
 
       .. figure:: /_static/images/L10/_result_callback_sequence_dark.png
          :alt: Sequence diagram for _result_callback
-         :width: 30%
+         :width: 60%
          :align: center
          :class: only-dark
 
