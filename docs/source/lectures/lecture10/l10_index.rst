@@ -12,9 +12,10 @@ runtime using **parameters**, define domain-specific data types with
 request/response communication with **services**, and build
 goal-oriented long-running tasks with **actions**. Together these
 mechanisms form the complete ROS 2 communication toolkit required for
-building sophisticated robotic systems. All hands-on examples use four
-dedicated demo packages: ``param_demo``, ``custom_interfaces``,
-``service_demo``, and ``action_demo``.
+building sophisticated robotic systems. All hands-on examples use
+dedicated demo packages: ``parameters_demo``, ``custom_interfaces``,
+``message_demo``, ``service_demo``, and ``action_demo``, built via
+the ``lecture10_demo`` metapackage.
 
 
 Learning Objectives
@@ -22,23 +23,27 @@ Learning Objectives
 
 By the end of this lecture, you will be able to:
 
-- Declare, read, and set parameters on ROS 2 nodes using Python.
-- Write YAML parameter files and pass parameters from the command line
-  and launch files.
-- Create custom ``.msg``, ``.srv``, and ``.action`` interface
-  definitions and build them with CMake.
-- Write service servers and service clients (synchronous and
-  asynchronous).
-- Write action servers and action clients with feedback and
-  cancellation support.
-- Choose the appropriate communication pattern (topic, service, action)
-  for a given robotic task.
+- Declare, retrieve, and set ROS 2 parameters, and react to runtime
+  changes with a parameter callback.
+- Define custom message, service, and action interfaces in a CMake
+  package and use them in Python nodes.
+- Write a service server and client using both asynchronous
+  (``call_async``) and synchronous (``call``) patterns.
+- Explain when to use a ``MultiThreadedExecutor`` and a separate
+  callback group to avoid deadlocks in a synchronous service client.
+- Write an action server that publishes feedback, handles cancellation
+  cooperatively, and returns a terminal result.
+- Write an action client that manages the full asynchronous callback
+  chain: goal response, feedback, cancel response, and result.
+- Choose the appropriate communication mechanism (topic, service,
+  action, parameter) for a given robotics task.
 
 
 Contents
 --------
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :titlesonly:
 
@@ -51,15 +56,21 @@ Contents
 Next Steps
 ----------
 
-- In the next lecture, we will cover simulation and mobile robot control:
+- In the next lecture, we will cover **L11: Simulation and Mobile Robot
+  Control**:
 
-  - Gazebo Harmonic simulation environment
-  - TF2 coordinate transforms
-  - Commanding mobile robots with ``cmd_vel``
-  - Sensor integration (LiDAR, camera, IMU)
+  - Gazebo Harmonic architecture and SDF world files
+  - Spawning robots and configuring sensors (LiDAR, camera, IMU)
+  - ``ros_gz_bridge`` for Gazebo--ROS 2 communication
+  - TF2 coordinate frames, broadcasters, and listeners
+  - Mobile robot control with ``cmd_vel`` and differential drive
+  - Reading sensor data in Python nodes
 
 - Complete the `exercises
   <https://enpm605-spring-2026-docs.readthedocs.io/en/latest/lectures/lecture10/l10_exercises.html>`_
   from this lecture before the next class.
-- Read `Understanding Actions
-  <https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html>`_.
+- Set up the Docker simulation environment (see `Simulation
+  <https://enpm605-spring-2026-docs.readthedocs.io/en/latest/simulation/simulation.html>`_
+  page).
+- Read `Getting Started with Gazebo Harmonic
+  <https://gazebosim.org/docs/harmonic/getstarted/>`_.
