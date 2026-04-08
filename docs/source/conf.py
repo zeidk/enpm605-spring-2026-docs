@@ -77,7 +77,7 @@ html_theme_options = {
     "footer_end": ["theme-version"],
     # Syntax highlighting for light and dark modes
     "pygments_light_style": "igor",
-    "pygments_dark_style": "nord",
+    "pygments_dark_style": "nord-darker",
 }
 
 # Edit on GitHub button

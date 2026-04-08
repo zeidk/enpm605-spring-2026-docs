@@ -13,18 +13,17 @@ The pre-built Docker image includes:
 - **Husarion ROSbot** simulation packages (robot model with LiDAR,
   camera, and IMU sensors)
 
-Terminology
------------
+.. card:: Terminology
 
-Throughout this guide, two terms are used to distinguish between
-your machine and the Docker container:
+   Throughout this guide, two terms are used to distinguish between
+   your machine and the Docker container:
 
-- **Host** -- your physical Ubuntu machine (where Docker is installed
-  and where you run ``docker`` commands).
-- **Container** (or **remote**) -- the isolated Docker environment
-  where ROS 2, Gazebo, and the simulation packages run. When VS Code
-  is attached to the container, it refers to it as a *remote*
-  environment.
+   - **Host** -- your physical Ubuntu machine (where Docker is installed
+     and where you run ``docker`` commands).
+   - **Container** (or **remote**) -- the isolated Docker environment
+     where ROS 2, Gazebo, and the simulation packages run. When VS Code
+     is attached to the container, it refers to it as a *remote*
+     environment.
 
 
 .. _docker-step1:
@@ -34,7 +33,9 @@ Step 1: Install Docker Engine
 
 
 .. dropdown:: Install Docker Engine on Ubuntu
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    Follow the official guide:
    `Install Docker Engine on Ubuntu
@@ -63,7 +64,9 @@ Step 1: Install Docker Engine
 
 
 .. dropdown:: Install NVIDIA Container Toolkit (GPU acceleration)
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    GPU acceleration is strongly recommended -- without it, Gazebo will
    fall back to software rendering and be very slow.
@@ -129,7 +132,9 @@ Step 2: Pull the Docker Image
 
 
 .. dropdown:: Pull the pre-built image
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    The course Docker image is hosted on Docker Hub. Pull it with:
 
@@ -161,7 +166,9 @@ Step 3: Run the Container
 
 
 .. dropdown:: Allow X11 Display Access
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    Before starting the container, allow Docker to access your display
    server so Gazebo and RViz windows appear on your screen:
@@ -184,7 +191,9 @@ Step 3: Run the Container
 
 
 .. dropdown:: Start the Container
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    .. tab-set::
 
@@ -267,6 +276,9 @@ Step 3: Run the Container
 
 
 .. dropdown:: Open Additional Terminals
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    To open a second (or third, etc.) terminal in the **same running
    container**:
@@ -286,6 +298,9 @@ Step 3: Run the Container
 
 
 .. dropdown:: Exit the Container
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    To leave a container terminal, type:
 
@@ -310,6 +325,9 @@ Step 3: Run the Container
 
 
 .. dropdown:: Stop and Restart the Container
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    The container **persists** after you exit, so you can restart it
    later without losing any installed packages or configuration changes
@@ -350,7 +368,9 @@ Step 3: Run the Container
 
 
 .. dropdown:: Connect with VS Code
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    VS Code can attach directly to the running container, giving you a
    full editor with IntelliSense, integrated terminal, and file
@@ -428,81 +448,96 @@ Once inside the container (via terminal or VS Code), launch the
 simulation using the shared instructions on the :ref:`simulation-launch`
 page.
 
-
 Troubleshooting
 ====================================================
 
+.. card::
 
-.. dropdown:: ``package 'ros_gz_bridge' not found``
+   .. dropdown:: ``package 'ros_gz_bridge' not found``
+      :color: warning
+      :icon: package
+      :animate: fade-in-slide-down
 
-   The ROS--Gazebo bridge packages are not installed in the container.
-   Install them:
+      The ROS--Gazebo bridge packages are not installed in the container.
+      Install them:
 
-   .. code-block:: console
+      .. code-block:: console
 
-      sudo apt update
-      sudo apt install -y ros-jazzy-ros-gz
+         sudo apt update
+         sudo apt install -y ros-jazzy-ros-gz
 
-   Then source the environment again:
+      Then source the environment again:
 
-   .. code-block:: console
+      .. code-block:: console
 
-      source /opt/ros/jazzy/setup.bash
-      source ~/rosbot_ws/install/setup.bash
-
-
-.. dropdown:: ``cannot open display`` error
-
-   The container cannot connect to your display server.
-
-   - Ensure you ran ``xhost +local:docker`` on the host **before**
-     starting the container.
-   - Check that the ``DISPLAY`` variable is set inside the container:
-
-     .. code-block:: console
-
-        echo $DISPLAY
-
-     It should show ``:0`` or ``:1``. If it is empty, the ``-e
-     DISPLAY=$DISPLAY`` flag was not passed correctly.
+         source /opt/ros/jazzy/setup.bash
+         source ~/rosbot_ws/install/setup.bash
 
 
-.. dropdown:: Gazebo is extremely slow (no GPU)
+   .. dropdown:: ``cannot open display`` error
+      :color: warning
+      :icon: device-desktop
+      :animate: fade-in-slide-down
 
-   The simulator is likely using software rendering.
+      The container cannot connect to your display server.
 
-   - Run ``nvidia-smi`` inside the container. If it fails, the GPU is
-     not being passed through.
-   - Ensure ``--gpus all`` was included in your ``docker run`` command.
-   - Ensure the NVIDIA Container Toolkit is installed on the host
-     (see Step 1).
-   - Restart Docker on the host: ``sudo systemctl restart docker``.
+      - Ensure you ran ``xhost +local:docker`` on the host **before**
+      starting the container.
+      - Check that the ``DISPLAY`` variable is set inside the container:
 
+      .. code-block:: console
 
-.. dropdown:: ``permission denied`` when running Docker commands
+         echo $DISPLAY
 
-   Your user is not in the ``docker`` group.
-
-   .. code-block:: console
-
-      sudo usermod -aG docker $USER
-
-   Then **log out and log back in**. Alternatively, run
-   ``newgrp docker`` to apply the change in your current session only.
+      It should show ``:0`` or ``:1``. If it is empty, the ``-e
+      DISPLAY=$DISPLAY`` flag was not passed correctly.
 
 
-.. dropdown:: ``docker: Error response from daemon: Conflict``
+   .. dropdown:: Gazebo is extremely slow (no GPU)
+      :color: warning
+      :icon: cpu
+      :animate: fade-in-slide-down
 
-   A container named ``enpm605`` already exists. Either restart it:
+      The simulator is likely using software rendering.
 
-   .. code-block:: console
+      - Run ``nvidia-smi`` inside the container. If it fails, the GPU is
+      not being passed through.
+      - Ensure ``--gpus all`` was included in your ``docker run`` command.
+      - Ensure the NVIDIA Container Toolkit is installed on the host
+      (see Step 1).
+      - Restart Docker on the host: ``sudo systemctl restart docker``.
 
-      docker start enpm605
-      docker exec -it enpm605 bash
 
-   Or remove it and create a new one:
+   .. dropdown:: ``permission denied`` when running Docker commands
+      :color: warning
+      :icon: lock
+      :animate: fade-in-slide-down
 
-   .. code-block:: console
+      Your user is not in the ``docker`` group.
 
-      docker rm enpm605
-      # Then run the docker run command again
+      .. code-block:: console
+
+         sudo usermod -aG docker $USER
+
+      Then **log out and log back in**. Alternatively, run
+      ``newgrp docker`` to apply the change in your current session only.
+
+
+   .. dropdown:: ``docker: Error response from daemon: Conflict``
+      :color: warning
+      :icon: alert
+      :animate: fade-in-slide-down
+
+      A container named ``enpm605`` already exists. Either restart it:
+
+      .. code-block:: console
+
+         docker start enpm605
+         docker exec -it enpm605 bash
+
+      Or remove it and create a new one:
+
+      .. code-block:: console
+
+         docker rm enpm605
+         # Then run the docker run command again

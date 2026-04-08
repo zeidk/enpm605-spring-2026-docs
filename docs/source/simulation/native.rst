@@ -29,7 +29,9 @@ Step 1: Install Gazebo Harmonic
 ====================================================
 
 .. dropdown:: Install Gazebo Harmonic from packages
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    **Add the Gazebo package repository:**
 
@@ -72,7 +74,9 @@ Step 2: Create and Build the Workspace
 ====================================================
 
 .. dropdown:: Clone the ROSbot simulation packages
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    Create a new workspace and clone the repository:
 
@@ -98,7 +102,9 @@ Step 2: Create and Build the Workspace
 
 
 .. dropdown:: Install dependencies and build
-   :open:
+   :color: primary
+   :icon: pin
+   :animate: fade-in-slide-down
 
    Install all required ROS 2 dependencies:
 
@@ -156,78 +162,94 @@ instructions on the :ref:`simulation-launch` page.
 Troubleshooting
 ====================================================
 
+.. card::
 
-.. dropdown:: ``gz sim`` command not found
+   .. dropdown:: ``gz sim`` command not found
+      :color: warning
+      :icon: cpu
+      :animate: fade-in-slide-down
 
-   Gazebo Harmonic is not installed or not on your ``PATH``.
+      Gazebo Harmonic is not installed or not on your ``PATH``.
 
-   - Verify the installation with ``apt list --installed | grep gz-harmonic``.
-   - Ensure the OSRF repository was added correctly (see Step 1).
-   - Re-run ``sudo apt update && sudo apt install -y gz-harmonic``.
-
-
-.. dropdown:: ``rosdep install`` fails with missing keys
-
-   Some dependencies may not be available in the default rosdep
-   sources.
-
-   - Ensure you ran ``rosdep update`` before ``rosdep install``.
-   - Try adding the ``--skip-keys`` flag for known missing keys:
-
-     .. code-block:: console
-
-        rosdep install --from-paths src --ignore-src -y --skip-keys "gz-harmonic"
+      - Verify the installation with ``apt list --installed | grep gz-harmonic``.
+      - Ensure the OSRF repository was added correctly (see Step 1).
+      - Re-run ``sudo apt update && sudo apt install -y gz-harmonic``.
 
 
-.. dropdown:: ``colcon build`` fails with CMake errors
+   .. dropdown:: ``rosdep install`` fails with missing keys
+      :color: warning
+      :icon: cpu
+      :animate: fade-in-slide-down
 
-   - Make sure you sourced ROS 2 before building:
+      Some dependencies may not be available in the default rosdep
+      sources.
 
-     .. code-block:: console
+      - Ensure you ran ``rosdep update`` before ``rosdep install``.
+      - Try adding the ``--skip-keys`` flag for known missing keys:
 
-        source /opt/ros/jazzy/setup.bash
+      .. code-block:: console
 
-   - Ensure all dependencies were installed with ``rosdep install``.
-   - Delete the ``build/``, ``install/``, and ``log/`` directories
-     and rebuild:
-
-     .. code-block:: console
-
-        rm -rf build/ install/ log/
-        colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+         rosdep install --from-paths src --ignore-src -y --skip-keys "gz-harmonic"
 
 
-.. dropdown:: Gazebo crashes or shows a black screen
+   .. dropdown:: ``colcon build`` fails with CMake errors
+      :color: warning
+      :icon: cpu
+      :animate: fade-in-slide-down
 
-   - Check if your GPU drivers are working:
+      - Make sure you sourced ROS 2 before building:
 
-     .. code-block:: console
+      .. code-block:: console
 
-        glxinfo | grep "OpenGL renderer"
+         source /opt/ros/jazzy/setup.bash
 
-     If the renderer shows ``llvmpipe`` or ``software``, your GPU
-     drivers are not properly installed.
-   - For NVIDIA GPUs, ensure the proprietary driver is installed:
+      - Ensure all dependencies were installed with ``rosdep install``.
+      - Delete the ``build/``, ``install/``, and ``log/`` directories
+      and rebuild:
 
-     .. code-block:: console
+      .. code-block:: console
 
-        sudo ubuntu-drivers install
-
-   - Try running Gazebo with software rendering as a workaround:
-
-     .. code-block:: console
-
-        export LIBGL_ALWAYS_SOFTWARE=1
-        ros2 launch rosbot_gazebo simulation.yaml
+         rm -rf build/ install/ log/
+         colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 
-.. dropdown:: ``package 'rosbot_gazebo' not found``
+   .. dropdown:: Gazebo crashes or shows a black screen
+      :color: warning
+      :icon: cpu
+      :animate: fade-in-slide-down
 
-   The workspace is not sourced.
+      - Check if your GPU drivers are working:
 
-   - Run ``source ~/rosbot_ws/install/setup.bash`` in your terminal.
-   - Verify the package exists:
+      .. code-block:: console
 
-     .. code-block:: console
+         glxinfo | grep "OpenGL renderer"
 
-        ros2 pkg prefix rosbot_gazebo
+      If the renderer shows ``llvmpipe`` or ``software``, your GPU
+      drivers are not properly installed.
+      - For NVIDIA GPUs, ensure the proprietary driver is installed:
+
+      .. code-block:: console
+
+         sudo ubuntu-drivers install
+
+      - Try running Gazebo with software rendering as a workaround:
+
+      .. code-block:: console
+
+         export LIBGL_ALWAYS_SOFTWARE=1
+         ros2 launch rosbot_gazebo simulation.yaml
+
+
+   .. dropdown:: ``package 'rosbot_gazebo' not found``
+      :color: warning
+      :icon: cpu
+      :animate: fade-in-slide-down
+
+      The workspace is not sourced.
+
+      - Run ``source ~/rosbot_ws/install/setup.bash`` in your terminal.
+      - Verify the package exists:
+
+      .. code-block:: console
+
+         ros2 pkg prefix rosbot_gazebo

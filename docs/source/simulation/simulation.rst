@@ -32,17 +32,17 @@ There are two ways to set up the simulation environment:
      - When to use
      - Trade-off
    * - :doc:`docker`
-     - You need **Gazebo Classic** for another course.
+     - You need **Gazebo Classic** or you need to use **ROS Humble** for another course
      - Gazebo Harmonic runs inside a Docker container, isolated from
        Gazebo Classic on the host.
    * - :doc:`native`
-     - You do **not** need Gazebo Classic.
+     - You do **not** need Gazebo Classic and you can use **ROS Jazzy**.
      - Gazebo Harmonic is installed directly on your system. Simpler
        workflow, but cannot coexist with Gazebo Classic.
 
 .. warning::
 
-   **Why does this matter?** Gazebo Harmonic and Gazebo Classic cannot
+   Gazebo Harmonic and Gazebo Classic cannot
    coexist on the same system -- they share library names and the
    ``gazebo`` command, leading to symbol collisions. Pick the method
    that matches your situation.
@@ -64,6 +64,7 @@ simulation.
 
 .. dropdown:: Launch Gazebo with ROSbot
    :open:
+   :animate: fade-in-slide-down
 
    .. code-block:: console
 
@@ -79,6 +80,7 @@ simulation.
 
 
 .. dropdown:: Launch Arguments
+   :animate: fade-in-slide-down
 
    You can customize the simulation by passing arguments to the launch
    file using the ``argument:=value`` syntax.
@@ -131,6 +133,7 @@ Verifying the Setup
 
 .. dropdown:: Quick Smoke Test
    :open:
+   :animate: fade-in-slide-down
 
    Open a terminal in your simulation environment and verify the robot
    is publishing data:
