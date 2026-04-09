@@ -83,7 +83,7 @@ Step 2: Create and Build the Workspace
    .. code-block:: console
 
       mkdir -p ~/rosbot_ws/src
-      cd ~/rosbot_ws/src
+      cd ~/rosbot_ws
 
    .. code-block:: console
 
