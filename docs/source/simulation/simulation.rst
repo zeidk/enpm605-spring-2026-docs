@@ -62,7 +62,7 @@ Launching the Simulation
 Once your environment is set up (via either method), launch the
 simulation.
 
-.. dropdown:: Launch Gazebo with ROSbot
+.. dropdown:: Launch Gazebo with a Robot
    :open:
    :animate: fade-in-slide-down
 
@@ -124,6 +124,18 @@ simulation.
    .. code-block:: console
 
       ros2 launch rosbot_gazebo simulation.yaml rviz:=False x:=1.0 y:=3.0
+
+   .. note::
+
+      To see **all** available launch arguments and their defaults, run:
+
+      .. code-block:: console
+
+         ros2 launch rosbot_gazebo simulation.yaml --show-args
+
+      This is useful for discovering arguments not listed in the table above,
+      such as ``namespace``, ``mecanum``, ``configuration``, and
+      ``manipulator_serial_port``.
 
 
 .. _simulation-verify:
