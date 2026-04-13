@@ -73,32 +73,24 @@ Step 1: Install Gazebo Harmonic
 Step 2: Create and Build the Workspace
 ====================================================
 
-.. dropdown:: Clone the ROSbot simulation packages
+.. dropdown:: Clone the course workspace
    :color: primary
    :icon: pin
    :animate: fade-in-slide-down
 
-   Create a new workspace and clone the repository:
+   The course repository already bundles the ROSbot simulation packages
+   (``husarion_components_description``, ``husarion_controllers``,
+   ``husarion_gz_worlds``, and ``rosbot_ros``) under ``lecture11/`` --
+   there is no need to create a separate ``rosbot_ws`` or to pull them
+   in manually with ``vcs import``.
+
+   Clone the course repository into your workspace:
 
    .. code-block:: console
 
-      mkdir -p ~/rosbot_ws/src
-      cd ~/rosbot_ws
-
-   .. code-block:: console
-
-      git clone -b jazzy https://github.com/husarion/rosbot_ros.git src/rosbot_ros
-
-   Import the simulation dependencies:
-
-   .. code-block:: console
-
-      vcs import src < src/rosbot_ros/rosbot/rosbot_simulation.repos
-
-   - ``vcs import`` reads the ``.repos`` file and clones additional
-     repositories (``husarion_components_description``,
-     ``husarion_controllers``, ``husarion_gz_worlds``) at their pinned
-     versions.
+      mkdir -p ~/enpm605_ws
+      cd ~/enpm605_ws
+      git clone https://github.com/zeidk/enpm605-spring-2026-ros.git src
 
 
 .. dropdown:: Install dependencies and build
@@ -121,16 +113,21 @@ Step 2: Create and Build the Workspace
       be able to find system packages like ``ros_gz_bridge``, and the
       simulation launch will fail.
 
-   Build the workspace:
+   Build the workspace up to the Lecture 11 meta-package (this pulls
+   in every ROSbot simulation package and the lecture demos in the
+   correct order):
 
    .. code-block:: console
 
-      colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+      colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to lecture11_meta
 
    - ``--symlink-install`` creates symbolic links instead of copying
      files, so changes to Python scripts and launch files take effect
      without rebuilding.
    - ``-DCMAKE_BUILD_TYPE=Release`` enables compiler optimizations.
+   - ``--packages-up-to lecture11_meta`` builds ``lecture11_meta`` and
+     all of its transitive dependencies (the husarion and rosbot
+     packages, plus ``frame_demo`` and ``robot_control_demo``).
 
    The build may take several minutes on the first run.
 
@@ -147,7 +144,7 @@ Step 2: Create and Build the Workspace
 
       .. code-block:: bash
 
-         source ~/rosbot_ws/install/setup.bash
+         source ~/enpm605_ws/install/setup.bash
 
 
 .. _native-step3:
@@ -210,7 +207,7 @@ Troubleshooting
       .. code-block:: console
 
          rm -rf build/ install/ log/
-         colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+         colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to lecture11_meta
 
 
    .. dropdown:: Gazebo crashes or shows a black screen
@@ -247,7 +244,7 @@ Troubleshooting
 
       The workspace is not sourced.
 
-      - Run ``source ~/rosbot_ws/install/setup.bash`` in your terminal.
+      - Run ``source ~/enpm605_ws/install/setup.bash`` in your terminal.
       - Verify the package exists:
 
       .. code-block:: console

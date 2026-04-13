@@ -147,7 +147,7 @@ Step 2: Pull the Docker Image
    - ``zeidk/enpm605-sim:latest`` is the image name -- it contains
      ROS 2 Jazzy, Gazebo Harmonic, and the ROSbot simulation workspace
      already compiled.
-   - The download is ~4--6 GB. No further compilation is needed.
+   - The download is ~4--6 GB. No further compilation is needed (unless indicated)
 
    **Verify the image was downloaded:**
 

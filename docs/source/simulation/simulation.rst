@@ -10,8 +10,8 @@ environment used in this course. The simulation stack consists of:
 
 - **ROS 2 Jazzy** desktop installation
 - **Gazebo Harmonic** simulator
-- **Husarion ROSbot** simulation packages (robot model with LiDAR,
-  camera, and IMU sensors)
+- **Husarion ROSbot** `simulation packages <https://github.com/husarion/rosbot_ros>`__ (robot model with LiDAR, camera, and IMU sensors)
+
 
 .. note::
 
@@ -68,15 +68,8 @@ simulation.
 
    .. code-block:: console
 
-      ros2 launch rosbot_gazebo simulation.yaml robot_model:=<rosbot/rosbot_xl>
+      ros2 launch rosbot_gazebo husarion_world.launch.py
 
-   - ``ros2 launch`` starts a launch file that brings up multiple nodes.
-   - ``rosbot_gazebo`` is the package containing the simulation launch
-     files.
-   - ``simulation.yaml`` is the launch file that starts Gazebo with the
-     ROSbot model and RViz.
-   - ``robot_model:=`` selects the robot model -- use ``rosbot`` or
-     ``rosbot_xl``.
 
 
 .. dropdown:: Launch Arguments
@@ -123,7 +116,7 @@ simulation.
 
    .. code-block:: console
 
-      ros2 launch rosbot_gazebo simulation.yaml rviz:=False x:=1.0 y:=3.0
+      ros2 launch rosbot_gazebo husarion_world.launch.py rviz:=False x:=1.0 y:=3.0
 
    .. note::
 
@@ -131,7 +124,7 @@ simulation.
 
       .. code-block:: console
 
-         ros2 launch rosbot_gazebo simulation.yaml --show-args
+         ros2 launch rosbot_gazebo husarion_world.launch.py --show-args
 
       This is useful for discovering arguments not listed in the table above,
       such as ``namespace``, ``mecanum``, ``configuration``, and
@@ -163,21 +156,8 @@ Verifying the Setup
       ros2 topic hz /camera/color/image_raw
 
       # Print one odometry message and exit
-      ros2 topic echo /odom --once
+      ros2 topic echo /odom/filtered --once
 
       # Generate a PDF of the TF tree (saved to frames.pdf)
       ros2 run tf2_tools view_frames
 
-   You should see topics for the LiDAR (``/scan``), camera, IMU
-   (``/imu_broadcaster/imu``), and odometry (``/odom``).
-
-   **Drive the robot manually:**
-
-   .. code-block:: console
-
-      ros2 run teleop_twist_keyboard teleop_twist_keyboard
-
-   - This node reads your keyboard input and publishes velocity
-     commands on ``/cmd_vel``.
-   - Use the keys shown on screen (``i`` = forward, ``j`` = turn left,
-     ``l`` = turn right, ``k`` = stop, ``,`` = backward).
