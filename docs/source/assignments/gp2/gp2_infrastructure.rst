@@ -1,69 +1,167 @@
 ====================================================
-Simulation and Provided Infrastructure
+Simulation and Provided Code
 ====================================================
 
 
 Simulation Setup
 ================
 
-The simulation uses a custom Gazebo world with three ArUco boxes arranged
-in a triangle. The world file is located at:
+This assignment uses the **GP2 world** (``gp2.sdf``) from
+``husarion_gz_worlds`` and the differential-drive ``rosbot`` (not
+``rosbot_xl``). The world is otherwise empty, but it contains three
+color-coded floor markers at the three goal positions (red, green,
+blue) with black arrows pointing in each goal's ``final_heading``.
+The launch file is already installed in your workspace.
 
-.. code-block:: text
+.. important::
 
-   ~/rosbot_ws/src/husarion_gz_worlds/worlds/aruco_triangle_world.sdf
+   The floor markers are **visual-only** (no collision geometry).
+   The robot does **not** use them for perception. They exist
+   purely as a visual cue for you and the instructor to confirm the
+   goal poses at a glance.
 
-**World layout:**
 
-.. list-table::
-   :widths: 10 25 15 50
-   :header-rows: 1
-   :class: compact-table
+   .. only:: html
 
-   * - Box
-     - Position (x, y, z)
-     - Yaw
-     - Marker orientation
-   * - box_1
-     - (4.0, 0.0, 0.25)
-     - 0
-     - Marker faces **-X** (toward the origin)
-   * - box_2
-     - (0.0, 4.0, 0.25)
-     - |pi|/2
-     - Marker faces **-Y** (toward the origin)
-   * - box_3
-     - (0.0, -4.0, 0.25)
-     - -|pi|/2
-     - Marker faces **+Y** (toward the origin)
+      .. figure:: /_static/images/gp2/gp2_world.png
+         :alt: Simulation environment for GP2
+         :width: 80%
+         :align: center
+         :class: only-light
 
-.. |pi| unicode:: U+03C0
+         Simulation environment for GP2.
 
-The robot starts at the origin ``(0, 0, 0)``.
+      .. figure:: /_static/images/gp2/gp2_world.png
+         :alt: Simulation environment for GP2
+         :width: 80%
+         :align: center
+         :class: only-dark
 
-**Launch the simulation** (in a separate terminal sourced from ``~/rosbot_ws``):
+         Simulation environment for GP2.
+
+
+Build and Launch
+----------------
+
+Follow these six steps from a terminal opened in ``~/enpm605_ws``.
+
+**1. Pull the latest code.** The ``gp2.sdf`` world and the
+``gp2_world.launch.py`` launch file are distributed in the lecture
+packages, so pulling the repository refreshes your workspace.
 
 .. code-block:: console
 
-   ros2 launch rosbot_gazebo simulation.yaml \
-       gz_world:=$HOME/rosbot_ws/src/husarion_gz_worlds/worlds/aruco_triangle_world.sdf \
-       robot_model:=rosbot_xl
+   cd ~/enpm605_ws && git pull
+
+**2. Install system dependencies.** ``rosdep`` scans every
+``package.xml`` under ``src/`` and installs any missing apt
+dependencies (ROS libraries, Gazebo plugins, Python modules).
+
+.. code-block:: console
+
+   rosdep install --from-paths src --ignore-src -y --skip-keys "micro_ros_agent"
+
+.. note::
+
+   - ``--from-paths src`` tells rosdep to scan every package under
+     ``src/``.
+   - ``--ignore-src`` skips dependencies that are satisfied by
+     other packages already in the workspace (so rosdep does not
+     try to apt-install something you have as source).
+   - ``-y`` auto-confirms apt prompts.
+   - ``--skip-keys "micro_ros_agent"`` skips the micro-ROS agent
+     key, which is not available on standard apt repositories and
+     is not needed for the GP2 simulation.
+
+**3. Remove stale build artifacts.** Delete any existing
+``build/``, ``install/``, and ``log/`` directories at the root of
+your workspace so the next build starts from a clean slate. Old
+artifacts from previous lectures or failed builds are a common
+source of confusing errors when the layout changes.
+
+.. code-block:: console
+
+   cd ~/enpm605_ws && rm -rf build/ install/ log/
+
+.. warning::
+
+   Only delete these three directories at the **workspace root**
+   (``~/enpm605_ws/build``, ``~/enpm605_ws/install``,
+   ``~/enpm605_ws/log``). Do **not** delete anything under
+   ``~/enpm605_ws/src/`` -- that folder contains source code you
+   need, including the ``gp2/`` submission folder and the
+   ``gp2_meta`` metapackage.
+
+**4. Build the GP2 stack.** ``--packages-up-to`` resolves the
+dependency graph of the ``gp2_meta`` metapackage and builds every
+package it needs (including ``husarion_gz_worlds``,
+``rosbot_gazebo``, and your own two packages once you have added
+them; see below) in the correct order.
+
+.. code-block:: console
+
+   colcon build --symlink-install \
+       --cmake-args -DCMAKE_BUILD_TYPE=Release \
+       --packages-up-to gp2_meta
+
+.. note::
+
+   - ``--symlink-install`` links Python files and installed assets
+     (launch files, world files) back to the source tree, so you
+     can edit a ``.py`` or ``.sdf`` without re-running
+     ``colcon build`` every time.
+   - ``-DCMAKE_BUILD_TYPE=Release`` enables compiler optimizations,
+     which matters for the simulation's C++ components.
+   - ``gp2_meta`` is a metapackage (at ``~/enpm605_ws/src/gp2_meta``)
+     that transitively depends on ``husarion_gz_worlds``,
+     ``rosbot_gazebo``, and the rest of the rosbot_ros stack. Once
+     you have created your two packages, you will register them
+     in ``gp2_meta/package.xml`` so this same command builds your
+     submission too.
+
+.. important::
+
+   **Edit** ``~/enpm605_ws/src/gp2_meta/package.xml`` **before
+   your first full build**:
+
+   - Replace the three placeholder ``<maintainer>`` tags with
+     your group members' names and UMD emails. If your group
+     has 2 members instead of 3, delete the extra slot.
+   - Uncomment the two ``<exec_depend>`` lines near the bottom,
+     replacing ``<N>`` with your group number:
+
+     .. code-block:: xml
+
+        <exec_depend>group<N>_gp2_interfaces</exec_depend>
+        <exec_depend>group<N>_gp2</exec_depend>
+
+   Without the ``<exec_depend>`` edits, ``colcon build
+   --packages-up-to gp2_meta`` will build the simulation stack
+   but skip your own code. See :doc:`gp2_requirements` for the
+   full ``package.xml`` metadata requirements.
+
+**5. Source the workspace.** Run this in every new terminal before
+launching ROS 2 commands.
+
+.. code-block:: console
+
+   source ~/enpm605_ws/install/setup.bash
+
+**6. Launch the GP2 world.**
+
+.. code-block:: console
+
+   ros2 launch rosbot_gazebo gp2_world.launch.py
+
+The rosbot starts at the origin ``(0, 0, 0)`` with yaw ``0``. You
+should see the three color-coded markers (red, green, blue) arranged
+in a triangle around the robot, each with a black arrow pointing in
+the goal's ``final_heading``.
 
 
-Provided Infrastructure
-=======================
 
-The following nodes are **provided** and must be launched from your launch
-file. Do **not** copy or modify them.
-
-
-.. dropdown:: Proportional Controller (``robot_control_demo/p_controller``)
+.. dropdown:: Topics You Will Use
    :open:
-
-   A two-phase proportional controller that drives the robot to a goal
-   position **and** orientation.
-
-   **Interface:**
 
    .. list-table::
       :widths: 25 30 45
@@ -73,34 +171,81 @@ file. Do **not** copy or modify them.
       * - Direction
         - Topic / Type
         - Description
-      * - **Subscribes**
-        - ``/goal_pose`` (``PoseStamped``)
-        - Goal position (x, y) and orientation (yaw, encoded as a
-          quaternion). Publishing a new goal resets the controller.
-      * - **Subscribes**
-        - ``/odometry/filtered`` (``Odometry``)
-        - Robot pose feedback from the EKF.
-      * - **Publishes**
-        - ``/cmd_vel`` (``TwistStamped``)
+      * - **Subscribe**
+        - ``/odometry/filtered`` (``nav_msgs/Odometry``)
+        - Robot pose feedback from the EKF. Use it to extract the
+          current ``(x, y, yaw)``.
+      * - **Publish**
+        - ``/cmd_vel`` (``geometry_msgs/TwistStamped``)
         - Velocity commands to the differential-drive controller.
-      * - **Publishes**
-        - ``/goal_reached`` (``Bool``)
-        - Publishes ``True`` when the robot has reached the goal
-          position **and** orientation within tolerance.
+          Linear ``x`` is forward speed (m/s); angular ``z`` is yaw
+          rate (rad/s).
 
-   **Behavior:**
 
-   - When no goal is set (default parameters are all zero), the
-     controller idles and waits for a ``PoseStamped`` on ``/goal_pose``.
-   - **Phase 1 (position):** drives toward ``(goal_x, goal_y)`` using
-     proportional gains ``k_rho`` (linear) and ``k_alpha`` (angular).
+Provided Reference Code
+=======================
+
+The following ROS 2 package is **already on your machine** at
+``~/enpm605_ws/src/lecture11/robot_control_demo``. You will **not**
+submit or depend on it directly. Instead, you will **port the
+proportional-controller logic** into the ``execute_callback`` of your
+own action server.
+
+.. important::
+
+   Do **not** launch ``robot_control_demo/p_controller`` alongside your
+   action server. Both nodes would publish to ``/cmd_vel`` and fight
+   for control of the robot. Your submitted system must be
+   self-contained: the action server itself subscribes to
+   ``/odometry/filtered`` and publishes to ``/cmd_vel``.
+
+
+.. dropdown:: Proportional Controller Reference (``p_controller_demo.py``)
+   :open:
+
+   Read the file at
+   ``~/enpm605_ws/src/lecture11/robot_control_demo/robot_control_demo/
+   p_controller_demo.py`` carefully. You will re-use its control logic
+   inside your action server.
+
+   **Two-phase control loop (runs at 20 Hz):**
+
+   - **Phase 1 (position):** while the Euclidean distance
+     ``rho = sqrt(dx^2 + dy^2)`` exceeds ``goal_tolerance``, drive
+     toward the goal:
+
+     .. code-block:: python
+
+        angle_to_goal = math.atan2(dy, dx)
+        alpha = math.atan2(
+            math.sin(angle_to_goal - yaw),
+            math.cos(angle_to_goal - yaw),
+        )
+        cmd.twist.linear.x  = clip(k_rho   * rho,   MAX_LINEAR)
+        cmd.twist.angular.z = clip(k_alpha * alpha, MAX_ANGULAR)
+
    - **Phase 2 (orientation):** once within ``goal_tolerance`` of the
-     target position, rotates in place to reach ``goal_yaw`` using gain
-     ``k_yaw``.
-   - When both tolerances are satisfied, publishes ``Bool(data=True)``
-     on ``/goal_reached`` and sends a zero-velocity stop command.
+     goal position, rotate in place to reach the desired yaw:
 
-   **Parameters:**
+     .. code-block:: python
+
+        yaw_error = math.atan2(
+            math.sin(goal_yaw - yaw),
+            math.cos(goal_yaw - yaw),
+        )
+        cmd.twist.angular.z = clip(k_yaw * yaw_error, MAX_ANGULAR)
+
+     When ``abs(yaw_error) < yaw_tolerance``, the goal is **fully
+     reached** (position **and** orientation).
+
+   **Constants:**
+
+   .. code-block:: python
+
+      MAX_LINEAR  = 0.5   # m/s
+      MAX_ANGULAR = 1.0   # rad/s
+
+   **Suggested gains and tolerances (defaults in the reference):**
 
    .. list-table::
       :widths: 25 15 60
@@ -109,10 +254,10 @@ file. Do **not** copy or modify them.
 
       * - Parameter
         - Default
-        - Description
+        - Purpose
       * - ``k_rho``
         - 0.4
-        - Proportional gain on distance to goal (linear velocity).
+        - Proportional gain on distance (linear velocity).
       * - ``k_alpha``
         - 0.8
         - Proportional gain on heading error (angular velocity, phase 1).
@@ -126,122 +271,89 @@ file. Do **not** copy or modify them.
         - 0.05
         - Yaw error in radians at which the orientation goal is reached.
 
-   **Publishing a goal** (convert yaw to quaternion using ``scipy``):
+   **Quaternion and yaw conversion** (use ``scipy``):
 
    .. code-block:: python
 
-      from geometry_msgs.msg import PoseStamped
       from scipy.spatial.transform import Rotation as R
 
-      goal = PoseStamped()
-      goal.header.stamp = self.get_clock().now().to_msg()
-      goal.header.frame_id = "odom"
-      goal.pose.position.x = 2.0
-      goal.pose.position.y = 0.0
-      quat = R.from_euler("z", 1.5708).as_quat()  # [x, y, z, w]
-      goal.pose.orientation.x = quat[0]
-      goal.pose.orientation.y = quat[1]
-      goal.pose.orientation.z = quat[2]
-      goal.pose.orientation.w = quat[3]
-      self._goal_pub.publish(goal)
+      # yaw (rad) from quaternion (x, y, z, w)
+      yaw = R.from_quat([q.x, q.y, q.z, q.w]).as_euler("xyz")[2]
+
+      # quaternion from yaw (rad)
+      quat = R.from_euler("z", yaw).as_quat()  # [x, y, z, w]
 
 
-.. dropdown:: ArUco Detector (``frame_demo/aruco_detector``)
-   :open:
+Goals Configuration
+===================
 
-   Detects ArUco markers in the robot's camera stream and broadcasts
-   each marker's 6-DoF pose as a TF frame.
-
-   **TF output:**
-
-   - **Parent frame:** the camera optical frame (from the image header,
-     typically ``oak_rgb_camera_frame``).
-   - **Child frame:** ``aruco_marker_<id>`` where ``<id>`` is the
-     integer marker ID detected by OpenCV (e.g., ``aruco_marker_2``,
-     ``aruco_marker_4``, ``aruco_marker_5``).
-
-   The TF tree chains these frames automatically:
-
-   .. code-block:: text
-
-      odom -> base_link -> ... -> oak_rgb_camera_frame -> aruco_marker_<id>
-
-   This means you can look up the marker pose **relative to odom** with:
-
-   .. code-block:: python
-
-      transform = self._tf_buffer.lookup_transform(
-          "odom",                          # target frame
-          f"aruco_marker_{marker_id}",     # source frame
-          rclpy.time.Time(),               # latest available
-          rclpy.duration.Duration(seconds=1.0),  # timeout
-      )
-      marker_x = transform.transform.translation.x
-      marker_y = transform.transform.translation.y
-
-   **Parameters:**
-
-   .. list-table::
-      :widths: 30 15 55
-      :header-rows: 1
-      :class: compact-table
-
-      * - Parameter
-        - Default
-        - Description
-      * - ``camera_image_topic``
-        - ``/oak/rgb/color``
-        - Color image topic to subscribe to.
-      * - ``camera_info_topic``
-        - ``/oak/stereo/camera_info``
-        - CameraInfo topic with camera intrinsics.
-      * - ``marker_size``
-        - 0.194
-        - Physical edge length of each ArUco marker (meters).
-      * - ``dictionary_id``
-        - ``DICT_5X5_250``
-        - OpenCV ArUco dictionary constant name.
-
-   .. note::
-
-      The marker IDs visible at each waypoint depend on which face of the
-      ArUco box is oriented toward the camera. You will **not** know the
-      IDs in advance. Your code must dynamically discover which marker ID
-      is visible and look up the corresponding TF frame.
-
-
-Waypoints Configuration
-=======================
-
-The following YAML file defines the three waypoints where the robot should
-navigate to observe the ArUco markers. **Copy this file into your
-package** at ``config/waypoints.yaml``.
+The three goals that your action client must visit are defined in a
+YAML parameter file that **you must create** inside your package at
+``config/goals.yaml``. Use the template below as a starting point.
+You are free to tune the values, but your submitted file must
+contain **exactly three goals** and must keep the parameter names
+``goal_x``, ``goal_y``, and ``final_heading``.
 
 .. code-block:: yaml
 
-   # Waypoints for the ArUco marker triangle assignment.
+   # Three goals for the GP2 action client.
    #
-   # Each waypoint is a viewing position where the robot's forward-facing
-   # camera has a clear line-of-sight to one ArUco box.
+   # Parallel arrays: goal_x[i], goal_y[i], final_heading[i] define
+   # the i-th goal pose.
    #
-   # World layout (aruco_triangle_world.sdf):
-   #   Box 1: (4.0,  0.0, 0.25)  yaw=0      -> marker faces -X
-   #   Box 2: (0.0,  4.0, 0.25)  yaw=pi/2   -> marker faces -Y
-   #   Box 3: (0.0, -4.0, 0.25)  yaw=-pi/2  -> marker faces +Y
+   # Coordinates are in the odom frame (meters).
+   # final_heading is the desired yaw at the goal (radians).
    #
-   # Arrays are parallel: waypoint_x[i], waypoint_y[i], waypoint_yaw[i]
-   # define the i-th goal pose.
+   # Layout: equilateral triangle of radius 5 m around the origin.
+   # Vertices at angles 0, 2*pi/3, -2*pi/3. Each final_heading points
+   # radially outward (away from the origin).
 
    /**:
      ros__parameters:
-       waypoint_x:   [ 2.0,  0.0,  0.0]
-       waypoint_y:   [ 0.0,  2.0, -2.0]
-       waypoint_yaw: [ 0.0,  1.5708, -1.5708]
+       goal_x:         [ 5.0, -2.5,       -2.5      ]
+       goal_y:         [ 0.0,  4.330127,  -4.330127 ]
+       final_heading:  [ 0.0,  2.0943951, -2.0943951]
 
 
 .. important::
 
-   Load this file in your launch file using the ``parameters`` field of
-   the ``Node`` action so that ``waypoint_x``, ``waypoint_y``, and
-   ``waypoint_yaw`` are available in your navigator node via
+   Load this file in your launch file using the ``parameters`` field
+   of the **client** ``Node`` action so that ``goal_x``, ``goal_y``,
+   and ``final_heading`` are available in your client node via
    ``self.get_parameter()``.
+
+
+.. dropdown:: Reference Files to Study
+   :open:
+
+   Before you write any code, read these files in the lecture packages.
+   You are **not** submitting any of them; they are study material.
+
+   .. list-table::
+      :widths: 45 55
+      :header-rows: 1
+      :class: compact-table
+
+      * - File
+        - What to learn from it
+      * - ``lecture11/robot_control_demo/robot_control_demo/
+          p_controller_demo.py``
+        - The two-phase P-controller you will port into your action
+          server.
+      * - ``lecture10/action_demo/action_demo/navigate_server.py``
+        - Skeleton of an ``ActionServer``: goal/cancel callbacks,
+          feedback publishing inside ``execute_callback``, returning a
+          result.
+      * - ``lecture10/action_demo/action_demo/navigate_client.py``
+        - Skeleton of an ``ActionClient``: ``send_goal_async``, goal
+          response callback, feedback callback, result callback.
+      * - ``lecture10/custom_interfaces/action/Navigate.action``
+        - Example of a ``.action`` file with goal / result / feedback
+          sections.
+      * - ``lecture10/custom_interfaces/CMakeLists.txt`` and
+          ``package.xml``
+        - Template for a CMake package that generates action
+          interfaces via ``rosidl_generate_interfaces``.
+      * - ``lecture10/parameters_demo/launch/demo3.launch.py`` and
+          ``lecture10/parameters_demo/config/parameters_demo.yaml``
+        - Template for loading a YAML parameter file in a launch file.

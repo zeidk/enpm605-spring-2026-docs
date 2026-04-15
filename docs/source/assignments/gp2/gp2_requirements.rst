@@ -5,281 +5,437 @@ Requirements
 .. |rarr| unicode:: U+2192
 
 
-.. dropdown:: Package Structure
-   :open:
+Your Tasks
+==========
 
-   Your submission must contain **one** ROS 2 Python package. Replace
-   ``<N>`` with your group number.
+At a high level, your group must complete the following tasks. Each
+is spelled out in detail in the sections below.
 
-   .. code-block:: text
+1. **Create two ROS 2 packages** inside the pre-existing
+   ``~/enpm605_ws/src/gp2/`` folder:
 
-      group<N>_gp2/
-      |-- group<N>_gp2/
-      |   |-- __init__.py
-      |   |-- marker_navigator.py
-      |-- scripts/
-      |   |-- __init__.py
-      |   |-- main_marker_navigator.py
-      |-- launch/
-      |   |-- gp2.launch.py
-      |-- config/
-      |   |-- waypoints.yaml
-      |-- resource/
-      |   |-- group<N>_gp2
-      |-- test/
-      |-- package.xml
-      |-- setup.py
-      |-- setup.cfg
-      |-- README.md
+   a. ``group<N>_gp2_interfaces`` (CMake) containing the
+      ``NavigateToGoal.action`` definition.
+   b. ``group<N>_gp2`` (ament_python) containing the action server,
+      the action client, the launch file, and the goals YAML.
 
-   **Package metadata:** ``package.xml`` and ``setup.py`` must include a
-   meaningful description, a license (e.g., ``Apache-2.0``), and both
-   group members listed as maintainers with their email addresses.
+2. **Register both packages** as ``<exec_depend>`` entries in
+   ``~/enpm605_ws/src/gp2_meta/package.xml`` so that
+   ``colcon build --packages-up-to gp2_meta`` picks them up.
 
+3. **Define the** ``NavigateToGoal`` **action interface** (goal,
+   result, feedback) in ``group<N>_gp2_interfaces`` exactly as
+   specified.
 
-.. dropdown:: Navigator Node (``marker_navigator``)
-   :open:
+4. **Implement the action server** (``navigate_to_goal_server``).
+   Port the two-phase proportional controller from
+   ``robot_control_demo/p_controller_demo.py`` into the
+   ``execute_callback``. The server subscribes to
+   ``/odometry/filtered``, publishes to ``/cmd_vel``, emits
+   feedback during execution, and returns a result on success,
+   cancel, or failure.
 
-   Implement a node called ``marker_navigator`` that autonomously
-   executes the following sequence:
+5. **Implement the action client** (``navigate_to_goal_client``).
+   The client's job, in order, is:
 
-   1. **Read waypoints** from parameters (``waypoint_x``, ``waypoint_y``,
-      ``waypoint_yaw``). Validate that all three arrays have equal length.
-      Log the number of waypoints loaded.
+   a. **Read the three goals** from ``config/goals.yaml`` (the
+      parallel arrays ``goal_x``, ``goal_y``, ``final_heading``).
+   b. **Validate** that all three arrays have length 3.
+   c. **Wait** for the action server to become available.
+   d. **Task the robot to go to each goal, sequentially**: send
+      goal ``i``, wait for its result, log feedback and the
+      outcome, and only then send goal ``i+1``. Never queue or
+      dispatch in parallel.
+   e. **Log a final summary** once all three goals have succeeded.
 
-   2. **For each waypoint** (sequentially):
+6. **Write the launch file** (``gp2.launch.py``) that starts the
+   server and the client, loads ``goals.yaml`` into the client,
+   and exposes ``goal_tolerance`` and ``yaw_tolerance`` as launch
+   arguments forwarded to the server.
 
-      a. Convert the waypoint ``(x, y, yaw)`` to a ``PoseStamped``
-         message (yaw must be encoded as a quaternion in the orientation
-         field).
-      b. Publish the ``PoseStamped`` to ``/goal_pose``.
-      c. Wait for ``Bool(data=True)`` on ``/goal_reached``.
-      d. Once at the waypoint, **wait briefly** (1--2 seconds) for the
-         ArUco detector to stabilize its TF broadcast.
-      e. **Detect which marker is visible**: query the ``/tf`` topic or
-         attempt ``lookup_transform`` for candidate marker IDs. The
-         detector logs which markers it sees -- your node must
-         determine the correct ``aruco_marker_<id>`` frame
-         dynamically.
-      f. Use ``tf_buffer.lookup_transform("odom", "aruco_marker_<id>",
-         ...)`` to get the marker's position in the ``odom`` frame.
-      g. **Store** the marker's ``(x, y)`` position.
-      h. **Log** the marker ID and its ``odom``-frame position.
+7. **Document contributions** in ``README.md`` (one short
+   paragraph per group member summarizing what they worked on).
 
-   3. **Compute the centroid** of the three detected marker positions:
+8. **Submit** by zipping the ``~/enpm605_ws/src/gp2/`` folder and
+   uploading it to Canvas as ``group<N>_gp2.zip`` (see
+   :doc:`submission` for the exact command).
 
-      .. math::
-
-         x_c = \frac{x_1 + x_2 + x_3}{3}, \quad
-         y_c = \frac{y_1 + y_2 + y_3}{3}
-
-   4. **Log** the centroid coordinates.
-
-   5. **Navigate to the centroid** by publishing a final ``PoseStamped``
-      to ``/goal_pose`` (orientation can be ``yaw=0``).
-
-   6. Once the robot reaches the centroid, **log** a completion message
-      with a summary: the three marker IDs, their positions, and the
-      centroid.
-
-   **Subscriptions and publications:**
-
-   .. list-table::
-      :widths: 25 30 45
-      :header-rows: 1
-      :class: compact-table
-
-      * - Direction
-        - Topic / Type
-        - Description
-      * - **Publishes**
-        - ``/goal_pose`` (``PoseStamped``)
-        - Goal commands for the proportional controller.
-      * - **Subscribes**
-        - ``/goal_reached`` (``Bool``)
-        - Completion signal from the proportional controller.
-      * - **TF2**
-        - ``Buffer`` + ``TransformListener``
-        - Used to look up ``aruco_marker_<id>`` in the ``odom`` frame.
-
-   **Required parameters** (loaded from ``config/waypoints.yaml``):
-
-   .. list-table::
-      :widths: 25 15 60
-      :header-rows: 1
-      :class: compact-table
-
-      * - Parameter
-        - Type
-        - Description
-      * - ``waypoint_x``
-        - ``double[]``
-        - X coordinates of the viewing waypoints.
-      * - ``waypoint_y``
-        - ``double[]``
-        - Y coordinates of the viewing waypoints.
-      * - ``waypoint_yaw``
-        - ``double[]``
-        - Yaw orientations at each waypoint (radians).
-
-   **Error handling:**
-
-   - If a TF lookup fails (timeout, frame not found), log a warning and
-     **retry up to 3 times** with a 1-second delay between attempts.
-   - If a marker cannot be detected after all retries at a waypoint, log
-     an error and continue to the next waypoint. Compute the centroid
-     using only the markers that were successfully detected.
+The remainder of this page details each of these tasks.
 
 
-.. dropdown:: Launch File (``gp2.launch.py``)
-   :open:
+Package Structure
+=================
 
-   Write a launch file that starts **all three nodes** and loads the
-   parameter file.
+Your submission must contain **two** ROS 2 packages, both placed
+inside the pre-existing ``~/enpm605_ws/src/gp2/`` folder. Replace
+``<N>`` with your group number.
 
-   **Required nodes:**
+**Folder layout in the workspace:**
 
-   .. list-table::
-      :widths: 25 25 50
-      :header-rows: 1
-      :class: compact-table
+.. code-block:: text
 
-      * - Executable
-        - Package
-        - Notes
-      * - ``p_controller``
-        - ``robot_control_demo``
-        - No parameters needed (uses defaults; goals come via topic).
-      * - ``aruco_detector``
-        - ``frame_demo``
-        - No parameters needed (defaults target the rosbot_xl OAK-D camera).
-      * - ``marker_navigator``
-        - ``group<N>_gp2``
-        - Load ``config/waypoints.yaml`` using the ``parameters`` field.
+   ~/enpm605_ws/src/gp2/
+   |-- group<N>_gp2_interfaces/
+   |-- group<N>_gp2/
 
-   **Launch file requirements:**
+You will zip and submit the ``gp2/`` folder itself (see
+:doc:`submission`).
 
-   1. All nodes must use ``output="screen"`` and ``emulate_tty=True``.
-   2. Load ``config/waypoints.yaml`` for the ``marker_navigator`` node
-      using ``get_package_share_directory()`` and the ``parameters``
-      field.
-   3. Declare at least **two** launch arguments:
+**Package 1. Action interface (CMake):**
 
-      - ``goal_tolerance`` (default ``0.10``) -- passed to the
-        ``p_controller`` node.
-      - ``yaw_tolerance`` (default ``0.05``) -- passed to the
-        ``p_controller`` node.
+.. code-block:: text
 
-   4. Group the **infrastructure nodes** (``p_controller`` and
-      ``aruco_detector``) in a ``GroupAction``.
+   group<N>_gp2_interfaces/
+   |-- action/
+   |   |-- NavigateToGoal.action
+   |-- CMakeLists.txt
+   |-- package.xml
 
-   **Example launch file skeleton:**
+**Package 2. Nodes and launch (ament_python):**
 
-   .. code-block:: python
+.. code-block:: text
 
-      from launch import LaunchDescription
-      from launch_ros.actions import Node
-      from launch.actions import DeclareLaunchArgument, GroupAction
-      from launch.substitutions import LaunchConfiguration
-      from ament_index_python.packages import get_package_share_directory
-      import os
+   group<N>_gp2/
+   |-- group<N>_gp2/
+   |   |-- __init__.py
+   |   |-- navigate_to_goal_server.py
+   |   |-- navigate_to_goal_client.py
+   |-- scripts/
+   |   |-- __init__.py
+   |   |-- main_navigate_to_goal_server.py
+   |   |-- main_navigate_to_goal_client.py
+   |-- launch/
+   |   |-- gp2.launch.py
+   |-- config/
+   |   |-- goals.yaml
+   |-- resource/
+   |   |-- group<N>_gp2
+   |-- test/
+   |-- package.xml
+   |-- setup.py
+   |-- setup.cfg
+   |-- README.md
 
+**Package metadata:** both ``package.xml`` files and the
+``setup.py`` must include a meaningful description, a license
+(e.g., ``Apache-2.0``), and all group members listed as
+maintainers with their email addresses.
 
-      def generate_launch_description():
-          # Get the path to the waypoints config
-          pkg_dir = get_package_share_directory("group<N>_gp2")
-          waypoints_file = os.path.join(pkg_dir, "config", "waypoints.yaml")
+**Update the** ``gp2_meta`` **metapackage** at
+``~/enpm605_ws/src/gp2_meta/package.xml``. Two edits are required:
 
-          # Launch arguments
-          goal_tolerance_arg = DeclareLaunchArgument(
-              "goal_tolerance", default_value="0.10",
-              description="Position tolerance for the P-controller (meters)",
-          )
-          yaw_tolerance_arg = DeclareLaunchArgument(
-              "yaw_tolerance", default_value="0.05",
-              description="Yaw tolerance for the P-controller (radians)",
-          )
+1. **Replace the three placeholder** ``<maintainer>`` **tags** with
+   your group members. The file ships with three maintainer slots
+   (to accommodate groups of 2 or 3). Fill them with your real
+   names and UMD emails, and **delete any extra slots** your group
+   does not need.
 
-          # Infrastructure nodes (grouped)
-          infrastructure = GroupAction([
-              Node(
-                  package="robot_control_demo",
-                  executable="p_controller",
-                  output="screen",
-                  emulate_tty=True,
-                  parameters=[{
-                      "goal_tolerance": LaunchConfiguration("goal_tolerance"),
-                      "yaw_tolerance": LaunchConfiguration("yaw_tolerance"),
-                  }],
-              ),
-              Node(
-                  package="frame_demo",
-                  executable="aruco_detector",
-                  output="screen",
-                  emulate_tty=True,
-              ),
-          ])
+   .. code-block:: xml
 
-          # Student's navigator node
-          navigator = Node(
-              package="group<N>_gp2",
-              executable="marker_navigator",
-              output="screen",
-              emulate_tty=True,
-              parameters=[waypoints_file],
-          )
+      <!-- For a group of 2, delete the third line. -->
+      <maintainer email="alice@umd.edu">Alice Smith</maintainer>
+      <maintainer email="bob@umd.edu">Bob Jones</maintainer>
+      <maintainer email="carol@umd.edu">Carol Lee</maintainer>
 
-          ld = LaunchDescription()
-          ld.add_action(goal_tolerance_arg)
-          ld.add_action(yaw_tolerance_arg)
-          ld.add_action(infrastructure)
-          ld.add_action(navigator)
-          return ld
+2. **Uncomment the two** ``<exec_depend>`` **lines** near the
+   bottom of the file, replacing ``<N>`` with your group number:
+
+   .. code-block:: xml
+
+      <exec_depend>group<N>_gp2_interfaces</exec_depend>
+      <exec_depend>group<N>_gp2</exec_depend>
+
+Together these edits let ``colcon build --packages-up-to gp2_meta``
+pick up your packages, and make ``gp2_meta`` a valid package
+attributed to your group.
 
 
-.. dropdown:: README.md Requirements
-   :open:
+Action Interface
+================
 
-   Your ``README.md`` must include:
+Define the custom action at
+``group<N>_gp2_interfaces/action/NavigateToGoal.action`` exactly as
+follows:
 
-   1. **Group members**: names and UIDs.
-   2. **Contributions**: a brief description of each team member's
-      contributions.
-   3. **System architecture**: a text or diagram showing all three nodes,
-      topics (``/goal_pose``, ``/goal_reached``, ``/cmd_vel``), TF frames,
-      and how they interact. You may use
-      `Mermaid <https://mermaid.js.org/>`_ or a screenshot of
-      ``rqt_graph``.
-   4. **TF tree**: include the output of ``ros2 run tf2_tools
-      view_frames`` (the generated ``frames.pdf``) and annotate which
-      frames your node uses for lookups.
-   5. **Design decisions**: explain how you detect which marker ID is
-      visible at each waypoint, how you handle detection failures, and
-      any timing/sequencing choices you made.
-   6. **Build and run instructions**: exact commands to build, source,
-      launch the simulation, and launch your system.
-   7. **Known issues**: any limitations or incomplete features.
+.. code-block:: text
+
+   # Goal
+   geometry_msgs/Point goal_position
+   float64 final_heading
+   ---
+   # Result
+   bool success
+   float64 total_distance
+   float64 elapsed_time
+   ---
+   # Feedback
+   geometry_msgs/Pose current_pose
+   float64 distance_remaining
+
+**Semantics:**
+
+- ``goal_position.x`` / ``goal_position.y`` are the target position
+  in the ``odom`` frame (meters). ``goal_position.z`` is ignored.
+- ``final_heading`` is the desired yaw at the goal (radians).
+- ``success`` is ``True`` if both position and orientation
+  tolerances are satisfied, ``False`` on cancellation or abort.
+- ``total_distance`` is the cumulative path length traveled during
+  execution (meters).
+- ``elapsed_time`` is the wall-clock duration of the goal (seconds).
+- ``distance_remaining`` is the straight-line distance from the
+  current pose to the goal position (meters).
+
+**CMake/package configuration** (follow the template in
+``lecture10/custom_interfaces``):
+
+- ``CMakeLists.txt`` must call ``rosidl_generate_interfaces`` on
+  ``action/NavigateToGoal.action`` and depend on ``geometry_msgs``.
+- ``package.xml`` must include the
+  ``<buildtool_depend>rosidl_default_generators</buildtool_depend>``,
+  ``<exec_depend>rosidl_default_runtime</exec_depend>``,
+  ``<member_of_group>rosidl_interface_packages</member_of_group>``,
+  and ``<depend>geometry_msgs</depend>`` entries.
 
 
-.. dropdown:: Code Quality Requirements
-   :open:
+Action Server
+=============
 
-   .. warning::
+Implement a node called ``navigate_to_goal_server`` that exposes an
+``ActionServer`` on the action name ``navigate_to_goal`` using the
+``NavigateToGoal`` interface. **The server itself drives the
+robot.** Do not delegate to any other controller node.
 
-      The following are mandatory and will result in point deductions if
-      missing.
+**The execute callback must:**
 
-   - **Docstrings:** Every class and every method must have a
-     Google-style docstring.
-   - **Type hints:** All method parameters and return types must have
-     type annotations.
-   - **Inline comments:** Include comments that explain non-obvious logic
-     (e.g., TF lookup strategy, quaternion conversion, centroid
-     computation).
-   - **Naming conventions:** ``snake_case`` for topics, services,
-     methods, and variables. ``CamelCase`` for class names.
-   - **Logging:** Use the ROS 2 logger exclusively -- never ``print()``.
-     Use the appropriate severity level: ``info()`` for normal
-     operation, ``warn()`` for retries or recoverable issues,
-     ``error()`` for failures.
-   - **Linting:** Ensure Ruff is enabled and no errors appear.
+1. **Accept** a goal in ``goal_callback`` only if the goal position
+   is reachable (e.g., accept all for this assignment, or reject on
+   obviously invalid inputs such as NaNs). Log the decision.
+
+2. **Subscribe** to ``/odometry/filtered`` and maintain the current
+   ``(x, y, yaw)`` as internal state, independent of the action
+   lifecycle.
+
+3. **Publish** to ``/cmd_vel`` (``geometry_msgs/TwistStamped``)
+   inside a 20 Hz control loop (driven by the execute callback or
+   by a timer that runs during execution).
+
+4. **Implement the two-phase P-controller** (phase 1 = position,
+   phase 2 = orientation) ported from
+   ``robot_control_demo/p_controller_demo.py``. Use the gains and
+   tolerances as parameters (see below).
+
+5. **Publish feedback** at a regular rate (no faster than 5 Hz, no
+   slower than 1 Hz) containing:
+
+   - ``current_pose`` (the latest pose from odometry),
+   - ``distance_remaining`` (``sqrt(dx^2 + dy^2)`` to the goal
+     position).
+
+6. **Check for cancellation** each control iteration. On
+   cancellation, send a zero-velocity stop command, call
+   ``goal_handle.canceled()``, and return a result with
+   ``success=False`` populated with the partial totals.
+
+7. **Succeed** when both position and orientation tolerances are
+   satisfied: send a zero-velocity stop command, call
+   ``goal_handle.succeed()``, and return a result with
+   ``success=True`` and the final ``total_distance`` /
+   ``elapsed_time``.
+
+**Server parameters** (declared in ``__init__``):
+
+.. list-table::
+   :widths: 25 15 60
+   :header-rows: 1
+   :class: compact-table
+
+   * - Parameter
+     - Default
+     - Description
+   * - ``k_rho``
+     - 0.4
+     - Proportional gain on distance (linear velocity).
+   * - ``k_alpha``
+     - 0.8
+     - Proportional gain on heading error (phase 1).
+   * - ``k_yaw``
+     - 0.8
+     - Proportional gain on yaw error (phase 2).
+   * - ``goal_tolerance``
+     - 0.10
+     - Position tolerance (meters).
+   * - ``yaw_tolerance``
+     - 0.05
+     - Yaw tolerance (radians).
+
+**Subscriptions and publications:**
+
+.. list-table::
+   :widths: 25 30 45
+   :header-rows: 1
+   :class: compact-table
+
+   * - Direction
+     - Topic / Type
+     - Description
+   * - **Subscribes**
+     - ``/odometry/filtered`` (``nav_msgs/Odometry``)
+     - Robot pose feedback.
+   * - **Publishes**
+     - ``/cmd_vel`` (``geometry_msgs/TwistStamped``)
+     - Velocity commands.
+   * - **Action server**
+     - ``navigate_to_goal`` (``group<N>_gp2_interfaces/NavigateToGoal``)
+     - Receives goals, publishes feedback, returns the result.
+
+
+Action Client
+=============
+
+Implement a node called ``navigate_to_goal_client`` that owns an
+``ActionClient`` on ``navigate_to_goal`` and **sends three goals
+sequentially**.
+
+**The client must:**
+
+1. **Declare and read** the three parallel parameter arrays
+   ``goal_x``, ``goal_y``, ``final_heading`` from the YAML file
+   (see :doc:`gp2_infrastructure`). Validate that all three arrays
+   have **length 3** and identical length. Log the loaded goals at
+   startup.
+
+2. **Wait** for the action server to become available using
+   ``self._action_client.wait_for_server()``.
+
+3. **Send goals one at a time.** The client sends goal ``i+1``
+   **only after** the result for goal ``i`` has been received
+   (i.e., never sends in parallel and never queues ahead).
+
+4. **Log each feedback message** at ``info`` level with the current
+   pose and distance remaining, throttled to at most once per
+   second (``throttle_duration_sec=1.0``).
+
+5. **Log each result** with ``success``, ``total_distance``, and
+   ``elapsed_time``. If the result is ``success=False``, abort the
+   sequence: log an error and **do not** send the remaining goals.
+
+6. When all three goals have completed successfully, log a
+   **mission-complete summary** that lists each goal and its
+   ``total_distance`` / ``elapsed_time``.
+
+**Client parameters** (loaded from ``config/goals.yaml``):
+
+.. list-table::
+   :widths: 25 15 60
+   :header-rows: 1
+   :class: compact-table
+
+   * - Parameter
+     - Type
+     - Description
+   * - ``goal_x``
+     - ``double[]``
+     - X coordinates of the three goals (length 3).
+   * - ``goal_y``
+     - ``double[]``
+     - Y coordinates of the three goals (length 3).
+   * - ``final_heading``
+     - ``double[]``
+     - Desired yaw at each goal in radians (length 3).
+
+
+Launch File
+===========
+
+Write a Python launch file at ``launch/gp2.launch.py`` that starts
+**both** your nodes and loads the parameter file.
+
+**Required nodes:**
+
+.. list-table::
+   :widths: 30 30 40
+   :header-rows: 1
+   :class: compact-table
+
+   * - Executable
+     - Package
+     - Notes
+   * - ``navigate_to_goal_server``
+     - ``group<N>_gp2``
+     - Controller gains and tolerances come from launch arguments.
+   * - ``navigate_to_goal_client``
+     - ``group<N>_gp2``
+     - Loads ``config/goals.yaml`` via the ``parameters`` field.
+
+**Launch file requirements:**
+
+1. Both nodes must use ``output="screen"`` and ``emulate_tty=True``.
+2. Load ``config/goals.yaml`` for the **client** node using
+   ``get_package_share_directory()`` and the ``parameters`` field.
+3. Declare at least **two** launch arguments:
+
+   - ``goal_tolerance`` (default ``0.10``), passed to the server.
+   - ``yaw_tolerance`` (default ``0.05``), passed to the server.
+
+4. The simulation launch
+   (``ros2 launch rosbot_gazebo gp2_world.launch.py``) is **not**
+   included in your launch file; the user starts it in a separate
+   terminal.
+
+**What your launch file should do, in order:**
+
+1. Resolve the path to ``config/goals.yaml`` inside the installed
+   share directory of ``group<N>_gp2`` (so it is found at runtime
+   regardless of where the user launched from).
+2. Declare the two launch arguments ``goal_tolerance`` and
+   ``yaw_tolerance`` with their default values and short
+   descriptions.
+3. Build a ``Node`` action for the action server, forwarding the
+   two launch arguments into its ``parameters``.
+4. Build a ``Node`` action for the action client, passing the
+   resolved ``goals.yaml`` path into its ``parameters``.
+5. Assemble a ``LaunchDescription`` that registers the two launch
+   arguments and both ``Node`` actions, and return it from
+   ``generate_launch_description()``.
+
+Lecture 8 and Lecture 10 launch files (e.g.,
+``parameters_demo/launch/demo3.launch.py``) show each of these
+pieces in isolation; use them as reference material rather than
+as copy-paste templates.
+
+
+README.md
+=========
+
+Your ``README.md`` must contain a single section describing **each
+group member's contributions** to the project. For every member,
+list their name and a short (2 to 4 sentence) summary of what they
+personally wrote, debugged, tested, or documented.
+
+No other sections are required. Do **not** include system
+architecture diagrams, design write-ups, or build instructions in
+the README; keep it focused on who did what.
+
+
+Code Quality
+============
+
+.. warning::
+
+   The following are mandatory and will result in point deductions
+   if missing.
+
+- **Docstrings:** Every class and every method must have a
+  Google-style docstring.
+- **Type hints:** All method parameters and return types must have
+  type annotations.
+- **Inline comments:** Include comments that explain non-obvious
+  logic (e.g., quaternion conversion, two-phase transition,
+  cancellation handling).
+- **Naming conventions:** ``snake_case`` for topics, services,
+  actions, methods, and variables. ``CamelCase`` for class names.
+- **Logging:** Use the ROS 2 logger exclusively. Never use
+  ``print()``. Use the appropriate severity level: ``info()`` for
+  normal operation, ``warn()`` for recoverable issues, ``error()``
+  for failures.
+- **Linting:** Ensure Ruff is enabled and no errors appear.
