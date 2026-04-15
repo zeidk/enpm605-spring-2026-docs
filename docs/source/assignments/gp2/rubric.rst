@@ -76,9 +76,11 @@ This rubric details how the 50 points are allocated.
      -
    * - Parameter loading
      - 3
-     - Three parallel arrays loaded from ``config/goals.yaml`` via
-       ``self.get_parameter()``. Length is validated (==3 and
-       equal). Goals are logged at startup.
+     - Three named goal blocks (``goal1``, ``goal2``, ``goal3``)
+       loaded from ``config/goals.yaml`` via ``self.get_parameter()``
+       using dot-namespaced names (e.g. ``goal1.x``,
+       ``goal1.final_heading``). All nine fields are validated as
+       present. Goals are logged at startup.
    * - Sequential goal dispatch
      - 4
      - Next goal is sent **only after** the previous goal's result

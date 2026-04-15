@@ -76,4 +76,4 @@ How to Submit
 3. The ZIP must not contain ``build/``, ``install/``, ``log/``,
    ``__pycache__/``, or ``.pyc`` files.
 
-4. All group members must submit the same ZIP file on Canvas.
+4. Only one submission per group

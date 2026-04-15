@@ -39,8 +39,9 @@ is spelled out in detail in the sections below.
    The client's job, in order, is:
 
    a. **Read the three goals** from ``config/goals.yaml`` (the
-      parallel arrays ``goal_x``, ``goal_y``, ``final_heading``).
-   b. **Validate** that all three arrays have length 3.
+      named blocks ``goal1``, ``goal2``, ``goal3``, each with
+      fields ``x``, ``y``, and ``final_heading``).
+   b. **Validate** that all three goals were loaded successfully.
    c. **Wait** for the action server to become available.
    d. **Task the robot to go to each goal, sequentially**: send
       goal ``i``, wait for its result, log feedback and the
@@ -298,11 +299,13 @@ sequentially**.
 
 **The client must:**
 
-1. **Declare and read** the three parallel parameter arrays
-   ``goal_x``, ``goal_y``, ``final_heading`` from the YAML file
-   (see :doc:`gp2_infrastructure`). Validate that all three arrays
-   have **length 3** and identical length. Log the loaded goals at
-   startup.
+1. **Declare and read** the three goals from the YAML file (see
+   :doc:`gp2_infrastructure`). Each goal is a named block
+   (``goal1``, ``goal2``, ``goal3``) with three fields
+   (``x``, ``y``, ``final_heading``), so the client declares nine
+   parameters in total using dot-namespaced names such as
+   ``goal1.x`` and ``goal1.final_heading``. Validate that all three
+   goals were loaded successfully and log them at startup.
 
 2. **Wait** for the action server to become available using
    ``self._action_client.wait_for_server()``.
@@ -333,15 +336,16 @@ sequentially**.
    * - Parameter
      - Type
      - Description
-   * - ``goal_x``
-     - ``double[]``
-     - X coordinates of the three goals (length 3).
-   * - ``goal_y``
-     - ``double[]``
-     - Y coordinates of the three goals (length 3).
-   * - ``final_heading``
-     - ``double[]``
-     - Desired yaw at each goal in radians (length 3).
+   * - ``goalN.x``
+     - ``double``
+     - X coordinate of goal ``N`` in the odom frame (meters),
+       for ``N`` in ``{1, 2, 3}``.
+   * - ``goalN.y``
+     - ``double``
+     - Y coordinate of goal ``N`` in the odom frame (meters).
+   * - ``goalN.final_heading``
+     - ``double``
+     - Desired yaw at goal ``N`` (radians).
 
 
 Launch File

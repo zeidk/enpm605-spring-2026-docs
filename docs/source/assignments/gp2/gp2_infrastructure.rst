@@ -45,17 +45,14 @@ Build and Launch
 
 Follow these six steps from a terminal opened in ``~/enpm605_ws``.
 
-**1. Pull the latest code.** The ``gp2.sdf`` world and the
-``gp2_world.launch.py`` launch file are distributed in the lecture
-packages, so pulling the repository refreshes your workspace.
+**1. Pull the latest code.** 
 
 .. code-block:: console
 
    cd ~/enpm605_ws && git pull
 
-**2. Install system dependencies.** ``rosdep`` scans every
-``package.xml`` under ``src/`` and installs any missing apt
-dependencies (ROS libraries, Gazebo plugins, Python modules).
+**2. Install system dependencies.** 
+
 
 .. code-block:: console
 
@@ -88,21 +85,15 @@ source of confusing errors when the layout changes.
    Only delete these three directories at the **workspace root**
    (``~/enpm605_ws/build``, ``~/enpm605_ws/install``,
    ``~/enpm605_ws/log``). Do **not** delete anything under
-   ``~/enpm605_ws/src/`` -- that folder contains source code you
-   need, including the ``gp2/`` submission folder and the
-   ``gp2_meta`` metapackage.
+   ``~/enpm605_ws/src/``
 
 **4. Build the GP2 stack.** ``--packages-up-to`` resolves the
 dependency graph of the ``gp2_meta`` metapackage and builds every
-package it needs (including ``husarion_gz_worlds``,
-``rosbot_gazebo``, and your own two packages once you have added
-them; see below) in the correct order.
+package it needs in the correct order.
 
 .. code-block:: console
 
-   colcon build --symlink-install \
-       --cmake-args -DCMAKE_BUILD_TYPE=Release \
-       --packages-up-to gp2_meta
+   colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-up-to gp2_meta
 
 .. note::
 
@@ -128,12 +119,12 @@ them; see below) in the correct order.
      your group members' names and UMD emails. If your group
      has 2 members instead of 3, delete the extra slot.
    - Uncomment the two ``<exec_depend>`` lines near the bottom,
-     replacing ``<N>`` with your group number:
+     replacing ``N`` with your group number:
 
      .. code-block:: xml
 
-        <exec_depend>group<N>_gp2_interfaces</exec_depend>
-        <exec_depend>group<N>_gp2</exec_depend>
+        <exec_depend>groupN_gp2_interfaces</exec_depend>
+        <exec_depend>groupN_gp2</exec_depend>
 
    Without the ``<exec_depend>`` edits, ``colcon build
    --packages-up-to gp2_meta`` will build the simulation stack
@@ -291,15 +282,14 @@ The three goals that your action client must visit are defined in a
 YAML parameter file that **you must create** inside your package at
 ``config/goals.yaml``. Use the template below as a starting point.
 You are free to tune the values, but your submitted file must
-contain **exactly three goals** and must keep the parameter names
-``goal_x``, ``goal_y``, and ``final_heading``.
+contain **exactly three goals** named ``goal1``, ``goal2``, and
+``goal3``, each with the fields ``x``, ``y``, and ``final_heading``.
 
 .. code-block:: yaml
 
    # Three goals for the GP2 action client.
    #
-   # Parallel arrays: goal_x[i], goal_y[i], final_heading[i] define
-   # the i-th goal pose.
+   # Each goal is a named block with x, y, and final_heading fields.
    #
    # Coordinates are in the odom frame (meters).
    # final_heading is the desired yaw at the goal (radians).
@@ -310,17 +300,29 @@ contain **exactly three goals** and must keep the parameter names
 
    /**:
      ros__parameters:
-       goal_x:         [ 5.0, -2.5,       -2.5      ]
-       goal_y:         [ 0.0,  4.330127,  -4.330127 ]
-       final_heading:  [ 0.0,  2.0943951, -2.0943951]
+       goal1:
+         x: 5.0
+         y: 0.0
+         final_heading: 0.0
+       goal2:
+         x: -2.5
+         y: 4.330127
+         final_heading: 2.0943951
+       goal3:
+         x: -2.5
+         y: -4.330127
+         final_heading: -2.0943951
 
 
 .. important::
 
    Load this file in your launch file using the ``parameters`` field
-   of the **client** ``Node`` action so that ``goal_x``, ``goal_y``,
-   and ``final_heading`` are available in your client node via
-   ``self.get_parameter()``.
+   of the **client** ``Node`` action. In your client node, access each
+   field with dot-namespaced parameter names, for example
+   ``self.get_parameter("goal1.x")``,
+   ``self.get_parameter("goal1.y")``, and
+   ``self.get_parameter("goal1.final_heading")`` (and likewise for
+   ``goal2`` and ``goal3``).
 
 
 .. dropdown:: Reference Files to Study

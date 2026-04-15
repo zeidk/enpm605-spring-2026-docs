@@ -81,8 +81,9 @@ Overview
            :class-card: sd-border-info
 
            Load three goal poses (``x``, ``y``, ``final_heading``)
-           from a YAML parameter file at launch time, using parallel
-           arrays indexed by goal number.
+           from a YAML parameter file at launch time, organized as
+           named blocks (``goal1``, ``goal2``, ``goal3``) and
+           accessed via dot-namespaced parameter names.
 
        .. grid-item-card:: Launch File Integration
            :class-card: sd-border-info
