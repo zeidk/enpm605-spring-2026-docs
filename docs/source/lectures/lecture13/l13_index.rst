@@ -42,6 +42,7 @@ Contents
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l13_lecture
    l13_exercises

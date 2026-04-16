@@ -37,6 +37,7 @@ Contents
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l9_lecture
    l9_exercises

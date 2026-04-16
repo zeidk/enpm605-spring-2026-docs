@@ -1172,43 +1172,6 @@ frame :math:`A`. Direction matters.
 - Inverting a transform reverses both the rotation and the translation:
   you cannot simply negate the translation vector.
 
-.. only:: html
-
-   .. figure:: /_static/images/L11/transforms_direction1_light.png
-      :alt: Transforms are directional
-      :width: 50%
-      :align: center
-      :class: only-light
-
-      Transforms are directional:
-      :math:`T^{camera}_{world} \neq T^{world}_{camera}`.
-
-   .. figure:: /_static/images/L11/transforms_direction1_dark.png
-      :alt: Transforms are directional
-      :width: 50%
-      :align: center
-      :class: only-dark
-
-      Transforms are directional:
-      :math:`T^{camera}_{world} \neq T^{world}_{camera}`.
-
-.. only:: html
-
-   .. figure:: /_static/images/L11/workcell_frames_light.png
-      :alt: Transforms for a workcell
-      :width: 80%
-      :align: center
-      :class: only-light
-
-      Transforms for a workcell.
-
-   .. figure:: /_static/images/L11/workcell_frames_dark.png
-      :alt: Transforms for a workcell
-      :width: 80%
-      :align: center
-      :class: only-dark
-
-      Transforms for a workcell.
 
 **Transforming a Point**
 
@@ -1224,27 +1187,6 @@ rotates vectors from frame :math:`B` into frame :math:`A`, and
 :math:`\mathbf{t}^{A}_{B}` is the translation vector of the origin of
 :math:`B` expressed in :math:`A`.
 
-.. only:: html
-
-   .. figure:: /_static/images/L11/point_transform_light.png
-      :alt: Transforming a point from camera frame to world frame
-      :width: 60%
-      :align: center
-      :class: only-light
-
-      The part detected in the ``camera`` frame is expressed in the
-      ``world`` frame as
-      :math:`\mathbf{p}_{world} = R^{world}_{camera}\, \mathbf{p}_{camera} + \mathbf{t}^{world}_{camera}`.
-
-   .. figure:: /_static/images/L11/point_transform_dark.png
-      :alt: Transforming a point from camera frame to world frame
-      :width: 60%
-      :align: center
-      :class: only-dark
-
-      The part detected in the ``camera`` frame is expressed in the
-      ``world`` frame as
-      :math:`\mathbf{p}_{world} = R^{world}_{camera}\, \mathbf{p}_{camera} + \mathbf{t}^{world}_{camera}`.
 
 **Chaining Transforms**
 
@@ -1259,26 +1201,6 @@ Transforms can be **chained**: if you know :math:`T^{A}_{B}` and
 The inner indices cancel, which is a useful consistency check: :math:`B`
 appears as a subscript on the left and a superscript on the right, and
 drops out of the result.
-
-.. only:: html
-
-   .. figure:: /_static/images/L11/transforms_direction_light.png
-      :alt: Chaining two transforms
-      :width: 40%
-      :align: center
-      :class: only-light
-
-      Chaining two transforms:
-      :math:`T^{world}_{part} = T^{world}_{camera} \times T^{camera}_{part}`.
-
-   .. figure:: /_static/images/L11/transforms_direction_dark.png
-      :alt: Chaining two transforms
-      :width: 40%
-      :align: center
-      :class: only-dark
-
-      Chaining two transforms:
-      :math:`T^{world}_{part} = T^{world}_{camera} \times T^{camera}_{part}`.
 
 
 TF2
