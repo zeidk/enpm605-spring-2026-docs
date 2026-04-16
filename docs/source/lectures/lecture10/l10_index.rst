@@ -18,25 +18,25 @@ dedicated demo packages: ``parameters_demo``, ``custom_interfaces``,
 the ``lecture10_demo`` metapackage.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Declare, retrieve, and set ROS 2 parameters, and react to runtime
-  changes with a parameter callback.
-- Define custom message, service, and action interfaces in a CMake
-  package and use them in Python nodes.
-- Write a service server and client using both asynchronous
-  (``call_async``) and synchronous (``call``) patterns.
-- Explain when to use a ``MultiThreadedExecutor`` and a separate
-  callback group to avoid deadlocks in a synchronous service client.
-- Write an action server that publishes feedback, handles cancellation
-  cooperatively, and returns a terminal result.
-- Write an action client that manages the full asynchronous callback
-  chain: goal response, feedback, cancel response, and result.
-- Choose the appropriate communication mechanism (topic, service,
-  action, parameter) for a given robotics task.
+   - Declare, retrieve, and set ROS 2 parameters, and react to runtime
+     changes with a parameter callback.
+   - Define custom message, service, and action interfaces in a CMake
+     package and use them in Python nodes.
+   - Write a service server and client using both asynchronous
+     (``call_async``) and synchronous (``call``) patterns.
+   - Explain when to use a ``MultiThreadedExecutor`` and a separate
+     callback group to avoid deadlocks in a synchronous service client.
+   - Write an action server that publishes feedback, handles cancellation
+     cooperatively, and returns a terminal result.
+   - Write an action client that manages the full asynchronous callback
+     chain: goal response, feedback, cancel response, and result.
+   - Choose the appropriate communication mechanism (topic, service,
+     action, parameter) for a given robotics task.
 
 
 Contents

@@ -54,8 +54,8 @@ Schedule
      - Parameters, Custom Interfaces, Services & Actions
      - Parameter declaration, descriptors, callbacks, YAML parameter files, custom ``.msg``/``.srv``/``.action`` definitions, CMake interface packages, service servers and clients (sync vs async), action servers and clients, feedback, cancellation, communication pattern selection
    * - L11
-     - Simulation and Mobile Robot Control
-     - Gazebo Harmonic architecture, SDF world and model files, sensors (lidar, camera, IMU), ``ros_gz_bridge`` configuration, spawning robots, TF2 coordinate frames, static and dynamic transforms, broadcasters and listeners, ``cmd_vel``/Twist, differential drive plugin, teleop, reading sensor data
+     - Coordinate Frames, TF2, and Mobile Robot Control
+     - Pose representation (position, Euler angles, quaternions, gimbal lock), coordinate frames (REP 105), TF2 transform tree, static and dynamic broadcasters, transform listeners, ``Buffer`` and ``lookup_transform``, Gazebo Harmonic simulation, RViz2 visualization, differential drive kinematics, ``cmd_vel``/``TwistStamped``, odometry, proportional controllers, KDL frame composition, ArUco marker detection with PnP
    * - L12
      - Nav2 and Lifecycle Nodes
      - Nav2 navigation stack, lifecycle (managed) nodes, state transitions, Nav2 goal dispatch
@@ -81,3 +81,4 @@ Contents
    lecture8/l8_index
    lecture9/l9_index
    lecture10/l10_index
+   lecture11/l11_index

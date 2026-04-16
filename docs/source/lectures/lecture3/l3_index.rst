@@ -8,18 +8,18 @@ Overview
 This lecture covers Python's essential data structures and control flow mechanisms: loops with ``for`` and ``while``, the versatile ``range()`` function, and the four fundamental collection types — lists, tuples, dictionaries, and sets. You will learn iteration patterns, list comprehensions, and how to choose the right data structure for different tasks.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Write loops using ``for`` and ``while`` statements with ``break``, ``continue``, and ``else``.
-- Master the ``range()`` function and its memory-efficient properties.
-- Understand iterables and distinguish between in-place and out-of-place operations.
-- Create, modify, and iterate over lists using methods and comprehensions.
-- Work with tuples, understand immutability, and apply tuple unpacking.
-- Implement dictionaries for key-value storage and iteration.
-- Use sets for unique collection management and mathematical set operations.
+   - Write loops using ``for`` and ``while`` statements with ``break``, ``continue``, and ``else``.
+   - Master the ``range()`` function and its memory-efficient properties.
+   - Understand iterables and distinguish between in-place and out-of-place operations.
+   - Create, modify, and iterate over lists using methods and comprehensions.
+   - Work with tuples, understand immutability, and apply tuple unpacking.
+   - Implement dictionaries for key-value storage and iteration.
+   - Use sets for unique collection management and mathematical set operations.
 
 
 Contents

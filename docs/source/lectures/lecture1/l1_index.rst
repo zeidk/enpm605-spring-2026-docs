@@ -8,17 +8,17 @@ Overview
 This lecture introduces the ENPM605 course, covering its structure, grading policies, and major deliverables. You will set up your development environment (Visual Studio Code, Docker, and Python), learn how Python code is executed from source to output, and get a first look at Python variables and data types.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Describe the course structure, grading policies, and major deliverables.
-- Set up Visual Studio Code with the Python and Dev Containers extensions.
-- Configure Docker for containerized development environments.
-- Explain the Python execution pipeline.
-- Run Python scripts using multiple methods in VS Code.
-- Verify your development environment is correctly configured.
+   - Describe the course structure, grading policies, and major deliverables.
+   - Set up Visual Studio Code with the Python and Dev Containers extensions.
+   - Configure Docker for containerized development environments.
+   - Explain the Python execution pipeline.
+   - Run Python scripts using multiple methods in VS Code.
+   - Verify your development environment is correctly configured.
 
 
 Contents

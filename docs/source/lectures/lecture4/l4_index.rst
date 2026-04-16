@@ -8,18 +8,18 @@ Overview
 This lecture introduces Python functions as the primary tool for organizing code into reusable, modular units. You will learn how to define and call functions, work with different argument types, understand Python's scope rules (LEGB), explore pass-by-assignment behavior, add type hints for clarity, write Google-style docstrings, and use recursion to solve problems that have a recursive structure.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Define and call functions using the ``def`` keyword with parameters and return values.
-- Distinguish between positional, default, keyword, ``*args``, and ``**kwargs`` arguments.
-- Explain the LEGB scope rule and predict how Python resolves variable names.
-- Describe how pass-by-assignment works with mutable and immutable objects.
-- Annotate functions with type hints including ``Optional``, ``Union``, and Python 3.10+ pipe syntax.
-- Write Google-style docstrings with descriptions, ``Args``, and ``Returns`` sections.
-- Implement recursive functions with proper base cases and recursive cases.
+   - Define and call functions using the ``def`` keyword with parameters and return values.
+   - Distinguish between positional, default, keyword, ``*args``, and ``**kwargs`` arguments.
+   - Explain the LEGB scope rule and predict how Python resolves variable names.
+   - Describe how pass-by-assignment works with mutable and immutable objects.
+   - Annotate functions with type hints including ``Optional``, ``Union``, and Python 3.10+ pipe syntax.
+   - Write Google-style docstrings with descriptions, ``Args``, and ``Returns`` sections.
+   - Implement recursive functions with proper base cases and recursive cases.
 
 
 Contents

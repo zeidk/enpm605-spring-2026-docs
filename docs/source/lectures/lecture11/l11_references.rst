@@ -9,318 +9,165 @@ References
     .. card::
         :class-card: sd-border-secondary
 
-        **ENPM605 -- L11: Simulation and Mobile Robot Control**
+        **ENPM605 -- L11: Coordinate Frames, TF2, and Mobile Robot Control**
 
-        Covers Gazebo Harmonic architecture and installation, SDF world
-        and model files (world structure, links, joints, sensors, physics
-        settings), ``ros_gz_bridge`` configuration and common topic
-        mappings, spawning robots with ``ros_gz_sim create``, TF2
-        fundamentals (coordinate frames, static and dynamic transforms,
-        transform broadcasters and listeners), mobile robot control
-        (``cmd_vel`` and ``Twist`` messages, differential drive plugin,
-        teleop, reading lidar/camera/IMU data), and launching a complete
-        simulation pipeline.
+        Covers pose representation (position as a 3D vector, orientation
+        via Euler angles and quaternions, gimbal lock, axis-angle
+        conversion, quaternion composition and multiplication order),
+        mobile robot control (Gazebo Harmonic simulation, RViz2
+        visualization, differential drive kinematics, ``cmd_vel`` and
+        ``TwistStamped``, odometry, proportional controllers for
+        position and heading), coordinate frames (REP 105 standard
+        frames, transforms, chaining), and TF2 (the transform tree,
+        static and dynamic broadcasters, transform listeners, CLI
+        tools, KDL frame composition).
 
 
-.. dropdown:: Gazebo Documentation
+.. dropdown:: Orientation and Quaternions
     :class-container: sd-border-secondary
 
     .. grid:: 1 1 2 2
         :gutter: 2
 
-        .. grid-item-card:: Gazebo Harmonic Documentation
-            :link: https://gazebosim.org/docs/harmonic
+        .. grid-item-card:: Robotics, Vision and Control (Corke)
+            :link: https://link.springer.com/book/10.1007/978-3-031-07262-8
             :class-card: sd-border-secondary
 
-            **gazebosim.org**
+            **Textbook: Pose and Orientation**
 
-            Official documentation for Gazebo Harmonic, the LTS release
-            paired with ROS 2 Jazzy.
+            Comprehensive coverage of spatial math for robotics:
+            rotation matrices, Euler angles, quaternions, and
+            homogeneous transforms.
 
-            +++
-
-            - Installation guide
-            - Tutorials and examples
-            - SDF specification reference
-
-        .. grid-item-card:: SDF Format Specification
-            :link: http://sdformat.org/spec
+        .. grid-item-card:: Modern Robotics (Lynch & Park)
+            :link: http://hades.mech.northwestern.edu/index.php/Modern_Robotics
             :class-card: sd-border-secondary
 
-            **sdformat.org**
+            **Textbook: Kinematics and Dynamics**
 
-            The Simulation Description Format specification. Reference
-            for all SDF elements: world, model, link, joint, sensor,
-            physics, and plugin tags.
-
-            +++
-
-            - Element reference
-            - Version changelog
-            - Schema validation
-
-        .. grid-item-card:: Gazebo Fuel Models
-            :link: https://app.gazebosim.org/fuel/models
-            :class-card: sd-border-secondary
-
-            **Gazebo Fuel**
-
-            Online repository of pre-built Gazebo models. Include models
-            directly in your SDF world files by URI.
-
-            +++
-
-            - Robot models
-            - Environment models
-            - Sensor models
-
-        .. grid-item-card:: Gazebo Sim API Reference
-            :link: https://gazebosim.org/api/sim/8/
-            :class-card: sd-border-secondary
-
-            **API Reference**
-
-            C++ API documentation for Gazebo Sim system plugins and
-            components.
-
-            +++
-
-            - System plugin interface
-            - ECS components
-            - Event handling
+            Open-access textbook covering rigid body motion,
+            forward and inverse kinematics, and velocity kinematics.
 
 
-.. dropdown:: ROS 2 + Gazebo Integration
+.. dropdown:: TF2 and Coordinate Frames
     :class-container: sd-border-secondary
 
     .. grid:: 1 1 2 2
         :gutter: 2
 
-        .. grid-item-card:: ros_gz GitHub Repository
-            :link: https://github.com/gazebosim/ros_gz
+        .. grid-item-card:: About TF2
+            :link: https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Tf2.html
             :class-card: sd-border-secondary
 
-            **ros_gz**
+            **ROS 2 Jazzy: TF2 Concepts**
 
-            Source code and documentation for the ROS 2 + Gazebo
-            integration packages: ``ros_gz_bridge``, ``ros_gz_sim``,
-            ``ros_gz_image``.
+            Conceptual overview of the transform library: frames,
+            transforms, buffers, and the tree structure.
 
             +++
 
-            - Bridge configuration
-            - Spawn examples
-            - Image transport bridge
+            - Transform tree
+            - Static vs. dynamic transforms
+            - Buffer and listener
 
-        .. grid-item-card:: ROS 2 Jazzy + Gazebo Integration Guide
-            :link: https://docs.ros.org/en/jazzy/Tutorials/Advanced/Simulators/Gazebo/Gazebo.html
+        .. grid-item-card:: Introduction to TF2
+            :link: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html
             :class-card: sd-border-secondary
 
-            **docs.ros.org**
+            **ROS 2 Jazzy: TF2 Tutorial**
 
-            Official ROS 2 tutorial for setting up and using Gazebo
-            Harmonic with ROS 2 Jazzy.
+            Hands-on introduction to TF2 with turtlesim, covering
+            broadcasters, listeners, and frame inspection tools.
 
             +++
 
-            - Installation
-            - Launch file integration
-            - Bridge configuration
+            - ``view_frames``
+            - ``tf2_echo``
+            - ``TransformListener``
 
-        .. grid-item-card:: ros_gz_bridge Message Pairs
-            :link: https://github.com/gazebosim/ros_gz/blob/ros2/ros_gz_bridge/README.md
+        .. grid-item-card:: Writing a Static Broadcaster (Python)
+            :link: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html
             :class-card: sd-border-secondary
 
-            **Supported Message Pairs**
+            **ROS 2 Jazzy: Static TF**
 
-            Complete list of supported Gazebo-to-ROS 2 message type
-            mappings for the bridge.
+            Tutorial for publishing a fixed transform between two
+            frames using ``StaticTransformBroadcaster``.
 
             +++
 
-            - Sensor messages
-            - Geometry messages
-            - Navigation messages
-
-        .. grid-item-card:: Gazebo + ROS 2 Launch Examples
-            :link: https://github.com/gazebosim/ros_gz/tree/ros2/ros_gz_sim_demos
-            :class-card: sd-border-secondary
-
-            **ros_gz_sim_demos**
-
-            Example launch files and configurations for common Gazebo +
-            ROS 2 use cases.
-
-            +++
-
-            - Diff drive robot
-            - Sensor bridges
-            - Multi-robot simulation
-
-
-.. dropdown:: TF2 Documentation
-    :class-container: sd-border-secondary
-
-    .. grid:: 1 1 2 2
-        :gutter: 2
-
-        .. grid-item-card:: TF2 Tutorials
-            :link: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Tf2-Main.html
-            :class-card: sd-border-secondary
-
-            **ROS 2 Jazzy TF2 Tutorials**
-
-            Step-by-step tutorials covering static broadcasters,
-            dynamic broadcasters, listeners, and debugging TF2 trees.
-
-            +++
-
-            - Writing a static broadcaster
-            - Writing a dynamic broadcaster
-            - Writing a listener
-            - Debugging with ``tf2_echo`` and ``view_frames``
-
-        .. grid-item-card:: tf2_ros API Reference
-            :link: https://docs.ros.org/en/jazzy/p/tf2_ros/
-            :class-card: sd-border-secondary
-
-            **tf2_ros**
-
-            Python and C++ API reference for the TF2 ROS 2 client
-            library.
-
-            +++
-
-            - ``Buffer`` and ``TransformListener``
-            - ``TransformBroadcaster``
             - ``StaticTransformBroadcaster``
+            - ``/tf_static``
+            - ``TransformStamped``
+
+        .. grid-item-card:: Writing a TF2 Broadcaster (Python)
+            :link: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html
+            :class-card: sd-border-secondary
+
+            **ROS 2 Jazzy: Dynamic TF**
+
+            Tutorial for publishing a time-varying transform using
+            ``TransformBroadcaster``.
+
+            +++
+
+            - ``TransformBroadcaster``
+            - ``/tf``
+            - Timer-based broadcasting
+
+        .. grid-item-card:: Writing a TF2 Listener (Python)
+            :link: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html
+            :class-card: sd-border-secondary
+
+            **ROS 2 Jazzy: TF Listener**
+
+            Tutorial for looking up transforms between frames using
+            ``Buffer`` and ``TransformListener``.
+
+            +++
+
+            - ``Buffer``
+            - ``TransformListener``
+            - ``lookup_transform()``
 
         .. grid-item-card:: REP 105: Coordinate Frames
             :link: https://www.ros.org/reps/rep-0105.html
             :class-card: sd-border-secondary
 
-            **REP 105**
+            **ROS Enhancement Proposal**
 
-            Standard naming conventions for coordinate frames in
-            mobile robots: ``map``, ``odom``, ``base_link``,
-            ``base_footprint``.
+            Defines the standard coordinate frames for mobile
+            platforms: ``world``, ``map``, ``odom``,
+            ``base_link``, and ``base_footprint``.
 
             +++
 
             - Frame naming conventions
-            - ``map`` vs ``odom`` semantics
-            - ``base_link`` orientation
-
-        .. grid-item-card:: REP 103: Units and Coordinate Conventions
-            :link: https://www.ros.org/reps/rep-0103.html
-            :class-card: sd-border-secondary
-
-            **REP 103**
-
-            Standard units (meters, radians, seconds) and coordinate
-            axis conventions (right-hand rule, x-forward, z-up) for
-            ROS 2.
-
-            +++
-
-            - SI units
-            - Right-hand coordinate frame
-            - Quaternion conventions
+            - Parent-child relationships
+            - Drift vs. jump semantics
 
 
-.. dropdown:: External Tutorials
+.. dropdown:: Mobile Robot Control
     :class-container: sd-border-secondary
 
     .. grid:: 1 1 2 2
         :gutter: 2
 
-        .. grid-item-card:: Articulated Robotics: Gazebo Sim
-            :link: https://articulatedrobotics.xyz/category/ros2-tutorials/
+        .. grid-item-card:: ROSbot ROS Repository
+            :link: https://github.com/husarion/rosbot_ros
             :class-card: sd-border-secondary
 
-            **Articulated Robotics**
+            **Husarion ROSbot ROS 2 Driver**
 
-            Video tutorials covering Gazebo simulation setup, robot
-            models, and ROS 2 integration from scratch.
+            The ROS 2 driver for both ROSbot 3 and ROSbot XL,
+            including Gazebo simulation, URDF models, and
+            hardware interfaces.
 
-            +++
-
-            - Building a robot in Gazebo
-            - Sensor simulation
-            - Control and navigation
-
-        .. grid-item-card:: The Construct: Gazebo Tutorials
-            :link: https://www.theconstructsim.com/
+        .. grid-item-card:: Gazebo Harmonic
+            :link: https://gazebosim.org/docs/harmonic
             :class-card: sd-border-secondary
 
-            **The Construct**
+            **Gazebo Sim Documentation**
 
-            Browser-based simulation environment with structured
-            Gazebo + ROS 2 courses.
-
-            +++
-
-            - Interactive exercises
-            - No local install required
-            - Gazebo-focused curriculum
-
-        .. grid-item-card:: Automatic Addison: TF2 Tutorials
-            :link: https://automaticaddison.com/how-to-use-tf2-with-ros-2/
-            :class-card: sd-border-secondary
-
-            **Automatic Addison**
-
-            Practical walkthroughs for TF2 in ROS 2, including
-            broadcasters, listeners, and visualization.
-
-            +++
-
-            - TF2 broadcaster examples
-            - TF2 listener examples
-            - RViz visualization
-
-
-.. dropdown:: Recommended Reading
-    :class-container: sd-border-secondary
-
-    .. grid:: 1 1 2 2
-        :gutter: 2
-
-        .. grid-item-card:: Anis Koubaa (Ed.)
-            :class-card: sd-border-secondary
-
-            **Robot Operating System (ROS): The Complete Reference
-            (Vol. 1-7)**
-
-            Relevant chapters cover simulation environments, Gazebo
-            integration, and coordinate frame management in ROS and
-            ROS 2 applications.
-
-        .. grid-item-card:: Open Robotics
-            :class-card: sd-border-secondary
-
-            **Programming Robots with ROS 2**
-
-            Chapters on simulation, TF2, and mobile robot control
-            provide detailed background for the concepts in this
-            lecture.
-
-        .. grid-item-card:: Siegwart, Nourbakhsh, and Scaramuzza
-            :class-card: sd-border-secondary
-
-            **Introduction to Autonomous Mobile Robots (2nd Edition)**
-
-            Chapters 3 and 5 cover mobile robot kinematics (including
-            differential drive), coordinate transformations, and
-            sensor-based navigation -- the theoretical foundations
-            behind the ROS 2 tools used in this lecture.
-
-        .. grid-item-card:: Corke, Peter
-            :class-card: sd-border-secondary
-
-            **Robotics, Vision and Control (3rd Edition)**
-
-            Chapter 2 (Representing Position and Orientation) and
-            Chapter 4 (Mobile Robot Vehicles) provide the mathematical
-            background for transforms, quaternions, and differential
-            drive kinematics.
+            Official documentation for Gazebo Harmonic, the simulator
+            paired with ROS 2 Jazzy.

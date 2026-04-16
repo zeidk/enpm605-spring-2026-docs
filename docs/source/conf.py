@@ -101,3 +101,6 @@ html_css_files = [
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
     "my.css",
 ]
+
+# Use MathJax 2 instead of 3 for file:// protocol compatibility
+mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"

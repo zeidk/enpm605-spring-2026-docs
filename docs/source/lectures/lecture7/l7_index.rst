@@ -20,20 +20,20 @@ examples continue with the Robotics Competition Management System
 running domain introduced in L6.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Distinguish between class methods, static methods, and instance methods.
-- Explain and implement association, aggregation, and composition.
-- Use inheritance to create class hierarchies with ``super()``.
-- Understand generalization and specialization in class design.
-- Apply polymorphism through duck typing and method overriding.
-- Define abstract base classes with the ``abc`` module.
-- Use ``typing.Protocol`` for structural subtyping and flexible interfaces.
-- Use ``__slots__`` to restrict attributes and reduce memory overhead.
-- Use ``@dataclass`` to reduce boilerplate for data-centric classes.
+   - Distinguish between class methods, static methods, and instance methods.
+   - Explain and implement association, aggregation, and composition.
+   - Use inheritance to create class hierarchies with ``super()``.
+   - Understand generalization and specialization in class design.
+   - Apply polymorphism through duck typing and method overriding.
+   - Define abstract base classes with the ``abc`` module.
+   - Use ``typing.Protocol`` for structural subtyping and flexible interfaces.
+   - Use ``__slots__`` to restrict attributes and reduce memory overhead.
+   - Use ``@dataclass`` to reduce boilerplate for data-centric classes.
 
 
 Contents

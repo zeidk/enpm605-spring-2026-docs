@@ -1,50 +1,52 @@
 ====================================================
-L11: Simulation and Mobile Robot Control
+L11: Coordinate Frames, TF2, and Mobile Robot Control
 ====================================================
 
 Overview
 --------
 
-This lecture introduces simulation with Gazebo Harmonic and covers the
-fundamentals of mobile robot control in ROS 2. You will learn how to
-define simulation worlds and robot models using SDF, bridge Gazebo
-topics into ROS 2 with ``ros_gz_bridge``, and spawn robots into a
-running simulation. The lecture then covers TF2, the ROS 2 coordinate
-frame system that every robotic application depends on, including
-static and dynamic transforms, transform listeners, and broadcasters.
-Finally, you will drive a differential-drive robot using
-``geometry_msgs/Twist`` messages and read sensor data (lidar, camera,
-IMU) from Python nodes. All hands-on examples use the
-``gazebo_demo``, ``tf2_demo``, and ``robot_control_demo`` packages.
+This lecture covers pose representation (position and orientation using
+Euler angles and quaternions), coordinate frames and the TF2 transform
+library, and mobile robot control. You will learn how orientations are
+encoded in ROS 2 using quaternions, why gimbal lock makes Euler angles
+unsuitable for continuous rotation tracking, and how TF2 manages
+the system-wide tree of coordinate frames that every robotic application
+depends on. On the control side, you will drive a differential-drive
+robot to a goal pose using a proportional controller on ``cmd_vel``,
+subscribe to odometry, and visualize the robot's state in RViz2. All
+hands-on examples use the ``robot_control_demo``, ``frame_demo``, and
+``tf2_demo`` packages.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Explain the Gazebo Harmonic architecture and how it differs from
-  Gazebo Classic.
-- Define simulation worlds and robot models using SDF files.
-- Configure ``ros_gz_bridge`` to bridge Gazebo topics into ROS 2.
-- Spawn a robot model into a running Gazebo simulation.
-- Describe the TF2 coordinate frame system and the difference between
-  static and dynamic transforms.
-- Write a TF2 transform listener and a transform broadcaster in Python.
-- Control a differential-drive mobile robot using ``cmd_vel`` and
-  ``Twist`` messages.
-- Read and process lidar, camera, and IMU sensor data in a ROS 2
-  Python node.
-- Launch a complete simulation pipeline: Gazebo, bridge, spawn, and
-  control nodes.
+   - Explain how position and orientation are represented in ROS 2 using
+     ``geometry_msgs/msg/Pose``, Euler angles, and quaternions.
+   - Convert between axis-angle and quaternion representations and
+     understand the double-cover property.
+   - Describe the gimbal lock problem and explain why quaternions are
+     preferred in robotics.
+   - Explain coordinate frames and the TF2 transform tree, including the
+     standard ROS 2 frames (``world``, ``map``, ``odom``, ``base_link``).
+   - Publish static and dynamic transforms, and look them up with
+     ``Buffer`` and ``TransformListener``.
+   - Inspect the transform tree using ``view_frames``, ``tf2_echo``, and
+     ``rqt_tf_tree``.
+   - Drive a differential-drive robot to a goal pose using a proportional
+     controller on ``cmd_vel``.
 
 
 Contents
 --------
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
    :titlesonly:
+
 
    l11_lecture
    l11_exercises
@@ -55,13 +57,17 @@ Contents
 Next Steps
 ----------
 
-- In the next lecture, we will cover Nav2 and Lifecycle Nodes:
+- In the next lecture, we will cover **Mapping and Navigation with
+  Nav2**:
 
-  - Managed node concept and state transitions
-  - Nav2 architecture and components
-  - Sending navigation goals programmatically
-  - Waypoint following
+  - Occupancy grid maps and the ``map`` frame
+  - SLAM with ``slam_toolbox``: building a map from LiDAR + odometry
+  - Localization with AMCL against a saved map
+  - The Nav2 stack: planner, controller, behavior tree, recovery
+  - Sending navigation goals via RViz2 and the ``NavigateToPose`` action
 
 - Complete the exercises from this lecture before the next class.
-- Read `Nav2 Documentation
-  <https://docs.nav2.org/>`_.
+- Read `Nav2 Getting Started
+  <https://docs.nav2.org/getting_started/index.html>`_ and skim
+  `Nav2 Concepts
+  <https://docs.nav2.org/concepts/index.html>`_.

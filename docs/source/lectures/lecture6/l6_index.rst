@@ -8,21 +8,21 @@ Overview
 This lecture introduces object-oriented programming (OOP) in Python, covering both the design and implementation of classes. You will learn how to analyze a problem domain using requirement analysis, business rules, and noun/verb analysis, then translate that design into working Python code. The implementation phase covers class and object creation, the ``self`` parameter, the ``__init__`` constructor, instance and class attributes, dunder methods for operator overloading and string representations, and encapsulation using ``@property`` decorators. All examples use a Robotics Competition Management System as the running domain.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Explain the core principles of object-oriented programming (OOP).
-- Gather requirements and identify business rules from a domain description.
-- Apply noun/verb analysis to extract candidate classes, attributes, and methods.
-- Apply a design process to identify objects, define classes, and model behavior.
-- Define classes with attributes and methods using proper Python syntax.
-- Understand the role of ``self`` and the ``__init__`` constructor.
-- Distinguish between instance attributes and class attributes.
-- Override dunder methods: ``__str__``, ``__repr__``, ``__eq__``, and operator methods.
-- Understand abstraction and encapsulation as OOP principles.
-- Use ``@property`` to create getters and setters the Pythonic way.
+   - Explain the core principles of object-oriented programming (OOP).
+   - Gather requirements and identify business rules from a domain description.
+   - Apply noun/verb analysis to extract candidate classes, attributes, and methods.
+   - Apply a design process to identify objects, define classes, and model behavior.
+   - Define classes with attributes and methods using proper Python syntax.
+   - Understand the role of ``self`` and the ``__init__`` constructor.
+   - Distinguish between instance attributes and class attributes.
+   - Override dunder methods: ``__str__``, ``__repr__``, ``__eq__``, and operator methods.
+   - Understand abstraction and encapsulation as OOP principles.
+   - Use ``@property`` to create getters and setters the Pythonic way.
 
 
 Contents

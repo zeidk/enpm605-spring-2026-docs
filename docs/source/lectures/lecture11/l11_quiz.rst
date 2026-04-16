@@ -2,12 +2,12 @@
 Quiz
 ====================================================
 
-This quiz covers the key concepts from Lecture 11: Simulation with
-Gazebo Harmonic and Mobile Robot Control, including the Gazebo
-architecture, SDF files, ``ros_gz_bridge``, spawning models, TF2
-coordinate frames, static and dynamic transforms, ``cmd_vel``/Twist
-commands, differential drive control, and reading sensor data in
-Python nodes.
+This quiz covers the key concepts from Lecture 11: Pose Representation,
+Coordinate Frames, TF2, and Mobile Robot Control. Topics include
+position and orientation (Euler angles, quaternions, gimbal lock),
+coordinate frames (REP 105), the TF2 transform library (static and
+dynamic broadcasters, listeners, ``Buffer``), differential drive
+kinematics, odometry, and proportional controllers.
 
 .. note::
 
@@ -30,129 +30,89 @@ Multiple Choice
 .. admonition:: Question 1
    :class: hint
 
-   What is the role of ``ros_gz_bridge`` in a Gazebo Harmonic + ROS 2
-   system?
+   Which of the following correctly describes a quaternion representing
+   **no rotation** (the identity)?
 
-   A. It replaces the Gazebo physics engine with a ROS 2
-      implementation.
+   A. :math:`(w, x, y, z) = (0, 0, 0, 0)`
 
-   B. It converts Gazebo Transport messages to ROS 2 messages (and
-      vice versa) so that ROS 2 nodes can interact with the
-      simulation.
+   B. :math:`(w, x, y, z) = (1, 0, 0, 0)`
 
-   C. It is the GUI client that renders the 3D simulation viewport.
+   C. :math:`(w, x, y, z) = (0, 1, 0, 0)`
 
-   D. It compiles SDF files into URDF for ROS 2 compatibility.
+   D. :math:`(w, x, y, z) = (0.5, 0.5, 0.5, 0.5)`
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **B** -- It converts Gazebo Transport messages to ROS 2 messages
-   (and vice versa) so that ROS 2 nodes can interact with the
-   simulation.
+   **B** -- :math:`(w, x, y, z) = (1, 0, 0, 0)`.
 
-   Gazebo Harmonic uses its own transport layer (Gazebo Transport)
-   based on Protobuf messages, which is completely independent of
-   ROS 2. The ``ros_gz_bridge`` subscribes to Gazebo Transport topics
-   and republishes them as ROS 2 messages, and vice versa. Without
-   the bridge, ``ros2 topic list`` shows no Gazebo data, and ROS 2
-   velocity commands cannot reach the simulated robot.
+   In the axis-angle-to-quaternion formula, a rotation angle of
+   :math:`\theta = 0` gives :math:`w = \cos(0) = 1` and
+   :math:`(x, y, z) = \sin(0) \cdot \mathbf{u} = (0, 0, 0)`.
+   Option A is not a valid quaternion (zero magnitude). Options C
+   and D encode non-zero rotations.
 
 
 .. admonition:: Question 2
    :class: hint
 
-   In the ``ros_gz_bridge`` topic mapping syntax, what does the
-   following line mean?
+   What is the **gimbal lock** problem?
 
-   .. code-block:: text
+   A. A quaternion becomes invalid when its magnitude is not 1.
 
-      /cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist
+   B. Two rotation axes align at certain Euler angle values, causing
+      one degree of freedom to be lost.
 
-   A. Data flows from Gazebo to ROS 2 on the ``/cmd_vel`` topic.
+   C. The robot's wheels lock when the angular velocity is too high.
 
-   B. Data flows from ROS 2 to Gazebo on the ``/cmd_vel`` topic.
-
-   C. Data flows bidirectionally between ROS 2 and Gazebo.
-
-   D. The bridge creates a new ``/cmd_vel`` topic in Gazebo only.
+   D. TF2 cannot interpolate between two frames that share a parent.
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **B** -- Data flows from ROS 2 to Gazebo on the ``/cmd_vel`` topic.
+   **B** -- Two rotation axes align, losing one degree of freedom.
 
-   The ``]`` bracket means data flows from the left side (ROS 2) into
-   the right side (Gazebo). The ``[`` bracket means the opposite
-   direction (Gazebo to ROS 2). For ``cmd_vel``, the direction is
-   ROS 2 to Gazebo because ROS 2 nodes publish velocity commands
-   that the simulated robot must receive.
+   In the Tait-Bryan ZYX convention, when pitch
+   (:math:`\theta`) reaches :math:`\pm 90°`, the yaw and roll axes
+   align. The rotation matrix then depends only on the difference
+   :math:`(\psi - \phi)`, not on :math:`\psi` and :math:`\phi`
+   independently. This makes certain orientations unreachable through
+   smooth Euler-angle interpolation and is the primary reason ROS 2
+   uses quaternions instead.
 
 
 .. admonition:: Question 3
    :class: hint
 
-   Which of the following is NOT a required system plugin in a Gazebo
-   Harmonic world file?
+   In the standard ROS 2 frame hierarchy (REP 105), which frame is
+   **locally consistent but drifts over time**?
 
-   A. ``gz::sim::systems::Physics``
+   A. ``world``
 
-   B. ``gz::sim::systems::SceneBroadcaster``
+   B. ``map``
 
-   C. ``gz::sim::systems::UserCommands``
+   C. ``odom``
 
-   D. ``gz::sim::systems::RosBridge``
+   D. ``base_link``
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **D** -- ``gz::sim::systems::RosBridge``
+   **C** -- ``odom``.
 
-   There is no built-in Gazebo system plugin called ``RosBridge``.
-   The ROS 2 bridge is a separate ROS 2 node (``ros_gz_bridge``)
-   that runs outside Gazebo. The three required system plugins are
-   ``Physics`` (steps the simulation), ``SceneBroadcaster`` (sends
-   scene data to the GUI), and ``UserCommands`` (allows runtime
-   model spawning and manipulation). The ``Sensors`` plugin is also
-   commonly needed for sensor data generation.
+   The ``odom`` frame is computed from wheel odometry and/or IMU
+   integration. It is locally smooth (never jumps) but accumulates
+   drift over time. The ``map`` frame, in contrast, may jump when a
+   localization correction occurs (e.g., loop closure) but is
+   globally consistent. ``world`` is the fixed inertial frame, and
+   ``base_link`` moves with the robot.
 
 
 .. admonition:: Question 4
    :class: hint
 
-   What does ``rclpy.time.Time()`` (time zero) mean when passed to
-   ``tf_buffer.lookup_transform()``?
-
-   A. It requests the transform at simulation time zero (the start
-      of the simulation).
-
-   B. It requests the transform at the Unix epoch (January 1, 1970).
-
-   C. It requests the most recently available transform regardless
-      of timestamp.
-
-   D. It causes ``lookup_transform`` to block indefinitely until
-      a transform is published.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **C** -- It requests the most recently available transform
-   regardless of timestamp.
-
-   In TF2, passing a zero-valued ``Time`` object is a special
-   convention meaning "give me the latest transform you have." This
-   is the most common usage pattern because you typically want the
-   current state of the robot, not a historical transform. To query
-   a transform at a specific time, you pass a non-zero ``Time``
-   message matching the desired timestamp.
-
-
-.. admonition:: Question 5
-   :class: hint
-
-   For a differential-drive robot in ROS 2, which fields of the
-   ``geometry_msgs/msg/Twist`` message are used?
+   For a differential drive robot, which fields of
+   ``geometry_msgs/msg/Twist`` carry meaningful values?
 
    A. ``linear.x`` and ``linear.y``
 
@@ -165,227 +125,223 @@ Multiple Choice
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **B** -- ``linear.x`` and ``angular.z``
+   **B** -- ``linear.x`` and ``angular.z``.
 
-   A differential-drive robot can only move forward/backward
-   (``linear.x``) and rotate about the vertical axis
-   (``angular.z``). It cannot move sideways (``linear.y`` is zero
-   because it is a non-holonomic platform), and roll/pitch rates
-   (``angular.x``, ``angular.y``) are always zero for a ground
-   robot. All other fields of the ``Twist`` message must be set to
-   ``0.0``.
+   A differential drive robot can only move forward/backward
+   (``linear.x``) and rotate about its vertical axis
+   (``angular.z``). It cannot translate sideways
+   (``linear.y = 0``) or rotate about the forward or lateral axes
+   (``angular.x = angular.y = 0``). All other fields are set to
+   zero.
+
+
+.. admonition:: Question 5
+   :class: hint
+
+   What does ``tf_buffer.lookup_transform("odom", "camera_link",
+   rclpy.time.Time())`` return?
+
+   A. The transform that converts points from ``odom`` into
+      ``camera_link``.
+
+   B. The transform that converts points from ``camera_link`` into
+      ``odom``.
+
+   C. The inverse of the ``camera_link`` → ``odom`` transform.
+
+   D. Both B and C.
+
+.. dropdown:: Answer
+   :class-container: sd-border-success
+
+   **D** -- Both B and C.
+
+   ``lookup_transform(target, source, time)`` returns the transform
+   that expresses the ``source`` frame in the ``target`` frame. This
+   means it converts points from ``camera_link`` (source) into
+   ``odom`` (target). This is equivalent to the inverse of the
+   ``camera_link`` → ``odom`` transform, so B and C describe the
+   same thing.
 
 
 .. admonition:: Question 6
    :class: hint
 
-   Why must you bridge the ``/clock`` topic when running Gazebo with
-   ROS 2 nodes?
+   Which topic do **static** transforms publish on?
 
-   A. Because Gazebo does not have an internal clock and relies on
-      ROS 2 for time.
+   A. ``/tf``
 
-   B. So that ROS 2 nodes use simulation time instead of wall clock
-      time, ensuring consistent timestamps.
+   B. ``/tf_static``
 
-   C. Because ROS 2 cannot function without a ``/clock`` topic
-      published at all times.
+   C. ``/tf_tree``
 
-   D. To synchronize the Gazebo GUI refresh rate with ROS 2
-      timer frequencies.
+   D. ``/transform_static``
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **B** -- So that ROS 2 nodes use simulation time instead of wall
-   clock time, ensuring consistent timestamps.
+   **B** -- ``/tf_static``.
 
-   When ``use_sim_time`` is set to ``True`` on a ROS 2 node, the
-   node's clock subscribes to ``/clock`` instead of using the system
-   wall clock. This is essential for reproducibility: if Gazebo runs
-   slower or faster than real time, all ROS 2 nodes stay synchronized
-   with the simulation. Without bridging ``/clock``, sensor data
-   timestamps and node clocks will be misaligned, causing TF lookup
-   failures and incorrect behavior.
+   Static transforms are published once on ``/tf_static`` and are
+   latched (retained for late-joining subscribers). Dynamic
+   transforms are published repeatedly on ``/tf``. TF2's ``Buffer``
+   subscribes to both topics and treats them differently: static
+   transforms never expire, while dynamic transforms have a
+   configurable timeout.
 
 
 .. admonition:: Question 7
    :class: hint
 
-   What is the difference between ``/tf`` and ``/tf_static`` in ROS 2?
+   In a proportional controller, what happens to the velocity command
+   as the robot approaches the goal?
 
-   A. ``/tf`` uses ``BEST_EFFORT`` QoS and ``/tf_static`` uses
-      ``RELIABLE`` QoS; otherwise they are identical.
+   A. It increases because the gain is constant.
 
-   B. ``/tf`` carries transforms that change over time, while
-      ``/tf_static`` carries transforms that are published once with
-      ``TRANSIENT_LOCAL`` durability so late-joining subscribers
-      still receive them.
+   B. It remains constant until the robot enters the tolerance zone.
 
-   C. ``/tf`` is for robot frames and ``/tf_static`` is for world
-      frames such as ``map``.
+   C. It decreases because the error decreases.
 
-   D. ``/tf_static`` is deprecated in ROS 2 Jazzy; all transforms
-      should use ``/tf``.
+   D. It oscillates between positive and negative values.
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **B** -- ``/tf`` carries transforms that change over time, while
-   ``/tf_static`` carries transforms that are published once with
-   ``TRANSIENT_LOCAL`` durability so late-joining subscribers still
-   receive them.
+   **C** -- It decreases because the error decreases.
 
-   Dynamic transforms (e.g., ``odom`` -> ``base_link``) are published
-   continuously on ``/tf`` and expire if not refreshed. Static
-   transforms (e.g., ``base_link`` -> ``lidar_link``) never change,
-   so they are published once on ``/tf_static`` with
-   ``TRANSIENT_LOCAL`` durability. This means any node that starts
-   after the static broadcaster automatically receives the cached
-   static transforms without waiting for the next publish cycle.
+   The proportional control law is :math:`u = K_p \cdot e`. As the
+   robot approaches the goal, the error :math:`e` (distance or
+   heading difference) decreases, so the commanded velocity decreases
+   proportionally. This natural deceleration is a key property of
+   P-control. However, with very low gains, the robot may stop short
+   of the goal (steady-state error).
 
 
 .. admonition:: Question 8
    :class: hint
 
-   A student launches Gazebo with a lidar-equipped robot but sees no
-   data on the ``/lidar`` ROS 2 topic. Which of the following is the
-   most likely cause?
+   Given wheel separation :math:`L` and wheel radius :math:`r`, if
+   both wheels spin at the same speed (:math:`v_L = v_R = v_w`),
+   what is the angular velocity :math:`\omega`?
 
-   A. The lidar sensor is not defined in the SDF file.
+   A. :math:`\omega = r \cdot v_w / L`
 
-   B. The ``ros_gz_bridge`` is not running or is missing the lidar
-      topic mapping.
+   B. :math:`\omega = 0`
 
-   C. The ``Sensors`` system plugin is missing from the world file.
+   C. :math:`\omega = 2 r \cdot v_w / L`
 
-   D. All of the above could cause this problem.
+   D. :math:`\omega = v_w / r`
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
-   **D** -- All of the above could cause this problem.
+   **B** -- :math:`\omega = 0`.
 
-   Missing lidar data on the ROS 2 side can be caused by any link in
-   the pipeline: (A) if the sensor is not defined in SDF, Gazebo
-   generates no data; (B) if the bridge is not running or has the
-   wrong topic name, Gazebo data is not forwarded to ROS 2; (C) if
-   the ``Sensors`` system plugin is missing, Gazebo will not generate
-   any sensor data even if the sensor is defined. Debugging requires
-   checking all three: the SDF file, the bridge configuration, and
-   the world's system plugins.
+   From the differential drive kinematics:
+   :math:`\omega = r(v_R - v_L) / L`. When both wheels spin at the
+   same speed, :math:`v_R - v_L = 0`, so :math:`\omega = 0`. The
+   robot moves in a straight line with linear velocity
+   :math:`v = r(v_R + v_L) / 2 = r \cdot v_w`.
 
 
 ----
 
 
-True / False
-============
+True/False
+==========
 
 .. admonition:: Question 9
    :class: hint
 
-   **True or False:** TF2 allows coordinate frames to form a general
-   graph with cycles and multiple parents.
+   **True or False:** Quaternions :math:`q` and :math:`-q` represent
+   different rotations.
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
    **False**
 
-   TF2 organizes coordinate frames as a strict **tree** structure.
-   Every frame has exactly one parent frame (except the root frame,
-   which has none). There are no cycles, and no frame can have
-   multiple parents. If you accidentally publish transforms that
-   create a cycle or give a frame two parents, TF2 will report an
-   error and the lookup will fail. This tree constraint ensures that
-   the transform between any two frames is unique and unambiguous.
+   This is the **double cover** property. Both :math:`q` and
+   :math:`-q` map to the same 3D rotation. For example,
+   :math:`(0.707, 0.707, 0, 0)` and :math:`(-0.707, -0.707, 0, 0)`
+   both encode a :math:`90°` rotation about the :math:`x`-axis. This
+   can cause sign-flip artifacts when interpolating or comparing
+   quaternions.
 
 
 .. admonition:: Question 10
    :class: hint
 
-   **True or False:** In Gazebo Harmonic, the ``DiffDrive`` system
-   plugin subscribes directly to ROS 2 ``/cmd_vel`` messages without
-   needing a bridge.
+   **True or False:** A ``StaticTransformBroadcaster`` should be used
+   for publishing the ``odom`` → ``base_link`` transform.
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
    **False**
 
-   The ``DiffDrive`` plugin operates within Gazebo and subscribes to
-   ``cmd_vel`` on **Gazebo Transport**, not on ROS 2. A
-   ``ros_gz_bridge`` must be running to convert ROS 2
-   ``geometry_msgs/msg/Twist`` messages into Gazebo
-   ``gz.msgs.Twist`` messages. Without the bridge, ROS 2 velocity
-   commands never reach the simulated robot.
+   The ``odom`` → ``base_link`` transform changes continuously as the
+   robot moves. It must be published repeatedly on ``/tf`` using a
+   ``TransformBroadcaster``. A ``StaticTransformBroadcaster``
+   publishes once on ``/tf_static`` and TF2 assumes the transform is
+   permanent. Using it for a time-varying relationship would cause the
+   robot to appear frozen in RViz and break all downstream consumers.
 
 
 .. admonition:: Question 11
    :class: hint
 
-   **True or False:** A ``StaticTransformBroadcaster`` must publish
-   its transforms continuously at a fixed rate, just like a dynamic
-   ``TransformBroadcaster``.
+   **True or False:** Quaternion multiplication is commutative.
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
    **False**
 
-   A ``StaticTransformBroadcaster`` publishes to the ``/tf_static``
-   topic with ``TRANSIENT_LOCAL`` durability. This means the transform
-   is published **once** and cached by DDS. Any subscriber that
-   connects later automatically receives the cached transform without
-   the broadcaster needing to republish. In contrast, a dynamic
-   ``TransformBroadcaster`` must publish continuously because
-   ``/tf`` uses ``VOLATILE`` durability and transforms expire from
-   the TF2 buffer after a timeout.
+   Quaternion multiplication is **not commutative**:
+   :math:`q_1 \otimes q_2 \neq q_2 \otimes q_1` in general.
+   The order matters because it determines which rotation is applied
+   first. In a world-frame rotation, the new rotation is
+   pre-multiplied; in a body-frame rotation, it is post-multiplied.
 
 
 .. admonition:: Question 12
    :class: hint
 
-   **True or False:** Setting ``max_step_size`` to ``0.01`` in the
-   Gazebo physics configuration makes the simulation run faster
-   but may cause objects to pass through each other.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **True**
-
-   A larger ``max_step_size`` means the physics engine advances
-   more simulated time per step, so fewer steps are needed per
-   second of simulation time, making it run faster. However, larger
-   steps reduce the accuracy of collision detection and constraint
-   solving. Fast-moving objects can "tunnel" through thin walls
-   because the physics engine does not detect the contact between
-   steps. For contact-heavy simulations, ``0.001`` seconds or
-   smaller is recommended.
-
-
-.. admonition:: Question 13
-   :class: hint
-
-   **True or False:** Publishing a single ``Twist`` message on
-   ``/cmd_vel`` will cause a differential-drive robot to move at
-   that velocity indefinitely.
+   **True or False:** The TF2 transform tree can contain cycles (a
+   frame can have more than one parent).
 
 .. dropdown:: Answer
    :class-container: sd-border-success
 
    **False**
 
-   Most differential-drive controllers implement a command timeout.
-   If no new ``cmd_vel`` message arrives within the timeout period
-   (typically 0.5-1.0 seconds), the controller sets the wheel
-   velocities to zero as a safety measure. To maintain continuous
-   motion, you must publish ``cmd_vel`` messages at a steady rate
-   (typically 10-50 Hz). This is why ``teleop_twist_keyboard``
-   publishes repeatedly while a key is held down, not just once per
-   key press.
+   The TF2 transform tree is a strict **tree**: every frame has
+   exactly one parent, and there is exactly one root frame (typically
+   ``world``). Cycles are not allowed. If two broadcasters publish
+   conflicting parent relationships for the same frame, TF2 will
+   report an error. To find the transform between any two frames,
+   TF2 traverses up to the common ancestor and back down.
+
+
+.. admonition:: Question 13
+   :class: hint
+
+   **True or False:** Odometry provides a globally accurate estimate
+   of the robot's position.
+
+.. dropdown:: Answer
+   :class-container: sd-border-success
+
+   **False**
+
+   Odometry integrates small incremental motions over time, so it
+   **drifts**. Small errors in each step (wheel slip, encoder
+   resolution, uneven terrain) accumulate, causing the estimated pose
+   to diverge from the true pose. This is why the ``odom`` frame is
+   described as "locally consistent, drift-prone." Global accuracy
+   requires an additional localization source (e.g., AMCL against a
+   known map).
 
 
 ----
@@ -397,91 +353,72 @@ Essay Questions
 .. admonition:: Question 14
    :class: hint
 
-   **Explain the complete data path for a lidar scan from Gazebo to
-   a ROS 2 subscriber node.** Describe each component involved and
-   the message format at each stage.
+   Explain why ROS 2 uses quaternions instead of Euler angles to
+   represent orientations. In your answer, mention gimbal lock and at
+   least one other advantage of quaternions.
 
-   *(2-4 sentences)*
-
-.. dropdown:: Answer Guidelines
+.. dropdown:: Answer
    :class-container: sd-border-success
 
-   *Key points to include:*
-
-   - The ``Sensors`` system plugin in Gazebo generates lidar data
-     each simulation step based on the sensor definition in the SDF
-     file. The data is published as a ``gz.msgs.LaserScan`` Protobuf
-     message on a Gazebo Transport topic (e.g., ``/lidar``).
-   - The ``ros_gz_bridge`` subscribes to the Gazebo Transport topic,
-     deserializes the Protobuf message, converts it to a
-     ``sensor_msgs/msg/LaserScan`` ROS 2 message, and publishes it
-     on the corresponding ROS 2 topic.
-   - The ROS 2 subscriber node receives the
-     ``sensor_msgs/msg/LaserScan`` message through DDS, which
-     triggers its callback function. The callback processes the
-     ``ranges`` array to extract distance measurements.
-   - The pipeline requires three correctly configured components:
-     the sensor in SDF, the bridge mapping, and the ROS 2 subscriber.
-     A failure at any stage silently breaks the data flow.
+   ROS 2 uses quaternions because they are **singularity-free**: unlike
+   Euler angles, which suffer from gimbal lock when two rotation axes
+   align (e.g., pitch at :math:`\pm 90°`), quaternions can represent
+   any orientation without losing a degree of freedom. Additionally,
+   quaternions are efficient to **compose** (a single quaternion
+   multiplication vs. three matrix multiplications for Euler angles),
+   produce smooth **interpolation** (SLERP), and require only four
+   numbers to store a rotation. The trade-off is reduced human
+   intuition: reading ``(0.707, 0, 0, 0.707)`` is less intuitive
+   than "yaw = 90°," which is why ``scipy`` or ``tf_transformations``
+   conversion functions are commonly used.
 
 
 .. admonition:: Question 15
    :class: hint
 
-   **Describe the difference between static and dynamic transforms
-   in TF2 and explain when you would use each.** Give a concrete
-   example of each type in a mobile robot system.
+   Describe the difference between a **static** and a **dynamic**
+   transform in TF2. Give one concrete example of each.
 
-   *(2-4 sentences)*
-
-.. dropdown:: Answer Guidelines
+.. dropdown:: Answer
    :class-container: sd-border-success
 
-   *Key points to include:*
+   A **static transform** describes a fixed geometric relationship
+   that never changes over time. It is published once on
+   ``/tf_static`` and is latched so that late-joining subscribers
+   receive it immediately. Example: the offset from ``base_link`` to
+   a rigidly mounted LiDAR (``lidar_link``).
 
-   - **Static transforms** represent fixed geometric relationships
-     that never change, such as the offset from ``base_link`` to a
-     rigidly mounted sensor (``lidar_link``, ``camera_link``). They
-     are published once on ``/tf_static`` with ``TRANSIENT_LOCAL``
-     durability. Use a ``StaticTransformBroadcaster``.
-   - **Dynamic transforms** represent relationships that change over
-     time, such as ``odom`` -> ``base_link`` (updated as the robot
-     moves) or ``map`` -> ``odom`` (updated by a localization
-     algorithm). They are published continuously on ``/tf`` at a
-     regular rate (e.g., 50 Hz). Use a ``TransformBroadcaster``.
-   - The key design choice: if the relative pose between two frames
-     is physically fixed (bolted, welded), use a static transform.
-     If it changes during operation, use a dynamic transform.
-   - Using a static transform for a fixed relationship avoids
-     unnecessary network traffic and ensures late-joining nodes
-     immediately receive the transform.
+   A **dynamic transform** describes a relationship that changes over
+   time and must be re-published continuously on ``/tf``. Example:
+   the ``odom`` → ``base_link`` transform, which updates as the
+   robot moves based on odometry data.
+
+   Using a ``StaticTransformBroadcaster`` for a dynamic relationship
+   is incorrect because TF2 treats static transforms as permanent
+   and will not update or expire them.
 
 
 .. admonition:: Question 16
    :class: hint
 
-   **Describe how the Gazebo DiffDrive plugin converts a Twist
-   command into wheel velocities.** What parameters are needed and
-   what outputs does the plugin produce?
+   A proportional controller drives a robot toward a goal 5 m away
+   with gain :math:`K_p = 0.5\,\text{s}^{-1}`. Explain what happens
+   to the velocity at each step and identify one limitation of using
+   only a P controller for this task.
 
-   *(2-4 sentences)*
-
-.. dropdown:: Answer Guidelines
+.. dropdown:: Answer
    :class-container: sd-border-success
 
-   *Key points to include:*
+   At each control step, the velocity command is
+   :math:`v = K_p \cdot d = 0.5 \times d`, where :math:`d` is the
+   remaining distance. Initially :math:`v = 0.5 \times 5 = 2.5`
+   m/s; as the robot moves closer, :math:`d` decreases and so does
+   :math:`v`. The robot decelerates smoothly as it approaches the
+   goal.
 
-   - The ``DiffDrive`` plugin receives a ``Twist`` command
-     (``linear.x`` and ``angular.z``) and uses the differential drive
-     kinematic equations to compute left and right wheel angular
-     velocities. The two key parameters are ``wheel_separation`` (L)
-     and ``wheel_radius`` (r).
-   - The kinematic equations are:
-     ``v_left = (linear.x - angular.z * L / 2) / r`` and
-     ``v_right = (linear.x + angular.z * L / 2) / r``.
-   - The plugin applies these velocities to the wheel joints in the
-     physics simulation, causing the robot to move.
-   - As output, the plugin computes and publishes odometry (position
-     and velocity estimates based on wheel rotation) on the ``odom``
-     topic and the ``odom`` -> ``base_link`` transform on the ``tf``
-     topic.
+   A key limitation is **steady-state error**: if external
+   disturbances (wheel slip, friction) oppose the motion, the small
+   velocity near the goal may not overcome them, causing the robot to
+   stop slightly before the target. A PID controller adds an integral
+   term to eliminate this residual error and a derivative term to
+   reduce overshoot.

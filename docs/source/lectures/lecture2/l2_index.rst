@@ -8,16 +8,16 @@ Overview
 This lecture covers the building blocks of Python programming: organizing code into packages and modules, working with operators and Boolean logic, manipulating strings with indexing and slicing, and writing conditional logic with ``if``/``elif``/``else``. Along the way, you will learn Python's indentation rules, numeric type details, and string formatting with f-strings.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Distinguish between packages and modules and use different import strategies.
-- Apply arithmetic, relational, logical, membership, and identity operators.
-- Use the Boolean type and truth-testing rules for control flow.
-- Manipulate strings using indexing, slicing, methods, and f-strings.
-- Write conditional logic with ``if``/``elif``/``else`` statements.
+   - Distinguish between packages and modules and use different import strategies.
+   - Apply arithmetic, relational, logical, membership, and identity operators.
+   - Use the Boolean type and truth-testing rules for control flow.
+   - Manipulate strings using indexing, slicing, methods, and f-strings.
+   - Write conditional logic with ``if``/``elif``/``else`` statements.
 
 
 Contents

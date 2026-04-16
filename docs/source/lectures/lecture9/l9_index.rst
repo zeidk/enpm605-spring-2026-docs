@@ -17,18 +17,18 @@ groups). All hands-on examples use two dedicated demo packages:
 ``launch_demo`` and ``executor_demo``.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Write Python launch files to start multiple nodes together.
-- Use advanced launch features: arguments, conditionals, grouping, and
-  includes.
-- Explain the difference between single-threaded and multi-threaded
-  executors.
-- Use callback groups (mutually exclusive and reentrant) for concurrent
-  execution.
+   - Write Python launch files to start multiple nodes together.
+   - Use advanced launch features: arguments, conditionals, grouping, and
+     includes.
+   - Explain the difference between single-threaded and multi-threaded
+     executors.
+   - Use callback groups (mutually exclusive and reentrant) for concurrent
+     execution.
 
 
 Contents

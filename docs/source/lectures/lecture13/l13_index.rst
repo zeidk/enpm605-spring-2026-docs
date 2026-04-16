@@ -17,23 +17,23 @@ all coordinated by a single behavior tree. This lecture uses the
 ``bt_demo`` and ``integration_demo`` packages.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Explain what behavior trees are and why they are preferred over
-  finite state machines for complex robotic decision-making.
-- Identify and describe the core BT node types: sequence, fallback,
-  decorator, condition, and action.
-- Build and tick a behavior tree using the ``py_trees`` Python library.
-- Use the Blackboard for inter-behavior data sharing.
-- Wrap ROS 2 publishers, subscribers, action clients, and service
-  clients as BT behaviors using ``py_trees_ros``.
-- Design and implement a complete integration demo that uses a
-  behavior tree to coordinate lifecycle nodes, Nav2 goals, and
-  sensor-driven reactions.
-- Debug behavior trees using visualization tools and logging.
+   - Explain what behavior trees are and why they are preferred over
+     finite state machines for complex robotic decision-making.
+   - Identify and describe the core BT node types: sequence, fallback,
+     decorator, condition, and action.
+   - Build and tick a behavior tree using the ``py_trees`` Python library.
+   - Use the Blackboard for inter-behavior data sharing.
+   - Wrap ROS 2 publishers, subscribers, action clients, and service
+     clients as BT behaviors using ``py_trees_ros``.
+   - Design and implement a complete integration demo that uses a
+     behavior tree to coordinate lifecycle nodes, Nav2 goals, and
+     sensor-driven reactions.
+   - Debug behavior trees using visualization tools and logging.
 
 
 Contents

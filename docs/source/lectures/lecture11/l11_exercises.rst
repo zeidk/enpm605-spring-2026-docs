@@ -7,19 +7,19 @@ from Lecture 11. Each exercise asks you to **write code from scratch**
 based on a specification -- no starter code is provided.
 
 All files should be created inside your ``~/enpm605_ws/src/`` workspace
-in the appropriate packages (``gazebo_demo``, ``tf2_demo``, or
+in the appropriate packages (``frame_demo``, ``tf2_demo``, or
 ``robot_control_demo``).
 
 
-.. dropdown:: Exercise 1 -- Launch Gazebo with a Custom World
+.. dropdown:: Exercise 1 -- Quaternion Utility Library
     :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
     **Goal**
 
-    Practice creating an SDF world file and a ROS 2 launch file that
-    starts Gazebo Harmonic with the ``ros_gz_bridge``.
+    Build a Python module that converts between orientation
+    representations and verify it against ``scipy.spatial.transform``.
 
 
     .. raw:: html
@@ -29,54 +29,75 @@ in the appropriate packages (``gazebo_demo``, ``tf2_demo``, or
 
     **Specification**
 
-    Create the following files in the ``gazebo_demo`` package:
+    Create the file ``frame_demo/frame_demo/quat_utils.py`` that
+    implements the following functions.
 
-    1. **``worlds/obstacle_world.sdf``**: An SDF world file containing:
+    1. **``axis_angle_to_quaternion(axis, angle)``**:
 
-       - The required system plugins (``Physics``, ``SceneBroadcaster``,
-         ``UserCommands``, ``Sensors``).
-       - A ground plane and directional light.
-       - At least three box-shaped obstacles placed at different
-         positions in the world.
-       - Physics configured with ``max_step_size`` of ``0.001`` and
-         ``real_time_factor`` of ``1.0``.
+       - Input: a 3-element unit vector ``axis`` and a rotation
+         ``angle`` in radians.
+       - Output: a tuple ``(w, x, y, z)`` using the half-angle
+         formula:
 
-    2. **``launch/obstacle_world.launch.py``**: A launch file that:
+         .. math::
 
-       - Starts Gazebo with ``obstacle_world.sdf``.
-       - Starts ``ros_gz_bridge`` bridging ``/clock`` to
-         ``rosgraph_msgs/msg/Clock``.
+            w = \cos\!\left(\frac{\theta}{2}\right), \quad
+            (x, y, z) = \sin\!\left(\frac{\theta}{2}\right) \cdot \mathbf{u}
 
-    **Expected behavior**
+       - Raise ``ValueError`` if the axis is not a unit vector
+         (tolerance: ``1e-6``).
 
-    Running the launch file should open Gazebo with a ground plane,
-    lighting, and three visible box obstacles:
+    2. **``quaternion_to_euler(w, x, y, z)``**:
+
+       - Input: a unit quaternion ``(w, x, y, z)``.
+       - Output: a tuple ``(roll, pitch, yaw)`` in radians.
+       - Use the standard ZYX (Tait-Bryan) convention.
+
+    3. **``quaternion_multiply(q1, q2)``**:
+
+       - Input: two quaternions as ``(w, x, y, z)`` tuples.
+       - Output: the Hamilton product ``q1 * q2`` as a
+         ``(w, x, y, z)`` tuple.
+
+    4. **``normalize_quaternion(w, x, y, z)``**:
+
+       - Input: a quaternion (not necessarily unit).
+       - Output: the corresponding unit quaternion.
+       - Raise ``ValueError`` if the magnitude is zero.
+
+    Write a ``main()`` function that:
+
+    - Computes the quaternion for a :math:`90°` rotation about the
+      :math:`x`-axis using ``axis_angle_to_quaternion``.
+    - Computes the quaternion for a :math:`90°` rotation about the
+      :math:`z`-axis.
+    - Composes them (z-rotation applied first, then x-rotation) using
+      ``quaternion_multiply``.
+    - Converts the result to Euler angles.
+    - Prints all intermediate and final values.
+    - Verifies the result against
+      ``scipy.spatial.transform.Rotation`` and prints ``PASS`` or
+      ``FAIL``.
+
+    **Verification**
 
     .. code-block:: console
 
-       ros2 launch gazebo_demo obstacle_world.launch.py
-
-    **Verification commands**
-
-    .. code-block:: console
-
-       # Gazebo should be running
-       ps aux | grep gz
-
-       # Clock topic should be available
-       ros2 topic list | grep clock
-       ros2 topic hz /clock       # should show non-zero Hz
+       cd ~/enpm605_ws && colcon build --symlink-install --packages-select frame_demo
+       source install/setup.bash
+       ros2 run frame_demo quat_utils
 
 
-.. dropdown:: Exercise 2 -- Spawn and Drive a Robot
+.. dropdown:: Exercise 2 -- Static Transform Broadcaster Node
     :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
     **Goal**
 
-    Practice spawning a robot model into Gazebo and controlling it
-    with velocity commands through the bridge.
+    Write a ROS 2 node that publishes a static transform from
+    ``base_link`` to a custom sensor frame using parameters loaded
+    from a YAML file.
 
 
     .. raw:: html
@@ -86,60 +107,141 @@ in the appropriate packages (``gazebo_demo``, ``tf2_demo``, or
 
     **Specification**
 
-    Extend the ``gazebo_demo`` package:
+    Create ``frame_demo/frame_demo/sensor_frame_publisher.py``.
 
-    1. **``models/diff_drive.sdf``**: An SDF model with:
+    1. **``SensorFramePublisher(Node)``** class:
 
-       - A ``base_link`` with a box visual and collision.
-       - Two cylindrical wheels connected via revolute joints
-         (``left_wheel_joint``, ``right_wheel_joint``).
-       - A caster ball (sphere) for stability.
-       - The ``gz::sim::systems::DiffDrive`` plugin configured with
-         ``wheel_separation``, ``wheel_radius``, ``cmd_vel`` topic,
-         and ``odom`` topic.
+       - ``__init__``: declares the following parameters:
 
-    2. **``launch/drive_robot.launch.py``**: A launch file that:
+         - ``parent_frame`` (string, default ``"base_link"``)
+         - ``child_frame`` (string, default ``"sensor_link"``)
+         - ``translation`` (double array, default ``[0.0, 0.0, 0.0]``)
+         - ``rotation_rpy`` (double array, default ``[0.0, 0.0, 0.0]``)
 
-       - Launches Gazebo with the obstacle world from Exercise 1.
-       - Spawns the ``diff_drive`` model at position (0, 0, 0.1).
-       - Starts ``ros_gz_bridge`` bridging ``/cmd_vel``
-         (ROS 2 to Gazebo), ``/odom`` (Gazebo to ROS 2), ``/clock``,
-         and ``/tf``.
+       - Converts the roll-pitch-yaw values to a quaternion using
+         ``scipy.spatial.transform.Rotation.from_euler("xyz", [r, p, y])``.
+       - Creates a ``StaticTransformBroadcaster`` and publishes the
+         transform once.
+       - Logs the published transform at ``info`` level.
+
+    2. **YAML parameter file** ``config/sensor_frame.yaml``:
+
+       .. code-block:: yaml
+
+          /sensor_frame_publisher:
+            ros__parameters:
+              parent_frame: "base_link"
+              child_frame: "camera_link"
+              translation: [0.1, 0.0, 0.25]
+              rotation_rpy: [0.0, -0.2618, 0.0]
+
+    3. **Launch file** ``launch/sensor_frame.launch.py``:
+
+       - Starts the ``sensor_frame_publisher`` node with the YAML
+         parameter file.
+
+    4. Register the entry point in ``setup.py`` and install the config
+       and launch directories.
 
     **Expected behavior**
 
-    After launching, you should be able to drive the robot using
-    ``teleop_twist_keyboard``:
+    - The node starts, publishes the static transform, and keeps
+      running.
+    - ``ros2 run tf2_ros tf2_echo base_link camera_link`` shows the
+      transform.
+    - ``ros2 run rqt_tf_tree rqt_tf_tree --force-discover`` shows
+      ``base_link`` → ``camera_link`` in the tree.
+
+    **Verification**
+
+    .. code-block:: console
+
+       cd ~/enpm605_ws && colcon build --symlink-install --packages-select frame_demo
+       source install/setup.bash
+
+       # Terminal 1
+       ros2 launch frame_demo sensor_frame.launch.py
+
+       # Terminal 2
+       ros2 run tf2_ros tf2_echo base_link camera_link
+
+       # Terminal 3
+       ros2 run rqt_tf_tree rqt_tf_tree --force-discover
+
+
+.. dropdown:: Exercise 3 -- Transform Listener and Logger
+    :icon: gear
+    :class-container: sd-border-primary
+    :class-title: sd-font-weight-bold
+
+    **Goal**
+
+    Write a node that periodically looks up the transform between two
+    frames and logs the position and orientation (as Euler angles).
+
+
+    .. raw:: html
+
+       <hr>
+
+
+    **Specification**
+
+    Create ``frame_demo/frame_demo/frame_logger.py``.
+
+    1. **``FrameLogger(Node)``** class:
+
+       - ``__init__``: declares two parameters:
+
+         - ``target_frame`` (string, default ``"odom"``)
+         - ``source_frame`` (string, default ``"base_link"``)
+
+       - Creates a ``Buffer`` and a ``TransformListener``.
+       - Creates a timer at 1 Hz.
+
+    2. **Timer callback** ``_timer_callback(self)``:
+
+       - Calls ``self._tf_buffer.lookup_transform(target, source,
+         rclpy.time.Time(), timeout=Duration(seconds=0.1))``.
+       - Extracts the translation ``(x, y, z)``.
+       - Converts the quaternion to Euler angles using
+         ``scipy.spatial.transform.Rotation``.
+       - Logs translation and Euler angles (degrees) at ``info`` level.
+       - Catches ``TransformException`` and logs a warning instead.
+
+    **Expected behavior**
+
+    - With the ROSbot simulation running, the node logs the robot's
+      pose in the ``odom`` frame once per second.
+    - Moving the robot (e.g., with ``teleop_twist_keyboard``) shows
+      the logged values changing.
+
+    **Verification**
 
     .. code-block:: console
 
        # Terminal 1
-       ros2 launch gazebo_demo drive_robot.launch.py
+       ros2 launch rosbot_gazebo empty_world.launch.py
 
        # Terminal 2
-       ros2 run teleop_twist_keyboard teleop_twist_keyboard
+       cd ~/enpm605_ws && colcon build --symlink-install --packages-select frame_demo
+       source install/setup.bash
+       ros2 run frame_demo frame_logger
 
-    The robot should move forward, backward, and turn in response to
-    keyboard input.
-
-    **Verification commands**
-
-    .. code-block:: console
-
-       ros2 topic list               # should show /cmd_vel, /odom, /tf
-       ros2 topic echo /odom --once  # should show changing pose values
-       ros2 topic hz /odom           # should show ~50 Hz
+       # Terminal 3
+       ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=true
 
 
-.. dropdown:: Exercise 3 -- TF2 Broadcaster and Listener
+.. dropdown:: Exercise 4 -- Proportional Go-to-Goal Controller
     :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
 
     **Goal**
 
-    Practice writing a static transform broadcaster and a transform
-    listener that queries the TF tree.
+    Implement a two-phase proportional controller that drives a
+    differential-drive robot to a goal pose (position + final heading)
+    using odometry feedback.
 
 
     .. raw:: html
@@ -149,125 +251,84 @@ in the appropriate packages (``gazebo_demo``, ``tf2_demo``, or
 
     **Specification**
 
-    Create the following files in the ``tf2_demo`` package:
+    Create ``robot_control_demo/robot_control_demo/goto_goal.py``.
 
-    1. **``tf2_demo/sensor_frame_broadcaster.py``**:
+    1. **``GoToGoal(Node)``** class:
 
-       - A ``SensorFrameBroadcaster(Node)`` class that uses
-         ``StaticTransformBroadcaster`` to publish two static
-         transforms:
+       - ``__init__``: declares the following parameters with defaults:
 
-         - ``base_link`` -> ``lidar_link`` with translation
-           (0.15, 0.0, 0.1) and zero rotation.
-         - ``base_link`` -> ``camera_link`` with translation
-           (0.2, 0.0, 0.12) and zero rotation.
+         - ``goal_x`` (double, ``3.0``)
+         - ``goal_y`` (double, ``2.0``)
+         - ``goal_heading`` (double, ``1.57``) — desired final yaw in
+           radians
+         - ``k_rho`` (double, ``0.5``) — linear gain
+         - ``k_alpha`` (double, ``1.0``) — angular gain (drive phase)
+         - ``k_heading`` (double, ``1.5``) — angular gain (rotate phase)
+         - ``position_tolerance`` (double, ``0.05``) — meters
+         - ``heading_tolerance`` (double, ``0.05``) — radians
 
-       - Publish both transforms in ``__init__`` (static transforms
-         are published once).
+       - Creates a publisher on ``/cmd_vel``
+         (``geometry_msgs/msg/TwistStamped``).
+       - Subscribes to ``/odometry/filtered``
+         (``nav_msgs/msg/Odometry``).
+       - Creates a timer at 20 Hz for the control loop.
+       - Tracks the current phase: ``DRIVE`` or ``ROTATE``.
 
-    2. **``tf2_demo/frame_monitor.py``**:
+    2. **Odometry callback** ``_odom_callback(self, msg)``:
 
-       - A ``FrameMonitor(Node)`` class that uses ``Buffer`` and
-         ``TransformListener``.
-       - A 1 Hz timer callback that looks up the transform from
-         ``odom`` to ``lidar_link`` and logs the translation.
-       - Handle ``TransformException`` gracefully with a warning log.
+       - Extracts ``x``, ``y`` from ``msg.pose.pose.position``.
+       - Extracts yaw from the quaternion using
+         ``scipy.spatial.transform.Rotation``.
 
-    3. Register both nodes as entry points in ``setup.py``:
+    3. **Control loop** ``_control_loop(self)``:
 
-       .. code-block:: python
+       - **DRIVE phase**:
 
-          'sensor_broadcaster = scripts.run_sensor_broadcaster:main',
-          'frame_monitor = scripts.run_frame_monitor:main',
+         - Compute distance error:
+           :math:`\rho = \sqrt{(x_g - x)^2 + (y_g - y)^2}`
+         - Compute heading error to goal:
+           :math:`\alpha = \text{atan2}(y_g - y, x_g - x) - \psi`
+         - Normalize :math:`\alpha` to :math:`[-\pi, \pi]`.
+         - Set ``linear.x = k_rho * rho`` and
+           ``angular.z = k_alpha * alpha``.
+         - Clamp linear velocity to ``[0, 0.5]`` m/s and angular
+           velocity to ``[-1.0, 1.0]`` rad/s.
+         - If :math:`\rho <` ``position_tolerance``, switch to
+           ``ROTATE`` phase.
 
-    **Expected behavior**
+       - **ROTATE phase**:
 
-    With the simulation running (from Exercise 2):
+         - Compute heading error:
+           :math:`e_\psi = \psi_{\text{goal}} - \psi`
+         - Normalize to :math:`[-\pi, \pi]`.
+         - Set ``linear.x = 0.0`` and
+           ``angular.z = k_heading * e_psi``.
+         - Clamp angular velocity to ``[-1.0, 1.0]`` rad/s.
+         - If :math:`|e_\psi| <` ``heading_tolerance``, publish a
+           zero-velocity command, log ``"Goal reached!"``, and stop
+           the timer.
 
-    .. code-block:: console
-
-       # Terminal 1: simulation
-       ros2 launch gazebo_demo drive_robot.launch.py
-
-       # Terminal 2: static broadcaster
-       ros2 run tf2_demo sensor_broadcaster
-
-       # Terminal 3: frame monitor
-       ros2 run tf2_demo frame_monitor
-
-    The frame monitor should log the lidar position in the odom
-    frame at 1 Hz, updating as the robot moves.
-
-    **Verification commands**
-
-    .. code-block:: console
-
-       ros2 run tf2_tools view_frames       # PDF should show all frames
-       ros2 run tf2_ros tf2_echo odom lidar_link
-       ros2 topic echo /tf_static --once    # should show both static transforms
-
-
-.. dropdown:: Exercise 4 -- Obstacle Avoidance Node
-    :icon: gear
-    :class-container: sd-border-primary
-    :class-title: sd-font-weight-bold
-
-    **Goal**
-
-    Combine sensor reading with robot control to implement a simple
-    reactive obstacle avoidance behavior.
-
-
-    .. raw:: html
-
-       <hr>
-
-
-    **Specification**
-
-    Create the following in the ``robot_control_demo`` package:
-
-    1. **``robot_control_demo/obstacle_avoider.py``**:
-
-       - An ``ObstacleAvoider(Node)`` class with:
-
-         - A subscriber to ``/lidar`` (``sensor_msgs/msg/LaserScan``).
-         - A publisher to ``/cmd_vel`` (``geometry_msgs/msg/Twist``).
-         - A parameter ``min_distance`` (default ``0.5`` m).
-         - A parameter ``forward_speed`` (default ``0.3`` m/s).
-         - A parameter ``turn_speed`` (default ``0.5`` rad/s).
-         - In the lidar callback:
-
-           - Compute the minimum distance in the front 60-degree arc
-             of the scan.
-           - If ``min_front_distance > min_distance``: drive forward.
-           - Else: stop forward motion and turn in place.
-           - Publish the ``Twist`` command.
-
-    2. Register the entry point in ``setup.py``:
-
-       .. code-block:: python
-
-          'obstacle_avoider = scripts.run_obstacle_avoider:main',
+    4. Register the entry point in ``setup.py``.
 
     **Expected behavior**
 
-    The robot drives forward until it detects an obstacle within
-    ``min_distance``, then turns in place until the path is clear,
-    and resumes forward motion:
+    - The robot drives toward the goal position with a smooth curved
+      trajectory (simultaneous linear + angular motion).
+    - Once within ``position_tolerance`` of the goal, the robot stops
+      translating and rotates in place to the desired heading.
+    - Velocities decrease as the robot approaches the goal.
+
+    **Verification**
 
     .. code-block:: console
 
-       # Terminal 1: simulation with lidar bridge
-       ros2 launch gazebo_demo drive_robot.launch.py
+       # Terminal 1
+       ros2 launch rosbot_gazebo empty_world.launch.py
 
-       # Terminal 2: obstacle avoider
-       ros2 run robot_control_demo obstacle_avoider
+       # Terminal 2
+       cd ~/enpm605_ws && colcon build --symlink-install --packages-select robot_control_demo
+       source install/setup.bash
+       ros2 run robot_control_demo goto_goal --ros-args \
+           -p goal_x:=3.0 -p goal_y:=2.0 -p goal_heading:=1.57
 
-    **Verification commands**
-
-    .. code-block:: console
-
-       ros2 topic hz /cmd_vel         # should show continuous publishing
-       ros2 topic echo /cmd_vel       # should alternate between forward and turning
-       ros2 param get /obstacle_avoider min_distance   # should return 0.5
+       # Optional: visualize in RViz2 with Odometry display on /odometry/filtered

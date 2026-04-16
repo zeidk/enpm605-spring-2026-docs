@@ -17,21 +17,21 @@ what happens when nodes run at different speeds. All hands-on examples
 use the ``first_pkg`` Python package created during the lecture.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Explain the ROS 2 distributed architecture and core components.
-- Set up a ROS 2 workspace and shell environment.
-- Create and build Python packages with ``colcon``.
-- Write minimal and OOP-based ROS 2 nodes using ``rclpy``.
-- Use timers and callback functions to drive periodic behavior.
-- Implement publishers that send messages on a topic.
-- Implement subscribers that receive and process topic messages.
-- Configure Quality of Service (QoS) profiles.
-- Analyze publisher-subscriber communication under different timing
-  scenarios.
+   - Explain the ROS 2 distributed architecture and core components.
+   - Set up a ROS 2 workspace and shell environment.
+   - Create and build Python packages with ``colcon``.
+   - Write minimal and OOP-based ROS 2 nodes using ``rclpy``.
+   - Use timers and callback functions to drive periodic behavior.
+   - Implement publishers that send messages on a topic.
+   - Implement subscribers that receive and process topic messages.
+   - Configure Quality of Service (QoS) profiles.
+   - Analyze publisher-subscriber communication under different timing
+     scenarios.
 
 
 Contents

@@ -3,6 +3,11 @@ html {
   font-size: 16px;
 }
 
+/* Hide figure numbering (sphinx_proof forces numfig=True) */
+figcaption .caption-number {
+  display: none;
+}
+
 /* ------------------------------------------------------------
  * Compact Table Variant
  * Usage: .. list-table::
@@ -23,4 +28,61 @@ table.compact-table th p {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   line-height: 1.25;
+}
+
+/* ------------------------------------------------------------
+ * Admonition: Learning Objectives
+ * Usage: .. admonition:: Learning Objectives
+ *           :class: learning-objectives
+ * ------------------------------------------------------------ */
+.admonition.learning-objectives {
+  background-color: #fffbea;
+  border: 2px solid #e6b800;
+  border-radius: 0.35rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.admonition.learning-objectives > .admonition-title {
+  background-color: #fff3c4;
+  font-weight: 600;
+  font-size: 1.05em;
+  border-bottom: 1px solid #e6b800;
+}
+
+.admonition.learning-objectives {
+  --pst-icon-admonition-default: "\f19d";
+}
+
+.admonition.learning-objectives > .admonition-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #c49a00;
+}
+
+html[data-theme="dark"] .admonition.learning-objectives {
+  background-color: #3a3200;
+  border-color: #ffdf70;
+}
+
+html[data-theme="dark"] .admonition.learning-objectives > .admonition-title {
+  background-color: #4d4200;
+  border-bottom-color: #ffdf70;
+}
+
+html[data-theme="dark"] .admonition.learning-objectives > .admonition-title::before {
+  color: #ffe48f;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] .admonition.learning-objectives {
+    background-color: #3a3200;
+    border-color: #ffdf70;
+  }
+  html[data-theme="auto"] .admonition.learning-objectives > .admonition-title {
+    background-color: #4d4200;
+    border-bottom-color: #ffdf70;
+  }
+  html[data-theme="auto"] .admonition.learning-objectives > .admonition-title::before {
+    color: #ffe48f;
+  }
 }

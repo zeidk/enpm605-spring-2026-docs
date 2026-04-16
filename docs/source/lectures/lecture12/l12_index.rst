@@ -18,25 +18,25 @@ simulation (building on the Gazebo setup from L11), and send navigation
 goals programmatically using the ``BasicNavigator`` helper class.
 
 
-Learning Objectives
--------------------
+.. admonition:: Learning Objectives
+   :class: learning-objectives
 
-By the end of this lecture, you will be able to:
+   By the end of this lecture, you will be able to:
 
-- Explain the lifecycle node state machine and its primary and
-  transition states.
-- Implement a lifecycle node in Python with ``on_configure``,
-  ``on_activate``, ``on_deactivate``, ``on_cleanup``, and
-  ``on_shutdown`` callbacks.
-- Use ``ros2 lifecycle`` CLI tools to inspect and transition managed
-  nodes.
-- Describe the high-level Nav2 architecture and its core servers.
-- Configure Nav2 parameters for planners, controllers, costmaps, and
-  AMCL.
-- Launch Nav2 in simulation using ``nav2_bringup``.
-- Send navigation goals and waypoints programmatically using the
-  ``BasicNavigator`` API.
-- Generate and save maps using SLAM Toolbox.
+   - Explain the lifecycle node state machine and its primary and
+     transition states.
+   - Implement a lifecycle node in Python with ``on_configure``,
+     ``on_activate``, ``on_deactivate``, ``on_cleanup``, and
+     ``on_shutdown`` callbacks.
+   - Use ``ros2 lifecycle`` CLI tools to inspect and transition managed
+     nodes.
+   - Describe the high-level Nav2 architecture and its core servers.
+   - Configure Nav2 parameters for planners, controllers, costmaps, and
+     AMCL.
+   - Launch Nav2 in simulation using ``nav2_bringup``.
+   - Send navigation goals and waypoints programmatically using the
+     ``BasicNavigator`` API.
+   - Generate and save maps using SLAM Toolbox.
 
 
 Contents
