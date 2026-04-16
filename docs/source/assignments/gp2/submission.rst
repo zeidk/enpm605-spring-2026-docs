@@ -74,6 +74,6 @@ How to Submit
    ``gp2/group<N>_gp2_interfaces/`` and ``gp2/group<N>_gp2/``.
 
 3. The ZIP must not contain ``build/``, ``install/``, ``log/``,
-   ``__pycache__/``, or ``.pyc`` files.
+   ``__pycache__/``, ``.pyc``, or ``*/.ruff_cache/*`` files.
 
-4. Only one submission per group
+4. Only one submission per group.

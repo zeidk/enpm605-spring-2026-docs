@@ -11,7 +11,7 @@ Overview
    :class: compact-table
 
    * - **Due Date**
-     - April 23, 2026, 11:59 PM EST
+     - April 24, 2026, 11:59 PM EST
    * - **Total Points**
      - 50 points
    * - **Submission**
