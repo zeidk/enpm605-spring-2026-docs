@@ -25,12 +25,10 @@ This lecture introduces object-oriented programming (OOP) in Python, covering bo
    - Use ``@property`` to create getters and setters the Pythonic way.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l6_lecture
    l6_exercises

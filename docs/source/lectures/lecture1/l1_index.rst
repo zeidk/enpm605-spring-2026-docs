@@ -21,12 +21,11 @@ This lecture introduces the ENPM605 course, covering its structure, grading poli
    - Verify your development environment is correctly configured.
 
 
-Contents
---------
 
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l1_lecture
    l1_quiz

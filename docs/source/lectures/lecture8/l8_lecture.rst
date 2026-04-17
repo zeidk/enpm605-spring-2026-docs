@@ -107,10 +107,11 @@ connecting robotic software components.
 
          ROS equation diagram
 
-   **Resources**
+   .. admonition:: Resources
+      :class: resources
 
-   - `ros.org <https://ros.org/>`_
-   - `ROS 2 Jazzy Documentation <https://docs.ros.org/en/jazzy/>`_
+      - `ros.org <https://ros.org/>`_
+      - `ROS 2 Jazzy Documentation <https://docs.ros.org/en/jazzy/>`_
 
 
 .. dropdown:: Where Is ROS Used?
@@ -397,17 +398,18 @@ exactly one thing.
    - **Language-independent**: C, C++, Java, Python, Ada.
    - **Fine-grained QoS**: 22 configurable policies per topic.
 
-   **Resources**
+   .. admonition:: Resources
+      :class: resources
 
-   - `OMG DDS Portal <https://www.omg.org/omg-dds-portal/>`_
-   - `DDS Foundation <https://www.dds-foundation.org/>`_
-   - `eProsima Fast DDS documentation
-     <https://fast-dds.docs.eprosima.com/>`_
-   - `Eclipse Cyclone DDS documentation <https://cyclonedds.io/docs/>`_
-   - `RTI Connext DDS documentation
-     <https://community.rti.com/documentation>`_
-   - `ROS 2 Jazzy: DDS vendor guide
-     <https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Different-Middleware-Vendors.html>`_
+      - `OMG DDS Portal <https://www.omg.org/omg-dds-portal/>`_
+      - `DDS Foundation <https://www.dds-foundation.org/>`_
+      - `eProsima Fast DDS documentation
+        <https://fast-dds.docs.eprosima.com/>`_
+      - `Eclipse Cyclone DDS documentation <https://cyclonedds.io/docs/>`_
+      - `RTI Connext DDS documentation
+        <https://community.rti.com/documentation>`_
+      - `ROS 2 Jazzy: DDS vendor guide
+        <https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Different-Middleware-Vendors.html>`_
 
 
 .. dropdown:: QoS Overview

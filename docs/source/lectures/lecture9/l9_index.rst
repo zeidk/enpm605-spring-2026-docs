@@ -31,9 +31,6 @@ groups). All hands-on examples use two dedicated demo packages:
      execution.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:

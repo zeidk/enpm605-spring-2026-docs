@@ -1,6 +1,6 @@
-====================================================
+=======================================================
 L11: Coordinate Frames, TF2, and Mobile Robot Control
-====================================================
+=======================================================
 
 Overview
 --------
@@ -38,9 +38,6 @@ hands-on examples use the ``robot_control_demo``, ``frame_demo``, and
    - Drive a differential-drive robot to a goal pose using a proportional
      controller on ``cmd_vel``.
 
-
-Contents
---------
 
 .. toctree::
    :hidden:

@@ -34,12 +34,10 @@ use the ``first_pkg`` Python package created during the lecture.
      scenarios.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l8_lecture
    l8_exercises

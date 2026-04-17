@@ -64,14 +64,15 @@ the behavior of a node at runtime without modifying the code. Parameters
 allow nodes to store and retrieve data, such as tuning constants, file
 paths, or robot-specific settings.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Using Parameters in a Class (Python)
-  <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html>`_
-- `About Parameters
-  <https://docs.ros.org/en/jazzy/Concepts/Basic/About-Parameters.html>`_
-- `Using ros2 param
-  <https://docs.ros.org/en/jazzy/How-To-Guides/Using-ros2-param.html>`_
+   - `Using Parameters in a Class (Python)
+     <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html>`_
+   - `About Parameters
+     <https://docs.ros.org/en/jazzy/Concepts/Basic/About-Parameters.html>`_
+   - `Using ros2 param
+     <https://docs.ros.org/en/jazzy/How-To-Guides/Using-ros2-param.html>`_
 
 
 .. dropdown:: Characteristics
@@ -250,18 +251,19 @@ paths, or robot-specific settings.
         load        Load parameter file for a node
         set         Set parameter
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      # Start a node
-      ros2 run demo_nodes_py talker
+         # Start a node
+         ros2 run demo_nodes_py talker
 
-      # List all parameters
-      ros2 param list /talker
+         # List all parameters
+         ros2 param list /talker
 
-      # Get information about a parameter
-      ros2 param get /talker use_sim_time
+         # Get information about a parameter
+         ros2 param get /talker use_sim_time
 
 
 Declaring Parameters
@@ -452,11 +454,12 @@ behavior and to provide meaningful context.
           1.0 / self._fps, self._image_pub_callback
       )
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 run parameters_demo camera_demo
+         ros2 run parameters_demo camera_demo
 
    .. admonition:: Think About It
       :class: hint
@@ -675,12 +678,13 @@ There are several ways to set parameters:
                       success = True
           return SetParametersResult(successful=success)
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 launch parameters_demo demo2.launch.py
-      ros2 param set camera_demo camera_name 'front_cam'
+         ros2 launch parameters_demo demo2.launch.py
+         ros2 param set camera_demo camera_name 'front_cam'
 
 
 .. dropdown:: Updating Timer Frequency
@@ -752,12 +756,13 @@ Custom interface definitions allow you to create **domain-specific**
 message, service, and action types beyond what ``std_msgs``,
 ``geometry_msgs``, and ``sensor_msgs`` provide.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Creating Custom msg and srv Files
-  <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html>`_
-- `About ROS 2 Interfaces
-  <https://docs.ros.org/en/jazzy/Concepts/Basic/About-Interfaces.html>`_
+   - `Creating Custom msg and srv Files
+     <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html>`_
+   - `About ROS 2 Interfaces
+     <https://docs.ros.org/en/jazzy/Concepts/Basic/About-Interfaces.html>`_
 
 
 .. dropdown:: Verify the Interfaces
@@ -891,12 +896,13 @@ contains a type and a field name.
       msg.completion_percentage = 100.0
       msg.message = "Task completed successfully"
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 run message_demo task_status_demo
-      ros2 topic echo /task_status
+         ros2 run message_demo task_status_demo
+         ros2 topic echo /task_status
 
 
 Defining a Custom Service (.srv)
@@ -1009,12 +1015,13 @@ Unlike topics (continuous data streams), services are used for discrete,
 one-shot operations that return a result. The client can wait for the
 response synchronously or asynchronously.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Understanding Services
-  <https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html>`_
-- `Writing a Simple Service and Client (Python)
-  <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html>`_
+   - `Understanding Services
+     <https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html>`_
+   - `Writing a Simple Service and Client (Python)
+     <https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html>`_
 
 
 .. dropdown:: Service Communication Model
@@ -1440,12 +1447,13 @@ etc.
    All demos are **text-based** -- robot movement is simulated with log
    messages and ``time.sleep()``. No robot or simulator needed.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Understanding Actions
-  <https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html>`_
-- `Writing an Action Server and Client (Python)
-  <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html>`_
+   - `Understanding Actions
+     <https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Actions/Understanding-ROS2-Actions.html>`_
+   - `Writing an Action Server and Client (Python)
+     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html>`_
 
 
 .. dropdown:: Action Communication Model

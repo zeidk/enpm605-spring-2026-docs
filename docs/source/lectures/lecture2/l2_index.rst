@@ -20,12 +20,10 @@ This lecture covers the building blocks of Python programming: organizing code i
    - Write conditional logic with ``if``/``elif``/``else`` statements.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l2_lecture
    l2_exercises

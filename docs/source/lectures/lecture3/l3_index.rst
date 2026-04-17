@@ -22,12 +22,10 @@ This lecture covers Python's essential data structures and control flow mechanis
    - Use sets for unique collection management and mathematical set operations.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l3_lecture
    l3_exercises

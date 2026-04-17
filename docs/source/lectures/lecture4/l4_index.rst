@@ -22,12 +22,10 @@ This lecture introduces Python functions as the primary tool for organizing code
    - Implement recursive functions with proper base cases and recursive cases.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l4_lecture
    l4_exercises

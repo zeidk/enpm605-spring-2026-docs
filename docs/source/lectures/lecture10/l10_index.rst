@@ -39,8 +39,6 @@ the ``lecture10_demo`` metapackage.
      action, parameter) for a given robotics task.
 
 
-Contents
---------
 
 .. toctree::
    :hidden:

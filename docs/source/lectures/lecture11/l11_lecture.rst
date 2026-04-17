@@ -5,7 +5,7 @@ Lecture
 .. raw:: latex
 
    \setcounter{figure}{0}
-   
+
 Prerequisites
 ====================================================
 
@@ -44,12 +44,13 @@ command depends on it.
    ROS 2 messages represent pose as ``geometry_msgs/msg/Pose`` which
    stores position as a ``Point`` and orientation as a ``Quaternion``.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Robotics, Vision and Control (Corke)
-  <https://link.springer.com/book/10.1007/978-3-031-07262-8>`_
-- `Modern Robotics (Lynch & Park)
-  <http://hades.mech.northwestern.edu/index.php/Modern_Robotics>`_
+   - `Robotics, Vision and Control (Corke)
+     <https://link.springer.com/book/10.1007/978-3-031-07262-8>`_
+   - `Modern Robotics (Lynch & Park)
+     <http://hades.mech.northwestern.edu/index.php/Modern_Robotics>`_
 
 
 Position
@@ -226,6 +227,7 @@ Building intuition through examples:
 .. list-table::
    :header-rows: 1
    :widths: 30 35 35
+   :class: compact-table
 
    * - Rotation
      - Quaternion :math:`(w,x,y,z)`
@@ -317,6 +319,7 @@ reference** for the rotation.
 .. list-table::
    :header-rows: 1
    :widths: 20 40 40
+   :class: compact-table
 
    * - Frame
      - Description
@@ -346,76 +349,77 @@ reference** for the rotation.
    pilot's roll, pitch, and yaw commands rotate about the aircraft's own
    axes, not the world axes.
 
-**Exercise: Quaternion from Axis-Angle**
+.. admonition:: Exercise: Quaternion from Axis-Angle
+   :class: example
 
-Calculate the rotation, expressed as a quaternion, resulting from a
-rotation of :math:`\alpha = \frac{\pi}{2}` radians about the
-:math:`x`-axis.
+   Calculate the rotation, expressed as a quaternion, resulting from a
+   rotation of :math:`\alpha = \frac{\pi}{2}` radians about the
+   :math:`x`-axis.
 
-.. only:: html
+   .. only:: html
 
-   .. figure:: /_static/images/L11/exercise_light.png
-      :alt: A rotation of pi/2 radians about the x-axis
-      :width: 50%
-      :align: center
-      :class: only-light
+      .. figure:: /_static/images/L11/exercise_light.png
+         :alt: A rotation of pi/2 radians about the x-axis
+         :width: 50%
+         :align: center
+         :class: only-light
 
-      A rotation of :math:`\alpha = \frac{\pi}{2}` radians about the
-      :math:`x`-axis.
+         A rotation of :math:`\alpha = \frac{\pi}{2}` radians about the
+         :math:`x`-axis.
 
-   .. figure:: /_static/images/L11/exercise_dark.png
-      :alt: A rotation of pi/2 radians about the x-axis
-      :width: 50%
-      :align: center
-      :class: only-dark
+      .. figure:: /_static/images/L11/exercise_dark.png
+         :alt: A rotation of pi/2 radians about the x-axis
+         :width: 50%
+         :align: center
+         :class: only-dark
 
-      A rotation of :math:`\alpha = \frac{\pi}{2}` radians about the
-      :math:`x`-axis.
+         A rotation of :math:`\alpha = \frac{\pi}{2}` radians about the
+         :math:`x`-axis.
 
-**Step 1. Identify the axis and angle**
+   1. **Identify the axis and angle**
 
-The rotation is about the :math:`x`-axis, so
-:math:`\mathbf{u} = (1, 0, 0)` and :math:`\alpha = \frac{\pi}{2}`.
+      The rotation is about the :math:`x`-axis, so
+      :math:`\mathbf{u} = (1, 0, 0)` and :math:`\alpha = \frac{\pi}{2}`.
 
-**Step 2. Verify the axis is a unit vector**
+   2. **Verify the axis is a unit vector**
 
-The axis-angle formula requires :math:`\|\mathbf{u}\| = 1`:
+      The axis-angle formula requires :math:`\|\mathbf{u}\| = 1`:
 
-.. math::
+      .. math::
 
-   \|\mathbf{u}\| = \sqrt{u_x^2 + u_y^2 + u_z^2} = \sqrt{1^2 + 0^2 + 0^2} = 1 \quad \checkmark
+         \|\mathbf{u}\| = \sqrt{u_x^2 + u_y^2 + u_z^2} = \sqrt{1^2 + 0^2 + 0^2} = 1 \quad \checkmark
 
-**Step 3. Apply the axis-angle formula**
+   3. **Apply the axis-angle formula**
 
-.. math::
+      .. math::
 
-   q = \cos\!\left(\frac{\alpha}{2}\right)
-     + \sin\!\left(\frac{\alpha}{2}\right)(u_x\, i + u_y\, j + u_z\, k)
-     = \cos\!\left(\frac{\pi}{4}\right)
-     + \sin\!\left(\frac{\pi}{4}\right)(1 \cdot i + 0 \cdot j + 0 \cdot k)
+         q = \cos\!\left(\frac{\alpha}{2}\right)
+           + \sin\!\left(\frac{\alpha}{2}\right)(u_x\, i + u_y\, j + u_z\, k)
+           = \cos\!\left(\frac{\pi}{4}\right)
+           + \sin\!\left(\frac{\pi}{4}\right)(1 \cdot i + 0 \cdot j + 0 \cdot k)
 
-**Step 4. Compute each component**
+   4. **Compute each component**
 
-- :math:`w = \cos\!\left(\frac{\alpha}{2}\right) = \cos\!\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} \approx 0.707`
-- :math:`x = \sin\!\left(\frac{\alpha}{2}\right) \times u_x = \sin\!\left(\frac{\pi}{4}\right) \times 1 = \frac{\sqrt{2}}{2} \approx 0.707`
-- :math:`y = \sin\!\left(\frac{\alpha}{2}\right) \times u_y = \sin\!\left(\frac{\pi}{4}\right) \times 0 = 0.0`
-- :math:`z = \sin\!\left(\frac{\alpha}{2}\right) \times u_z = \sin\!\left(\frac{\pi}{4}\right) \times 0 = 0.0`
+      - :math:`w = \cos\!\left(\frac{\alpha}{2}\right) = \cos\!\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} \approx 0.707`
+      - :math:`x = \sin\!\left(\frac{\alpha}{2}\right) \times u_x = \sin\!\left(\frac{\pi}{4}\right) \times 1 = \frac{\sqrt{2}}{2} \approx 0.707`
+      - :math:`y = \sin\!\left(\frac{\alpha}{2}\right) \times u_y = \sin\!\left(\frac{\pi}{4}\right) \times 0 = 0.0`
+      - :math:`z = \sin\!\left(\frac{\alpha}{2}\right) \times u_z = \sin\!\left(\frac{\pi}{4}\right) \times 0 = 0.0`
 
-**Step 5. Resulting quaternion**
+   5. **Resulting quaternion**
 
-.. math::
+      .. math::
 
-   q = (w, x, y, z) = \left(\frac{\sqrt{2}}{2},\, \frac{\sqrt{2}}{2},\, 0,\, 0\right)
-     \approx (0.707,\, 0.707,\, 0.0,\, 0.0)
+         q = (w, x, y, z) = \left(\frac{\sqrt{2}}{2},\, \frac{\sqrt{2}}{2},\, 0,\, 0\right)
+           \approx (0.707,\, 0.707,\, 0.0,\, 0.0)
 
-**Verify**: Does this match the table from earlier? A :math:`90°`
-rotation about :math:`x` should have :math:`w \approx 0.707` and only
-the :math:`x` component non-zero.
+      **Verify**: Does this match the table from earlier? A :math:`90°`
+      rotation about :math:`x` should have :math:`w \approx 0.707` and only
+      the :math:`x` component non-zero.
 
-.. note::
+   .. note::
 
-   Remember the double cover: :math:`(-0.707, -0.707, 0, 0)` represents
-   the *same* rotation.
+      Remember the double cover: :math:`(-0.707, -0.707, 0, 0)` represents
+      the *same* rotation.
 
 
 Mobile Robot Control
@@ -540,6 +544,7 @@ state.
 .. list-table::
    :header-rows: 1
    :widths: 20 30 50
+   :class: compact-table
 
    * - Display
      - Topic
@@ -673,6 +678,7 @@ In ROS 2 Jazzy the expected message type is
 .. list-table::
    :header-rows: 1
    :widths: 25 25 50
+   :class: compact-table
 
    * - ``linear.x``
      - ``angular.z``
@@ -796,20 +802,21 @@ robot's estimated position.
 
       ros2 topic echo odometry/filtered --once
 
-**Demonstration**
+.. admonition:: Demonstration
+   :class: demonstration
 
-- Review ``random_mover_demo.py`` from ``robot_control_demo``.
-- Start the environment:
+   - Review ``random_mover_demo.py`` from ``robot_control_demo``.
+   - Start the environment:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo empty_world.launch.py
+        ros2 launch rosbot_gazebo empty_world.launch.py
 
-- Randomly move the robot:
+   - Randomly move the robot:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run robot_control_demo random_mover
+        ros2 run robot_control_demo random_mover
 
 
 Proportional Controller
@@ -836,6 +843,7 @@ sophisticated designs.
 .. list-table::
    :header-rows: 1
    :widths: 30 35 35
+   :class: compact-table
 
    * - Error
      - Meaning
@@ -847,24 +855,8 @@ sophisticated designs.
      - How misaligned is the robot?
      - Angular velocity :math:`\omega`
 
-**Mobile Robot Application**
-
-Position error:
-
-.. math::
-
-   e_x &= x_g - x_r \\
-   e_y &= y_g - y_r \\
-   e_\theta &= \theta_g - \theta_r
-
-where :math:`\theta_g = \text{atan2}(e_y, e_x)`.
-
-Proportional control law:
-
-.. math::
-
-   v &= K_{pv} \cdot \sqrt{e_x^2 + e_y^2} \\
-   \omega &= K_{p\omega} \cdot e_\theta
+Mobile Robot Application
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. only:: html
 
@@ -880,64 +872,98 @@ Proportional control law:
       :align: center
       :class: only-dark
 
+.. card:: Position Error
+   :class-card: sd-border-info
+
+   .. math::
+
+      \begin{align*}
+      e_x &= x_g - x_r \\
+      e_y &= y_g - y_r
+      \end{align*}
+
+.. card:: Orientation Error
+   :class-card: sd-border-info
+
+   .. math::
+
+      e_\theta = \theta_g - \theta_r
+
+   where :math:`\theta_g = \text{atan2}(e_y, e_x)`.
+
+.. card:: Proportional Control Law
+   :class-card: sd-border-info
+
+   .. math::
+
+      v = K_{pv} \cdot \sqrt{e_x^2 + e_y^2}
+
+   .. math::
+
+      \omega = K_{p\omega} \cdot e_\theta
+
+
+
 .. note::
 
    As the robot approaches the goal, errors decrease, velocities
    decrease, and the robot stops at the goal.
 
-**Example: Reaching a Goal 5 m Away**
+.. admonition:: Example: Reaching a Goal 5 m Away
+   :class: example
 
-Reach the goal, which is 5 m from the current position of the robot
-(straight line).
+   Reach the goal, which is 5 m from the current position of the robot
+   (straight line).
 
-.. only:: html
+   .. only:: html
 
-   .. figure:: /_static/images/L11/drive_light.png
-      :alt: Robot must reach a goal 5 m ahead
-      :width: 50%
-      :align: center
-      :class: only-light
+      .. figure:: /_static/images/L11/drive_light.png
+         :alt: Robot must reach a goal 5 m ahead
+         :width: 50%
+         :align: center
+         :class: only-light
 
-   .. figure:: /_static/images/L11/drive_dark.png
-      :alt: Robot must reach a goal 5 m ahead
-      :width: 50%
-      :align: center
-      :class: only-dark
+      .. figure:: /_static/images/L11/drive_dark.png
+         :alt: Robot must reach a goal 5 m ahead
+         :width: 50%
+         :align: center
+         :class: only-dark
 
-We will assume a value for the proportional gain, e.g.,
-:math:`K_{pv}=0.5\,\text{s}^{-1}`. The units ensure that when
-multiplied by distance in meters, we get velocity in m/s.
+   We will assume a value for the proportional gain, e.g.,
+   :math:`K_{pv}=0.5\,\text{s}^{-1}`. The units ensure that when
+   multiplied by distance in meters, we get velocity in m/s.
 
-.. only:: html
 
-   .. figure:: /_static/images/L11/proportional_example_light.png
-      :alt: Proportional controller step-by-step example
-      :width: 80%
-      :align: center
-      :class: only-light
 
-   .. figure:: /_static/images/L11/proportional_example_dark.png
-      :alt: Proportional controller step-by-step example
-      :width: 80%
-      :align: center
-      :class: only-dark
+.. admonition:: Step-by-Step Example: Reaching a Goal 5 m Away
+   :class: example
 
-**Step-by-Step Example: Reaching a Goal 5 m Away**
+   Assume :math:`K_{pv} = 0.5\,\text{s}^{-1}`.
 
-Assume :math:`K_{pv} = 0.5\,\text{s}^{-1}`.
+   .. only:: html
 
-- **At** :math:`t_0`: error :math:`= 5` m :math:`\rightarrow`
-  :math:`u(t) = 0.5 \times 5 = 2.5` m/s :math:`\rightarrow` distance
-  traveled :math:`\approx 2.4` m
-- **At** :math:`t_1`: error :math:`= 2.6` m :math:`\rightarrow`
-  :math:`u(t) = 0.5 \times 2.6 = 1.3` m/s :math:`\rightarrow` distance
-  traveled :math:`\approx 3.6` m
-- **At** :math:`t_2`: error :math:`= 1.4` m :math:`\rightarrow`
-  :math:`u(t) = 0.5 \times 1.4 = 0.7` m/s :math:`\rightarrow` distance
-  traveled :math:`\approx 4.3` m
-- ... continues until the error falls below the tolerance.
+      .. figure:: /_static/images/L11/proportional_example_light.png
+         :alt: Proportional controller step-by-step example
+         :width: 80%
+         :align: center
+         :class: only-light
 
-.. note::
+      .. figure:: /_static/images/L11/proportional_example_dark.png
+         :alt: Proportional controller step-by-step example
+         :width: 80%
+         :align: center
+         :class: only-dark
+
+   - **At** :math:`t_0`: error :math:`= 5` m :math:`\rightarrow`
+     :math:`u(t) = 0.5 \times 5 = 2.5` m/s :math:`\rightarrow` distance
+     traveled :math:`\approx 2.4` m
+   - **At** :math:`t_1`: error :math:`= 2.6` m :math:`\rightarrow`
+     :math:`u(t) = 0.5 \times 2.6 = 1.3` m/s :math:`\rightarrow` distance
+     traveled :math:`\approx 3.6` m
+   - **At** :math:`t_2`: error :math:`= 1.4` m :math:`\rightarrow`
+     :math:`u(t) = 0.5 \times 1.4 = 0.7` m/s :math:`\rightarrow` distance
+     traveled :math:`\approx 4.3` m
+   - ... continues until the error falls below the tolerance.
 
    As the robot approaches the goal, errors decrease, velocities
    decrease, and the robot stops at the goal. This is the essence of
@@ -980,23 +1006,24 @@ orientation (heading angle).
    heading toward the goal while moving forward, resulting in a smooth
    curved trajectory.
 
-**Demonstration**
+.. admonition:: Demonstration
+   :class: demonstration
 
-- Review ``p_controller_demo.py`` from ``robot_control_demo``.
-- Start the environment:
+   - Review ``p_controller_demo.py`` from ``robot_control_demo``.
+   - Start the environment:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo empty_world.launch.py
+        ros2 launch rosbot_gazebo empty_world.launch.py
 
-- Reach a goal:
+   - Reach a goal:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch robot_control_demo p_controller.launch.py
+        ros2 launch robot_control_demo p_controller.launch.py
 
-- Observe in RViz2: add an **Odometry** display and watch the robot's
-  path.
+   - Observe in RViz2: add an **Odometry** display and watch the robot's
+     path.
 
 .. tip::
 
@@ -1013,14 +1040,15 @@ orthogonal axes used to express positions and orientations. In robotics,
 multiple frames are needed simultaneously: the world has its own frame,
 the robot body has its own frame, and each sensor has its own frame.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `About TF2
-  <https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Tf2.html>`_
-- `Introduction to TF2
-  <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html>`_
-- `REP 105: Coordinate Frames for Mobile Platforms
-  <https://wiki.ros.org/REP/0000?action=show&redirect=REP+105>`_
+   - `About TF2
+     <https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Tf2.html>`_
+   - `Introduction to TF2
+     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Introduction-To-Tf2.html>`_
+   - `REP 105: Coordinate Frames for Mobile Platforms
+     <https://wiki.ros.org/REP/0000?action=show&redirect=REP+105>`_
 
 
 Why Multiple Frames
@@ -1099,6 +1127,7 @@ Standard Mobile Robot Frames (REP 105)
 .. list-table::
    :header-rows: 1
    :widths: 20 80
+   :class: compact-table
 
    * - Frame
      - Description
@@ -1146,61 +1175,97 @@ In ROS 2, a transform between two frames is represented by the
 
    ros2 interface show geometry_msgs/msg/TransformStamped
 
-**Frames and Transforms Are Inseparable**
+.. code-block:: text
 
-A coordinate frame in isolation has no spatial meaning: knowing that a
-frame exists tells you nothing about where it is or how it is oriented
-unless you also know its transform relative to some other frame.
+   # This expresses a transform from coordinate frame header.frame_id
+   # to the coordinate frame child_frame_id at the time of header.stamp
+   #
+   # This message is mostly used by the tf2 package.
+   # See its documentation for more information.
+   #
+   # The child_frame_id is necessary in addition to the frame_id
+   # in the Header to communicate the full reference for the transform
+   # in a self contained message.
 
-The only exception is the **root frame**:
+   # The frame id in the header is used as the reference frame of this transform.
+   std_msgs/Header header
+       builtin_interfaces/Time stamp
+           int32 sec
+           uint32 nanosec
+       string frame_id
 
-- Every transform tree has exactly one root, typically ``world``.
-- The root frame is defined by convention as the fixed global reference;
-  it has no parent and therefore requires no transform.
-- Every other frame in the system must have a transform connecting it to
-  its parent, and through that parent, ultimately to ``world``.
+   # The frame id of the child frame to which this transform points.
+   string child_frame_id
 
-**Transforms Are Directional**
+   # Translation and rotation in 3-dimensions of child_frame_id from header.frame_id.
+   Transform transform
+       Vector3 translation
+           float64 x
+           float64 y
+           float64 z
+       Quaternion rotation
+           float64 x 0
+           float64 y 0
+           float64 z 0
+           float64 w 1
 
-A transform :math:`T^{A}_{B}` expresses frame :math:`B` *relative to*
-frame :math:`A`. Direction matters.
+.. card:: Frames and Transforms Are Inseparable
+   :class-card: sd-border-secondary
 
-- :math:`T^{A}_{B}` tells you where :math:`B` is when you are standing
-  in :math:`A`.
-- :math:`T^{B}_{A}` is the **inverse transform**: it tells you where
-  :math:`A` is when you are standing in :math:`B`.
-- Inverting a transform reverses both the rotation and the translation:
-  you cannot simply negate the translation vector.
+   A coordinate frame in isolation has no spatial meaning: knowing that a
+   frame exists tells you nothing about where it is or how it is oriented
+   unless you also know its transform relative to some other frame.
 
+   The only exception is the **root frame**:
 
-**Transforming a Point**
+   - Every transform tree has exactly one root, typically ``world``.
+   - The root frame is defined by convention as the fixed global reference;
+     it has no parent and therefore requires no transform.
+   - Every other frame in the system must have a transform connecting it to
+     its parent, and through that parent, ultimately to ``world``.
 
-Given a point :math:`\mathbf{p}_B` expressed in frame :math:`B`, the
-same point expressed in frame :math:`A` is:
+.. card:: Transforms Are Directional
+   :class-card: sd-border-secondary
 
-.. math::
+   A transform :math:`T^{A}_{B}` expresses frame :math:`B` *relative to*
+   frame :math:`A`. Direction matters.
 
-   \mathbf{p}_A = R^{A}_{B}\, \mathbf{p}_B + \mathbf{t}^{A}_{B}
+   - :math:`T^{A}_{B}` tells you where :math:`B` is when you are standing
+     in :math:`A`.
+   - :math:`T^{B}_{A}` is the **inverse transform**: it tells you where
+     :math:`A` is when you are standing in :math:`B`.
+   - Inverting a transform reverses both the rotation and the translation:
+     you cannot simply negate the translation vector.
 
-where :math:`R^{A}_{B}` is the :math:`3 \times 3` rotation matrix that
-rotates vectors from frame :math:`B` into frame :math:`A`, and
-:math:`\mathbf{t}^{A}_{B}` is the translation vector of the origin of
-:math:`B` expressed in :math:`A`.
+.. card:: Transforming a Point
+   :class-card: sd-border-secondary
 
+   Given a point :math:`\mathbf{p}_B` expressed in frame :math:`B`, the
+   same point expressed in frame :math:`A` is:
 
-**Chaining Transforms**
+   .. math::
 
-Transforms can be **chained**: if you know :math:`T^{A}_{B}` and
-:math:`T^{B}_{C}`, you can compute :math:`T^{A}_{C}` directly using
-:math:`4 \times 4` homogeneous transformation matrices:
+      \mathbf{p}_A = R^{A}_{B}\, \mathbf{p}_B + \mathbf{t}^{A}_{B}
 
-.. math::
+   where :math:`R^{A}_{B}` is the :math:`3 \times 3` rotation matrix that
+   rotates vectors from frame :math:`B` into frame :math:`A`, and
+   :math:`\mathbf{t}^{A}_{B}` is the translation vector of the origin of
+   :math:`B` expressed in :math:`A`.
 
-   T^{A}_{C} = T^{A}_{B} \times T^{B}_{C}
+.. card:: Chaining Transforms
+   :class-card: sd-border-secondary
 
-The inner indices cancel, which is a useful consistency check: :math:`B`
-appears as a subscript on the left and a superscript on the right, and
-drops out of the result.
+   Transforms can be **chained**: if you know :math:`T^{A}_{B}` and
+   :math:`T^{B}_{C}`, you can compute :math:`T^{A}_{C}` directly using
+   :math:`4 \times 4` homogeneous transformation matrices:
+
+   .. math::
+
+      T^{A}_{C} = T^{A}_{B} \times T^{B}_{C}
+
+   The inner indices cancel, which is a useful consistency check: :math:`B`
+   appears as a subscript on the left and a superscript on the right, and
+   drops out of the result.
 
 
 TF2
@@ -1293,15 +1358,16 @@ from.
 
 Provides the TF2 tree in a graphical user interface.
 
-.. rubric:: Demonstration
+.. admonition:: Demonstration
+   :class: demonstration
 
-- Start empty environment:
+   - Start empty environment:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo empty_world.launch.py
+        ros2 launch rosbot_gazebo empty_world.launch.py
 
-- Try each CLI tool.
+   - Try each CLI tool.
 
 
 Static Transforms
@@ -1312,10 +1378,11 @@ between two frames that does not change over time, for example the
 offset from ``base_link`` to a rigidly mounted sensor such as a LiDAR
 or camera.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Writing a TF2 Static Broadcaster (Python)
-  <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html>`_
+   - `Writing a TF2 Static Broadcaster (Python)
+     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Static-Broadcaster-Py.html>`_
 
 **CLI: static_transform_publisher**
 
@@ -1326,34 +1393,35 @@ from the command line.
 
    ros2 run tf2_ros static_transform_publisher --help
 
-.. rubric:: Demonstration
+.. admonition:: Demonstration
+   :class: demonstration
 
-Publish a transform from ``body_link`` to ``lidar_link``:
+   Publish a transform from ``body_link`` to ``lidar_link``:
 
-- T1:
+   - T1:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo empty_world.launch.py
+        ros2 launch rosbot_gazebo empty_world.launch.py
 
-- T2:
+   - T2:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run tf2_ros static_transform_publisher --x 0.2 --y 0.0 --z 0.15 \
-       --frame-id body_link --child-frame-id lidar_link
+        ros2 run tf2_ros static_transform_publisher --x 0.2 --y 0.0 --z 0.15 \
+          --frame-id body_link --child-frame-id lidar_link
 
-- T3:
+   - T3:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run tf2_ros tf2_echo body_link lidar_link
+        ros2 run tf2_ros tf2_echo body_link lidar_link
 
-- T4:
+   - T4:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run rqt_tf_tree rqt_tf_tree --force-discover
+        ros2 run rqt_tf_tree rqt_tf_tree --force-discover
 
 .. note::
 
@@ -1383,140 +1451,149 @@ Publish a transform from ``body_link`` to ``lidar_link``:
 
      ros2 launch rosbot_gazebo aruco_box_camera_world.launch.py
 
-**Step 1 --- Subscribe to the camera and prepare the broadcaster.**
+.. card:: Step 1 --- Subscribe to the camera and prepare the broadcaster
+   :class-card: sd-border-secondary
 
-We need image pixels, intrinsics, and a latched static TF publisher.
+   We need image pixels, intrinsics, and a latched static TF publisher.
 
-.. code-block:: python
+   .. code-block:: python
 
-   # Image pixels
-   self._image_sub = self.create_subscription(
-       Image, self._camera_image_topic,
-       self._image_callback, qos_profile_sensor_data,
-   )
-   # Intrinsics
-   self._info_sub = self.create_subscription(
-       CameraInfo, self._camera_info_topic,
-       self._camera_info_callback, qos_profile_sensor_data,
-   )
-   # Broadcaster
-   self._static_tf_broadcaster = StaticTransformBroadcaster(self)
+      # Image pixels
+      self._image_sub = self.create_subscription(
+          Image, self._camera_image_topic,
+          self._image_callback, qos_profile_sensor_data,
+      )
+      # Intrinsics
+      self._info_sub = self.create_subscription(
+          CameraInfo, self._camera_info_topic,
+          self._camera_info_callback, qos_profile_sensor_data,
+      )
+      # Broadcaster
+      self._static_tf_broadcaster = StaticTransformBroadcaster(self)
 
-**Step 2 --- Cache the intrinsics once.**
+.. card:: Step 2 --- Cache the intrinsics once
+   :class-card: sd-border-secondary
 
-Distortion and :math:`K` never change, so read them a single time and
-drop the subscription.
+   Distortion and :math:`K` never change, so read them a single time and
+   drop the subscription.
 
-.. code-block:: python
+   .. code-block:: python
 
-   def _camera_info_callback(self, msg: CameraInfo):
-       self._camera_matrix = np.array(msg.k, dtype=np.float64).reshape(3, 3)
-       self._dist_coeffs  = np.array(msg.d, dtype=np.float64)
-       self.destroy_subscription(self._info_sub)
+      def _camera_info_callback(self, msg: CameraInfo):
+          self._camera_matrix = np.array(msg.k, dtype=np.float64).reshape(3, 3)
+          self._dist_coeffs  = np.array(msg.d, dtype=np.float64)
+          self.destroy_subscription(self._info_sub)
 
-**Step 3 --- Describe the marker in its own frame.**
+.. card:: Step 3 --- Describe the marker in its own frame
+   :class-card: sd-border-secondary
 
-Four corners of a square of side ``marker_size``, centered at the
-origin, lying in the :math:`z=0` plane. These are the *object points*
-PnP will try to match against the detected pixels.
+   Four corners of a square of side ``marker_size``, centered at the
+   origin, lying in the :math:`z=0` plane. These are the *object points*
+   PnP will try to match against the detected pixels.
 
-.. code-block:: python
+   .. code-block:: python
 
-   half = self._marker_size / 2.0
-   self._marker_object_points = np.array(
-       [[-half,  half, 0.0], [ half,  half, 0.0],
-        [ half, -half, 0.0], [-half, -half, 0.0]],
-       dtype=np.float32,
-   )
+      half = self._marker_size / 2.0
+      self._marker_object_points = np.array(
+          [[-half,  half, 0.0], [ half,  half, 0.0],
+           [ half, -half, 0.0], [-half, -half, 0.0]],
+          dtype=np.float32,
+      )
 
-**Step 4 --- Detect the marker in the image.**
+.. card:: Step 4 --- Detect the marker in the image
+   :class-card: sd-border-secondary
 
-OpenCV's ``ArucoDetector`` returns the four pixel corners of every
-marker it finds.
+   OpenCV's ``ArucoDetector`` returns the four pixel corners of every
+   marker it finds.
 
-.. code-block:: python
+   .. code-block:: python
 
-   corners, ids, _ = self._detector.detectMarkers(cv_image)
-   if ids is None or len(ids) == 0:
-       return
-   image_points = corners[0].reshape(-1, 2).astype(np.float32)
+      corners, ids, _ = self._detector.detectMarkers(cv_image)
+      if ids is None or len(ids) == 0:
+          return
+      image_points = corners[0].reshape(-1, 2).astype(np.float32)
 
-**Step 5 --- Solve PnP: 2D corners + 3D model -> pose.**
+.. card:: Step 5 --- Solve PnP: 2D corners + 3D model -> pose
+   :class-card: sd-border-secondary
 
-Given the known square (object points), the detected pixels (image
-points), and the intrinsics, ``solvePnP`` returns ``rvec`` (rotation as
-an axis-angle vector) and ``tvec`` (translation), i.e. the pose of the
-marker in the *camera optical frame*.
+   Given the known square (object points), the detected pixels (image
+   points), and the intrinsics, ``solvePnP`` returns ``rvec`` (rotation as
+   an axis-angle vector) and ``tvec`` (translation), i.e. the pose of the
+   marker in the *camera optical frame*.
 
-.. code-block:: python
+   .. code-block:: python
 
-   success, rvec, tvec = cv2.solvePnP(
-       self._marker_object_points, image_points,
-       self._camera_matrix, self._dist_coeffs,
-       flags=cv2.SOLVEPNP_IPPE_SQUARE,
-   )
+      success, rvec, tvec = cv2.solvePnP(
+          self._marker_object_points, image_points,
+          self._camera_matrix, self._dist_coeffs,
+          flags=cv2.SOLVEPNP_IPPE_SQUARE,
+      )
 
-**Step 6 --- Convert rvec to a quaternion.**
+.. card:: Step 6 --- Convert rvec to a quaternion
+   :class-card: sd-border-secondary
 
-TF expects a quaternion, not an axis-angle vector.
+   TF expects a quaternion, not an axis-angle vector.
 
-.. code-block:: python
+   .. code-block:: python
 
-   qx, qy, qz, qw = Rotation.from_rotvec(rvec.flatten()).as_quat()
+      qx, qy, qz, qw = Rotation.from_rotvec(rvec.flatten()).as_quat()
 
-**Step 7 --- Publish once as a static TF.**
+.. card:: Step 7 --- Publish once as a static TF
+   :class-card: sd-border-secondary
 
-Parent is the camera optical frame (taken from the image header); child
-is ``static_aruco_box``. Translation is ``tvec``, rotation is the
-quaternion from ``rvec``.
+   Parent is the camera optical frame (taken from the image header); child
+   is ``static_aruco_box``. Translation is ``tvec``, rotation is the
+   quaternion from ``rvec``.
 
-.. code-block:: python
+   .. code-block:: python
 
-   t = TransformStamped()
-   t.header.stamp     = self.get_clock().now().to_msg()
-   t.header.frame_id  = image_header.frame_id  # camera optical frame
-   t.child_frame_id   = self._child_frame_id   # "static_aruco_box"
-   t.transform.translation.x = float(tvec[0])
-   t.transform.translation.y = float(tvec[1])
-   t.transform.translation.z = float(tvec[2])
-   t.transform.rotation.x = float(qx)
-   t.transform.rotation.y = float(qy)
-   t.transform.rotation.z = float(qz)
-   t.transform.rotation.w = float(qw)
-   self._static_tf_broadcaster.sendTransform(t)
+      t = TransformStamped()
+      t.header.stamp     = self.get_clock().now().to_msg()
+      t.header.frame_id  = image_header.frame_id  # camera optical frame
+      t.child_frame_id   = self._child_frame_id   # "static_aruco_box"
+      t.transform.translation.x = float(tvec[0])
+      t.transform.translation.y = float(tvec[1])
+      t.transform.translation.z = float(tvec[2])
+      t.transform.rotation.x = float(qx)
+      t.transform.rotation.y = float(qy)
+      t.transform.rotation.z = float(qz)
+      t.transform.rotation.w = float(qw)
+      self._static_tf_broadcaster.sendTransform(t)
 
-**Step 8 --- One-shot behavior.**
+.. card:: Step 8 --- One-shot behavior
+   :class-card: sd-border-secondary
 
-After a successful publish, flip a flag and drop the image subscription
-so no more frames are processed --- the static TF stays latched on
-``/tf_static``.
+   After a successful publish, flip a flag and drop the image subscription
+   so no more frames are processed --- the static TF stays latched on
+   ``/tf_static``.
 
-.. code-block:: python
+   .. code-block:: python
 
-   self._tf_published = True
-   self.destroy_subscription(self._image_sub)
+      self._tf_published = True
+      self.destroy_subscription(self._image_sub)
 
-.. rubric:: Demonstration
+.. admonition:: Demonstration
+   :class: demonstration
 
-- T1:
+   - T1:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo aruco_box_camera_world.launch.py
+        ros2 launch rosbot_gazebo aruco_box_camera_world.launch.py
 
-- T2:
+   - T2:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run rqt_tf_tree rqt_tf_tree --force-discover
+        ros2 run rqt_tf_tree rqt_tf_tree --force-discover
 
-- T3:
+   - T3:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch frame_demo static_aruco_detector.launch.py
+        ros2 launch frame_demo static_aruco_detector.launch.py
 
-- T2: Refresh ``rqt_tf_tree``.
+   - T2: Refresh ``rqt_tf_tree``.
 
 
 Dynamic Transforms
@@ -1526,12 +1603,13 @@ A **dynamic transform** describes a relationship between frames that
 changes over time, most commonly the pose of the robot in the world
 (``odom`` -> ``base_link``), which updates as the robot moves.
 
-**Resources**
+.. admonition:: Resources
+   :class: resources
 
-- `Writing a TF2 Broadcaster (Python)
-  <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html>`_
-- `Writing a TF2 Listener (Python)
-  <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html>`_
+   - `Writing a TF2 Broadcaster (Python)
+     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Broadcaster-Py.html>`_
+   - `Writing a TF2 Listener (Python)
+     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Writing-A-Tf2-Listener-Py.html>`_
 
 **Scenario: ArUco Marker Detection (Dynamic)**
 
@@ -1561,158 +1639,167 @@ changes over time, most commonly the pose of the robot in the world
 
      ros2 launch rosbot_gazebo aruco_box_world.launch.py
 
-**Step 1 --- Subscribe to the camera, set up the broadcaster and debug publisher.**
+.. card:: Step 1 --- Subscribe to the camera, set up the broadcaster and debug publisher
+   :class-card: sd-border-secondary
 
-We need image pixels, intrinsics, a *dynamic* TF broadcaster, and an
-annotated debug image for ``rqt_image_view``.
+   We need image pixels, intrinsics, a *dynamic* TF broadcaster, and an
+   annotated debug image for ``rqt_image_view``.
 
-.. code-block:: python
+   .. code-block:: python
 
-   # Image pixels + intrinsics
-   self._image_sub = self.create_subscription(...)
-   self._info_sub = self.create_subscription(...)
-   # Annotated debug image (marker outlines + pose axes)
-   self._debug_image_pub = self.create_publisher(
-       Image, "aruco_detection_image", 10
-   )
-   # Dynamic TF broadcaster (publishes on /tf, not /tf_static)
-   self._tf_broadcaster = TransformBroadcaster(self)
+      # Image pixels + intrinsics
+      self._image_sub = self.create_subscription(...)
+      self._info_sub = self.create_subscription(...)
+      # Annotated debug image (marker outlines + pose axes)
+      self._debug_image_pub = self.create_publisher(
+          Image, "aruco_detection_image", 10
+      )
+      # Dynamic TF broadcaster (publishes on /tf, not /tf_static)
+      self._tf_broadcaster = TransformBroadcaster(self)
 
-**Step 2 --- Cache the intrinsics once.**
+.. card:: Step 2 --- Cache the intrinsics once
+   :class-card: sd-border-secondary
 
-Same as the static case: read :math:`K` and :math:`d` a single time,
-then drop the subscription.
+   Same as the static case: read :math:`K` and :math:`d` a single time,
+   then drop the subscription.
 
-.. code-block:: python
+   .. code-block:: python
 
-   def _camera_info_callback(self, msg: CameraInfo):
-       self._camera_matrix = np.array(msg.k, dtype=np.float64).reshape(3, 3)
-       self._dist_coeffs  = np.array(msg.d, dtype=np.float64)
-       self.destroy_subscription(self._info_sub)
+      def _camera_info_callback(self, msg: CameraInfo):
+          self._camera_matrix = np.array(msg.k, dtype=np.float64).reshape(3, 3)
+          self._dist_coeffs  = np.array(msg.d, dtype=np.float64)
+          self.destroy_subscription(self._info_sub)
 
-**Step 3 --- Describe a marker in its own frame.**
+.. card:: Step 3 --- Describe a marker in its own frame
+   :class-card: sd-border-secondary
 
-Same object-point template as the static case: a square of side
-``marker_size``, centered at the origin, in the :math:`z=0` plane.
-Corner order matches ``detectMarkers``: top-left, top-right,
-bottom-right, bottom-left.
+   Same object-point template as the static case: a square of side
+   ``marker_size``, centered at the origin, in the :math:`z=0` plane.
+   Corner order matches ``detectMarkers``: top-left, top-right,
+   bottom-right, bottom-left.
 
-.. code-block:: python
+   .. code-block:: python
 
-   half = self._marker_size / 2.0
-   self._marker_object_points = np.array(
-       [[-half,  half, 0.0], [ half,  half, 0.0],
-        [ half, -half, 0.0], [-half, -half, 0.0]],
-       dtype=np.float32,
-   )
+      half = self._marker_size / 2.0
+      self._marker_object_points = np.array(
+          [[-half,  half, 0.0], [ half,  half, 0.0],
+           [ half, -half, 0.0], [-half, -half, 0.0]],
+          dtype=np.float32,
+      )
 
-**Step 4 --- Detect all markers in the current frame.**
+.. card:: Step 4 --- Detect all markers in the current frame
+   :class-card: sd-border-secondary
 
-``detectMarkers`` returns *all* markers it sees; we will iterate over
-them.
+   ``detectMarkers`` returns *all* markers it sees; we will iterate over
+   them.
 
-.. code-block:: python
+   .. code-block:: python
 
-   corners, ids, _ = self._detector.detectMarkers(cv_image)
-   if ids is None or len(ids) == 0:
-       return  # nothing to do for this frame
+      corners, ids, _ = self._detector.detectMarkers(cv_image)
+      if ids is None or len(ids) == 0:
+          return  # nothing to do for this frame
 
-**Step 5 --- Solve PnP for each detected marker.**
+.. card:: Step 5 --- Solve PnP for each detected marker
+   :class-card: sd-border-secondary
 
-Loop over every detection; each ``solvePnP`` call gives the pose of that
-marker in the camera optical frame.
+   Loop over every detection; each ``solvePnP`` call gives the pose of that
+   marker in the camera optical frame.
 
-.. code-block:: python
+   .. code-block:: python
 
-   for i, marker_id in enumerate(ids.flatten()):
-       image_points = corners[i].reshape(-1, 2).astype(np.float32)
-       success, rvec, tvec = cv2.solvePnP(
-           self._marker_object_points, image_points,
-           self._camera_matrix, self._dist_coeffs,
-           flags=cv2.SOLVEPNP_IPPE_SQUARE,
-       )
-       if not success:
-           continue
-       self._broadcast_marker_tf(msg.header, int(marker_id), rvec, tvec)
+      for i, marker_id in enumerate(ids.flatten()):
+          image_points = corners[i].reshape(-1, 2).astype(np.float32)
+          success, rvec, tvec = cv2.solvePnP(
+              self._marker_object_points, image_points,
+              self._camera_matrix, self._dist_coeffs,
+              flags=cv2.SOLVEPNP_IPPE_SQUARE,
+          )
+          if not success:
+              continue
+          self._broadcast_marker_tf(msg.header, int(marker_id), rvec, tvec)
 
-**Step 6 --- Convert rvec to a quaternion.**
+.. card:: Step 6 --- Convert rvec to a quaternion
+   :class-card: sd-border-secondary
 
-TF expects a quaternion, not an axis-angle vector.
+   TF expects a quaternion, not an axis-angle vector.
 
-.. code-block:: python
+   .. code-block:: python
 
-   qx, qy, qz, qw = Rotation.from_rotvec(rvec.flatten()).as_quat()
+      qx, qy, qz, qw = Rotation.from_rotvec(rvec.flatten()).as_quat()
 
-**Step 7 --- Broadcast one TF per marker, every frame.**
+.. card:: Step 7 --- Broadcast one TF per marker, every frame
+   :class-card: sd-border-secondary
 
-Parent frame comes from the image header (camera optical frame); child
-is ``aruco_marker_<id>``. The timestamp is copied from the image header
-so downstream TF consumers can interpolate correctly.
+   Parent frame comes from the image header (camera optical frame); child
+   is ``aruco_marker_<id>``. The timestamp is copied from the image header
+   so downstream TF consumers can interpolate correctly.
 
-.. code-block:: python
+   .. code-block:: python
 
-   t = TransformStamped()
-   t.header.stamp     = image_header.stamp         # image time, not now()
-   t.header.frame_id  = image_header.frame_id      # camera optical frame
-   t.child_frame_id   = f"aruco_marker_{marker_id}"
-   t.transform.translation.x = float(tvec[0])
-   t.transform.translation.y = float(tvec[1])
-   t.transform.translation.z = float(tvec[2])
-   t.transform.rotation.x = float(qx)
-   t.transform.rotation.y = float(qy)
-   t.transform.rotation.z = float(qz)
-   t.transform.rotation.w = float(qw)
-   self._tf_broadcaster.sendTransform(t)
+      t = TransformStamped()
+      t.header.stamp     = image_header.stamp         # image time, not now()
+      t.header.frame_id  = image_header.frame_id      # camera optical frame
+      t.child_frame_id   = f"aruco_marker_{marker_id}"
+      t.transform.translation.x = float(tvec[0])
+      t.transform.translation.y = float(tvec[1])
+      t.transform.translation.z = float(tvec[2])
+      t.transform.rotation.x = float(qx)
+      t.transform.rotation.y = float(qy)
+      t.transform.rotation.z = float(qz)
+      t.transform.rotation.w = float(qw)
+      self._tf_broadcaster.sendTransform(t)
 
-.. note::
+   .. note::
 
-   Unlike the static case, there is no one-shot flag and no
-   ``destroy_subscription``: the callback keeps running and publishes a
-   fresh TF for every image on ``/tf``.
+      Unlike the static case, there is no one-shot flag and no
+      ``destroy_subscription``: the callback keeps running and publishes a
+      fresh TF for every image on ``/tf``.
 
-**Step 8 --- Publish an annotated debug image.**
+.. card:: Step 8 --- Publish an annotated debug image
+   :class-card: sd-border-secondary
 
-Draw a 3D axis triad on each detected marker and outline the detections,
-then republish the image so you can verify detections live in
-``rqt_image_view``.
+   Draw a 3D axis triad on each detected marker and outline the detections,
+   then republish the image so you can verify detections live in
+   ``rqt_image_view``.
 
-.. code-block:: python
+   .. code-block:: python
 
-   cv2.drawFrameAxes(
-       cv_image, self._camera_matrix, self._dist_coeffs,
-       rvec, tvec, self._marker_size * 0.5,
-   )
-   cv2.aruco.drawDetectedMarkers(cv_image, corners, ids)
+      cv2.drawFrameAxes(
+          cv_image, self._camera_matrix, self._dist_coeffs,
+          rvec, tvec, self._marker_size * 0.5,
+      )
+      cv2.aruco.drawDetectedMarkers(cv_image, corners, ids)
 
-   debug_msg = self._bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
-   debug_msg.header = msg.header
-   self._debug_image_pub.publish(debug_msg)
+      debug_msg = self._bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
+      debug_msg.header = msg.header
+      self._debug_image_pub.publish(debug_msg)
 
-.. rubric:: Demonstration
+.. admonition:: Demonstration
+   :class: demonstration
 
-- T1:
+   - T1:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo aruco_box_world.launch.py
+        ros2 launch rosbot_gazebo aruco_box_world.launch.py
 
-- T2:
+   - T2:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch frame_demo dynamic_detector_demo.launch.py
+        ros2 launch frame_demo dynamic_detector_demo.launch.py
 
-- T3:
+   - T3:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run rqt_image_view rqt_image_view /aruco_detection_image
+        ros2 run rqt_image_view rqt_image_view /aruco_detection_image
 
-- T4:
+   - T4:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run rqt_tf_tree rqt_tf_tree --force-discover
+        ros2 run rqt_tf_tree rqt_tf_tree --force-discover
 
 
 Static vs. Dynamic Comparison
@@ -1721,6 +1808,7 @@ Static vs. Dynamic Comparison
 .. list-table::
    :header-rows: 1
    :widths: 25 40 35
+   :class: compact-table
 
    * -
      - **StaticTransformBroadcaster**
@@ -1772,107 +1860,111 @@ report each marker's position in the ``odom`` frame.
 
      ros2 launch frame_demo dynamic_detector_listener.launch.py
 
-**Step 1 --- Set up the Buffer and TransformListener.**
+.. card:: Step 1 --- Set up the Buffer and TransformListener
+   :class-card: sd-border-secondary
 
-The ``Buffer`` stores incoming transforms (default: last 10 s); the
-``TransformListener`` subscribes to ``/tf`` and ``/tf_static`` and
-populates the buffer automatically. A timer drives the periodic lookup.
+   The ``Buffer`` stores incoming transforms (default: last 10 s); the
+   ``TransformListener`` subscribes to ``/tf`` and ``/tf_static`` and
+   populates the buffer automatically. A timer drives the periodic lookup.
 
-.. code-block:: python
+   .. code-block:: python
 
-   from tf2_ros import Buffer, TransformListener, TransformException
-   from rclpy.duration import Duration
-   import rclpy, yaml
+      from tf2_ros import Buffer, TransformListener, TransformException
+      from rclpy.duration import Duration
+      import rclpy, yaml
 
-   class ArucoMarkerListener(Node):
-       def __init__(self):
-           super().__init__("aruco_marker_listener")
-           self._target_frame  = "odom"
-           self._marker_prefix = "aruco_marker_"
-           self._tf_buffer   = Buffer()
-           self._tf_listener = TransformListener(self._tf_buffer, self)
-           self._timer = self.create_timer(1.0, self._timer_callback)
+      class ArucoMarkerListener(Node):
+          def __init__(self):
+              super().__init__("aruco_marker_listener")
+              self._target_frame  = "odom"
+              self._marker_prefix = "aruco_marker_"
+              self._tf_buffer   = Buffer()
+              self._tf_listener = TransformListener(self._tf_buffer, self)
+              self._timer = self.create_timer(1.0, self._timer_callback)
 
-.. note::
+   .. note::
 
-   Always create the ``Buffer`` **before** the ``TransformListener``:
-   the listener needs a buffer to write into.
+      Always create the ``Buffer`` **before** the ``TransformListener``:
+      the listener needs a buffer to write into.
 
-**Step 2 --- Auto-discover marker frames in the TF buffer.**
+.. card:: Step 2 --- Auto-discover marker frames in the TF buffer
+   :class-card: sd-border-secondary
 
-``Buffer.all_frames_as_yaml()`` returns a YAML snapshot of every frame
-currently known to TF. Filter by the prefix to get the markers.
+   ``Buffer.all_frames_as_yaml()`` returns a YAML snapshot of every frame
+   currently known to TF. Filter by the prefix to get the markers.
 
-.. code-block:: python
+   .. code-block:: python
 
-   def _discover_marker_frames(self):
-       frames = yaml.safe_load(self._tf_buffer.all_frames_as_yaml()) or {}
-       return sorted(
-           name for name in frames
-           if name.startswith(self._marker_prefix)
-       )
+      def _discover_marker_frames(self):
+          frames = yaml.safe_load(self._tf_buffer.all_frames_as_yaml()) or {}
+          return sorted(
+              name for name in frames
+              if name.startswith(self._marker_prefix)
+          )
 
-**Why auto-discovery?** The detector creates a new child frame each time
-it sees a new marker ID. Hard-coding IDs would not scale; walking the
-buffer picks up new markers as soon as they appear.
+   **Why auto-discovery?** The detector creates a new child frame each time
+   it sees a new marker ID. Hard-coding IDs would not scale; walking the
+   buffer picks up new markers as soon as they appear.
 
-**Step 3 --- Look up each marker in the target frame.**
+.. card:: Step 3 --- Look up each marker in the target frame
+   :class-card: sd-border-secondary
 
-``lookup_transform(target, source, time)`` returns the transform
-expressing ``source`` in ``target``. The ``timeout`` lets TF wait
-briefly for data that may still be in flight.
+   ``lookup_transform(target, source, time)`` returns the transform
+   expressing ``source`` in ``target``. The ``timeout`` lets TF wait
+   briefly for data that may still be in flight.
 
-.. code-block:: python
+   .. code-block:: python
 
-   def _timer_callback(self):
-       for frame in self._discover_marker_frames():
-           try:
-               t = self._tf_buffer.lookup_transform(
-                   self._target_frame,        # "odom"
-                   frame,                     # "aruco_marker_<id>"
-                   rclpy.time.Time(),         # latest available
-                   timeout=Duration(seconds=0.1),
-               )
-           except TransformException as e:
-               self.get_logger().warn(
-                   f"{frame} -> {self._target_frame}: {e}")
-               continue
-           p = t.transform.translation
-           self.get_logger().info(
-               f"{frame}: x={p.x:.3f}, y={p.y:.3f}, z={p.z:.3f}")
+      def _timer_callback(self):
+          for frame in self._discover_marker_frames():
+              try:
+                  t = self._tf_buffer.lookup_transform(
+                      self._target_frame,        # "odom"
+                      frame,                     # "aruco_marker_<id>"
+                      rclpy.time.Time(),         # latest available
+                      timeout=Duration(seconds=0.1),
+                  )
+              except TransformException as e:
+                  self.get_logger().warn(
+                      f"{frame} -> {self._target_frame}: {e}")
+                  continue
+              p = t.transform.translation
+              self.get_logger().info(
+                  f"{frame}: x={p.x:.3f}, y={p.y:.3f}, z={p.z:.3f}")
 
-.. rubric:: Demonstration
+.. admonition:: Demonstration
+   :class: demonstration
 
-One launch file starts the simulation, the dynamic detector, and the
-listener together:
+   One launch file starts the simulation, the dynamic detector, and the
+   listener together:
 
-- T1:
+   - T1:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo aruco_markers_world.launch.py
+        ros2 launch rosbot_gazebo aruco_markers_world.launch.py
 
-- T2:
+   - T2:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch frame_demo dynamic_detector_listener.launch.py
+        ros2 launch frame_demo dynamic_detector_listener.launch.py
 
-- T3:
+   - T3:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run rqt_tf_tree rqt_tf_tree --force-discover
+        ros2 run rqt_tf_tree rqt_tf_tree --force-discover
 
-Expected output on T2 once markers are in view:
+   Expected output on T2 once markers are in view:
 
-.. code-block:: console
+   .. code-block:: console
 
-   [aruco_detector-1] [INFO] [1776111488.195991627] [aruco_detector]: Detected markers: [2, 4, 5]
+      [aruco_detector-1] [INFO] [1776111488.195991627] [aruco_detector]: Detected markers: [2, 4, 5]
 
-   [aruco_marker_listener]: aruco_marker_2 in odom: x=1.984, y=-0.500, z=0.251
-   [aruco_marker_listener]: aruco_marker_4 in odom: x=1.967, y=-0.003, z=0.251
-   [aruco_marker_listener]: aruco_marker_5 in odom: x=1.977, y=0.491, z=0.250
+      [aruco_marker_listener]: aruco_marker_2 in odom: x=1.984, y=-0.500, z=0.251
+      [aruco_marker_listener]: aruco_marker_4 in odom: x=1.967, y=-0.003, z=0.251
+      [aruco_marker_listener]: aruco_marker_5 in odom: x=1.977, y=0.491, z=0.250
 
 
 Behind the Scenes
@@ -1930,22 +2022,23 @@ When you call
 2. **Chains transforms** via matrix multiplication.
 3. **Returns** the composed transform.
 
-**Example: Marker Pose in Odom Frame**
+.. admonition:: Example: Marker Pose in Odom Frame
+   :class: example
 
-.. math::
+   .. math::
 
-   \text{odom} \xrightarrow{T_1} \text{base\_link} \xrightarrow{T_2} \text{camera\_optical} \xrightarrow{T_3} \text{marker}
+      \text{odom} \xrightarrow{T_1} \text{base_link} \xrightarrow{T_2} \text{camera_optical} \xrightarrow{T_3} \text{marker}
 
-The listener computes:
-:math:`T_{\text{odom} \rightarrow \text{marker}} = T_1 \times T_2 \times T_3`
+   The listener computes:
+   :math:`T_{\text{odom} \rightarrow \text{marker}} = T_1 \times T_2 \times T_3`
 
-Where each :math:`T` is a :math:`4 \times 4` homogeneous transformation
-matrix:
+   Where each :math:`T` is a :math:`4 \times 4` homogeneous transformation
+   matrix:
 
-.. math::
+   .. math::
 
-   T = \begin{bmatrix} R_{3\times3} & t_{3\times1} \\ 0_{1\times3} & 1 \end{bmatrix}
-     = \begin{bmatrix} r_{00} & r_{01} & r_{02} & t_x \\ r_{10} & r_{11} & r_{12} & t_y \\ r_{20} & r_{21} & r_{22} & t_z \\ 0 & 0 & 0 & 1 \end{bmatrix}
+      T = \begin{bmatrix} R_{3\times3} & t_{3\times1} \\ 0_{1\times3} & 1 \end{bmatrix}
+        = \begin{bmatrix} r_{00} & r_{01} & r_{02} & t_x \\ r_{10} & r_{11} & r_{12} & t_y \\ r_{20} & r_{21} & r_{22} & t_z \\ 0 & 0 & 0 & 1 \end{bmatrix}
 
 
 KDL Frames
@@ -1964,8 +2057,8 @@ broadcaster runs, TF contains two hops relevant to the marker:
 .. math::
 
    \underbrace{\text{odom}}_{\text{target}} \;\xrightarrow{T_1}\;
-   \underbrace{\text{overhead\_camera\_optical\_frame}}_{\text{middle}} \;\xrightarrow{T_2}\;
-   \underbrace{\text{static\_aruco\_box}}_{\text{source}}
+   \underbrace{\text{overhead_camera_optical_frame}}_{\text{middle}} \;\xrightarrow{T_2}\;
+   \underbrace{\text{static_aruco_box}}_{\text{source}}
 
 - **Goal:** look up :math:`T_1` and :math:`T_2` *separately* and
   compose them in Python with PyKDL to recover
@@ -2003,62 +2096,65 @@ rotation (``PyKDL.Rotation``) plus a translation (``PyKDL.Vector``).
 3. **Convert** the resulting ``PyKDL.Frame`` back to a
    ``geometry_msgs/Pose`` (or publish as a TF).
 
-**Step 1 --- Helpers: ROS <-> KDL conversions.**
+.. card:: Step 1 --- Helpers: ROS <-> KDL conversions
+   :class-card: sd-border-secondary
 
-TF returns a ``TransformStamped``; PyKDL wants a ``Frame``. One function
-each way.
+   TF returns a ``TransformStamped``; PyKDL wants a ``Frame``. One function
+   each way.
 
-.. code-block:: python
+   .. code-block:: python
 
-   import PyKDL
-   from geometry_msgs.msg import Pose, TransformStamped
+      import PyKDL
+      from geometry_msgs.msg import Pose, TransformStamped
 
-   def transform_to_kdl(t: TransformStamped) -> PyKDL.Frame:
-       p, q = t.transform.translation, t.transform.rotation
-       return PyKDL.Frame(
-           PyKDL.Rotation.Quaternion(q.x, q.y, q.z, q.w),
-           PyKDL.Vector(p.x, p.y, p.z),
-       )
+      def transform_to_kdl(t: TransformStamped) -> PyKDL.Frame:
+          p, q = t.transform.translation, t.transform.rotation
+          return PyKDL.Frame(
+              PyKDL.Rotation.Quaternion(q.x, q.y, q.z, q.w),
+              PyKDL.Vector(p.x, p.y, p.z),
+          )
 
-   def kdl_to_pose(frame: PyKDL.Frame) -> Pose:
-       pose = Pose()
-       pose.position.x, pose.position.y, pose.position.z = (
-           frame.p.x(), frame.p.y(), frame.p.z()
-       )
-       qx, qy, qz, qw = frame.M.GetQuaternion()
-       pose.orientation.x, pose.orientation.y = qx, qy
-       pose.orientation.z, pose.orientation.w = qz, qw
-       return pose
+      def kdl_to_pose(frame: PyKDL.Frame) -> Pose:
+          pose = Pose()
+          pose.position.x, pose.position.y, pose.position.z = (
+              frame.p.x(), frame.p.y(), frame.p.z()
+          )
+          qx, qy, qz, qw = frame.M.GetQuaternion()
+          pose.orientation.x, pose.orientation.y = qx, qy
+          pose.orientation.z, pose.orientation.w = qz, qw
+          return pose
 
-**Step 2 --- Look up each hop separately.**
+.. card:: Step 2 --- Look up each hop separately
+   :class-card: sd-border-secondary
 
-We do *not* ask TF to chain for us. We ask for each edge of the tree
-individually.
+   We do *not* ask TF to chain for us. We ask for each edge of the tree
+   individually.
 
-.. code-block:: python
+   .. code-block:: python
 
-   t_target_middle = self._tf_buffer.lookup_transform(
-       self._target,  self._middle,  rclpy.time.Time(),
-       timeout=Duration(seconds=0.1),
-   )   # odom -> overhead_camera_optical_frame
-   t_middle_source = self._tf_buffer.lookup_transform(
-       self._middle,  self._source,  rclpy.time.Time(),
-       timeout=Duration(seconds=0.1),
-   )   # overhead_camera_optical_frame -> static_aruco_box
+      t_target_middle = self._tf_buffer.lookup_transform(
+          self._target,  self._middle,  rclpy.time.Time(),
+          timeout=Duration(seconds=0.1),
+      )   # odom -> overhead_camera_optical_frame
+      t_middle_source = self._tf_buffer.lookup_transform(
+          self._middle,  self._source,  rclpy.time.Time(),
+          timeout=Duration(seconds=0.1),
+      )   # overhead_camera_optical_frame -> static_aruco_box
 
-**Step 3 --- Compose with KDL, then convert back.**
+.. card:: Step 3 --- Compose with KDL, then convert back
+   :class-card: sd-border-secondary
 
-``*`` is overloaded: multiplying two ``PyKDL.Frame`` objects returns
-their composition.
+   ``*`` is overloaded: multiplying two ``PyKDL.Frame`` objects returns
+   their composition.
 
-.. code-block:: python
+   .. code-block:: python
 
-   kdl_target_middle = transform_to_kdl(t_target_middle)
-   kdl_middle_source = transform_to_kdl(t_middle_source)
+      kdl_target_middle = transform_to_kdl(t_target_middle)
+      kdl_middle_source = transform_to_kdl(t_middle_source)
 
-   kdl_target_source = kdl_target_middle * kdl_middle_source   # chain!
+      kdl_target_source = kdl_target_middle * kdl_middle_source   # chain!
 
-   pose_in_target = kdl_to_pose(kdl_target_source)
+      pose_in_target = kdl_to_pose(kdl_target_source)
 
 **KDL vs. TF2**
 
@@ -2082,34 +2178,35 @@ their composition.
    multiplication step, which is otherwise hidden inside
    ``lookup_transform``.
 
-.. rubric:: Demonstration
+.. admonition:: Demonstration
+   :class: demonstration
 
-- T1:
+   - T1:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch rosbot_gazebo aruco_box_camera_world.launch.py
+        ros2 launch rosbot_gazebo aruco_box_camera_world.launch.py
 
-- T2:
+   - T2:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 launch frame_demo kdl_chain_demo.launch.py
+        ros2 launch frame_demo kdl_chain_demo.launch.py
 
-- T3:
+   - T3:
 
-  .. code-block:: console
+     .. code-block:: console
 
-     ros2 run tf2_ros tf2_echo odom static_aruco_box
+        ros2 run tf2_ros tf2_echo odom static_aruco_box
 
-T2 should print the KDL-composed pose; T3 should print the direct TF
-lookup --- the two values should match.
+   T2 should print the KDL-composed pose; T3 should print the direct TF
+   lookup --- the two values should match.
 
-.. code-block:: console
+   .. code-block:: console
 
-   [kdl_chain_demo]: KDL-composed static_aruco_box in odom:
-       pos=(2.001, 2.001, 0.481)
-       quat=(0.707, -0.707, 0.000, 0.000)
+      [kdl_chain_demo]: KDL-composed static_aruco_box in odom:
+          pos=(2.001, 2.001, 0.481)
+          quat=(0.707, -0.707, 0.000, 0.000)
 
 
 Appendix A: Gimbal Lock

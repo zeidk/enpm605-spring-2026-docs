@@ -24,12 +24,10 @@ This lecture explores advanced function concepts in Python, building on the fund
    - Use built-in higher-order functions: ``map``, ``filter``, and ``sorted`` with ``key``.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l5_lecture
    l5_exercises

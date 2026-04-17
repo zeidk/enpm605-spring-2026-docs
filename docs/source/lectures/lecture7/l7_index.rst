@@ -36,12 +36,10 @@ running domain introduced in L6.
    - Use ``@dataclass`` to reduce boilerplate for data-centric classes.
 
 
-Contents
---------
-
 .. toctree::
    :maxdepth: 2
    :titlesonly:
+   :hidden:
 
    l7_lecture
    l7_exercises

@@ -86,3 +86,174 @@ html[data-theme="dark"] .admonition.learning-objectives > .admonition-title::bef
     color: #ffe48f;
   }
 }
+
+/* ------------------------------------------------------------
+ * Admonition: Example
+ * Usage: .. admonition:: Example Title
+ *           :class: example
+ * ------------------------------------------------------------ */
+.admonition.example {
+  background-color: #f8f9fa;
+  border: 2px solid #adb5bd;
+  border-radius: 0.35rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.admonition.example > .admonition-title {
+  background-color: #e9ecef;
+  font-weight: 600;
+  font-size: 1.05em;
+  border-bottom: 1px solid #adb5bd;
+}
+
+.admonition.example {
+  --pst-icon-admonition-default: "\f0eb";
+}
+
+.admonition.example > .admonition-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #6c757d;
+}
+
+html[data-theme="dark"] .admonition.example {
+  background-color: #2b2d30;
+  border-color: #6c757d;
+}
+
+html[data-theme="dark"] .admonition.example > .admonition-title {
+  background-color: #383a3e;
+  border-bottom-color: #6c757d;
+}
+
+html[data-theme="dark"] .admonition.example > .admonition-title::before {
+  color: #adb5bd;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] .admonition.example {
+    background-color: #2b2d30;
+    border-color: #6c757d;
+  }
+  html[data-theme="auto"] .admonition.example > .admonition-title {
+    background-color: #383a3e;
+    border-bottom-color: #6c757d;
+  }
+  html[data-theme="auto"] .admonition.example > .admonition-title::before {
+    color: #adb5bd;
+  }
+}
+
+/* ------------------------------------------------------------
+ * Admonition: Resources
+ * Usage: .. admonition:: Resources
+ *           :class: resources
+ * ------------------------------------------------------------ */
+.admonition.resources {
+  background-color: #f0faf0;
+  border: 2px solid #4caf50;
+  border-radius: 0.35rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.admonition.resources > .admonition-title {
+  background-color: #e0f2e1;
+  font-weight: 600;
+  font-size: 1.05em;
+  border-bottom: 1px solid #4caf50;
+}
+
+.admonition.resources {
+  --pst-icon-admonition-default: "\f0c1";
+}
+
+.admonition.resources > .admonition-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #2e7d32;
+}
+
+html[data-theme="dark"] .admonition.resources {
+  background-color: #1e2a1f;
+  border-color: #7be47b;
+}
+
+html[data-theme="dark"] .admonition.resources > .admonition-title {
+  background-color: #2b3c2c;
+  border-bottom-color: #7be47b;
+}
+
+html[data-theme="dark"] .admonition.resources > .admonition-title::before {
+  color: #9cff9c;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] .admonition.resources {
+    background-color: #1e2a1f;
+    border-color: #7be47b;
+  }
+  html[data-theme="auto"] .admonition.resources > .admonition-title {
+    background-color: #2b3c2c;
+    border-bottom-color: #7be47b;
+  }
+  html[data-theme="auto"] .admonition.resources > .admonition-title::before {
+    color: #9cff9c;
+  }
+}
+
+/* ------------------------------------------------------------
+ * Admonition: Demonstration
+ * Usage: .. admonition:: Demonstration
+ *           :class: demonstration
+ * ------------------------------------------------------------ */
+.admonition.demonstration {
+  background-color: #f0f4ff;
+  border: 2px solid #5b7bb5;
+  border-radius: 0.35rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.admonition.demonstration > .admonition-title {
+  background-color: #dce4f5;
+  font-weight: 600;
+  font-size: 1.05em;
+  border-bottom: 1px solid #5b7bb5;
+}
+
+.admonition.demonstration {
+  --pst-icon-admonition-default: "\f144";
+}
+
+.admonition.demonstration > .admonition-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #3a5a8c;
+}
+
+html[data-theme="dark"] .admonition.demonstration {
+  background-color: #1e2433;
+  border-color: #7b9fd4;
+}
+
+html[data-theme="dark"] .admonition.demonstration > .admonition-title {
+  background-color: #2a3448;
+  border-bottom-color: #7b9fd4;
+}
+
+html[data-theme="dark"] .admonition.demonstration > .admonition-title::before {
+  color: #a0c0ef;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] .admonition.demonstration {
+    background-color: #1e2433;
+    border-color: #7b9fd4;
+  }
+  html[data-theme="auto"] .admonition.demonstration > .admonition-title {
+    background-color: #2a3448;
+    border-bottom-color: #7b9fd4;
+  }
+  html[data-theme="auto"] .admonition.demonstration > .admonition-title::before {
+    color: #a0c0ef;
+  }
+}

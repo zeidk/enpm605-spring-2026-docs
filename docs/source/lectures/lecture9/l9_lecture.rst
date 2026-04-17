@@ -103,16 +103,17 @@ enabling dynamic configuration.
       debugging by printing messages, adjusting log levels, and tracking
       node status during launch.
 
-   **Resources**
+   .. admonition:: Resources
+      :class: resources
 
-   - `ROS 2 Documentation: Launch Files Tutorials
-     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Launch-Main.html>`_
-   - `ROS 2 Documentation: Creating Launch Files
-     <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Creating-Launch-Files.html>`_
-   - `ROS 2 Documentation: Launch File Formats
-     <https://docs.ros.org/en/jazzy/How-To-Guides/Launch-file-different-formats.html>`_
-   - `ROS 2 Documentation: Using Substitutions in Launch Files
-     <https://docs.ros.org/en/jazzy/How-To-Guides/Using-Substitutions-In-Launch-Files.html>`_
+      - `ROS 2 Documentation: Launch Files Tutorials
+        <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Launch-Main.html>`_
+      - `ROS 2 Documentation: Creating Launch Files
+        <https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Creating-Launch-Files.html>`_
+      - `ROS 2 Documentation: Launch File Formats
+        <https://docs.ros.org/en/jazzy/How-To-Guides/Launch-file-different-formats.html>`_
+      - `ROS 2 Documentation: Using Substitutions in Launch Files
+        <https://docs.ros.org/en/jazzy/How-To-Guides/Using-Substitutions-In-Launch-Files.html>`_
 
    .. note::
 
@@ -172,12 +173,13 @@ enabling dynamic configuration.
    Both patterns are equivalent. Choose whichever improves readability
    for your use case.
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 launch launch_files_demo demo1.launch.py
-      ros2 launch launch_files_demo demo2.launch.py
+         ros2 launch launch_files_demo demo1.launch.py
+         ros2 launch launch_files_demo demo2.launch.py
 
 
 Advanced Features
@@ -213,11 +215,12 @@ configurable robot systems.
    - ``PathJoinSubstitution`` constructs a file path from components in
      a platform-independent way.
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 launch launch_files_demo demo3.launch.py
+         ros2 launch launch_files_demo demo3.launch.py
 
 
 .. dropdown:: Conditional Launching
@@ -246,12 +249,13 @@ configurable robot systems.
 
       ros2 launch <package> <launch_file> --show-args
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 launch launch_files_demo demo4.launch.py start_talker:=true
-      ros2 launch launch_files_demo demo4.launch.py start_talker:=false
+         ros2 launch launch_files_demo demo4.launch.py start_talker:=true
+         ros2 launch launch_files_demo demo4.launch.py start_talker:=false
 
 
 .. dropdown:: Node Grouping
@@ -288,12 +292,13 @@ configurable robot systems.
           ],
       )
 
-   **Demonstration**
+   .. admonition:: Demonstration
+      :class: demonstration
 
-   .. code-block:: console
+      .. code-block:: console
 
-      ros2 launch launch_files_demo demo5.launch.py
-      ros2 launch launch_files_demo demo6.launch.py enable_chatter:=true
+         ros2 launch launch_files_demo demo5.launch.py
+         ros2 launch launch_files_demo demo6.launch.py enable_chatter:=true
 
 
 Executors
@@ -325,12 +330,13 @@ multi-task robotic systems.
       simultaneously on separate cores. The executor and callback group
       together determine which one you get.
 
-   **Resources**
+   .. admonition:: Resources
+      :class: resources
 
-   - `About Executors
-     <https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Executors.html>`_
-   - `Using Callback Groups
-     <https://docs.ros.org/en/jazzy/How-To-Guides/Using-callback-groups.html>`_
+      - `About Executors
+        <https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Executors.html>`_
+      - `Using Callback Groups
+        <https://docs.ros.org/en/jazzy/How-To-Guides/Using-callback-groups.html>`_
 
 
 Single-Threaded Executor
