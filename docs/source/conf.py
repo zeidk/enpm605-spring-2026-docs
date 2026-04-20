@@ -83,7 +83,7 @@ html_theme_options = {
 # Edit on GitHub button
 html_context = {
     "github_user": "zeidk",
-    "github_repo": "enpm818t-spring-2026-docs",
+    "github_repo": "enpm605-spring-2026-docs",
     "github_version": "main",
     "doc_path": "docs/source",
     "default_mode": "dark",
