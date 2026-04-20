@@ -482,7 +482,7 @@ Troubleshooting
       The container cannot connect to your display server.
 
       - Ensure you ran ``xhost +local:docker`` on the host **before**
-      starting the container.
+        starting the container.
       - Check that the ``DISPLAY`` variable is set inside the container:
 
       .. code-block:: console
@@ -501,10 +501,10 @@ Troubleshooting
       The simulator is likely using software rendering.
 
       - Run ``nvidia-smi`` inside the container. If it fails, the GPU is
-      not being passed through.
+        not being passed through.
       - Ensure ``--gpus all`` was included in your ``docker run`` command.
       - Ensure the NVIDIA Container Toolkit is installed on the host
-      (see Step 1).
+        (see Step 1).
       - Restart Docker on the host: ``sudo systemctl restart docker``.
 
 

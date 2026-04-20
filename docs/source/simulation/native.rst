@@ -202,7 +202,7 @@ Troubleshooting
 
       - Ensure all dependencies were installed with ``rosdep install``.
       - Delete the ``build/``, ``install/``, and ``log/`` directories
-      and rebuild:
+        and rebuild:
 
       .. code-block:: console
 
