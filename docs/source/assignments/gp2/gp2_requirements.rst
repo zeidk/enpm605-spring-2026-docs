@@ -2,8 +2,6 @@
 Requirements
 ====================================================
 
-.. |rarr| unicode:: U+2192
-
 
 Your Tasks
 ==========
@@ -101,10 +99,10 @@ You will zip and submit the ``gp2/`` folder itself (see
    |   |-- __init__.py
    |   |-- navigate_to_goal_server.py
    |   |-- navigate_to_goal_client.py
-   |-- scripts/
-   |   |-- __init__.py
-   |   |-- main_navigate_to_goal_server.py
-   |   |-- main_navigate_to_goal_client.py
+   |   |-- scripts/
+   |       |-- __init__.py
+   |       |-- main_navigate_to_goal_server.py
+   |       |-- main_navigate_to_goal_client.py
    |-- launch/
    |   |-- gp2.launch.py
    |-- config/
