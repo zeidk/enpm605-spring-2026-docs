@@ -4,6 +4,14 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.5.1 -- Lecture 12 (2026-04-22)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: GP 2 (gp2_requirements.rst)
+
+   - Moved the ``scripts`` folder in the python package for GP2
+
 .. dropdown:: v1.5 -- GP2 scripts folder (2026-04-21)
    :icon: tag
    :class-container: sd-border-warning

@@ -104,7 +104,7 @@ Step 2: Create and Build the Workspace
 
       source /opt/ros/jazzy/setup.bash
       rosdep update
-      rosdep install --from-paths src --ignore-src -y --skip-keys "micro_ros_agent"
+      sudo apt update && rosdep install -i --from-path src --rosdistro $ROS_DISTRO --ignore-src -y --skip-keys "micro_ros_agent python3-ftdi"
 
    .. warning::
 
