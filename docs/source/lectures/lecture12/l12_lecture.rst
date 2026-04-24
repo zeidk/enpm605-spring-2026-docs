@@ -149,6 +149,12 @@ declared inside a Python launch file.
         - ``rqt_graph``
         - Two separate nodes, each publishing on its own namespaced topic
 
+.. admonition:: Observe
+   :class: tip
+
+   How many nodes appear in ``rqt_graph``? What are their full names?
+   What topics do each publish?
+
 **Launch File: ``namespace`` Argument**
 
 .. code-block:: python
@@ -299,6 +305,11 @@ communicate without modifying either node.
 
    ros2 run remapping_demo camera_demo_exe --ros-args -r image_raw:=/sensors/front/image
 
+- The format is ``-r original_name:=new_name``.
+- The topic ``/image_raw`` is now published as
+  ``/sensors/front/image``.
+- Subscribers must use the remapped name.
+
 **Launch File: ``remappings`` Argument**
 
 .. code-block:: python
@@ -365,21 +376,25 @@ Namespaces vs. Remapping
    * - Situation
      - Tool
      - Why
-   * - Running the same node multiple times
+   * - Running the same node multiple times (e.g., three cameras)
      - **Namespace**
-     - All topics, services, and parameters are isolated automatically.
-   * - Two nodes use different names for the same data
+     - All topics, services, and parameters are isolated automatically
+       under one prefix.
+   * - Two nodes use different names for the same data (e.g., one
+       publishes ``/image``, another subscribes to ``/camera/image``)
      - **Topic remapping**
      - Bridges the naming gap without touching either node's code.
    * - Running the same executable twice in the same namespace
      - **Node remapping**
-     - Each instance must have a unique node name.
+     - Each instance must have a unique node name; ``__node`` changes
+       it.
    * - Overriding a parameter value at launch time
      - **Parameter remapping** (``-p``)
      - Faster than editing a YAML file; no source change needed.
    * - Both isolation *and* renaming in one launch
-     - **Namespace + remapping**
-     - Namespace isolates the group; remapping fine-tunes individual names.
+     - **Namespace + remapping together**
+     - Namespace isolates the group; remapping fine-tunes individual
+       names within it.
 
 A **namespace** is a bulk operation that moves everything under a new
 prefix at once. **Remapping** is a surgical operation that changes one
@@ -493,7 +508,8 @@ node overrides.
 .. note::
 
    A node starts in **Unconfigured** the moment it is created. It stays
-   there until a ``configure`` command is issued.
+   there indefinitely until a ``configure`` command is issued. No
+   publishers, timers, or subscriptions exist at this point.
 
 **Transition Commands**
 
@@ -530,7 +546,8 @@ node overrides.
 
    Transitions must follow the state machine strictly. You cannot jump
    from Unconfigured directly to Active: ``configure`` then ``activate``
-   must be issued in order.
+   must be issued in order. Skipping ``configure`` is why
+   ``ros2 lifecycle set`` returns **Transition failed**.
 
 
 Implementing a Lifecycle Node
@@ -556,11 +573,14 @@ callback per transition. Each callback must return
            self._timer = None
            self._counter = 0
 
-- ``LifecycleNode`` is imported from ``rclpy_lifecycle``.
-- Publishers and timers are declared as ``None``. They are created in
-  ``on_configure``, not in ``__init__``.
+- ``LifecycleNode`` is imported from ``rclpy_lifecycle``, part of the
+  standard ROS 2 Jazzy installation.
+- Publishers and timers are declared as ``None`` here. They are created
+  in ``on_configure``, not in ``__init__``, so they are only allocated
+  when explicitly requested.
 - ``TransitionCallbackReturn`` carries three values: ``SUCCESS``,
-  ``FAILURE``, and ``ERROR``.
+  ``FAILURE``, and ``ERROR``. A callback returning ``FAILURE`` aborts
+  the transition and keeps the node in its current state.
 
 **on_configure: Allocate Resources**
 
@@ -574,8 +594,13 @@ callback per transition. Each callback must return
        return TransitionCallbackReturn.SUCCESS
 
 - Use ``create_lifecycle_publisher`` instead of ``create_publisher``.
-  A lifecycle publisher remains **inactive** until ``on_activate``.
-- Do **not** create timers here.
+  A lifecycle publisher is created here but remains **inactive** until
+  ``on_activate`` is called.
+- An inactive lifecycle publisher silently discards any messages
+  published to it, preventing data from being sent before the node is
+  fully ready.
+- Do **not** create timers here. Timer callbacks would fire even while
+  the node is Inactive.
 
 **on_activate: Start Processing**
 
@@ -605,8 +630,14 @@ callback per transition. Each callback must return
        if self._timer is not None:
            self._timer.cancel()
            self._timer = None
-       super().on_deactivate(state)
+       super().on_deactivate(state)         # disables the lifecycle publisher
        return TransitionCallbackReturn.SUCCESS
+
+- Cancel the timer first so no further callbacks fire, then call
+  ``super().on_deactivate(state)`` to disable the publisher.
+- The publisher object still exists after deactivation. It is
+  re-enabled by the next ``on_activate`` call without needing to be
+  recreated.
 
 **on_cleanup: Release Resources**
 
@@ -631,7 +662,8 @@ Testing Lifecycle Nodes
 ----------------------------------------------------
 
 The simplest way to test a lifecycle node is to drive its state
-transitions manually from the CLI.
+transitions manually from the CLI, observing the logged output and
+published topics at each step.
 
 .. dropdown:: Demonstration: Changing States with the CLI
    :open:
@@ -651,16 +683,16 @@ transitions manually from the CLI.
         - State confirmed: unconfigured
       * - T2
         - ``ros2 lifecycle set /sensor_publisher configure``
-        - Enters **Inactive**; publisher created
+        - Enters **Inactive**; publisher created, no data yet
       * - T2
         - ``ros2 lifecycle set /sensor_publisher activate``
-        - Enters **Active**; data flows
+        - Enters **Active**; timer starts, data flows
       * - T3
         - ``ros2 topic echo /sensor_data``
         - Messages appear while Active
       * - T2
         - ``ros2 lifecycle set /sensor_publisher deactivate``
-        - Enters **Inactive**; timer cancelled
+        - Enters **Inactive**; timer cancelled, publisher disabled
       * - T2
         - ``ros2 lifecycle set /sensor_publisher cleanup``
         - Returns to **Unconfigured**; all resources released
@@ -707,6 +739,13 @@ every 5 seconds.
    equivalent to running ``ros2 lifecycle set`` from the CLI, but
    without any human intervention.
 
+**What Happens in Each Transition**
+
+The four lifecycle callbacks are identical in structure to the
+``SensorPublisher`` from the previous subsection. The self-cycling
+design does not change what each callback does, only who requests the
+transition.
+
 .. list-table:: What each callback does inside SelfCyclingNode
    :widths: 25 75
    :header-rows: 1
@@ -718,9 +757,11 @@ every 5 seconds.
    * - ``on_activate``
      - Calls ``super().on_activate``, then starts a 1-second publish timer.
    * - ``on_deactivate``
-     - Cancels the publish timer, then calls ``super().on_deactivate``.
+     - Cancels the publish timer, then calls ``super().on_deactivate`` to
+       disable the publisher.
    * - ``on_cleanup``
-     - Sets the publisher to ``None``. Counter resets to zero.
+     - Sets the publisher to ``None``, releasing all resources. Counter
+       resets to zero.
 
 .. note::
 
@@ -731,13 +772,18 @@ every 5 seconds.
 .. dropdown:: Demonstration
    :open:
 
-   .. code-block:: console
+   .. list-table::
+      :widths: 5 95
+      :header-rows: 1
 
-      # T1:
-      ros2 run lifecycle_demo self_cycling_exe
-      # T2:
-      ros2 lifecycle get /self_cycling_node
-      ros2 topic echo /sensor_data
+      * -
+        - Command
+      * - T1
+        - ``ros2 run lifecycle_demo self_cycling_exe``
+      * - T2
+        - ``ros2 lifecycle get /self_cycling_node``
+      * - T2
+        - ``ros2 topic echo /sensor_data``
 
    The full cycle is: Unconfigured -> (5s) -> Inactive -> (5s) ->
    Active -> (5s) -> Inactive -> (5s) -> Unconfigured -> ...
@@ -949,6 +995,10 @@ heading (``goal_yaw``, default 0.0 rad) before retrying.
 
       Drive-to-goal BT with Fallback recovery.
 
+
+Review
+----------------------------------------------------
+
 .. list-table:: bt_demo Package Files
    :widths: 30 70
    :header-rows: 1
@@ -965,9 +1015,12 @@ heading (``goal_yaw``, default 0.0 rad) before retrying.
      - Condition node: subscribes to odometry and returns SUCCESS while
        far from the goal, FAILURE when within tolerance.
    * - ``main_drive_to_goal.py``
-     - Entry point: assembles the tree, reads ROS 2 parameters, runs it.
-   * - ``drive_to_goal.py``
-     - Launch file: exposes all tuneable values as launch arguments.
+     - Entry point: assembles a Sequence with a condition gate and a
+       Selector fallback (Timeout + Spin recovery), reads ROS 2
+       parameters, and runs the tree.
+   * - ``drive_to_goal.launch.py``
+     - Launch file: exposes all tuneable values (goal, gains, timeout)
+       as launch arguments.
 
 
 Decorators

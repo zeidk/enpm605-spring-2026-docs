@@ -58,10 +58,10 @@ Next Steps
   Nav2**:
 
   - Occupancy grid maps and the ``map`` frame
-  - SLAM with ``slam_toolbox``: building a map from LiDAR + odometry
+  - SLAM with ``slam_toolbox``: building a map from LiDAR and odometry
   - Localization with AMCL against a saved map
   - The Nav2 stack: planner, controller, behavior tree, recovery
-  - Sending navigation goals via RViz2 and the ``NavigateToPose`` action
+  - Sending navigation goals via the ``NavigateToPose`` action
 
 - Complete the exercises from this lecture before the next class.
 - Read `Nav2 Getting Started
