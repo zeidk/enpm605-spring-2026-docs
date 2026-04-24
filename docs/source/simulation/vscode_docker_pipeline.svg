@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 900 520"
+   font-family="Segoe UI, Arial, sans-serif"
+   version="1.1"
+   id="svg46"
+   sodipodi:docname="vscode_docker_pipeline.svg"
+   inkscape:version="1.4.3 (1:1.4.3+202512261034+0d15f75042)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview46"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.8355225"
+     inkscape:cx="415.36359"
+     inkscape:cy="303.48323"
+     inkscape:window-width="1850"
+     inkscape:window-height="1136"
+     inkscape:window-x="70"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg46" />
+  <defs
+     id="defs2">
+    <marker
+       id="arrow"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="8"
+       markerHeight="8"
+       orient="auto-start-auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#4a4a4a"
+         id="path1" />
+    </marker>
+    <marker
+       id="arrow-blue"
+       viewBox="0 0 10 10"
+       refX="9"
+       refY="5"
+       markerWidth="8"
+       markerHeight="8"
+       orient="auto-start-auto">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="#0078d4"
+         id="path2" />
+    </marker>
+    <filter
+       id="shadow"
+       x="-0.0027027027"
+       y="-0.0022727273"
+       width="1.0054054"
+       height="1.0045455">
+      <feDropShadow
+         dx="2"
+         dy="2"
+         stdDeviation="3"
+         flood-opacity="0.15" />
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect
+     width="900"
+     height="520"
+     rx="12"
+     fill="#f8f9fa"
+     id="rect2" />
+  <!-- Title -->
+  <text
+     x="450"
+     y="36"
+     text-anchor="middle"
+     font-size="20"
+     font-weight="bold"
+     fill="#23233a"
+     id="text2">VS Code + Docker Container Pipeline</text>
+  <!-- ===== HOST MACHINE BOX ===== -->
+  <rect
+     x="30"
+     y="56"
+     width="370"
+     height="440"
+     rx="14"
+     fill="#e8f0fe"
+     stroke="#4285f4"
+     stroke-width="2"
+     filter="url(#shadow)"
+     id="rect3" />
+  <text
+     x="214.83887"
+     y="84"
+     text-anchor="middle"
+     font-size="15px"
+     font-weight="bold"
+     fill="#1a56db"
+     id="text3">Host Machine (Ubuntu)</text>
+  <!-- Step 1: Terminal -->
+  <rect
+     x="55"
+     y="102"
+     width="320"
+     height="68"
+     rx="10"
+     fill="#ffffff"
+     stroke="#b0c4de"
+     stroke-width="1.5"
+     id="rect4" />
+  <circle
+     cx="80"
+     cy="124"
+     r="13"
+     fill="#4285f4"
+     id="circle4" />
+  <text
+     x="80"
+     y="129"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text4">1</text>
+  <text
+     x="100"
+     y="124"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text5">Terminal: Start the container</text>
+  <text
+     x="96"
+     y="146"
+     font-size="11.5px"
+     fill="#555555"
+     font-family="Consolas, monospace"
+     id="text6">xhost +local:docker</text>
+  <text
+     x="96"
+     y="162"
+     font-size="11.5px"
+     fill="#555555"
+     font-family="Consolas, monospace"
+     id="text7">docker start enpm605</text>
+  <!-- Step 2: VS Code on Host -->
+  <rect
+     x="55"
+     y="186"
+     width="320"
+     height="68"
+     rx="10"
+     fill="#ffffff"
+     stroke="#b0c4de"
+     stroke-width="1.5"
+     id="rect7" />
+  <circle
+     cx="80"
+     cy="208"
+     r="13"
+     fill="#4285f4"
+     id="circle7" />
+  <text
+     x="80"
+     y="213"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text8">2</text>
+  <text
+     x="100"
+     y="208"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text9">VS Code: Install extension</text>
+  <g
+     id="g48"
+     transform="translate(20)">
+    <text
+       x="70"
+       y="230"
+       font-size="11.5px"
+       fill="#555555"
+       id="text10">Install</text>
+    <text
+       x="102.40186"
+       y="230.06738"
+       font-size="11.5px"
+       fill="#0078d4"
+       font-weight="bold"
+       id="text11">Dev Containers</text>
+    <text
+       x="189.78247"
+       y="230"
+       font-size="11.5px"
+       fill="#555555"
+       id="text12">extension</text>
+  </g>
+  <text
+     x="90"
+     y="246"
+     font-size="10.5px"
+     fill="#888888"
+     font-style="italic"
+     id="text13">ms-vscode-remote.remote-containers</text>
+  <!-- Step 3: Attach -->
+  <rect
+     x="55"
+     y="270"
+     width="320"
+     height="80"
+     rx="10"
+     fill="#ffffff"
+     stroke="#b0c4de"
+     stroke-width="1.5"
+     id="rect13" />
+  <circle
+     cx="80"
+     cy="292"
+     r="13"
+     fill="#4285f4"
+     id="circle13" />
+  <text
+     x="80"
+     y="297"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text14">3</text>
+  <text
+     x="100"
+     y="292"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text15">VS Code: Attach to container</text>
+  <text
+     x="88"
+     y="314"
+     font-size="11.5px"
+     fill="#555555"
+     id="text16">Ctrl+Shift+P &gt;</text>
+  <text
+     x="88"
+     y="330"
+     font-size="11.5px"
+     fill="#0078d4"
+     font-style="italic"
+     id="text17">Dev Containers: Attach to Running Container</text>
+  <text
+     x="88"
+     y="346"
+     font-size="11.5px"
+     fill="#555555"
+     id="text18">Select</text>
+  <text
+     x="123"
+     y="346"
+     font-size="11.5px"
+     fill="#0078d4"
+     font-weight="bold"
+     id="text19">enpm605</text>
+  <!-- Arrow from Host to Container -->
+  <line
+     x1="400"
+     y1="310"
+     x2="478"
+     y2="310"
+     stroke="#0078d4"
+     stroke-width="2.5"
+     stroke-dasharray="8,4"
+     marker-end="url(#arrow-blue)"
+     id="line19" />
+  <text
+     x="440.24414"
+     y="297.93689"
+     text-anchor="middle"
+     font-size="15.3842px"
+     fill="#0078d4"
+     font-weight="bold"
+     id="text20"
+     style="stroke-width:1.53842">attach</text>
+  <!-- ===== DOCKER CONTAINER BOX ===== -->
+  <rect
+     x="490"
+     y="56"
+     width="385"
+     height="440"
+     rx="14"
+     fill="#e6f4ea"
+     stroke="#34a853"
+     stroke-width="2"
+     filter="url(#shadow)"
+     id="rect20" />
+  <text
+     x="682"
+     y="84"
+     text-anchor="middle"
+     font-size="15"
+     font-weight="bold"
+     fill="#1e7e34"
+     id="text21">Docker Container (enpm605)</text>
+  <!-- Step 4: VS Code Window -->
+  <rect
+     x="515"
+     y="102"
+     width="335"
+     height="100"
+     rx="10"
+     fill="#ffffff"
+     stroke="#a8d5ba"
+     stroke-width="1.5"
+     id="rect21" />
+  <circle
+     cx="540"
+     cy="124"
+     r="13"
+     fill="#34a853"
+     id="circle21" />
+  <text
+     x="540"
+     y="129"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text22">4</text>
+  <text
+     x="560"
+     y="124"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text23">VS Code window opens (remote)</text>
+  <text
+     x="530"
+     y="154"
+     font-size="11.5px"
+     fill="#555555"
+     id="text24">Bottom-left shows:</text>
+  <g
+     id="g46"
+     transform="translate(103.5835,-15.118774)">
+    <rect
+       x="530"
+       y="155"
+       width="195"
+       height="20"
+       rx="4"
+       fill="#0078d4"
+       id="rect24" />
+    <text
+       x="627.40601"
+       y="167.91919"
+       text-anchor="middle"
+       font-size="11px"
+       fill="#ffffff"
+       font-weight="bold"
+       id="text25">Container enpm605</text>
+  </g>
+  <text
+     x="530"
+     y="182.5127"
+     font-size="11.5px"
+     fill="#555555"
+     id="text27">File &gt; Open Folder &gt; /home/zeid/</text>
+  <!-- Step 5: Open Folder -->
+  <rect
+     x="515"
+     y="218"
+     width="335"
+     height="76"
+     rx="10"
+     fill="#ffffff"
+     stroke="#a8d5ba"
+     stroke-width="1.5"
+     id="rect27" />
+  <circle
+     cx="540"
+     cy="240"
+     r="13"
+     fill="#34a853"
+     id="circle27" />
+  <text
+     x="540"
+     y="245"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text28">5</text>
+  <text
+     x="560"
+     y="240"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text29">Open workspace folder</text>
+  <text
+     x="530"
+     y="270"
+     font-size="11.5px"
+     fill="#555555"
+     font-family="Consolas, monospace"
+     id="text30">/home/zeid/enpm605_ws/</text>
+  <text
+     x="530"
+     y="286"
+     font-size="10.5px"
+     fill="#888888"
+     font-style="italic"
+     id="text31">mounted from host -- changes persist</text>
+  <!-- Step 6: Integrated terminal -->
+  <rect
+     x="515"
+     y="310"
+     width="335"
+     height="76"
+     rx="10"
+     fill="#ffffff"
+     stroke="#a8d5ba"
+     stroke-width="1.5"
+     id="rect31" />
+  <circle
+     cx="540"
+     cy="332"
+     r="13"
+     fill="#34a853"
+     id="circle31" />
+  <text
+     x="540"
+     y="337"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text32">6</text>
+  <text
+     x="560"
+     y="332"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text33">Use the integrated terminal</text>
+  <text
+     x="530"
+     y="360"
+     font-size="11.5px"
+     fill="#555555"
+     id="text34">Open terminal: Ctrl+`</text>
+  <text
+     x="530"
+     y="378"
+     font-size="11.5px"
+     fill="#555555"
+     id="text35">Full access to ROS 2, Gazebo, colcon</text>
+  <!-- Step 7: Test -->
+  <rect
+     x="515"
+     y="402"
+     width="335"
+     height="76"
+     rx="10"
+     fill="#ffffff"
+     stroke="#a8d5ba"
+     stroke-width="1.5"
+     id="rect35" />
+  <circle
+     cx="540"
+     cy="424"
+     r="13"
+     fill="#34a853"
+     id="circle35" />
+  <text
+     x="540"
+     y="429"
+     text-anchor="middle"
+     font-size="14"
+     font-weight="bold"
+     fill="#fff"
+     id="text36">7</text>
+  <text
+     x="560"
+     y="424"
+     font-size="13"
+     font-weight="bold"
+     fill="#23233a"
+     id="text37">Test the setup</text>
+  <g
+     id="g47"
+     transform="translate(3.0483398,0.7788086)">
+    <text
+       x="530"
+       y="452"
+       font-size="10.5px"
+       fill="#555555"
+       font-family="Consolas, monospace"
+       id="text38">ros2 launch rosbot_gazebo</text>
+    <text
+       x="694.70532"
+       y="452"
+       font-size="10.5px"
+       fill="#555555"
+       font-family="Consolas, monospace"
+       id="text39">empty_world.launch.py</text>
+  </g>
+  <!-- Legend -->
+  <rect
+     x="55"
+     y="370"
+     width="320"
+     height="110"
+     rx="10"
+     fill="#fff9e6"
+     stroke="#f9ab00"
+     stroke-width="1.5"
+     id="rect39" />
+  <text
+     x="70"
+     y="392"
+     font-size="13"
+     font-weight="bold"
+     fill="#b5850b"
+     id="text40">Key Directories (inside container)</text>
+  <text
+     x="70"
+     y="414"
+     font-size="11.5"
+     fill="#555"
+     font-family="Consolas, monospace"
+     id="text41">~/enpm605_ws/</text>
+  <text
+     x="172"
+     y="414"
+     font-size="10.5px"
+     fill="#888888"
+     id="text42">Your workspace</text>
+  <text
+     x="70"
+     y="434"
+     font-size="11.5"
+     fill="#555"
+     font-family="Consolas, monospace"
+     id="text43">~/enpm605_ws/src/rosbot_sim/</text>
+  <text
+     x="272"
+     y="434"
+     font-size="10.5px"
+     fill="#888888"
+     id="text44">ROSbot pkgs</text>
+  <text
+     x="70"
+     y="458"
+     font-size="10.5"
+     fill="#888"
+     font-style="italic"
+     id="text45"
+     style="-inkscape-font-specification:'Segoe UI, Arial, sans-serif, Italic';font-family:'Segoe UI', Arial, sans-serif;font-weight:normal;font-style:italic;font-stretch:normal;font-variant:normal;font-size:12px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">enpm605_ws is mounted from host.</text>
+  <text
+     x="70.06665"
+     y="472"
+     font-size="10.5px"
+     fill="#888888"
+     font-style="italic"
+     id="text46"
+     style="-inkscape-font-specification:'Segoe UI, Arial, sans-serif, Italic';font-family:'Segoe UI', Arial, sans-serif;font-weight:normal;font-style:italic;font-stretch:normal;font-variant:normal;font-size:12px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Files there persist even if the container is deleted.</text>
+</svg>

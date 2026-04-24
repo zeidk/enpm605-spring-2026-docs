@@ -55,7 +55,7 @@ Follow these steps from a terminal opened in ``~/enpm605_ws``.
 
 .. code-block:: console
 
-   rosdep install --from-paths src --ignore-src -y \
+   sudo apt update && rosdep install --from-paths src --ignore-src -y \
        --skip-keys "micro_ros_agent python3-ftdi"
 
 **3. Build the full stack.**

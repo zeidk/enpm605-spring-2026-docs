@@ -161,7 +161,7 @@ Step 2: Pull the Docker Image
 
 .. _docker-step3:
 
-Step 3: Run the Container
+Step 3: Create and Start the Container
 ====================================================
 
 
@@ -190,10 +190,16 @@ Step 3: Run the Container
       back in, you need to run it again.
 
 
-.. dropdown:: Start the Container
+.. dropdown:: Create the Container
    :color: primary
    :icon: pin
    :animate: fade-in-slide-down
+
+   .. important::
+
+      You only need to run ``docker run`` **once** to create the
+      container. After that, use ``docker start`` / ``docker exec`` to
+      restart it (see :ref:`docker-lifecycle`).
 
    .. tab-set::
 
@@ -207,7 +213,7 @@ Step 3: Run the Container
                 -e DISPLAY=$DISPLAY \
                 -e QT_X11_NO_MITSHM=1 \
                 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-                -v ~/enpm605_ws:/home/user/enpm605_ws \
+                -v ~/enpm605_ws:/home/zeid/enpm605_ws \
                 --network host \
                 zeidk/enpm605-sim:latest \
                 bash
@@ -222,7 +228,7 @@ Step 3: Run the Container
                 -e QT_X11_NO_MITSHM=1 \
                 -e LIBGL_ALWAYS_SOFTWARE=1 \
                 -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-                -v ~/enpm605_ws:/home/user/enpm605_ws \
+                -v ~/enpm605_ws:/home/zeid/enpm605_ws \
                 --network host \
                 zeidk/enpm605-sim:latest \
                 bash
@@ -259,7 +265,7 @@ Step 3: Run the Container
       * - ``-v /tmp/.X11-unix:/tmp/.X11-unix:rw``
         - Mount the X11 socket so the container can communicate with
           your display server.
-      * - ``-v ~/enpm605_ws:/home/user/enpm605_ws``
+      * - ``-v ~/enpm605_ws:/home/zeid/enpm605_ws``
         - **Mount your work directory.** Files you create inside
           ``~/enpm605_ws`` in the container are saved to
           ``~/enpm605_ws`` on your host machine. Your code is preserved
@@ -272,7 +278,76 @@ Step 3: Run the Container
       * - ``bash``
         - The command to run inside the container (a bash shell).
 
-   You are now inside the container with ROS 2 and Gazebo ready to use.
+   After running this command you will be dropped into a bash shell
+   **inside the container**. Your working directory will be
+   ``/home/zeid/``. You now have access to ROS 2 and Gazebo.
+
+
+.. _docker-step4:
+
+Step 4: Verify the Setup
+====================================================
+
+Once inside the container, verify that everything works by launching
+a quick test simulation.
+
+.. dropdown:: Quick Gazebo Test
+   :color: primary
+   :icon: pin
+   :open:
+   :animate: fade-in-slide-down
+
+   From the container shell, run:
+
+   .. code-block:: console
+
+      ros2 launch rosbot_gazebo empty_world.launch.py
+
+   This launches Gazebo Harmonic with the ROSbot in an empty world.
+   You should see:
+
+   - A **Gazebo** window opens on your screen showing an empty
+     environment with the ROSbot model.
+   - An **RViz** window opens showing the robot's sensor data.
+
+   If both windows appear and the robot is visible, your setup is
+   working correctly. Close both windows (``Ctrl+C`` in the terminal)
+   before proceeding.
+
+   .. note::
+
+      If Gazebo does not open or you see a ``cannot open display``
+      error, make sure you ran ``xhost +local:docker`` on the host
+      **before** starting the container. See the
+      :ref:`docker-troubleshooting` section below.
+
+
+.. _docker-workspace:
+
+Working Inside the Container
+====================================================
+
+.. card:: Key Directories
+
+   When you are inside the container, your home directory is
+   ``/home/zeid/``. The main workspace is:
+
+   .. list-table::
+      :widths: 40 60
+      :class: compact-table
+
+      * - ``~/enpm605_ws/``
+        - **Your workspace** (mounted from the host at
+          ``~/enpm605_ws/``). This directory contains both the pre-built
+          ROSbot simulation packages (under ``src/rosbot_sim/``) and
+          your own ROS 2 packages. Files persist on your host machine
+          even if the container is deleted.
+      * - ``~/enpm605_ws/src/rosbot_sim/``
+        - The ROSbot simulation packages (robot model, Gazebo worlds,
+          launch files). **Do not modify** these packages.
+      * - ``~/enpm605_ws/src/``
+        - Create your own ROS 2 packages here alongside
+          ``rosbot_sim/``.
 
 
 .. dropdown:: Open Additional Terminals
@@ -297,7 +372,12 @@ Step 3: Run the Container
    simulation is running.
 
 
-.. dropdown:: Exit the Container
+.. _docker-lifecycle:
+
+Container Lifecycle
+====================================================
+
+.. dropdown:: Exiting the Container
    :color: primary
    :icon: pin
    :animate: fade-in-slide-down
@@ -324,7 +404,7 @@ Step 3: Run the Container
       background.
 
 
-.. dropdown:: Stop and Restart the Container
+.. dropdown:: Stopping and Restarting the Container
    :color: primary
    :icon: pin
    :animate: fade-in-slide-down
@@ -350,6 +430,8 @@ Step 3: Run the Container
       docker start enpm605
       docker exec -it enpm605 bash
 
+   - ``xhost +local:docker`` re-enables display access (needed once
+     per login session).
    - ``docker start`` restarts a previously stopped container with all
      its state intact.
    - ``docker exec`` attaches a new terminal to it.
@@ -367,14 +449,29 @@ Step 3: Run the Container
      again.
 
 
-.. dropdown:: Connect with VS Code
+.. _docker-vscode:
+
+Connecting with VS Code
+====================================================
+
+VS Code can attach directly to the running container, giving you a
+full editor with IntelliSense, integrated terminal, and file
+browsing -- all running inside the Docker environment.
+
+The following diagram shows the complete pipeline:
+
+.. image:: vscode_docker_pipeline.svg
+   :align: center
+   :width: 100%
+   :alt: Pipeline showing how to connect VS Code to the Docker container
+
+|
+
+.. dropdown:: Step-by-step instructions
    :color: primary
    :icon: pin
+   :open:
    :animate: fade-in-slide-down
-
-   VS Code can attach directly to the running container, giving you a
-   full editor with IntelliSense, integrated terminal, and file
-   browsing inside the Docker environment.
 
    .. important::
 
@@ -384,17 +481,20 @@ Step 3: Run the Container
 
    **1. Install the Dev Containers extension**
 
-   Open VS Code and install the **Dev Containers** extension
+   Open VS Code on your **host machine** and install the
+   **Dev Containers** extension
    (``ms-vscode-remote.remote-containers``):
 
    .. code-block:: console
 
       code --install-extension ms-vscode-remote.remote-containers
 
-   - This extension allows VS Code to connect to Docker containers and
-     use them as a full development environment.
+   This extension allows VS Code to connect to Docker containers and
+   use them as a full development environment.
 
    **2. Start the container** (if not already running)
+
+   In a **host terminal** (not VS Code), run:
 
    .. code-block:: console
 
@@ -402,26 +502,25 @@ Step 3: Run the Container
       docker start enpm605
 
    If you have not created the container yet, run the ``docker run``
-   command from the previous section first.
+   command from Step 3 first.
 
    **3. Attach VS Code to the container**
 
    - Open the VS Code **Command Palette** (``Ctrl+Shift+P``)
-   - Type **Dev Containers: Attach to Running Container...**
+   - Type ``Dev Containers: Attach to Running Container...``
    - Select **enpm605** from the list
 
-   VS Code will open a new window connected to the container. The
-   bottom-left corner will show **Container enpm605**.
+   VS Code will open a **new window** connected to the container. The
+   bottom-left corner will show
+   :bdg-primary:`Container enpm605`
+   confirming you are working inside the container.
 
    **4. Open a folder**
 
-   Once attached, use **File > Open Folder** to navigate to a
-   workspace inside the container:
+   Once attached, use **File > Open Folder** and navigate to:
 
-   - ``/home/user/enpm605_ws/`` -- your work directory (mounted from
+   - ``/home/zeid/enpm605_ws/`` -- your workspace (mounted from
      host -- changes are saved on your machine)
-   - ``/home/user/rosbot_ws/`` -- the pre-built ROSbot simulation
-     workspace
 
    **5. Install extensions inside the container**
 
@@ -432,21 +531,26 @@ Step 3: Run the Container
    - **Python** (``ms-python.python``)
    - **ROS** (``ms-iot.vscode-ros``)
 
-   .. tip::
+   **6. Use the integrated terminal**
 
-      Once attached to the container, you can open integrated terminals
-      inside VS Code with ``Ctrl+``` ` -- these run inside the
-      container and have full access to ROS 2 and Gazebo commands.
+   Open a terminal inside VS Code with ``Ctrl+``` ` -- this terminal
+   runs **inside the container** and has full access to ROS 2 and
+   Gazebo commands. You can open multiple terminals from within VS Code,
+   eliminating the need to run ``docker exec`` from separate host
+   terminals.
 
 
-.. _docker-step4:
+.. _docker-launch:
 
-Step 4: Launch the Simulation
+Launching the Simulation
 ====================================================
 
-Once inside the container (via terminal or VS Code), launch the
-simulation using the shared instructions on the :ref:`simulation-launch`
-page.
+Once your environment is set up (and verified with the quick test in
+Step 4), launch the full simulation using the shared instructions on
+the :ref:`simulation-launch` page.
+
+
+.. _docker-troubleshooting:
 
 Troubleshooting
 ====================================================
@@ -471,7 +575,7 @@ Troubleshooting
       .. code-block:: console
 
          source /opt/ros/jazzy/setup.bash
-         source ~/rosbot_ws/install/setup.bash
+         source ~/enpm605_ws/install/setup.bash
 
 
    .. dropdown:: ``cannot open display`` error
