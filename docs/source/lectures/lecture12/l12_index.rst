@@ -33,10 +33,10 @@ examples use the ``namespace_demo``, ``remapping_demo``,
      behavior in each state.
    - Explain the structure of a behavior tree: nodes, ticks, and return
      statuses.
-   - Implement a robot behavior tree in Python using ``py_trees`` and
-     ``py_trees_ros``.
-   - Drive a robot to a goal in Gazebo using a BT with conditions,
-     actions, decorators, and a recovery strategy.
+   - Implement a simple robot behavior tree in Python using
+     ``py_trees`` and ``py_trees_ros``.
+   - Drive a robot to a fixed goal in Gazebo using a BT with a
+     condition and an action node.
 
 
 .. toctree::

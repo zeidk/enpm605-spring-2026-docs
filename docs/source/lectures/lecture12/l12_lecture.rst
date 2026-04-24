@@ -16,8 +16,9 @@ everything set up before running any code in this lecture.
 .. dropdown:: Before You Start
    :open:
 
-   - Do a ``git pull`` (native installation only).
-   - Recompile Lecture 12 packages:
+   - Remove the ``log/``, ``build/``, and ``install/`` folders.
+   - Do a ``git pull``.
+   - Compile lecture 12 packages only:
 
    .. code-block:: console
 
@@ -25,12 +26,12 @@ everything set up before running any code in this lecture.
           --cmake-args -DCMAKE_BUILD_TYPE=Release \
           --packages-up-to lecture12_meta
 
-   - Source ``.bashrc``.
+   - Source your workspace.
    - Verify Gazebo launches cleanly:
 
    .. code-block:: console
 
-      ros2 launch rosbot_gazebo empty_world.launch.py
+      ros2 launch rosbot_gazebo husarion_world.launch.py
 
 
 Namespaces
@@ -462,6 +463,8 @@ node overrides.
 
 - Deactivation must always succeed. If ``on_deactivate`` could fail,
   the system could get stuck unable to stop a node.
+- Clean up as best you can, but the node will end up Inactive
+  regardless.
 - The same applies to ``on_shutdown``: the state machine only moves
   forward toward Finalized.
 
@@ -614,6 +617,15 @@ callback per transition. Each callback must return
        self._counter = 0
        return TransitionCallbackReturn.SUCCESS
 
+   def main(args=None):
+       rclpy.init(args=args)
+       rclpy.spin(SensorPublisher())
+       rclpy.shutdown()
+
+Setting ``self._publisher = None`` drops the only reference, allowing
+the publisher to be garbage-collected. The node returns to
+Unconfigured and can be reconfigured.
+
 
 Testing Lifecycle Nodes
 ----------------------------------------------------
@@ -651,23 +663,49 @@ transitions manually from the CLI.
         - Enters **Inactive**; timer cancelled
       * - T2
         - ``ros2 lifecycle set /sensor_publisher cleanup``
-        - Returns to **Unconfigured**
+        - Returns to **Unconfigured**; all resources released
+
+.. admonition:: Experiment
+   :class: tip
+
+   After cleanup the node is **Unconfigured** again. Issue
+   ``configure`` and ``activate`` a second time. Does the counter
+   reset? What does this tell you about when ``on_cleanup`` runs
+   relative to ``__init__``?
 
 
 Programmatic State Changes
 ----------------------------------------------------
 
-A lifecycle node can trigger its own state transitions by calling the
-``change_state`` service on itself. In the ``self_cycling_exe``
+A lifecycle node can trigger its own state transitions programmatically
+by calling the lifecycle service on itself. In the ``self_cycling_exe``
 example, a timer fires every 5 seconds and advances the node through
 the full state cycle automatically.
 
-- A class-level list ``_CYCLE`` defines the sequence:
+**Design: Self-Cycling Node**
+
+Rather than waiting for a human operator, the node drives its own
+state transitions by calling the ``change_state`` service on itself
+every 5 seconds.
+
+- A class-level list ``_CYCLE`` defines the sequence of transitions:
   ``configure`` -> ``activate`` -> ``deactivate`` -> ``cleanup``, then
   repeats.
-- Every lifecycle node automatically advertises
-  ``/<node_name>/change_state``. Calling it programmatically is
-  equivalent to running ``ros2 lifecycle set`` from the CLI.
+- A ``create_client`` call connects to the node's own
+  ``/<node_name>/change_state`` service, which every lifecycle node
+  advertises automatically.
+- A 5-second timer fires ``_advance_state``, which picks the next
+  transition from the list and issues it as an asynchronous service
+  call.
+- A modulo index ensures the cycle repeats indefinitely without
+  resetting ``_step``.
+
+.. note::
+
+   Every lifecycle node automatically advertises
+   ``/<node_name>/change_state``. Calling it programmatically is
+   equivalent to running ``ros2 lifecycle set`` from the CLI, but
+   without any human intervention.
 
 .. list-table:: What each callback does inside SelfCyclingNode
    :widths: 25 75
