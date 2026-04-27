@@ -67,12 +67,6 @@ Follow these steps from a terminal opened in ``~/enpm605_ws``.
 
 **3. Build the full stack.**
 
-.. code-block:: console
-
-   colcon build --symlink-install \
-       --cmake-args -DCMAKE_BUILD_TYPE=Release \
-       --packages-up-to final_project_meta
-
 .. important::
 
    **Edit** ``~/enpm605_ws/src/final_project_meta/package.xml``
@@ -93,6 +87,13 @@ Follow these steps from a terminal opened in ``~/enpm605_ws``.
    --packages-up-to final_project_meta`` will build the simulation
    stack but skip your own code.
 
+.. code-block:: console
+
+   colcon build --symlink-install \
+       --cmake-args -DCMAKE_BUILD_TYPE=Release \
+       --packages-up-to final_project_meta
+
+
 **4. Source the workspace.**
 
 .. code-block:: console
@@ -110,19 +111,68 @@ should see the four color-coded zone markers (red, green, blue,
 yellow) in the four rooms and a white base station marker with a
 red cross at the center.
 
-**6. Launch Nav2** (in a second terminal). Pass the path to the map
-your group built and saved under ``group<N>_final/maps/``:
-
-.. code-block:: console
-
-   ros2 launch rosbot_gazebo navigation.launch.py \
-       map:=/path/to/group<N>_final/maps/final_project_world.yaml
-
-**7. Launch the search and rescue mission** (in a third terminal):
+**6. Launch the search and rescue mission** (in a second terminal):
 
 .. code-block:: console
 
    ros2 launch group<N>_final search_and_rescue.launch.py
+
+Your ``search_and_rescue.launch.py`` is the **single entry point** for
+the mission: it must bring up Nav2 (localization + navigation stack)
+*and* start your behavior tree node. Do **not** invoke
+``map_nav.launch.py`` directly, and do **not** ask me (the grader) to run
+two launch files in parallel.
+
+Instead, **reuse the relevant portions** of the reference launch file
+inside your own ``search_and_rescue.launch.py``:
+
+- Reference: `map_nav.launch.py
+  <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture13/nav_demo/launch/map_nav.launch.py>`_
+
+
+A typical structure looks like:
+
+.. code-block:: python
+
+   from ament_index_python.packages import get_package_share_directory
+   from launch import LaunchDescription
+   from launch.actions import IncludeLaunchDescription
+   from launch.launch_description_sources import PythonLaunchDescriptionSource
+   from launch_ros.actions import Node
+   import os
+
+   def generate_launch_description():
+       pkg_share = get_package_share_directory('group<N>_final')
+       map_file = os.path.join(pkg_share, 'maps', 'final_project_map.yaml')
+       nav2_params = os.path.join(pkg_share, 'config', 'nav2_params.yaml')
+
+       # --- adapted from map_nav.launch.py ---
+       nav2_bringup = IncludeLaunchDescription(
+           PythonLaunchDescriptionSource(...),  # nav2_bringup launch
+           launch_arguments={
+               'map': map_file,
+               'params_file': nav2_params,
+               'use_sim_time': 'true',
+           }.items(),
+       )
+
+       # --- your own behavior tree node ---
+       bt_node = Node(
+           package='group<N>_final',
+           executable='search_and_rescue',
+           output='screen',
+       )
+
+       return LaunchDescription([nav2_bringup, bt_node])
+
+.. important::
+
+   ``final_project_map.yaml`` is the file you produce in the
+   :ref:`final-project-build-the-map` step. Make sure both the
+   ``.yaml`` and its companion ``.pgm`` are installed by your
+   package (add the ``maps/`` directory to ``data_files`` in
+   ``setup.py``), otherwise ``get_package_share_directory()`` will
+   not find them at runtime.
 
 
 How Detection Works
@@ -151,8 +201,7 @@ as a ROS 2 service call.
 .. note::
 
    The detection service is a simple dictionary lookup -- it does
-   **not** check whether the robot is physically near the zone. A
-   student could call the service manually from any location:
+   **not** check whether the robot is physically near the zone. You could call the service manually from any location:
 
    .. code-block:: console
 
@@ -216,29 +265,33 @@ You are free to change the survivor locations, but your submitted
 survivors.
 
 
-Topics and Frames
-=================
+Interfaces and Frames
+=====================
 
-.. dropdown:: Topics You Will Use
+.. dropdown:: Actions and Services You Will Use
    :open:
 
    .. list-table::
-      :widths: 25 30 45
+      :widths: 15 15 40 30
       :header-rows: 1
       :class: compact-table
 
-      * - Direction
-        - Topic / Type
+      * - Role
+        - Kind
+        - Name / Type
         - Description
-      * - **Action client**
-        - ``navigate_to_pose`` (``nav2_msgs/NavigateToPose``)
+      * - **Client**
+        - Action
+        - ``navigate_to_pose`` (``nav2_msgs/action/NavigateToPose``)
         - Nav2 action for autonomous navigation to a goal pose.
-      * - **Service client**
-        - ``/detect_survivor`` (``DetectSurvivor``)
-        - Simulated survivor detection at a zone.
-      * - **Service client**
-        - ``/report_survivor`` (``ReportSurvivor``)
-        - Report a found survivor to the simulated command center.
+      * - **Client**
+        - Service
+        - ``/detect_survivor`` (``group<N>_final_interfaces/srv/DetectSurvivor``)
+        - Simulated survivor detection at a zone (you implement the server).
+      * - **Client**
+        - Service
+        - ``/report_survivor`` (``group<N>_final_interfaces/srv/ReportSurvivor``)
+        - Report a found survivor to the simulated command center (you implement the server).
 
 .. dropdown:: TF Frames
    :open:
@@ -274,57 +327,57 @@ directly.
    :open:
 
    .. list-table::
-      :widths: 45 55
+      :widths: 30 70
       :header-rows: 1
       :class: compact-table
 
       * - File
         - What to learn from it
-      * - ``lecture13/mapping_navigation_demo/mapping_navigation_demo/navigation_demo_interface.py``
+      * - `navigation_demo_interface.py (lecture13) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture13/mapping_navigation_demo/mapping_navigation_demo/navigation_demo_interface.py>`_
         - **Primary Nav2 reference.** Shows how to use
           ``BasicNavigator`` from ``nav2_simple_commander`` to send
           ``NavigateToPose`` goals, handle feedback and results
           (``TaskResult.SUCCEEDED / CANCELED / FAILED``), and
           follow waypoints. Also demonstrates setting the initial
           pose using TF lookups and ``setInitialPose()``.
-      * - ``lecture13/mapping_navigation_demo/mapping_navigation_demo/scripts/main_navigation_demo.py``
+      * - `main_navigation_demo.py (lecture13) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture13/mapping_navigation_demo/mapping_navigation_demo/scripts/main_navigation_demo.py>`_
         - Entry point pattern: creating the node with a
           ``MultiThreadedExecutor``.
-      * - ``lecture13/mapping_navigation_demo/launch/navigation.launch.py``
+      * - `navigation.launch.py (lecture13) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture13/mapping_navigation_demo/launch/navigation.launch.py>`_
         - Launch file that starts Nav2 localization, navigation
           stack, RViz, and an optional demo node with
           ``IfCondition``. Shows how to pass parameters and
           launch arguments.
-      * - ``lecture13/mapping_navigation_demo/config/nav2_params.yaml``
+      * - `nav2_params.yaml (lecture13) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture13/mapping_navigation_demo/config/nav2_params.yaml>`_
         - Nav2 parameter configuration. Note the
           ``enable_stamped_cmd_vel: True`` setting required for
           the ROSbot (the robot uses ``TwistStamped``, not
           ``Twist``).
-      * - ``lecture12/bt_demo/bt_demo/drive_forward.py``
+      * - `drive_forward.py (lecture12) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture12/bt_demo/bt_demo/drive_forward.py>`_
         - Custom BT action node pattern: ``setup(**kwargs)`` to
           get the ROS 2 node, ``update()`` returning
           ``Status.RUNNING/SUCCESS/FAILURE``, ``terminate()``
           for cleanup.
-      * - ``lecture12/bt_demo/bt_demo/goal_not_reached.py``
+      * - `goal_not_reached.py (lecture12) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture12/bt_demo/bt_demo/goal_not_reached.py>`_
         - Custom BT condition node pattern: subscribes to a topic
           in ``setup()``, returns ``SUCCESS`` or ``FAILURE`` in
           ``update()`` (never ``RUNNING``).
-      * - ``lecture12/bt_demo/bt_demo/scripts/main_drive_to_goal.py``
+      * - `main_drive_to_goal.py (lecture12) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture12/bt_demo/bt_demo/scripts/main_drive_to_goal.py>`_
         - Entry point that reads parameters, builds the BT,
           wraps it in ``py_trees_ros.trees.BehaviourTree``, and
           runs ``tick_tock()`` + ``rclpy.spin()``.
-      * - ``lecture12/bt_demo/launch/drive_to_goal.py``
+      * - `drive_to_goal.py (lecture12) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture12/bt_demo/launch/drive_to_goal.py>`_
         - Launch file with ``DeclareLaunchArgument``,
           ``LaunchConfiguration``, parameter forwarding, and
           ``emulate_tty=True``.
-      * - ``lecture10/custom_interfaces/``
+      * - `custom_interfaces/ (lecture10) <https://github.com/zeidk/enpm605-spring-2026-ros/tree/main/src/lecture10/custom_interfaces>`_
         - Template for a CMake package that generates service
           interfaces via ``rosidl_generate_interfaces``.
-      * - ``lecture10/parameters_demo/launch/demo3.launch.py``
+      * - `demo3.launch.py (lecture10) <https://github.com/zeidk/enpm605-spring-2026-ros/blob/main/src/lecture10/parameters_demo/launch/demo3.launch.py>`_
         - Loading a YAML parameter file in a launch file using
           ``get_package_share_directory()`` and the
           ``parameters`` field.
-      * - ``lecture11/frame_demo/``
+      * - `frame_demo/ (lecture11) <https://github.com/zeidk/enpm605-spring-2026-ros/tree/main/src/lecture11/frame_demo>`_
         - TF2 frame broadcasting examples using
           ``tf2_ros.StaticTransformBroadcaster`` and
           ``TransformStamped`` messages.
@@ -333,14 +386,18 @@ directly.
 Starter Packages
 ================
 
-Your workspace contains two directories for this project:
+Your workspace contains two directories for this project (both
+ship in the course repo under
+`src/ <https://github.com/zeidk/enpm605-spring-2026-ros/tree/main/src>`_):
 
-- ``~/enpm605_ws/src/final_project/`` -- empty folder where you
-  create your two packages (``group<N>_final_interfaces`` and
-  ``group<N>_final``).
-- ``~/enpm605_ws/src/final_project_meta/`` -- metapackage that you
-  edit to register your packages (see above).
+- `final_project/ <https://github.com/zeidk/enpm605-spring-2026-ros/tree/main/src/final_project>`_
+  (cloned to ``~/enpm605_ws/src/final_project/``) -- empty folder
+  where you create your two packages
+  (``group<N>_final_interfaces`` and ``group<N>_final``).
+- `final_project_meta/ <https://github.com/zeidk/enpm605-spring-2026-ros/tree/main/src/final_project_meta>`_
+  (cloned to ``~/enpm605_ws/src/final_project_meta/``) --
+  metapackage that you edit to register your packages (see above).
 
-The metapackage already includes dependencies on ``py_trees``,
+The metapackage already includes dependencies on the simulated robot, ``py_trees``,
 ``py_trees_ros``, ``tf2_ros``, ``sensor_msgs``, ``geometry_msgs``,
 ``nav_msgs``, and ``nav2_simple_commander``.

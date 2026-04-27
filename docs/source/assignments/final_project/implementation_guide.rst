@@ -52,7 +52,7 @@ to avoid blocking your partner and to enable testing at each step.
        drive the robot through every room (with at least one loop
        closure), and save the result with
        ``ros2 run nav2_map_server map_saver_cli`` into
-       ``group<N>_final/maps/final_project_world.{pgm,yaml}``. See
+       ``group<N>_final/maps/final_project_map.{pgm,yaml}``. See
        :ref:`final-project-build-the-map` and Lecture 13 Exercise 1.
        The map is required for Nav2 to localize -- you cannot test
        ``NavigateToZone`` without it.
@@ -128,16 +128,20 @@ isolation before assembling the full tree.
        ``lecture12/bt_demo/scripts/main_drive_to_goal.py``.
    * - 15
      - Write the launch file
-     - Start the three mission nodes (BT + two service servers).
-       Load ``mission_params.yaml``. Declare at least one launch
-       argument. Reference:
+     - Bring up Nav2 (via ``IncludeLaunchDescription``, with
+       ``map:=maps/final_project_map.yaml`` and
+       ``params_file:=config/nav2_params.yaml``) and start the
+       three mission nodes (BT + two service servers). Load
+       ``mission_params.yaml``. Declare at least one launch
+       argument. References:
        ``lecture12/bt_demo/launch/drive_to_goal.py`` and
-       ``lecture13/mapping_navigation_demo/launch/navigation.launch.py``.
+       ``lecture13/nav_demo/launch/map_nav.launch.py`` (adapt the
+       Nav2 bringup -- do not invoke ``map_nav.launch.py`` directly).
    * - 16
      - End-to-end testing
-     - Launch Gazebo + Nav2 + your mission. Verify: all zones
-       visited, survivors detected, TF frames broadcast, report
-       service called, robot returns to base. Use
+     - Launch Gazebo, then your mission launch file. Verify: all
+       zones visited, survivors detected, TF frames broadcast,
+       report service called, robot returns to base. Use
        ``ros2 run tf2_ros tf2_echo map survivor_1`` to verify
        TF frames.
 
@@ -160,7 +164,6 @@ isolation before assembling the full tree.
    * - 18
      - Code quality
      - Add docstrings, type hints, inline comments. Run Ruff.
-       Remove ``__pycache__/`` directories.
    * - 19
      - Write README.md
      - Contributions section + BT design explanation (``memory``
@@ -188,7 +191,8 @@ the full system, but each focuses on their area.
    * - **Phase 1**
      - Create both package skeletons and the CMake interfaces
        package. Write ``DetectSurvivorServer`` and
-       ``ReportSurvivorServer``. Create ``mission_params.yaml``.
+       ``ReportSurvivorServer``. Create ``mission_params.yaml`` and
+       adapt ``nav2_params.yaml`` from the lecture-13 reference.
        Build and save the map with ``slam_toolbox`` /
        ``nav2_map_server``.
      - Write ``ZoneManager``. Review Lecture 12 BT code and
@@ -327,6 +331,10 @@ Memory Flag Choices
   navigation on the next tick.
 - **HandleDetection Selector** (``memory=False``): The detection
   result is checked fresh each time.
+- **SurvivorFound Sequence** (``memory=False``): All three children
+  (``IsSurvivorDetected?``, ``BroadcastSurvivorTF``, ``NotifyBase``)
+  are synchronous and complete in a single tick, so there is no
+  RUNNING child to resume.
 
 
 Testing Tips
@@ -357,10 +365,8 @@ testing individual nodes.
    # Terminal 1: Gazebo
    ros2 launch rosbot_gazebo final_project_world.launch.py
 
-   # Terminal 2: Nav2 (use the map your group built and saved
-   # under group<N>_final/maps/)
-   ros2 launch rosbot_gazebo navigation.launch.py \
-       map:=/path/to/group<N>_final/maps/final_project_world.yaml
-
-   # Terminal 3: Mission
+   # Terminal 2: Mission (this single launch file brings up Nav2
+   # with your saved map under
+   # group<N>_final/maps/final_project_map.yaml, the two service
+   # servers, and the BT node)
    ros2 launch group<N>_final search_and_rescue.launch.py

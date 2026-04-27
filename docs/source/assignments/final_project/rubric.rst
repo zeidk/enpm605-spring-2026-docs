@@ -115,21 +115,24 @@ This rubric details how the 100 points are allocated.
      - Root Selector uses ``memory=False`` (reactive). Patrol
        Sequence uses ``memory=True`` (resuming).
        HandleDetection Selector uses ``memory=False``.
-       Justification provided in README.
+       SurvivorFound Sequence uses ``memory=False`` (all children
+       are synchronous, single-tick). Justification provided in
+       README.
    * - **Map (5 pts)**
      -
      -
    * - Saved map files
      - 3
      - ``group<N>_final/maps/`` contains a valid
-       ``final_project_world.pgm`` plus matching ``.yaml``,
-       produced by ``slam_toolbox`` + ``nav2_map_server``. Free,
-       occupied, and unknown regions look correct.
+       ``final_project_map.pgm`` plus matching
+       ``final_project_map.yaml``, produced by ``slam_toolbox`` +
+       ``nav2_map_server``. Free, occupied, and unknown regions
+       look correct.
    * - AMCL localization against the saved map
      - 2
-     - ``ros2 launch rosbot_gazebo navigation.launch.py
-       map:=...`` loads cleanly and AMCL converges after a single
-       2D Pose Estimate click in RViz2.
+     - ``ros2 launch group<N>_final search_and_rescue.launch.py``
+       brings up Nav2 with the saved map and AMCL converges after
+       a single 2D Pose Estimate click in RViz2.
    * - **Launch File (8 pts)**
      -
      -
@@ -140,8 +143,10 @@ This rubric details how the 100 points are allocated.
    * - Parameter file loading
      - 3
      - ``config/mission_params.yaml`` is loaded for the BT node
-       using ``get_package_share_directory()`` and the
-       ``parameters`` field.
+       via the ``parameters`` field, and
+       ``config/nav2_params.yaml`` is forwarded to the Nav2
+       bringup include via ``params_file:=``. Both paths are
+       resolved with ``get_package_share_directory()``.
    * - Launch arguments
      - 2
      - At least one launch argument declared and forwarded to the

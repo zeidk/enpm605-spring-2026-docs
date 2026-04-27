@@ -39,8 +39,10 @@ is spelled out in detail in the sections below.
    reads parameters, builds the tree, and runs it with
    ``py_trees_ros.trees.BehaviourTree``.
 
-8. **Write the launch file** that starts the service servers and the
-   behavior tree node, loading all parameters from YAML.
+8. **Write the launch file** that brings up Nav2 (with your
+   ``nav2_params.yaml`` and ``final_project_map.yaml``), starts the
+   two simulated service servers, and starts the behavior tree node,
+   loading mission parameters from ``mission_params.yaml``.
 
 9. **Build a map** of the final project world using ``slam_toolbox``
    and save it under ``group<N>_final/maps/`` (see
@@ -93,9 +95,10 @@ inside the pre-existing ``~/enpm605_ws/src/final_project/`` folder.
    |   |-- search_and_rescue.launch.py
    |-- config/
    |   |-- mission_params.yaml
+   |   |-- nav2_params.yaml
    |-- maps/
-   |   |-- final_project_world.pgm
-   |   |-- final_project_world.yaml
+   |   |-- final_project_map.pgm
+   |   |-- final_project_map.yaml
    |-- resource/
    |   |-- group<N>_final
    |-- test/
@@ -138,13 +141,6 @@ output files (``.pgm`` + ``.yaml``) live under
         - Drive the robot with teleop
       * - RViz
         - Observe the map display
-
-   .. code-block:: console
-
-      # T1
-      ros2 launch rosbot_gazebo final_project_world.launch.py rviz:=False
-      # T2
-      ros2 launch nav_demo map_nav.launch.py mode:=mapping
 
    2. Save the map under your package's ``maps/`` directory using
       ``nav2_map_server``:
@@ -228,9 +224,14 @@ servers. These simulate a perception system and a command center.
   .. code-block:: python
 
      SURVIVORS = {
-         "zone_a": (2.5, 3.2),
-         "zone_c": (7.1, 4.5),
+         "zone_a": (-2.5, 3.2),
+         "zone_c": (4.1, -2.5),
      }
+
+  These coordinates are slight offsets from the zone centers
+  (``zone_a`` at (-3.0, 3.0) and ``zone_c`` at (4.0, -3.0)) so the
+  reported survivor pose is plausibly *inside the zone* rather than
+  at its exact center.
 
 - When called, if the ``zone_id`` is in the dictionary, returns
   ``found=True`` with the survivor's ``(x, y)`` coordinates.
@@ -369,12 +370,17 @@ diagram lives at
 4. After reaching a zone, ``DetectSurvivor`` calls the detection
    service and stores the result internally.
 
-5. The **HandleDetection Selector** checks ``IsSurvivorDetected?``:
+5. The **HandleDetection Selector** ticks its first child, the
+   **SurvivorFound Sequence**, which in turn ticks
+   ``IsSurvivorDetected?``:
 
-   - If found (SUCCESS): ``BroadcastSurvivorTF`` publishes a static
-     TF frame, then ``NotifyBase`` calls the report service.
-   - If not found (FAILURE): ``LogNoDetection`` logs a message and
-     returns SUCCESS so the Selector succeeds.
+   - If found (SUCCESS): the SurvivorFound Sequence continues to
+     ``BroadcastSurvivorTF`` (publishes a static TF frame) and then
+     ``NotifyBase`` (calls the report service). The Sequence
+     succeeds, so the HandleDetection Selector succeeds.
+   - If not found (FAILURE): the SurvivorFound Sequence fails on
+     its first child, so HandleDetection ticks its second child,
+     ``LogNoDetection``, which logs a message and returns SUCCESS.
 
 6. ``AdvanceZone`` moves to the next zone, and the Patrol Sequence
    repeats on the next tick.
@@ -512,53 +518,74 @@ Launch File
 ===========
 
 Write a Python launch file at
-``launch/search_and_rescue.launch.py`` that starts all required
-nodes and loads the parameter file.
+``launch/search_and_rescue.launch.py``. **It is the single entry
+point for the mission**: it must bring up Nav2 *and* start your two
+simulated service servers *and* start the behavior tree node. This should be run in a second terminal, after the
+Gazebo world is already up. See
+:doc:`infrastructure` for the
+overall structure and a code skeleton.
 
-**Required nodes:**
+**Required actions in the launch file:**
 
 .. list-table::
-   :widths: 30 30 40
+   :widths: 25 25 50
    :header-rows: 1
    :class: compact-table
 
-   * - Executable
-     - Package
+   * - Action
+     - Package / Source
      - Notes
-   * - ``search_and_rescue_exe``
+   * - ``IncludeLaunchDescription`` of Nav2 bringup
+     - ``nav2_bringup``
+     - Pass ``map:=<pkg>/maps/final_project_map.yaml``,
+       ``params_file:=<pkg>/config/nav2_params.yaml``, and
+       ``use_sim_time:=true``. Adapt from the lecture-13
+       ``map_nav.launch.py`` reference -- do **not** invoke
+       ``map_nav.launch.py`` directly.
+   * - ``Node`` -- ``search_and_rescue_exe``
      - ``group<N>_final``
      - The behavior tree entry point.
-   * - ``detect_survivor_server_exe``
+   * - ``Node`` -- ``detect_survivor_server_exe``
      - ``group<N>_final``
      - Simulated detection service server.
-   * - ``report_survivor_server_exe``
+   * - ``Node`` -- ``report_survivor_server_exe``
      - ``group<N>_final``
      - Simulated report service server.
 
 **Launch file requirements:**
 
-1. All nodes must use ``output="screen"`` and ``emulate_tty=True``.
-2. Load ``config/mission_params.yaml`` for the behavior tree node
-   using ``get_package_share_directory()`` and the ``parameters``
-   field.
-3. Declare at least one launch argument that the BT node consumes
+1. All ``Node`` actions must use ``output="screen"`` and
+   ``emulate_tty=True``.
+
+   - ``output="screen"`` sends the node's stdout/stderr (including
+     every ``get_logger().info()`` / ``warn()`` / ``error()`` call)
+     to the launch terminal. The launch default is ``"log"``, which
+     writes silently to ``~/.ros/log/`` and shows nothing live --
+     a common cause of "my logger is broken" reports.
+   - ``emulate_tty=True`` allocates a pseudo-TTY for the child
+     process so Python uses **line buffering** (every ``\n``
+     flushes immediately) instead of the default block buffering
+     on a pipe (~4--8 KB). Without it, log lines arrive in clumps
+     long after the events that produced them, and ANSI color
+     codes for ``[INFO]``/``[WARN]``/``[ERROR]`` are stripped.
+
+2. Resolve all package-relative paths
+   (``maps/final_project_map.yaml``, ``config/nav2_params.yaml``,
+   ``config/mission_params.yaml``) using
+   ``get_package_share_directory('group<N>_final')``. This implies
+   the ``maps/`` and ``config/`` directories must be installed --
+   add them to ``data_files`` in ``setup.py``, otherwise
+   ``get_package_share_directory()`` will not find them at runtime.
+3. Load ``config/mission_params.yaml`` for the behavior tree node
+   via the ``parameters`` field.
+4. Declare at least one launch argument that the BT node consumes
    (for example, ``tick_rate_hz`` with a sensible default), and
    forward it to the BT node via ``parameters``. The intent is to
    exercise ``DeclareLaunchArgument`` and ``LaunchConfiguration`` --
    not to expose every internal value.
-4. The simulation (Gazebo + Nav2) is started **separately** by the
-   user in two terminals before launching the mission:
-
-   .. code-block:: console
-
-      ros2 launch rosbot_gazebo final_project_world.launch.py
-      ros2 launch rosbot_gazebo navigation.launch.py \
-          map:=/path/to/group<N>_final/maps/final_project_world.yaml
-
-   The map file is the one you built and saved with
-   ``slam_toolbox`` / ``nav2_map_server`` (see
-   :ref:`final-project-build-the-map` above). Your launch file does
-   **not** include these.
+5. The Gazebo simulation is **not** started by your launch file --
+   the user runs ``ros2 launch rosbot_gazebo
+   final_project_world.launch.py`` in a separate terminal first.
 
 
 Parameter File

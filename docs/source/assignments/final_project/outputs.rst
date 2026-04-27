@@ -69,14 +69,13 @@ Use these commands to test individual components.
 
 .. code-block:: console
 
-   # 1. Launch simulation + Nav2 (separate terminals). The map file
-   # is the one you built with slam_toolbox and saved under
-   # group<N>_final/maps/.
+   # 1. Launch the Gazebo simulation (terminal 1)
    ros2 launch rosbot_gazebo final_project_world.launch.py
-   ros2 launch rosbot_gazebo navigation.launch.py \
-       map:=/path/to/group<N>_final/maps/final_project_world.yaml
 
-   # 2. Launch the mission
+   # 2. Launch the mission (terminal 2). This single launch file
+   # brings up Nav2 (with your saved map under
+   # group<N>_final/maps/final_project_map.yaml), the two service
+   # servers, and the BT node.
    ros2 launch group<N>_final search_and_rescue.launch.py
 
    # 3. Check TF frames for discovered survivors

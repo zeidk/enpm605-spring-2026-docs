@@ -32,6 +32,13 @@ fail at submission time typically also fail at grading time.
   ``maps/final_project_map.yaml`` (built with ``slam_toolbox``)
   are present inside ``group<N>_final/`` and Nav2 launches cleanly
   against them.
+- |box| ``setup.py`` installs ``maps/``, ``config/``, and
+  ``launch/`` via ``data_files`` -- verify with
+  ``ls install/group<N>_final/share/group<N>_final/`` after a
+  ``colcon build`` and confirm all three directories appear.
+  Without this, ``get_package_share_directory()`` returns a path
+  that does not contain your map / params / launch files at
+  runtime.
 
 **Documentation**
 
@@ -70,6 +77,6 @@ How to Submit
    ``final_project/group<N>_final/``.
 
 3. The ZIP must not contain ``build/``, ``install/``, ``log/``,
-   ``__pycache__/``, ``.pyc``, ``.ruff_cache/``, or any other artifacts.
+   ``__pycache__/``, ``.pyc``, ``.ruff_cache/``, and any other artifacts.
 
 4. Only one submission per group.
