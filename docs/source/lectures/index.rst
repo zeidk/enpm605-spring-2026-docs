@@ -83,3 +83,4 @@ Contents
    lecture10/l10_index
    lecture11/l11_index
    lecture12/l12_index
+   lecture13/l13_index

@@ -4,6 +4,131 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.6.0 -- L13 Documentation Released (2026-04-26)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Lecture Notes (l13_lecture.rst)
+
+   - Added "Prerequisites" section: workspace cleanup, ``rosdep``
+     install, ``--packages-up-to lecture13_meta`` build, and a
+     Gazebo smoke-test launch.
+   - Added "Mapping" section: motivation for maps (planning,
+     localization, semantics, multi-session), comparison of metric /
+     topological / semantic representations with light/dark figure
+     placeholders.
+   - Added "Occupancy Grid Maps" section: grid parameters (resolution,
+     width, height, origin), the three cell states with a values
+     table, and light/dark figure placeholders. Bayesian / log-odds
+     LiDAR update with worked example.
+   - Added "The map Frame" section: full REP 105 chain table,
+     publisher / drift / jump semantics, light/dark frame-chain
+     figure placeholders, and a side-by-side ``map`` vs. ``odom``
+     comparison table.
+   - Added "SLAM" section: ``slam_toolbox`` overview, scan matching
+     (with figure placeholders), pose graph (with figure
+     placeholders), loop closure (with figure placeholders), and a
+     "How the Three Pieces Connect" subsection covering covariance
+     and edge strength.
+   - Added "Launching slam_toolbox" subsection: key parameter table
+     (resolution, max_laser_range, minimum_travel_distance / heading,
+     use_scan_matching, do_loop_closing), mapping-mode demonstration,
+     and a "drive fast vs. slow" experiment with answer.
+   - Added "Map Saving and Loading" subsection: ``map_saver_cli``
+     usage and the ``.pgm`` / ``.yaml`` format example.
+   - Added "Navigation" section: the four navigation questions, end-
+     to-end Nav2 demonstration table.
+   - Added "Localization" subsection: AMCL overview, why "adaptive,"
+     three ways to set the initial pose (RViz2, parameters,
+     programmatically), and a SLAM vs. AMCL comparison table.
+   - Added "Particle Filters" subsubsection: scoring a particle
+     against the map, the predict / update / resample cycle, and
+     light/dark figure placeholders for the cycle and for
+     initialization vs. converged clouds.
+   - Added "Costmaps" subsection: global vs. local costmap table,
+     layered architecture (static, obstacle, inflation), and the
+     robot footprint with inscribed and circumscribed radii (with
+     light/dark figure placeholders).
+   - Added "Planning and Control" subsection: global planner table
+     (NavFn, Smac Hybrid A*, Theta*), local controller table (DWB,
+     Regulated Pure Pursuit), with explanatory bullets on output
+     topics and behavior-tree plugin selection.
+   - Added "Behavior Trees and Recovery" subsection: Nav2 BT
+     orchestration and recovery behaviors (Spin, Wait, Clear costmap,
+     Back up).
+   - Added "NavigateToPose Action API" subsection: goal / feedback /
+     result, sending a goal from RViz2, sending a goal
+     programmatically with ``BasicNavigator``. Added key-method
+     table for ``BasicNavigator`` and two worked examples (single
+     goal, follow waypoints) with demonstration tables.
+   - Added "Explore Mode" subsection: simultaneous SLAM + Nav2 with
+     ``mode:=explore``.
+
+   .. rubric:: Index (l13_index.rst)
+
+   - Overview, learning objectives, toctree, and next-steps for L13.
+
+   .. rubric:: Exercises (l13_exercises.rst)
+
+   - Exercise 1: build, save, and reload a map -- map with
+     ``slam_toolbox``, save with ``map_saver_cli``, and reload for
+     AMCL navigation.
+   - Exercise 2: inflation radius and path quality -- sweep four
+     ``inflation_radius`` values, capture screenshots, and reflect on
+     why the planner fails through narrow doorways above a threshold.
+   - Exercise 3: sequential goals with ``BasicNavigator`` --
+     parameterized three-goal sequence using ``goToPose``, with
+     feedback printing and result logging.
+   - Exercise 4: cancel-on-distance behavior -- extend Exercise 3
+     with a "no-progress for 5 s" watchdog that calls
+     ``cancelTask()`` and continues with the next goal.
+
+   .. rubric:: Quiz (l13_quiz.rst)
+
+   - 8 multiple choice questions covering occupancy-grid encoding,
+     REP 105 jump semantics, loop closure, AMCL adaptivity, global
+     vs. local costmaps, Smac vs. NavFn, the inflation layer, and
+     ``NavigateToPose`` feedback.
+   - 5 true/false questions covering AMCL initial pose parameters,
+     inscribed vs. circumscribed radius, ``slam_toolbox``
+     localization mode, planner-call frequency, and the
+     ``BasicNavigator`` waypoint follower.
+   - 4 essay questions: SLAM pipeline (scan match / pose graph /
+     loop closure), particle-filter cycle, global vs. local
+     costmaps, and the action goal / feedback / result triplet.
+
+   .. rubric:: Glossary (glossary.rst)
+
+   - 23 new terms added: AMCL, BasicNavigator, Circumscribed Radius,
+     Costmap, DWB Controller, Footprint, Inflation Layer,
+     Inscribed Radius, Loop Closure, ``map`` Frame, Map Server,
+     ``nav2_simple_commander``, NavFn Planner, ``NavigateToPose``,
+     Occupancy Grid Map, Particle Filter, Pose Graph, Regulated
+     Pure Pursuit, REP 105, Scan Matching, SLAM, ``slam_toolbox``,
+     Smac Planner.
+   - Updated ``Behavior Tree`` and ``Nav2`` entries with L13
+     cross-references and an expanded scope.
+
+   .. rubric:: References (l13_references.rst)
+
+   - Lecture 13 card summarizing all topics covered.
+   - Mapping and SLAM: ``nav_msgs/OccupancyGrid``, REP 105, Nav2 +
+     slam_toolbox tutorial, ``slam_toolbox`` repository, Jazzy API.
+   - Localization (AMCL): Nav2 AMCL configuration page and
+     ``nav2_amcl`` API reference.
+   - Nav2 Stack: top-level Nav2 docs, concepts overview, costmap
+     configuration, NavFn / Smac planner configuration, DWB / RPP
+     controller configuration, behavior trees, BehaviorTree.CPP.
+   - NavigateToPose API: Simple Commander API, source code,
+     ``nav2_msgs`` action interface.
+   - Recommended Reading: Corke's *Robotics, Vision and Control*
+     Chapter 14 and Lynch & Park's *Modern Robotics* Chapter 13.
+
+   .. rubric:: Lectures Index (lectures/index.rst)
+
+   - Added ``lecture13/l13_index`` to the toctree.
+
+
 .. dropdown:: v1.5.1 -- Lecture 12 (2026-04-22)
    :icon: tag
    :class-container: sd-border-warning

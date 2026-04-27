@@ -176,6 +176,17 @@ A
       containing a goal, result, and feedback section. Example use:
       navigating a robot to a goal pose. :doc:`L8 </lectures/lecture8/l8_lecture>`
 
+   Adaptive Monte Carlo Localization
+   AMCL
+      A particle-filter localization algorithm distributed with Nav2 as
+      the ``nav2_amcl`` package. AMCL maintains a cloud of weighted
+      pose hypotheses and refines it by comparing predicted LiDAR scans
+      against the actual scan on each cycle (predict, update,
+      resample). The "adaptive" part dynamically grows the particle
+      count when the robot is poorly localized and shrinks it once the
+      filter has converged. AMCL consumes ``/map`` and publishes the
+      ``map`` -> ``odom`` transform. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Aggregation
       A "has-a" relationship where the contained object (the part) can
       exist independently of the container (the whole). Parts are created
@@ -253,11 +264,22 @@ B
       a ``RecursionError``. Example: ``if n <= 1: return 1`` in a
       factorial function. :doc:`L4 </lectures/lecture4/l4_lecture>`
 
+   BasicNavigator
+      The high-level Python class shipped by ``nav2_simple_commander``.
+      Wraps the ``NavigateToPose`` and waypoint-follower action clients
+      so a script can call ``setInitialPose``, ``waitUntilNav2Active``,
+      ``goToPose``, ``followWaypoints``, ``isTaskComplete``,
+      ``getFeedback``, ``getResult``, and ``cancelTask`` without
+      writing any action plumbing. Internally creates its own
+      ``rclpy`` node. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Behavior Tree
       A tree-structured model for task execution used in robotics and
-      game AI. In this course, students build application-level behavior
-      trees with the *py_trees* library to coordinate Nav2 navigation
-      actions. :doc:`L1 </lectures/lecture1/l1_lecture>`
+      game AI. In this course, students build application-level
+      behavior trees with the *py_trees* library to coordinate Nav2
+      navigation actions; Nav2 itself uses an internal behavior tree
+      (BehaviorTree.CPP) to orchestrate planning, control, and
+      recovery. :doc:`L12 </lectures/lecture12/l12_lecture>` · :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    bool
       Python's Boolean type, a subclass of ``int`` with exactly two
@@ -351,6 +373,15 @@ C
       single expression, e.g., ``1 < x < 10`` is equivalent to
       ``1 < x and x < 10``. Each operand is evaluated at most once. :doc:`L2 </lectures/lecture2/l2_lecture>`
 
+   Circumscribed Radius
+      The radius of the smallest circle that **encloses** the robot's
+      footprint. Any cell at distance greater than this radius from an
+      obstacle is guaranteed to be safe regardless of the robot's
+      heading. The Nav2 inflation radius is typically set at least as
+      large as the circumscribed radius so the planner steers the
+      robot far enough from walls. Compare with :term:`Inscribed
+      Radius`. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Class
       A blueprint that defines the attributes (data) and methods
       (functions) that its objects will have. Defined using the ``class``
@@ -437,6 +468,16 @@ C
       a consistent development environment across platforms. See also
       :term:`Docker`, :term:`Dev Containers`. :doc:`L1 </lectures/lecture1/l1_lecture>`
 
+   Costmap
+      A 2D grid maintained by Nav2 that assigns a traversal cost to
+      every cell. A cost of zero means the cell is freely traversable;
+      a *lethal* cost means the robot's footprint would collide if
+      placed there. Costmaps are built by stacking layers (static,
+      obstacle, inflation). Nav2 maintains both a **global** costmap
+      (whole map, used by the planner) and a **local** costmap
+      (rolling window around the robot, used by the controller).
+      :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    continue
       A statement that skips the rest of the current loop iteration and
       proceeds to the next iteration. Unlike ``break``, the loop
@@ -471,6 +512,16 @@ D
       post-initialization logic via ``__post_init__``, and immutable
       variants via ``frozen=True``. Best suited to classes whose primary
       purpose is storing data. :doc:`L7 </lectures/lecture7/l7_lecture>`
+
+   DWB Controller
+      A Nav2 local controller (Dynamic Window-based) that samples a set
+      of candidate ``(linear, angular)`` velocity pairs each control
+      cycle, simulates each one forward over the local costmap, scores
+      the resulting trajectories via critic plugins (path alignment,
+      goal heading, obstacle distance, etc.), and publishes the
+      best-scoring command on ``/cmd_vel``. Best suited to crowded,
+      dynamic environments. Compare with :term:`Regulated Pure
+      Pursuit`. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    DDS (Data Distribution Service)
       An open, data-centric publish-subscribe middleware standard managed
@@ -706,6 +757,16 @@ F
       by the ``//`` operator. ``10 // 3`` is ``3``; ``10 // -3`` is
       ``-4`` (not ``-3``). :doc:`L2 </lectures/lecture2/l2_lecture>`
 
+   Footprint
+      The 2D polygon that represents the robot's outline in the
+      ``base_link`` frame. Nav2 uses the footprint, in conjunction
+      with the costmap, to decide which cells are lethal: a cell is
+      lethal if placing the footprint there would overlap an obstacle.
+      Differential-drive robots are often modelled as a circular
+      footprint so that orientation drops out of collision checking
+      (the inscribed and circumscribed radii coincide). See
+      :term:`Inscribed Radius`, :term:`Circumscribed Radius`. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    for Loop
       A control structure that iterates over items in an :term:`iterable`.
       Syntax: ``for item in iterable:``. The loop variable takes each
@@ -912,6 +973,21 @@ I
       in Python. PEP 8 prescribes **4 spaces** per level. Mixing tabs
       and spaces causes ``IndentationError``. :doc:`L2 </lectures/lecture2/l2_lecture>`
 
+   Inflation Layer
+      A Nav2 costmap layer that expands lethal cells outward by a
+      configurable ``inflation_radius``, producing a graded cost
+      gradient that decays with distance. The planner naturally
+      prefers paths that stay away from walls, even though the
+      footprint itself is not modelled at every cell. The radius is
+      typically set at least as large as the robot's circumscribed
+      radius. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   Inscribed Radius
+      The radius of the largest circle that fits **inside** the
+      robot's footprint. Any cell at distance less than this radius
+      from an obstacle is lethal regardless of the robot's heading.
+      Compare with :term:`Circumscribed Radius`. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Inheritance
       A mechanism that allows a class (the child or derived class) to
       reuse and extend the attributes and methods of another class (the
@@ -1097,6 +1173,15 @@ L
       the first match found. This is the fundamental mechanism for
       variable name resolution in Python. :doc:`L4 </lectures/lecture4/l4_lecture>`
 
+   Loop Closure
+      A SLAM mechanism that detects when the robot returns near a
+      previously visited area and adds a constraint between the current
+      pose graph node and the earlier node observing the same place.
+      The graph optimizer then redistributes accumulated drift across
+      the entire trajectory to satisfy the new constraint, producing a
+      globally consistent map. Without loop closure, drift accumulates
+      and the map shears or overlaps after long traversals. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Lexer
    Tokenizer
       The first stage of the Python execution pipeline. Breaks source
@@ -1146,6 +1231,22 @@ M
       A container that associates keys with values. The primary mapping
       type in Python is :term:`dict`. Mappings support key-based
       access (``d[key]``) and key membership testing (``key in d``). :doc:`L3 </lectures/lecture3/l3_lecture>`
+
+   ``map`` Frame
+      The global REP 105 reference frame for mobile navigation. Goal
+      poses, planned paths, and the occupancy grid are expressed in
+      ``map``. The localization stack (SLAM or AMCL) publishes the
+      ``map`` -> ``odom`` transform, which **may jump** when the
+      pose estimate is corrected (loop closure, particle filter
+      convergence). Compare with ``odom``, which never jumps but
+      drifts over time. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   Map Server
+      The ``nav2_map_server`` node that loads a saved occupancy grid
+      from disk (``.yaml`` + ``.pgm``) at startup and republishes it
+      on ``/map`` for AMCL and the costmaps to consume. The companion
+      ``map_saver_cli`` tool serializes a live map (e.g., from
+      ``slam_toolbox``) to disk in the same format. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    Membership Operator
       The ``in`` and ``not in`` operators, which test whether an
@@ -1258,10 +1359,30 @@ N
 
    Nav2
       The ROS 2 Navigation Stack. Provides autonomous navigation
-      capabilities including path planning, obstacle avoidance via
-      costmaps, and recovery behaviors. Configured (not written) by
-      students; called via action servers from :term:`behavior trees
-      <Behavior Tree>`. :doc:`L1 </lectures/lecture1/l1_lecture>`
+      capabilities including localization (AMCL), costmaps, global
+      planners (NavFn, Smac), local controllers (DWB, Regulated Pure
+      Pursuit), recovery behaviors, and a behavior-tree-based
+      navigator. Students configure (rather than rewrite) Nav2 and
+      send goals via action servers. :doc:`L1 </lectures/lecture1/l1_lecture>` · :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   nav2_simple_commander
+      The Python convenience package shipped with Nav2 that wraps the
+      navigation action interfaces. Its primary class is
+      :term:`BasicNavigator`. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   NavFn Planner
+      A classical Dijkstra/A* grid planner shipped with Nav2. Fast
+      and simple, but ignores kinematic constraints, so the resulting
+      path may not be physically drivable by a non-holonomic robot
+      from the start. Compare with :term:`Smac Planner`. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   NavigateToPose
+      The primary ROS 2 action interface to Nav2
+      (``nav2_msgs/action/NavigateToPose``). The client sends a goal
+      ``PoseStamped`` in the ``map`` frame; Nav2 plans, controls, and
+      recovers autonomously, publishing periodic feedback (current
+      pose, distance remaining, recovery count) until the goal
+      succeeds, fails, or is cancelled. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    Nested Condition
       An ``if`` statement inside another ``if`` block. While sometimes
@@ -1311,6 +1432,15 @@ O
       bundle data (attributes) and behavior (methods) together. Multiple
       objects can be created from the same class, each with independent
       state. :doc:`L6 </lectures/lecture6/l6_lecture>`
+
+   Occupancy Grid Map
+      A metric map that divides 2D space into a regular grid; each cell
+      stores a probability that the corresponding region is occupied.
+      Encoded in ROS 2 as ``nav_msgs/msg/OccupancyGrid``: ``0`` =
+      free, ``100`` = occupied, ``-1`` = unknown, with intermediate
+      values for partial evidence. Defined by a resolution (typical
+      ``0.05 m``), width, height, and origin pose. Updated by SLAM via
+      Bayesian (log-odds) ray tracing of LiDAR scans. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    Operator Overloading
       A form of polymorphism in which the same operator (``+``, ``==``,
@@ -1378,6 +1508,17 @@ P
       grammar to produce a parse tree, which is then simplified into
       an :term:`AST`. :doc:`L1 </lectures/lecture1/l1_lecture>`
 
+   Particle Filter
+      A recursive Bayesian estimator that represents a probability
+      distribution over the robot's pose as a set of weighted
+      hypotheses (particles), each a candidate pose
+      :math:`(x, y, \theta)`. AMCL repeats three steps every cycle:
+      **predict** (move particles by the motion model), **update**
+      (weight each particle by how well a virtual LiDAR scan matches
+      the real scan against the map), and **resample** (draw a new
+      set with replacement, proportional to weight). The cloud
+      concentrates around poses that consistently explain the data. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Pass-by-Assignment
       Python's argument-passing mechanism, sometimes called
       "pass-by-object-reference." The function receives a reference to
@@ -1390,6 +1531,15 @@ P
       Python code. Prescribes ``snake_case`` for variables and
       functions, ``UPPER_CASE`` for constants, and ``PascalCase``
       for classes. :doc:`L1 </lectures/lecture1/l1_lecture>` · :doc:`L2 </lectures/lecture2/l2_lecture>`
+
+   Pose Graph
+      The internal representation used by graph-based SLAM (e.g.,
+      ``slam_toolbox``): nodes are estimated robot poses sampled along
+      the trajectory, edges encode the relative transforms between
+      poses (typically from scan matching). Loop-closure edges
+      connect distant nodes that observed the same area. A graph
+      optimizer adjusts every node simultaneously to satisfy all
+      constraints, producing a globally consistent map. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    Polymorphism
       A design principle meaning "many forms." Different objects respond
@@ -1608,6 +1758,22 @@ R
       evaluates it, prints the result, and loops. Python provides a
       built-in REPL via ``python3`` or the VS Code Native Python REPL. :doc:`L1 </lectures/lecture1/l1_lecture>`
 
+   Regulated Pure Pursuit
+   RPP
+      A Nav2 local controller that follows the planned path by aiming
+      at a *lookahead point* on it and slowing down near obstacles
+      and tight curves. Cheaper and smoother than :term:`DWB
+      Controller`, well suited to open environments with predictable
+      paths. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   REP 105
+      The ROS Enhancement Proposal that defines the standard
+      coordinate-frame chain for mobile platforms: ``world`` ->
+      ``map`` -> ``odom`` -> ``base_link`` -> sensor frames. Specifies
+      who publishes each transform and the jump/drift semantics
+      (``odom`` is locally consistent but drifts; ``map`` is globally
+      consistent but can jump on correction). :doc:`L11 </lectures/lecture11/l11_lecture>` · :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Requirement Analysis
       The process of identifying **what** the system must do (functional
       requirements) and **how well** it must do it (non-functional
@@ -1670,6 +1836,16 @@ S
 =
 
 .. glossary::
+
+   Scan Matching
+      The algorithm that aligns two LiDAR point clouds (typically two
+      consecutive scans) by finding the rigid transform (translation +
+      rotation) that best overlaps them. The result is an incremental
+      pose estimate that does not depend on wheel odometry, and is
+      therefore more accurate on slippery or uneven surfaces. In
+      ``slam_toolbox``, scan-match results become the edges of the
+      pose graph; the result's covariance determines how strongly the
+      graph optimizer trusts each edge. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    Scope
       The region of a program where a variable name is accessible. Python
@@ -1742,11 +1918,36 @@ S
       :term:`.pth files <.pth File>` placed here are processed at
       startup.
 
+   SLAM
+   Simultaneous Localization and Mapping
+      The class of algorithms that estimate the robot's pose **and**
+      build a map of the environment at the same time, from sensor
+      data alone. ``slam_toolbox`` is the graph-based 2D SLAM library
+      used in this course: it scan-matches successive LiDAR scans,
+      stores the result in a pose graph, and uses loop closure to
+      correct accumulated drift. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   slam_toolbox
+      A graph-based 2D SLAM library by Steve Macenski. Builds an
+      occupancy grid in real time from LiDAR + odometry by scan
+      matching new scans, adding nodes/edges to a pose graph, and
+      detecting loop closures to correct drift. Supports an
+      online-async mode (build a fresh map) and a localization mode
+      (load an existing serialized graph). Configured via a YAML
+      parameter file (``mapper_params_online_async.yaml``). :doc:`L13 </lectures/lecture13/l13_lecture>`
+
    Slicing
       Extracting a subsequence from a sequence using the syntax
       ``[start:stop:stride]``. ``start`` is inclusive, ``stop`` is
       exclusive, and ``stride`` defaults to ``1``. Negative indices
       count from the end. :doc:`L2 </lectures/lecture2/l2_lecture>` · :doc:`L3 </lectures/lecture3/l3_lecture>`
+
+   Smac Planner
+      A family of Nav2 global planners (Hybrid A*, lattice, Theta*)
+      that search an SE(2) lattice respecting the robot's turning
+      radius. Best suited to non-holonomic robots in tight spaces
+      where the path must be physically drivable from the start.
+      Compare with :term:`NavFn Planner`. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    snake_case
       A naming convention where words are separated by underscores and
