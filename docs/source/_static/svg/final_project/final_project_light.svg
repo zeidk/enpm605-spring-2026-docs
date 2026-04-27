@@ -1,0 +1,1551 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   contentStyleType="text/css"
+   data-diagram-type="SEQUENCE"
+   height="1110px"
+   preserveAspectRatio="none"
+   style="width:1410px;height:1110px;background:#FFFFFF;"
+   version="1.1"
+   viewBox="0 0 1410 1110"
+   width="1410px"
+   zoomAndPan="magnify"
+   id="svg73"
+   sodipodi:docname="final_project_light.svg"
+   inkscape:version="1.4.3 (1:1.4.3+202512261035+0d15f75042)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview73"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.64184397"
+     inkscape:cx="705"
+     inkscape:cy="554.65193"
+     inkscape:window-width="3840"
+     inkscape:window-height="941"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg73" />
+<?plantuml 1.2026.3beta6?>  <defs
+     id="defs1" />
+  <g
+     id="g73"
+     inkscape:export-filename="../../images/final_project/final_project_light.png"
+     inkscape:export-xdpi="350"
+     inkscape:export-ydpi="350">
+    <g
+       id="g1">
+      <title
+         id="title1">search_and_rescue</title>
+      <rect
+         fill="#FFFFFF"
+         height="848.5234"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="287.6133"
+         y="144.8594"
+         id="rect1" />
+    </g>
+    <g
+       id="g2">
+      <title
+         id="title2">Nav2</title>
+      <rect
+         fill="#FFFFFF"
+         height="58.2656"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="600.271"
+         y="406.0547"
+         id="rect2" />
+    </g>
+    <g
+       id="g3">
+      <title
+         id="title3">Nav2</title>
+      <rect
+         fill="#FFFFFF"
+         height="29.1328"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="600.271"
+         y="935.1172"
+         id="rect3" />
+    </g>
+    <g
+       id="g4">
+      <title
+         id="title4">DetectSurvivorServer</title>
+      <rect
+         fill="#FFFFFF"
+         height="29.1328"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="829.7471"
+         y="543.7188"
+         id="rect4" />
+    </g>
+    <g
+       id="g5">
+      <title
+         id="title5">ReportSurvivorServer</title>
+      <rect
+         fill="#FFFFFF"
+         height="29.1328"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="1276.5313"
+         y="655.25"
+         id="rect5" />
+    </g>
+    <rect
+       fill="#FFFFFF"
+       height="496.0625"
+       rx="3"
+       ry="3"
+       style="stroke:#000000;stroke-width:1;"
+       width="1213.8862"
+       x="180.2676"
+       y="317.5234"
+       id="rect6" />
+    <rect
+       fill="#FFFFFF"
+       height="161.4688"
+       rx="3"
+       ry="3"
+       style="stroke:#000000;stroke-width:1;"
+       width="1193.8862"
+       x="190.2676"
+       y="587.8516"
+       id="rect7" />
+    <path
+       d="M190.2676,692.3828 L1384.1538,692.3828 L1384.1538,746.3203 A3,3 0 0 1 1381.1538,749.3203 L193.2676,749.3203 A3,3 0 0 1 190.2676,746.3203 L190.2676,692.3828"
+       fill="#FFFFFF"
+       style="stroke:none;stroke-width:1;"
+       id="path7" />
+    <g
+       class="participant-lifeline"
+       data-entity-uid="part1"
+       data-qualified-name="User"
+       data-source-line="8"
+       id="part1-lifeline">
+      <g
+         id="g8">
+        <title
+           id="title7">User</title>
+        <rect
+           fill="#000000"
+           fill-opacity="0.00000"
+           height="912.7891"
+           width="8"
+           x="44.5674"
+           y="98.5938"
+           id="rect8" />
+        <line
+           style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;"
+           x1="48"
+           x2="48"
+           y1="98.5938"
+           y2="1011.3828"
+           id="line8" />
+      </g>
+    </g>
+    <g
+       class="participant-lifeline"
+       data-entity-uid="part2"
+       data-qualified-name="BT"
+       data-source-line="9"
+       id="part2-lifeline">
+      <g
+         id="g9">
+        <title
+           id="title8">search_and_rescue</title>
+        <rect
+           fill="#000000"
+           fill-opacity="0.00000"
+           height="912.7891"
+           width="8"
+           x="288.6133"
+           y="98.5938"
+           id="rect9" />
+        <line
+           style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;"
+           x1="292.2676"
+           x2="292.2676"
+           y1="98.5938"
+           y2="1011.3828"
+           id="line9" />
+      </g>
+    </g>
+    <g
+       class="participant-lifeline"
+       data-entity-uid="part3"
+       data-qualified-name="Nav2"
+       data-source-line="10"
+       id="part3-lifeline">
+      <g
+         id="g10">
+        <title
+           id="title9">Nav2</title>
+        <rect
+           fill="#000000"
+           fill-opacity="0.00000"
+           height="912.7891"
+           width="8"
+           x="601.271"
+           y="98.5938"
+           id="rect10" />
+        <line
+           style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;"
+           x1="605.2397"
+           x2="605.2397"
+           y1="98.5938"
+           y2="1011.3828"
+           id="line10" />
+      </g>
+    </g>
+    <g
+       class="participant-lifeline"
+       data-entity-uid="part4"
+       data-qualified-name="Detect"
+       data-source-line="11"
+       id="part4-lifeline">
+      <g
+         id="g11">
+        <title
+           id="title10">DetectSurvivorServer</title>
+        <rect
+           fill="#000000"
+           fill-opacity="0.00000"
+           height="912.7891"
+           width="8"
+           x="830.7471"
+           y="98.5938"
+           id="rect11" />
+        <line
+           style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;"
+           x1="834.3022"
+           x2="834.3022"
+           y1="98.5938"
+           y2="1011.3828"
+           id="line11" />
+      </g>
+    </g>
+    <g
+       class="participant-lifeline"
+       data-entity-uid="part5"
+       data-qualified-name="TF"
+       data-source-line="12"
+       id="part5-lifeline">
+      <g
+         id="g12">
+        <title
+           id="title11">tf2_static</title>
+        <rect
+           fill="#000000"
+           fill-opacity="0.00000"
+           height="912.7891"
+           width="8"
+           x="1054.0503"
+           y="98.5938"
+           id="rect12" />
+        <line
+           style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;"
+           x1="1057.1919"
+           x2="1057.1919"
+           y1="98.5938"
+           y2="1011.3828"
+           id="line12" />
+      </g>
+    </g>
+    <g
+       class="participant-lifeline"
+       data-entity-uid="part6"
+       data-qualified-name="Report"
+       data-source-line="13"
+       id="part6-lifeline">
+      <g
+         id="g13">
+        <title
+           id="title12">ReportSurvivorServer</title>
+        <rect
+           fill="#000000"
+           fill-opacity="0.00000"
+           height="912.7891"
+           width="8"
+           x="1277.5313"
+           y="98.5938"
+           id="rect13" />
+        <line
+           style="stroke:#000000;stroke-width:1;stroke-dasharray:5,5;"
+           x1="1280.9087"
+           x2="1280.9087"
+           y1="98.5938"
+           y2="1011.3828"
+           id="line13" />
+      </g>
+    </g>
+    <g
+       class="participant participant-head"
+       data-entity-uid="part1"
+       data-qualified-name="User"
+       data-source-line="8"
+       id="part1-head">
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="31.9102"
+         x="29.6123"
+         y="78.9951"
+         id="text13">User</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="71.1348"
+         x="10"
+         y="95.292"
+         id="text14">(operator)</text>
+      <ellipse
+         cx="48.5674"
+         cy="14"
+         fill="#FFFFFF"
+         rx="8"
+         ry="8"
+         style="stroke:#000000;stroke-width:1;"
+         id="ellipse14" />
+      <path
+         d="M48.5674,22 L48.5674,49 M35.5674,30 L61.5674,30 M48.5674,49 L35.5674,64 M48.5674,49 L61.5674,64"
+         fill="none"
+         style="stroke:#000000;stroke-width:1;"
+         id="path14" />
+    </g>
+    <g
+       class="participant participant-tail"
+       data-entity-uid="part1"
+       data-qualified-name="User"
+       data-source-line="8"
+       id="part1-tail">
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="31.9102"
+         x="29.6123"
+         y="1023.3779"
+         id="text15">User</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="71.1348"
+         x="10"
+         y="1039.6748"
+         id="text16">(operator)</text>
+      <ellipse
+         cx="48.5674"
+         cy="1051.9766"
+         fill="#FFFFFF"
+         rx="8"
+         ry="8"
+         style="stroke:#000000;stroke-width:1;"
+         id="ellipse16" />
+      <path
+         d="M48.5674,1059.9766 L48.5674,1086.9766 M35.5674,1067.9766 L61.5674,1067.9766 M48.5674,1086.9766 L35.5674,1101.9766 M48.5674,1086.9766 L61.5674,1101.9766"
+         fill="none"
+         style="stroke:#000000;stroke-width:1;"
+         id="path16" />
+    </g>
+    <g
+       class="participant participant-head"
+       data-entity-uid="part2"
+       data-qualified-name="BT"
+       data-source-line="9"
+       id="part2-head">
+      <rect
+         fill="#FFFFFF"
+         height="46.5938"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="164.6914"
+         x="210.2676"
+         y="51"
+         id="rect16" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="133.998"
+         x="225.6143"
+         y="70.9951"
+         id="text17">search_and_rescue</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="150.6914"
+         x="217.2676"
+         y="87.292"
+         id="text18">(BT entry-point node)</text>
+    </g>
+    <g
+       class="participant participant-tail"
+       data-entity-uid="part2"
+       data-qualified-name="BT"
+       data-source-line="9"
+       id="part2-tail">
+      <rect
+         fill="#FFFFFF"
+         height="46.5938"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="164.6914"
+         x="210.2676"
+         y="1010.3828"
+         id="rect18" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="133.998"
+         x="225.6143"
+         y="1030.3779"
+         id="text19">search_and_rescue</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="150.6914"
+         x="217.2676"
+         y="1046.6748"
+         id="text20">(BT entry-point node)</text>
+    </g>
+    <g
+       class="participant participant-head"
+       data-entity-uid="part3"
+       data-qualified-name="Nav2"
+       data-source-line="10"
+       id="part3-head">
+      <rect
+         fill="#FFFFFF"
+         height="46.5938"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="234.0625"
+         x="488.2397"
+         y="51"
+         id="rect20" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="36.2441"
+         x="587.1489"
+         y="70.9951"
+         id="text21">Nav2</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="220.0625"
+         x="495.2397"
+         y="87.292"
+         id="text22">(NavigateToPose action server)</text>
+    </g>
+    <g
+       class="participant participant-tail"
+       data-entity-uid="part3"
+       data-qualified-name="Nav2"
+       data-source-line="10"
+       id="part3-tail">
+      <rect
+         fill="#FFFFFF"
+         height="46.5938"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="234.0625"
+         x="488.2397"
+         y="1010.3828"
+         id="rect22" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="36.2441"
+         x="587.1489"
+         y="1030.3779"
+         id="text23">Nav2</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="220.0625"
+         x="495.2397"
+         y="1046.6748"
+         id="text24">(NavigateToPose action server)</text>
+    </g>
+    <g
+       class="participant participant-head"
+       data-entity-uid="part4"
+       data-qualified-name="Detect"
+       data-source-line="11"
+       id="part4-head">
+      <rect
+         fill="#FFFFFF"
+         height="30.2969"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="164.8896"
+         x="752.3022"
+         y="67.2969"
+         id="rect24" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="150.8896"
+         x="759.3022"
+         y="87.292"
+         id="text25">DetectSurvivorServer</text>
+    </g>
+    <g
+       class="participant participant-tail"
+       data-entity-uid="part4"
+       data-qualified-name="Detect"
+       data-source-line="11"
+       id="part4-tail">
+      <rect
+         fill="#FFFFFF"
+         height="30.2969"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="164.8896"
+         x="752.3022"
+         y="1010.3828"
+         id="rect25" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="150.8896"
+         x="759.3022"
+         y="1030.3779"
+         id="text26">DetectSurvivorServer</text>
+    </g>
+    <g
+       class="participant participant-head"
+       data-entity-uid="part5"
+       data-qualified-name="TF"
+       data-source-line="12"
+       id="part5-head">
+      <rect
+         fill="#FFFFFF"
+         height="46.5938"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="221.7168"
+         x="947.1919"
+         y="51"
+         id="rect26" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="64.7637"
+         x="1025.6685"
+         y="70.9951"
+         id="text27">tf2_static</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="207.7168"
+         x="954.1919"
+         y="87.292"
+         id="text28">(StaticTransformBroadcaster)</text>
+    </g>
+    <g
+       class="participant participant-tail"
+       data-entity-uid="part5"
+       data-qualified-name="TF"
+       data-source-line="12"
+       id="part5-tail">
+      <rect
+         fill="#FFFFFF"
+         height="46.5938"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="221.7168"
+         x="947.1919"
+         y="1010.3828"
+         id="rect28" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="64.7637"
+         x="1025.6685"
+         y="1030.3779"
+         id="text29">tf2_static</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="207.7168"
+         x="954.1919"
+         y="1046.6748"
+         id="text30">(StaticTransformBroadcaster)</text>
+    </g>
+    <g
+       class="participant participant-head"
+       data-entity-uid="part6"
+       data-qualified-name="Report"
+       data-source-line="13"
+       id="part6-head">
+      <rect
+         fill="#FFFFFF"
+         height="30.2969"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="165.2451"
+         x="1198.9087"
+         y="67.2969"
+         id="rect30" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="151.2451"
+         x="1205.9087"
+         y="87.292"
+         id="text31">ReportSurvivorServer</text>
+    </g>
+    <g
+       class="participant participant-tail"
+       data-entity-uid="part6"
+       data-qualified-name="Report"
+       data-source-line="13"
+       id="part6-tail">
+      <rect
+         fill="#FFFFFF"
+         height="30.2969"
+         rx="3"
+         ry="3"
+         style="stroke:#000000;stroke-width:1;"
+         width="165.2451"
+         x="1198.9087"
+         y="1010.3828"
+         id="rect31" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="14"
+         lengthAdjust="spacing"
+         textLength="151.2451"
+         x="1205.9087"
+         y="1030.3779"
+         id="text32">ReportSurvivorServer</text>
+    </g>
+    <g
+       id="g32">
+      <title
+         id="title32">search_and_rescue</title>
+      <rect
+         fill="#FFFFFF"
+         height="848.5234"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="287.6133"
+         y="144.8594"
+         id="rect32" />
+    </g>
+    <g
+       id="g33">
+      <title
+         id="title33">Nav2</title>
+      <rect
+         fill="#FFFFFF"
+         height="58.2656"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="600.271"
+         y="406.0547"
+         id="rect33" />
+    </g>
+    <g
+       id="g34">
+      <title
+         id="title34">Nav2</title>
+      <rect
+         fill="#FFFFFF"
+         height="29.1328"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="600.271"
+         y="935.1172"
+         id="rect34" />
+    </g>
+    <g
+       id="g35">
+      <title
+         id="title35">DetectSurvivorServer</title>
+      <rect
+         fill="#FFFFFF"
+         height="29.1328"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="829.7471"
+         y="543.7188"
+         id="rect35" />
+    </g>
+    <g
+       id="g36">
+      <title
+         id="title36">ReportSurvivorServer</title>
+      <rect
+         fill="#FFFFFF"
+         height="29.1328"
+         style="stroke:#000000;stroke-width:1;"
+         width="10"
+         x="1276.5313"
+         y="655.25"
+         id="rect36" />
+    </g>
+    <g
+       class="message"
+       data-entity-1="part1"
+       data-entity-2="part2"
+       data-source-line="15"
+       id="msg1">
+      <polygon
+         fill="#000000"
+         points="275.6133,140.8594,285.6133,144.8594,275.6133,148.8594,279.6133,144.8594"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon36" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="48.5674"
+         x2="281.6133"
+         y1="144.8594"
+         y2="144.8594"
+         id="line36" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="184.1074"
+         x="76.0366"
+         y="124.6606"
+         id="text36">ros2 launch group&lt;N&gt;_final</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="192.0801"
+         x="72.0503"
+         y="139.7935"
+         id="text37">search_and_rescue.launch.py</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part2"
+       data-source-line="18"
+       id="msg2">
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="339.6133"
+         y1="189.125"
+         y2="189.125"
+         id="line37" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="339.6133"
+         x2="339.6133"
+         y1="189.125"
+         y2="202.125"
+         id="line38" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="298.6133"
+         x2="339.6133"
+         y1="202.125"
+         y2="202.125"
+         id="line39" />
+      <polygon
+         fill="#000000"
+         points="308.6133,198.125,298.6133,202.125,308.6133,206.125,304.6133,202.125"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon39" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="173.0752"
+         x="330.3467"
+         y="168.9263"
+         id="text39">load mission_params.yaml</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="224.542"
+         x="304.6133"
+         y="184.0591"
+         id="text40">(zones, base_station, tick_rate_hz)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part2"
+       data-source-line="19"
+       id="msg3">
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="339.6133"
+         y1="246.3906"
+         y2="246.3906"
+         id="line40" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="339.6133"
+         x2="339.6133"
+         y1="246.3906"
+         y2="259.3906"
+         id="line41" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="298.6133"
+         x2="339.6133"
+         y1="259.3906"
+         y2="259.3906"
+         id="line42" />
+      <polygon
+         fill="#000000"
+         points="308.6133,255.3906,298.6133,259.3906,308.6133,263.3906,304.6133,259.3906"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon42" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="123.7285"
+         x="360.571"
+         y="226.1919"
+         id="text42">build behavior tree</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="235.644"
+         x="304.6133"
+         y="241.3247"
+         id="text43">(Selector / Patrol / HandleDetection)</text>
+    </g>
+    <rect
+       fill="#FFFFFF"
+       height="3"
+       rx="3"
+       ry="3"
+       style="stroke:#FFFFFF;stroke-width:1;"
+       width="1399.1538"
+       x="5"
+       y="287.957"
+       id="rect43" />
+    <line
+       style="stroke:#000000;stroke-width:0.5;"
+       x1="5"
+       x2="1404.1538"
+       y1="287.957"
+       y2="287.957"
+       id="line43" />
+    <line
+       style="stroke:#000000;stroke-width:0.5;"
+       x1="5"
+       x2="1404.1538"
+       y1="290.957"
+       y2="290.957"
+       id="line44" />
+    <rect
+       fill="#FFFFFF"
+       height="23.1328"
+       rx="3"
+       ry="3"
+       style="stroke:#000000;stroke-width:1;"
+       width="74.0361"
+       x="667.5588"
+       y="277.3906"
+       id="rect44" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="55.5103"
+       x="673.5588"
+       y="293.4575"
+       id="text44">Mission</text>
+    <path
+       d="M183.2676,317.5234 L256.8916,317.5234 L256.8916,324.6563 L246.8916,334.6563 L180.2676,334.6563 L180.2676,320.5234 A3,3 0 0 1 183.2676,317.5234"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path44" />
+    <rect
+       fill="none"
+       height="496.0625"
+       rx="3"
+       ry="3"
+       style="stroke:#000000;stroke-width:1;"
+       width="1213.8862"
+       x="180.2676"
+       y="317.5234"
+       id="rect45" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="31.624"
+       x="195.2676"
+       y="330.5903"
+       id="text45">loop</text>
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="11"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="238.9761"
+       x="271.8916"
+       y="329.7339"
+       id="text46">[while ZonesRemaining? == SUCCESS]</text>
+    <path
+       d="M302,342.6563 L302,376.6563 A3,3 0 0 0 305,379.6563 L511,379.6563 A3,3 0 0 0 514,376.6563 L514,349.6563 L504,339.6563 L305,339.6563 A3,3 0 0 0 302,342.6563"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path46" />
+    <path
+       d="M504,339.6563 L504,348.1563 A1.5,1.5 0 0 0 505.5,349.6563 L514,349.6563 L504,339.6563"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path47" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       lengthAdjust="spacing"
+       textLength="181.6445"
+       x="308"
+       y="356.7231"
+       id="text47">NavigateToZone (BT action,</text>
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       lengthAdjust="spacing"
+       textLength="191.6294"
+       x="308"
+       y="371.856"
+       id="text48">async NavigateToPose client)</text>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part3"
+       data-source-line="26"
+       id="msg4">
+      <polygon
+         fill="#000000"
+         points="588.271,402.0547,598.271,406.0547,588.271,410.0547,592.271,406.0547"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon48" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="594.271"
+         y1="406.0547"
+         y2="406.0547"
+         id="line48" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="283.6577"
+         x="307.1133"
+         y="400.9888"
+         id="text49">send_goal_async(zone.x, zone.y, zone.yaw)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part3"
+       data-entity-2="part2"
+       data-source-line="28"
+       id="msg5">
+      <polygon
+         fill="#000000"
+         points="308.6133,431.1875,298.6133,435.1875,308.6133,439.1875,304.6133,435.1875"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon49" />
+      <line
+         style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+         x1="302.6133"
+         x2="599.271"
+         y1="435.1875"
+         y2="435.1875"
+         id="line49" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="135.624"
+         x="381.1301"
+         y="430.1216"
+         id="text50">feedback (RUNNING)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part3"
+       data-entity-2="part2"
+       data-source-line="29"
+       id="msg6">
+      <polygon
+         fill="#000000"
+         points="308.6133,460.3203,298.6133,464.3203,308.6133,468.3203,304.6133,464.3203"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon50" />
+      <line
+         style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+         x1="302.6133"
+         x2="604.271"
+         y1="464.3203"
+         y2="464.3203"
+         id="line50" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="101.8354"
+         x="400.5244"
+         y="459.2544"
+         id="text51">result SUCCESS</text>
+    </g>
+    <path
+       d="M302,480.3203 L302,514.3203 A3,3 0 0 0 305,517.3203 L491,517.3203 A3,3 0 0 0 494,514.3203 L494,487.3203 L484,477.3203 L305,477.3203 A3,3 0 0 0 302,480.3203"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path51" />
+    <path
+       d="M484,477.3203 L484,485.8203 A1.5,1.5 0 0 0 485.5,487.3203 L494,487.3203 L484,477.3203"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path52" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       lengthAdjust="spacing"
+       textLength="171.8247"
+       x="308"
+       y="494.3872"
+       id="text52">DetectSurvivor (BT action,</text>
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       lengthAdjust="spacing"
+       textLength="125.4614"
+       x="308"
+       y="509.52"
+       id="text53">sync service client)</text>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part4"
+       data-source-line="33"
+       id="msg7">
+      <polygon
+         fill="#000000"
+         points="817.7471,539.7188,827.7471,543.7188,817.7471,547.7188,821.7471,543.7188"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon53" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="823.7471"
+         y1="543.7188"
+         y2="543.7188"
+         id="line53" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="160.2656"
+         x="483.5474"
+         y="538.6528"
+         id="text54">detect_survivor(zone_id)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part4"
+       data-entity-2="part2"
+       data-source-line="35"
+       id="msg8">
+      <polygon
+         fill="#000000"
+         points="308.6133,568.8516,298.6133,572.8516,308.6133,576.8516,304.6133,572.8516"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon54" />
+      <line
+         style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+         x1="302.6133"
+         x2="833.7471"
+         y1="572.8516"
+         y2="572.8516"
+         id="line54" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="197.6279"
+         x="467.3662"
+         y="567.7856"
+         id="text55">(found, survivor_x, survivor_y)</text>
+    </g>
+    <path
+       d="M193.2676,587.8516 L254.7104,587.8516 L254.7104,594.9844 L244.7104,604.9844 L190.2676,604.9844 L190.2676,590.8516 A3,3 0 0 1 193.2676,587.8516"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path55" />
+    <rect
+       fill="none"
+       height="161.4688"
+       rx="3"
+       ry="3"
+       style="stroke:#000000;stroke-width:1;"
+       width="1193.8862"
+       x="190.2676"
+       y="587.8516"
+       id="rect55" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="19.4429"
+       x="205.2676"
+       y="600.9185"
+       id="text56">alt</text>
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="11"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="218.2222"
+       x="269.7104"
+       y="600.062"
+       id="text57">[IsSurvivorDetected? == SUCCESS]</text>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part5"
+       data-source-line="39"
+       id="msg9">
+      <polygon
+         fill="#000000"
+         points="1046.0503,622.1172,1056.0503,626.1172,1046.0503,630.1172,1050.0503,626.1172"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon57" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="1052.0503"
+         y1="626.1172"
+         y2="626.1172"
+         id="line57" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="229.8169"
+         x="562.9233"
+         y="621.0513"
+         id="text58">sendTransform(map -&gt; survivor_N)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part6"
+       data-source-line="40"
+       id="msg10">
+      <polygon
+         fill="#000000"
+         points="1264.5313,651.25,1274.5313,655.25,1264.5313,659.25,1268.5313,655.25"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon58" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="1270.5313"
+         y1="655.25"
+         y2="655.25"
+         id="line58" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="240.1509"
+         x="666.9968"
+         y="650.1841"
+         id="text59">report_survivor(survivor_id, location)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part6"
+       data-entity-2="part2"
+       data-source-line="42"
+       id="msg11">
+      <polygon
+         fill="#000000"
+         points="308.6133,680.3828,298.6133,684.3828,308.6133,688.3828,304.6133,684.3828"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon59" />
+      <line
+         style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+         x1="302.6133"
+         x2="1280.5313"
+         y1="684.3828"
+         y2="684.3828"
+         id="line59" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="139.6675"
+         x="719.7385"
+         y="679.3169"
+         id="text60">acknowledged = true</text>
+    </g>
+    <line
+       style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+       x1="190.2676"
+       x2="1384.1538"
+       y1="693.3828"
+       y2="693.3828"
+       id="line60" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="11"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="213.9092"
+       x="195.2676"
+       y="703.5933"
+       id="text61">[IsSurvivorDetected? == FAILURE]</text>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part2"
+       data-source-line="45"
+       id="msg12">
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="339.6133"
+         y1="728.3203"
+         y2="728.3203"
+         id="line61" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="339.6133"
+         x2="339.6133"
+         y1="728.3203"
+         y2="741.3203"
+         id="line62" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="298.6133"
+         x2="339.6133"
+         y1="741.3203"
+         y2="741.3203"
+         id="line63" />
+      <polygon
+         fill="#000000"
+         points="308.6133,737.3203,298.6133,741.3203,308.6133,745.3203,304.6133,741.3203"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon63" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="104.2793"
+         x="304.6133"
+         y="723.2544"
+         id="text63">LogNoDetection</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part2"
+       data-source-line="48"
+       id="msg13">
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="339.6133"
+         y1="792.5859"
+         y2="792.5859"
+         id="line64" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="339.6133"
+         x2="339.6133"
+         y1="792.5859"
+         y2="805.5859"
+         id="line65" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="298.6133"
+         x2="339.6133"
+         y1="805.5859"
+         y2="805.5859"
+         id="line66" />
+      <polygon
+         fill="#000000"
+         points="308.6133,801.5859,298.6133,805.5859,308.6133,809.5859,304.6133,805.5859"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon66" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="89.2861"
+         x="347.7837"
+         y="772.3872"
+         id="text66">AdvanceZone</text>
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="175.627"
+         x="304.6133"
+         y="787.52"
+         id="text67">(zone_manager.advance())</text>
+    </g>
+    <rect
+       fill="#FFFFFF"
+       height="3"
+       rx="3"
+       ry="3"
+       style="stroke:#FFFFFF;stroke-width:1;"
+       width="1399.1538"
+       x="5"
+       y="841.1523"
+       id="rect67" />
+    <line
+       style="stroke:#000000;stroke-width:0.5;"
+       x1="5"
+       x2="1404.1538"
+       y1="841.1523"
+       y2="841.1523"
+       id="line67" />
+    <line
+       style="stroke:#000000;stroke-width:0.5;"
+       x1="5"
+       x2="1404.1538"
+       y1="844.1523"
+       y2="844.1523"
+       id="line68" />
+    <rect
+       fill="#FFFFFF"
+       height="23.1328"
+       rx="3"
+       ry="3"
+       style="stroke:#000000;stroke-width:1;"
+       width="127.3184"
+       x="640.9177"
+       y="830.5859"
+       id="rect68" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       font-weight="700"
+       lengthAdjust="spacing"
+       textLength="108.7925"
+       x="646.9177"
+       y="846.6528"
+       id="text68">Return to base</text>
+    <path
+       d="M302,871.7188 L302,905.7188 A3,3 0 0 0 305,908.7188 L625,908.7188 A3,3 0 0 0 628,905.7188 L628,878.7188 L618,868.7188 L305,868.7188 A3,3 0 0 0 302,871.7188"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path68" />
+    <path
+       d="M618,868.7188 L618,877.2188 A1.5,1.5 0 0 0 619.5,878.7188 L628,878.7188 L618,868.7188"
+       fill="#FFFFFF"
+       style="stroke:#000000;stroke-width:1;"
+       id="path69" />
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       lengthAdjust="spacing"
+       textLength="238.6782"
+       x="308"
+       y="885.7856"
+       id="text69">Patrol Sequence fails (no zones left).</text>
+    <text
+       fill="#000000"
+       font-family="Hack"
+       font-size="13"
+       lengthAdjust="spacing"
+       textLength="305.0493"
+       x="308"
+       y="900.9185"
+       id="text70">Root Selector falls through to NavigateToBase.</text>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part3"
+       data-source-line="54"
+       id="msg14">
+      <polygon
+         fill="#000000"
+         points="588.271,931.1172,598.271,935.1172,588.271,939.1172,592.271,935.1172"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon70" />
+      <line
+         style="stroke:#000000;stroke-width:1;"
+         x1="297.6133"
+         x2="594.271"
+         y1="935.1172"
+         y2="935.1172"
+         id="line70" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="202.2363"
+         x="347.824"
+         y="930.0513"
+         id="text71">send_goal_async(base_station)</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part3"
+       data-entity-2="part2"
+       data-source-line="56"
+       id="msg15">
+      <polygon
+         fill="#000000"
+         points="308.6133,960.25,298.6133,964.25,308.6133,968.25,304.6133,964.25"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon71" />
+      <line
+         style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+         x1="302.6133"
+         x2="604.271"
+         y1="964.25"
+         y2="964.25"
+         id="line71" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="101.8354"
+         x="400.5244"
+         y="959.1841"
+         id="text72">result SUCCESS</text>
+    </g>
+    <g
+       class="message"
+       data-entity-1="part2"
+       data-entity-2="part1"
+       data-source-line="59"
+       id="msg16">
+      <polygon
+         fill="#000000"
+         points="59.5674,989.3828,49.5674,993.3828,59.5674,997.3828,55.5674,993.3828"
+         style="stroke:#000000;stroke-width:1;"
+         id="polygon72" />
+      <line
+         style="stroke:#000000;stroke-width:1;stroke-dasharray:2,2;"
+         x1="53.5674"
+         x2="291.6133"
+         y1="993.3828"
+         y2="993.3828"
+         id="line72" />
+      <text
+         fill="#000000"
+         font-family="Hack"
+         font-size="13"
+         lengthAdjust="spacing"
+         textLength="215.0459"
+         x="63.0674"
+         y="988.3169"
+         id="text73">mission complete (Ctrl-C to stop)</text>
+    </g>
+<?plantuml-src VLN1Zjiu3BthAxXpYe5CYft37efDYqcsipj06nH9vh8OmD3OZ2sCB7ebEMdwzKj9jYT9q-PYGI8V-KW-vZTVOuFGa24XtAiohRIo0LVBaWxALB2Jsk7f2_xNeIdm2pedAxpNgZ9GeF5ehrZTMqk7RQsALyFsyFk9YQNEb4ko1Yty8OGiF5cuUN9edys4MhIIBx8Ra0x2fM0lhmhLIkFXng6qHPrBK-OMNT4X-oosm6dOusrBYcqCbPZS5zjpvvNStx4zVrGbFMxfApa4Ja2HuSpj7lkumV3SzI_qMFXDP_TgJtOJRQDfUZWtzhkxt7d95nnj4mzRAutRaMqMbcHPIEU7MDk7S-SrjcIlHKeFGeIYmEq7PWVlkPZk3hJiJ553nPLj_rnzo7VAIFriVgZLB1dEscEekjfp3KAD12CDU9gpWqOvnoN9Ox_Sx2WRHfjy9sxb55wamyIEp1GuxzUSEuPv_Jqx1Nhfb2xX1MikDlVNMmojsg36sEzty5LwIveF_t226bCT6JCJOZw7Boa5cC-5q4Gj76gb4VuDEQonaShmZ7xaPzWyBPUVDXiXW7-6c99LLUs1TYcHjsu7PmZJaZe-VJRI7Kq15_DGQCNZb4MyH2YC0oCvv4fM97KU_M91Pj-c4B_7uIiFoNMiS1ocS1DXReS2xH3B5rcymcJzj5ezhlxEhXXntphjHux1eCHpv9_nFf_OSzwHTXXuLLpZcrmPeuo7tFKWaN6koWk2lGJ2NUyvvZ_P1R5FOK38lvsSZzabeHufmJFlHpVadrwmF6ivzB-KzVQXxz6ejKaZs_0oHbnb5pv9Kx7GuV36T7HHdBscGgRH7Bp7Z7jH3lSztiYV-sleeB6ii8Gvgw33qVQ4zmaAyjRz6U-7-yVFJ-jF5nnYeCzKhMZKK48ofH0NPlVbNl9s3ahe5Pqtql0wjpEPdYPP9g8dnrkZxwm1Jr7qKOjN1gqNygRV_Fp7eRI3YQ4e20SQTpwRFPir4K_oi03uxuMjVCqxgwf3Y3SLBZZOJFnIUgTBA1FdWlYbWdvGJmZ3jd6flXys7nJKj9gh2PEbj_fs6H9qdjhi562n_Hy0?>  </g>
+</svg>

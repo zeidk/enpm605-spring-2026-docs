@@ -32,19 +32,24 @@ is spelled out in detail in the sections below.
    not a BT node) that manages the list of search zones and tracks
    mission state.
 
-6. **Implement 12 behavior tree leaf nodes** (3 conditions + 9
+6. **Implement 9 behavior tree leaf nodes** (2 conditions + 7
    actions) using ``py_trees.behaviour.Behaviour``.
 
 7. **Assemble the full behavior tree** in an entry point script that
    reads parameters, builds the tree, and runs it with
    ``py_trees_ros.trees.BehaviourTree``.
 
-8. **Write the launch file** that starts Nav2, the service servers,
-   and the behavior tree node, loading all parameters from YAML.
+8. **Write the launch file** that starts the service servers and the
+   behavior tree node, loading all parameters from YAML.
 
-9. **Document contributions** in ``README.md``.
+9. **Build a map** of the final project world using ``slam_toolbox``
+   and save it under ``group<N>_final/maps/`` (see
+   :doc:`infrastructure` for the procedure). The saved
+   ``.pgm`` and ``.yaml`` files must be included in your submission.
 
-10. **Submit** by zipping the ``~/enpm605_ws/src/final_project/``
+10. **Document contributions** in ``README.md``.
+
+11. **Submit** by zipping the ``~/enpm605_ws/src/final_project/``
     folder and uploading it to Canvas.
 
 
@@ -88,6 +93,9 @@ inside the pre-existing ``~/enpm605_ws/src/final_project/`` folder.
    |   |-- search_and_rescue.launch.py
    |-- config/
    |   |-- mission_params.yaml
+   |-- maps/
+   |   |-- final_project_world.pgm
+   |   |-- final_project_world.yaml
    |-- resource/
    |   |-- group<N>_final
    |-- test/
@@ -95,6 +103,60 @@ inside the pre-existing ``~/enpm605_ws/src/final_project/`` folder.
    |-- setup.py
    |-- setup.cfg
    |-- README.md
+
+
+.. _final-project-build-the-map:
+
+Build the Map
+=============
+
+Nav2 needs a pre-built occupancy grid to localize the robot. **No
+map is provided** -- each group must build their own with
+``slam_toolbox`` and save it with ``nav2_map_server``. The two
+output files (``.pgm`` + ``.yaml``) live under
+``group<N>_final/maps/`` and ship with your submission.
+
+.. important::
+
+   Build the map yourself by following the same workflow we used in class.
+
+   1. Launch the final project world and ``slam_toolbox`` in mapping
+      mode (in two terminals):
+
+   .. list-table::
+      :widths: 10 90
+      :header-rows: 1
+      :class: compact-table
+
+      * -
+        - Command
+      * - T1
+        - ``ros2 launch rosbot_gazebo final_project_world.launch.py rviz:=False``
+      * - T2
+        - ``ros2 launch nav_demo map_nav.launch.py mode:=mapping``
+      * - Gazebo
+        - Drive the robot with teleop
+      * - RViz
+        - Observe the map display
+
+   .. code-block:: console
+
+      # T1
+      ros2 launch rosbot_gazebo final_project_world.launch.py rviz:=False
+      # T2
+      ros2 launch nav_demo map_nav.launch.py mode:=mapping
+
+   2. Save the map under your package's ``maps/`` directory using
+      ``nav2_map_server``:
+
+      .. code-block:: console
+
+         mkdir -p ~/enpm605_ws/src/final_project/group<N>_final/maps
+         ros2 run nav2_map_server map_saver_cli \
+             -f ~/enpm605_ws/src/final_project/group<N>_final/maps/final_project_map
+
+      This produces ``final_project_map.pgm`` and
+      ``final_project_map.yaml``.
 
 
 Service Interfaces
@@ -179,9 +241,27 @@ servers. These simulate a perception system and a command center.
 
 - Advertises a service on ``report_survivor`` using the
   ``ReportSurvivor`` interface.
-- When called, logs the ``survivor_id`` and ``location``, and
-  returns ``acknowledged=True``.
-- This simulates a command center acknowledging the report.
+- When called, the server **simulates a command center**: it does
+  not forward the message anywhere -- the "report" is simply a
+  ROS 2 log entry. Log at minimum:
+
+  - the ``survivor_id``,
+  - ``location.header.frame_id`` (so it is obvious that the
+    coordinates are in the **map frame**, not the robot body
+    frame), and
+  - ``location.point.x`` and ``location.point.y``.
+
+- Returns ``acknowledged=True``.
+
+.. note::
+
+   The ``location`` field uses ``geometry_msgs/PointStamped`` --
+   not a bare ``Point`` -- specifically so the frame in which the
+   coordinates are expressed travels with the data. A receiver
+   that gets a stamped point in ``"map"`` can transform it into
+   any other frame with ``tf2``. By contract, the BT node sends
+   ``frame_id = "map"``; the server should reject (or at least
+   warn) if it ever receives a different frame.
 
 
 ZoneManager
@@ -213,10 +293,6 @@ that need zone information receive a reference to the same
            """Move to the next zone."""
            ...
 
-       def skip(self) -> None:
-           """Skip the current zone and move to the next."""
-           ...
-
        def base_pose(self) -> dict:
            """Return the base station pose dict (x, y, yaw)."""
            ...
@@ -230,70 +306,83 @@ Behavior Tree
 =============
 
 The full behavior tree must be assembled in
-``scripts/main_search_and_rescue.py``. The tree structure is as
-follows:
+``scripts/main_search_and_rescue.py``. The **static structure** of
+the tree (composites, conditions, actions) is shown below.
 
-.. code-block:: text
+.. only:: html
 
-   Root Sequence (memory=False)
-   |-- CheckBattery?                          [condition]
-   |-- Selector (Mission or ReturnToBase)
-   |   |-- Sequence (Patrol, memory=True)
-   |   |   |-- ZonesRemaining?               [condition]
-   |   |   |-- Selector (NavigateWithRecovery, memory=True)
-   |   |   |   |-- Timeout
-   |   |   |   |   |-- NavigateToZone         [action - Nav2]
-   |   |   |   |-- Sequence (Recovery)
-   |   |   |   |   |-- Wait                   [action - pause]
-   |   |   |   |   |-- Timeout
-   |   |   |   |       |-- NavigateToZone     [action - Nav2 retry]
-   |   |   |   |-- SkipZone                   [action]
-   |   |   |-- DetectSurvivor                 [action - service call]
-   |   |   |-- Selector (HandleDetection)
-   |   |   |   |-- Sequence (SurvivorFound)
-   |   |   |   |   |-- IsSurvivorDetected?    [condition]
-   |   |   |   |   |-- BroadcastSurvivorTF    [action - TF]
-   |   |   |   |   |-- NotifyBase             [action - service call]
-   |   |   |   |-- LogNoDetection             [action]
-   |   |   |-- AdvanceZone                    [action]
-   |   |-- NavigateToBase                     [action - Nav2]
-   |-- NavigateToBase                         [action - Nav2, battery low]
+   .. figure:: /_static/images/final_project/bt_tree_light.png
+      :alt: Search-and-rescue behavior tree structure
+      :width: 100%
+      :align: center
+      :class: only-light
+
+      Behavior tree structure: composites, conditions, and actions.
+
+   .. figure:: /_static/images/final_project/bt_tree_dark.png
+      :alt: Search-and-rescue behavior tree structure
+      :width: 100%
+      :align: center
+      :class: only-dark
+
+      Behavior tree structure: composites, conditions, and actions.
+
+The diagram above shows what the tree *looks like*. The diagram
+below shows what it *does* at runtime -- the message flow between
+your BT node, Nav2, the two simulated service servers, and the
+static TF broadcaster. The PlantUML source for the sequence
+diagram lives at
+``docs/source/_static/images/final_project/final_project.puml``.
+
+.. only:: html
+
+   .. figure:: /_static/images/final_project/final_project_light.png
+      :alt: Search-and-rescue mission sequence diagram
+      :width: 100%
+      :align: center
+      :class: only-light
+
+      Runtime message flow during a single mission execution.
+
+   .. figure:: /_static/images/final_project/final_project_dark.png
+      :alt: Search-and-rescue mission sequence diagram
+      :width: 100%
+      :align: center
+      :class: only-dark
+
+      Runtime message flow during a single mission execution.
 
 **How the tree works, tick by tick:**
 
-1. The root **Sequence** (``memory=False``) first ticks
-   ``CheckBattery?``. If the battery is low (FAILURE), the Sequence
-   skips to the final child: ``NavigateToBase`` (battery low return).
+1. The root **Selector** (Mission or ReturnToBase, ``memory=False``)
+   tries the **Patrol Sequence** first.
 
-2. If battery is OK (SUCCESS), the **Selector** (Mission or
-   ReturnToBase) tries the **Patrol Sequence** first.
-
-3. The Patrol Sequence (``memory=True``) checks
+2. The Patrol Sequence (``memory=True``) checks
    ``ZonesRemaining?``. If all zones are visited (FAILURE), the
-   Selector falls back to ``NavigateToBase`` (mission complete).
+   Patrol Sequence fails and the root Selector falls back to
+   ``NavigateToBase`` (mission complete).
 
-4. If zones remain (SUCCESS), the **NavigateWithRecovery Selector**
-   (``memory=True``) attempts navigation:
+3. If zones remain (SUCCESS), ``NavigateToZone`` sends a
+   ``NavigateToPose`` goal to Nav2 for the current zone. It returns
+   RUNNING while the goal is in flight and SUCCESS on arrival.
 
-   - First child: ``NavigateToZone`` wrapped in a ``Timeout``.
-   - If timeout expires (FAILURE), try the **Recovery Sequence**:
-     ``Wait`` (pause), then retry ``NavigateToZone`` with a second
-     ``Timeout``.
-   - If the retry also fails, ``SkipZone`` is ticked (always
-     SUCCESS), which logs a warning and advances past the zone.
-
-5. After reaching a zone, ``DetectSurvivor`` calls the detection
+4. After reaching a zone, ``DetectSurvivor`` calls the detection
    service and stores the result internally.
 
-6. The **HandleDetection Selector** checks ``IsSurvivorDetected?``:
+5. The **HandleDetection Selector** checks ``IsSurvivorDetected?``:
 
    - If found (SUCCESS): ``BroadcastSurvivorTF`` publishes a static
      TF frame, then ``NotifyBase`` calls the report service.
    - If not found (FAILURE): ``LogNoDetection`` logs a message and
      returns SUCCESS so the Selector succeeds.
 
-7. ``AdvanceZone`` moves to the next zone, and the Patrol Sequence
+6. ``AdvanceZone`` moves to the next zone, and the Patrol Sequence
    repeats on the next tick.
+
+7. Once every zone has been visited, ``ZonesRemaining?`` returns
+   FAILURE, so the Patrol Sequence fails and the Selector ticks
+   ``NavigateToBase``. After the robot reaches the base station,
+   the mission is complete -- stop the BT node with ``Ctrl-C``.
 
 
 Condition Nodes
@@ -311,12 +400,6 @@ All condition nodes must inherit from
    * - Node
      - Constructor args
      - Behavior
-   * - ``CheckBattery``
-     - ``name``, ``battery_threshold``
-     - Subscribes to ``/battery_state``
-       (``sensor_msgs/BatteryState``) in ``setup()``. Returns
-       SUCCESS if ``percentage > battery_threshold``, FAILURE
-       otherwise.
    * - ``ZonesRemaining``
      - ``name``, ``zone_manager``
      - Returns SUCCESS if ``zone_manager.has_remaining()`` is True,
@@ -358,10 +441,6 @@ All action nodes must inherit from
      - ``name``, ``zone_manager``
      - Same as ``NavigateToZone`` but uses
        ``zone_manager.base_pose()`` as the target.
-   * - ``Wait``
-     - ``name``, ``duration``
-     - Returns RUNNING for ``duration`` seconds, then SUCCESS.
-       Provides a pause before retrying navigation.
    * - ``DetectSurvivor``
      - ``name``, ``zone_manager``
      - Calls the ``detect_survivor`` service with the current zone
@@ -376,22 +455,50 @@ All action nodes must inherit from
      - ``name``, ``detect_node``, ``zone_manager``
      - Creates a ``tf2_ros.StaticTransformBroadcaster`` in
        ``setup()`` using ``kwargs['node']``. In ``update()``, builds
-       a ``geometry_msgs/TransformStamped`` with
-       ``header.frame_id = "map"``,
-       ``child_frame_id = "survivor_N"`` (from
-       ``zone_manager.next_survivor_id()``), and translation from
-       ``detect_node.survivor_pose()``. Publishes the static
-       transform and returns SUCCESS. Verify with
-       ``ros2 run tf2_ros tf2_echo map survivor_1``.
+       a ``geometry_msgs/TransformStamped`` and publishes it.
+       Field values:
+
+       - ``header.stamp`` = current ROS time
+         (``self._node.get_clock().now().to_msg()``).
+       - ``header.frame_id = "map"`` -- the **parent** frame. This
+         **must** be ``"map"`` because: (1) the survivor coordinates
+         returned by ``DetectSurvivor`` are already expressed in
+         the map frame (the same frame Nav2 plans in and AMCL
+         localizes the robot in -- see REP-105), and (2) ``"map"``
+         is the only world-fixed frame in the system, so a static
+         transform under it stays valid for the rest of the
+         mission even as the robot moves.
+       - ``child_frame_id = "survivor_N"`` -- the **new** frame
+         being created, named via
+         ``zone_manager.next_survivor_id()`` (``"survivor_1"``,
+         ``"survivor_2"``, ...).
+       - ``transform.translation.{x,y}`` from
+         ``detect_node.survivor_pose()``; ``z = 0.0``.
+       - ``transform.rotation.w = 1.0`` (identity quaternion --
+         we are reporting a position, not an orientation).
+
+       Returns SUCCESS after ``sendTransform()``. Verify with
+       ``ros2 run tf2_ros tf2_echo map survivor_1`` -- you should
+       see the translation match the coordinates the
+       ``DetectSurvivorServer`` returned.
+
    * - ``NotifyBase``
      - ``name``, ``detect_node``
-     - Calls the ``report_survivor`` service with the survivor ID
-       and location from ``detect_node``. Returns SUCCESS if
-       acknowledged, FAILURE otherwise.
-   * - ``SkipZone``
-     - ``name``, ``zone_manager``
-     - Logs a warning that the current zone is being skipped. Calls
-       ``zone_manager.skip()``. Returns SUCCESS.
+     - Calls the ``report_survivor`` service with a request whose
+       ``survivor_id`` is the same string used as the TF child
+       frame (e.g., ``"survivor_1"``) and whose
+       ``location`` is a ``geometry_msgs/PointStamped`` carrying
+       the survivor's position **in the map frame**:
+
+       - ``location.header.stamp`` = current ROS time.
+       - ``location.header.frame_id = "map"`` -- so the receiving
+         server (and any downstream consumer) knows the point is
+         in the global fixed frame, not in the robot's body frame.
+       - ``location.point.{x,y}`` from
+         ``detect_node.survivor_pose()``; ``z = 0.0``.
+
+       Returns SUCCESS if the response's ``acknowledged`` field
+       is ``True``, FAILURE otherwise.
    * - ``AdvanceZone``
      - ``name``, ``zone_manager``
      - Calls ``zone_manager.advance()``. Returns SUCCESS.
@@ -399,38 +506,6 @@ All action nodes must inherit from
      - ``name``
      - Logs an info message that no survivor was found at the
        current zone. Returns SUCCESS.
-
-
-Battery Simulation
-------------------
-
-The battery is simulated by a simple publisher node (provided or
-written by the student) that publishes
-``sensor_msgs/BatteryState`` on ``/battery_state`` at 1 Hz. The
-``percentage`` field starts at ``100.0`` and decreases by a
-configurable rate per second (e.g., ``0.5`` per second). The
-``CheckBattery`` condition reads this topic.
-
-.. note::
-
-   You must write a simple ``battery_simulator`` node that publishes
-   ``BatteryState`` messages. This node is started by your launch
-   file.
-
-
-Decorators
-----------
-
-Two ``py_trees.decorators.Timeout`` decorators are used:
-
-1. **Primary navigation timeout**: wraps the first
-   ``NavigateToZone``. If Nav2 does not reach the zone within the
-   configured timeout, returns FAILURE.
-2. **Retry navigation timeout**: wraps the second
-   ``NavigateToZone`` (inside the Recovery Sequence). Same timeout
-   duration.
-
-The timeout duration is loaded from the parameter file.
 
 
 Launch File
@@ -459,9 +534,6 @@ nodes and loads the parameter file.
    * - ``report_survivor_server_exe``
      - ``group<N>_final``
      - Simulated report service server.
-   * - ``battery_simulator_exe``
-     - ``group<N>_final``
-     - Simulated battery publisher.
 
 **Launch file requirements:**
 
@@ -469,20 +541,24 @@ nodes and loads the parameter file.
 2. Load ``config/mission_params.yaml`` for the behavior tree node
    using ``get_package_share_directory()`` and the ``parameters``
    field.
-3. Declare at least the following launch arguments:
-
-   - ``battery_threshold`` (default ``20.0``)
-   - ``navigation_timeout`` (default ``30.0``)
-
+3. Declare at least one launch argument that the BT node consumes
+   (for example, ``tick_rate_hz`` with a sensible default), and
+   forward it to the BT node via ``parameters``. The intent is to
+   exercise ``DeclareLaunchArgument`` and ``LaunchConfiguration`` --
+   not to expose every internal value.
 4. The simulation (Gazebo + Nav2) is started **separately** by the
    user in two terminals before launching the mission:
 
    .. code-block:: console
 
       ros2 launch rosbot_gazebo final_project_world.launch.py
-      ros2 launch rosbot_gazebo navigation.launch.py map:=/path/to/map.yaml
+      ros2 launch rosbot_gazebo navigation.launch.py \
+          map:=/path/to/group<N>_final/maps/final_project_world.yaml
 
-   Your launch file does **not** include these.
+   The map file is the one you built and saved with
+   ``slam_toolbox`` / ``nav2_map_server`` (see
+   :ref:`final-project-build-the-map` above). Your launch file does
+   **not** include these.
 
 
 Parameter File
@@ -503,13 +579,44 @@ Create ``config/mission_params.yaml`` with the following structure:
          x: 0.0
          y: 0.0
          yaw: 0.0
-       battery_threshold: 20.0
-       navigation_timeout: 30.0
-       wait_duration: 5.0
-       battery_drain_rate: 0.5
+       tick_rate_hz: 2.0
 
-You are free to adjust the zone coordinates for your map, but your
-submitted file must contain **at least four zones**.
+**The** ``/**:`` **wildcard.** The top-level key ``/**`` is a ROS 2
+parameter-file glob: a single ``*`` matches one node-name token, and
+the doubled ``/**`` matches **any node name in any namespace**.
+Because of this, every node started with this YAML loaded will
+receive the parameters under ``ros__parameters`` -- you do not have
+to hard-code the BT node's name (or its namespace) here.
+
+Why this matters in practice:
+
+- The BT entry point creates an ``rclpy`` node whose name you may
+  change later (e.g., when prefixing with the group number). With
+  ``/**``, the YAML keeps working without edits.
+- If you launch the same node under a namespace
+  (``namespace="group3"`` in the launch file), a fully-qualified
+  key like ``search_and_rescue:`` would **silently fail to match**
+  (the actual node would be ``/group3/search_and_rescue``);
+  ``/**`` matches both forms.
+- You can be more selective when you need to. For example, scoping
+  one parameter to a specific node:
+
+  .. code-block:: yaml
+
+     /**:
+       ros__parameters:
+         tick_rate_hz: 2.0
+
+     search_and_rescue:
+       ros__parameters:
+         zones: [...]
+
+  Here ``tick_rate_hz`` is shared by every node, while ``zones``
+  only loads into a node literally named ``search_and_rescue``.
+
+For this assignment, the simple ``/**`` block above is enough --
+all parameters belong to the BT node, and there is only one
+consumer.
 
 
 README.md

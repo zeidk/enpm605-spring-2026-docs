@@ -1,0 +1,1271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   contentStyleType="text/css"
+   data-diagram-type="SEQUENCE"
+   height="1110px"
+   preserveAspectRatio="none"
+   style="width:1410px;height:1110px;background:#0B58A8;"
+   version="1.1"
+   viewBox="0 0 1410 1110"
+   width="1410px"
+   zoomAndPan="magnify"
+   id="svg74"
+   sodipodi:docname="final_project_dark.svg"
+   inkscape:version="1.4.3 (1:1.4.3+202512261035+0d15f75042)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview74"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.6308178"
+     inkscape:cx="231.21513"
+     inkscape:cy="658.52933"
+     inkscape:window-width="3840"
+     inkscape:window-height="941"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg74" />
+<?plantuml 1.2026.3beta6?>  <defs
+     id="defs1" />
+  <rect
+     fill="#0b58a8"
+     height="1110"
+     style="stroke:none;stroke-width:1;fill:none"
+     width="1410"
+     x="0"
+     y="0"
+     id="rect1" />
+  <rect
+     fill="#0b58a8"
+     height="848.52338"
+     style="stroke:#ffffff;stroke-width:1"
+     width="10"
+     x="287.61331"
+     y="144.85941"
+     id="rect2" />
+  <rect
+     fill="#0b58a8"
+     height="58.265598"
+     style="stroke:#ffffff;stroke-width:1"
+     width="10"
+     x="600.271"
+     y="406.05469"
+     id="rect3" />
+  <rect
+     fill="#0b58a8"
+     height="29.132799"
+     style="stroke:#ffffff;stroke-width:1"
+     width="10"
+     x="600.271"
+     y="935.11719"
+     id="rect4" />
+  <rect
+     fill="#0b58a8"
+     height="29.132799"
+     style="stroke:#ffffff;stroke-width:1"
+     width="10"
+     x="829.74707"
+     y="543.71881"
+     id="rect5" />
+  <rect
+     fill="#0b58a8"
+     height="29.132799"
+     style="stroke:#ffffff;stroke-width:1"
+     width="10"
+     x="1276.5312"
+     y="655.25"
+     id="rect6" />
+  <rect
+     fill="#0b58a8"
+     height="496.0625"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="1213.8862"
+     x="180.26759"
+     y="317.52341"
+     id="rect7" />
+  <rect
+     fill="#0b58a8"
+     height="161.4688"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="1193.8862"
+     x="190.26759"
+     y="587.85162"
+     id="rect8" />
+  <path
+     d="m 190.2676,692.3828 h 1193.8862 v 53.9375 a 3,3 0 0 1 -3,3 H 193.2676 a 3,3 0 0 1 -3,-3 v -53.9375"
+     fill="#0b58a8"
+     style="stroke:none;stroke-width:1;fill:none"
+     id="path8" />
+  <g
+     id="g9">
+    <title
+       id="title8">User</title>
+    <rect
+       fill="#000000"
+       fill-opacity="0"
+       height="912.78912"
+       width="8"
+       x="44.567402"
+       y="98.593803"
+       id="rect9" />
+    <line
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:5, 5"
+       x1="48"
+       x2="48"
+       y1="98.593803"
+       y2="1011.3828"
+       id="line9" />
+  </g>
+  <g
+     id="g10">
+    <title
+       id="title9">search_and_rescue</title>
+    <rect
+       fill="#000000"
+       fill-opacity="0"
+       height="912.78912"
+       width="8"
+       x="288.61331"
+       y="98.593803"
+       id="rect10" />
+    <line
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:5, 5"
+       x1="292.26761"
+       x2="292.26761"
+       y1="98.593803"
+       y2="1011.3828"
+       id="line10" />
+  </g>
+  <g
+     id="g11">
+    <title
+       id="title10">Nav2</title>
+    <rect
+       fill="#000000"
+       fill-opacity="0"
+       height="912.78912"
+       width="8"
+       x="601.271"
+       y="98.593803"
+       id="rect11" />
+    <line
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:5, 5"
+       x1="605.23969"
+       x2="605.23969"
+       y1="98.593803"
+       y2="1011.3828"
+       id="line11" />
+  </g>
+  <g
+     id="g12">
+    <title
+       id="title11">DetectSurvivorServer</title>
+    <rect
+       fill="#000000"
+       fill-opacity="0"
+       height="912.78912"
+       width="8"
+       x="830.74707"
+       y="98.593803"
+       id="rect12" />
+    <line
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:5, 5"
+       x1="834.30219"
+       x2="834.30219"
+       y1="98.593803"
+       y2="1011.3828"
+       id="line12" />
+  </g>
+  <g
+     id="g13">
+    <title
+       id="title12">tf2_static</title>
+    <rect
+       fill="#000000"
+       fill-opacity="0"
+       height="912.78912"
+       width="8"
+       x="1054.0503"
+       y="98.593803"
+       id="rect13" />
+    <line
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:5, 5"
+       x1="1057.1919"
+       x2="1057.1919"
+       y1="98.593803"
+       y2="1011.3828"
+       id="line13" />
+  </g>
+  <g
+     id="g14">
+    <title
+       id="title13">ReportSurvivorServer</title>
+    <rect
+       fill="#000000"
+       fill-opacity="0"
+       height="912.78912"
+       width="8"
+       x="1277.5312"
+       y="98.593803"
+       id="rect14" />
+    <line
+       style="stroke:#ffffff;stroke-width:1;stroke-dasharray:5, 5"
+       x1="1280.9087"
+       x2="1280.9087"
+       y1="98.593803"
+       y2="1011.3828"
+       id="line14" />
+  </g>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="31.9102"
+     x="29.612301"
+     y="78.995102"
+     id="text14">User</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="71.134804"
+     x="10"
+     y="95.292"
+     id="text15">(operator)</text>
+  <circle
+     cx="48.567402"
+     cy="14"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     id="ellipse15"
+     r="8" />
+  <path
+     d="m 48.5674,22 v 27 m -13,-19 h 26 m -13,19 -13,15 m 13,-15 13,15"
+     fill="none"
+     style="stroke:#ffffff;stroke-width:1"
+     id="path15" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="31.9102"
+     x="29.612301"
+     y="1023.3779"
+     id="text16">User</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="71.134804"
+     x="10"
+     y="1039.6748"
+     id="text17">(operator)</text>
+  <circle
+     cx="48.567402"
+     cy="1051.9766"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     id="ellipse17"
+     r="8" />
+  <path
+     d="m 48.5674,1059.9766 v 27 m -13,-19 h 26 m -13,19 -13,15 m 13,-15 13,15"
+     fill="none"
+     style="stroke:#ffffff;stroke-width:1"
+     id="path17" />
+  <rect
+     fill="#0b58a8"
+     height="46.5938"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="164.69141"
+     x="210.26759"
+     y="51"
+     id="rect17" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="133.998"
+     x="225.6143"
+     y="70.995102"
+     id="text18">search_and_rescue</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="150.69141"
+     x="217.26759"
+     y="87.292"
+     id="text19">(BT entry-point node)</text>
+  <rect
+     fill="#0b58a8"
+     height="46.5938"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="164.69141"
+     x="210.26759"
+     y="1010.3828"
+     id="rect19" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="133.998"
+     x="225.6143"
+     y="1030.3779"
+     id="text20">search_and_rescue</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="150.69141"
+     x="217.26759"
+     y="1046.6748"
+     id="text21">(BT entry-point node)</text>
+  <rect
+     fill="#0b58a8"
+     height="46.5938"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="234.0625"
+     x="488.23969"
+     y="51"
+     id="rect21" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="36.244099"
+     x="587.14893"
+     y="70.995102"
+     id="text22">Nav2</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="220.0625"
+     x="495.23969"
+     y="87.292"
+     id="text23">(NavigateToPose action server)</text>
+  <rect
+     fill="#0b58a8"
+     height="46.5938"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="234.0625"
+     x="488.23969"
+     y="1010.3828"
+     id="rect23" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="36.244099"
+     x="587.14893"
+     y="1030.3779"
+     id="text24">Nav2</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="220.0625"
+     x="495.23969"
+     y="1046.6748"
+     id="text25">(NavigateToPose action server)</text>
+  <rect
+     fill="#0b58a8"
+     height="30.2969"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="164.8896"
+     x="752.30219"
+     y="67.296898"
+     id="rect25" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="150.8896"
+     x="759.30219"
+     y="87.292"
+     id="text26">DetectSurvivorServer</text>
+  <rect
+     fill="#0b58a8"
+     height="30.2969"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="164.8896"
+     x="752.30219"
+     y="1010.3828"
+     id="rect26" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="150.8896"
+     x="759.30219"
+     y="1030.3779"
+     id="text27">DetectSurvivorServer</text>
+  <rect
+     fill="#0b58a8"
+     height="46.5938"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="221.7168"
+     x="947.19189"
+     y="51"
+     id="rect27" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="64.763702"
+     x="1025.6685"
+     y="70.995102"
+     id="text28">tf2_static</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="207.7168"
+     x="954.19189"
+     y="87.292"
+     id="text29">(StaticTransformBroadcaster)</text>
+  <rect
+     fill="#0b58a8"
+     height="46.5938"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="221.7168"
+     x="947.19189"
+     y="1010.3828"
+     id="rect29" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="64.763702"
+     x="1025.6685"
+     y="1030.3779"
+     id="text30">tf2_static</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="207.7168"
+     x="954.19189"
+     y="1046.6748"
+     id="text31">(StaticTransformBroadcaster)</text>
+  <rect
+     fill="#0b58a8"
+     height="30.2969"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="165.2451"
+     x="1198.9087"
+     y="67.296898"
+     id="rect31" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="151.2451"
+     x="1205.9087"
+     y="87.292"
+     id="text32">ReportSurvivorServer</text>
+  <rect
+     fill="#0b58a8"
+     height="30.2969"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     width="165.2451"
+     x="1198.9087"
+     y="1010.3828"
+     id="rect32" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="14px"
+     lengthAdjust="spacing"
+     textLength="151.2451"
+     x="1205.9087"
+     y="1030.3779"
+     id="text33">ReportSurvivorServer</text>
+  <rect
+     fill="#0b58a8"
+     height="848.52338"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     width="10"
+     x="287.61331"
+     y="144.85941"
+     id="rect33" />
+  <rect
+     fill="#0b58a8"
+     height="58.265598"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     width="10"
+     x="600.271"
+     y="406.05469"
+     id="rect34" />
+  <rect
+     fill="#0b58a8"
+     height="29.132799"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     width="10"
+     x="600.271"
+     y="935.11719"
+     id="rect35" />
+  <rect
+     fill="#0b58a8"
+     height="29.132799"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     width="10"
+     x="829.74707"
+     y="543.71881"
+     id="rect36" />
+  <rect
+     fill="#0b58a8"
+     height="29.132799"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     width="10"
+     x="1276.5312"
+     y="655.25"
+     id="rect37" />
+  <polygon
+     fill="#ffffff"
+     points="275.6133,140.8594 285.6133,144.8594 275.6133,148.8594 279.6133,144.8594 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon37" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="48.567402"
+     x2="281.61331"
+     y1="144.85941"
+     y2="144.85941"
+     id="line37" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="184.10741"
+     x="76.036598"
+     y="124.6606"
+     id="text37">ros2 launch group&lt;N&gt;_final</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="192.08009"
+     x="72.050301"
+     y="139.7935"
+     id="text38">search_and_rescue.launch.py</text>
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="339.61331"
+     y1="189.125"
+     y2="189.125"
+     id="line38" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="339.61331"
+     x2="339.61331"
+     y1="189.125"
+     y2="202.125"
+     id="line39" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="298.61331"
+     x2="339.61331"
+     y1="202.125"
+     y2="202.125"
+     id="line40" />
+  <polygon
+     fill="#ffffff"
+     points="308.6133,198.125 298.6133,202.125 308.6133,206.125 304.6133,202.125 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon40" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="173.0752"
+     x="330.34671"
+     y="168.9263"
+     id="text40">load mission_params.yaml</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="224.54201"
+     x="304.61331"
+     y="184.0591"
+     id="text41">(zones, base_station, tick_rate_hz)</text>
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="339.61331"
+     y1="246.39059"
+     y2="246.39059"
+     id="line41" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="339.61331"
+     x2="339.61331"
+     y1="246.39059"
+     y2="259.39059"
+     id="line42" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="298.61331"
+     x2="339.61331"
+     y1="259.39059"
+     y2="259.39059"
+     id="line43" />
+  <polygon
+     fill="#ffffff"
+     points="308.6133,255.3906 298.6133,259.3906 308.6133,263.3906 304.6133,259.3906 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon43" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="123.7285"
+     x="360.57101"
+     y="226.19189"
+     id="text43">build behavior tree</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="235.644"
+     x="304.61331"
+     y="241.32471"
+     id="text44">(Selector / Patrol / HandleDetection)</text>
+  <rect
+     fill="#ffffff"
+     height="3"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1"
+     width="1399.1538"
+     x="5"
+     y="287.957"
+     id="rect44" />
+  <line
+     style="stroke:#ffffff;stroke-width:0.5"
+     x1="5"
+     x2="1404.1538"
+     y1="287.957"
+     y2="287.957"
+     id="line44" />
+  <line
+     style="stroke:#ffffff;stroke-width:0.5"
+     x1="5"
+     x2="1404.1538"
+     y1="290.957"
+     y2="290.957"
+     id="line45" />
+  <rect
+     fill="#ffffff"
+     height="23.132799"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1"
+     width="74.036102"
+     x="667.55878"
+     y="277.39059"
+     id="rect45" />
+  <text
+     fill="#0b58a8"
+     font-family="Verdana"
+     font-size="13px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="55.5103"
+     x="673.55878"
+     y="293.45749"
+     id="text45"
+     style="fill:#000000;fill-opacity:1">Mission</text>
+  <path
+     d="m 183.2676,317.5234 h 73.624 v 7.1329 l -10,10 h -66.624 v -14.1329 a 3,3 0 0 1 3,-3"
+     fill="#ffffff"
+     id="path45" />
+  <rect
+     fill="none"
+     height="496.0625"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1"
+     width="1213.8862"
+     x="180.26759"
+     y="317.52341"
+     id="rect46" />
+  <text
+     fill="#0b58a8"
+     font-family="Verdana"
+     font-size="13px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="31.624001"
+     x="195.26759"
+     y="330.5903"
+     id="text46"
+     style="fill:#000000;fill-opacity:1">loop</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="11px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="238.9761"
+     x="271.8916"
+     y="329.73389"
+     id="text47"
+     style="fill:#75b8ec;fill-opacity:1">[while ZonesRemaining? == SUCCESS]</text>
+  <path
+     d="m 302,342.6563 v 34 a 3,3 0 0 0 3,3 h 206 a 3,3 0 0 0 3,-3 v -27 l -10,-10 H 305 a 3,3 0 0 0 -3,3"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     id="path47" />
+  <path
+     d="m 504,339.6563 v 8.5 a 1.5,1.5 0 0 0 1.5,1.5 h 8.5 l -10,-10"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     id="path48" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="181.6445"
+     x="308"
+     y="356.72311"
+     id="text48">NavigateToZone (BT action,</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="191.62939"
+     x="308"
+     y="371.85599"
+     id="text49">async NavigateToPose client)</text>
+  <polygon
+     fill="#ffffff"
+     points="588.271,402.0547 598.271,406.0547 588.271,410.0547 592.271,406.0547 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon49" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="594.271"
+     y1="406.05469"
+     y2="406.05469"
+     id="line49" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="283.65771"
+     x="307.11331"
+     y="400.9888"
+     id="text50">send_goal_async(zone.x, zone.y, zone.yaw)</text>
+  <polygon
+     fill="#ffffff"
+     points="308.6133,431.1875 298.6133,435.1875 308.6133,439.1875 304.6133,435.1875 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon50" />
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="302.61331"
+     x2="599.271"
+     y1="435.1875"
+     y2="435.1875"
+     id="line50" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="135.62399"
+     x="381.1301"
+     y="430.12161"
+     id="text51">feedback (RUNNING)</text>
+  <polygon
+     fill="#ffffff"
+     points="308.6133,460.3203 298.6133,464.3203 308.6133,468.3203 304.6133,464.3203 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon51" />
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="302.61331"
+     x2="604.271"
+     y1="464.32031"
+     y2="464.32031"
+     id="line51" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="101.8354"
+     x="400.52441"
+     y="459.25439"
+     id="text52">result SUCCESS</text>
+  <path
+     d="m 302,480.3203 v 34 a 3,3 0 0 0 3,3 h 186 a 3,3 0 0 0 3,-3 v -27 l -10,-10 H 305 a 3,3 0 0 0 -3,3"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     id="path52" />
+  <path
+     d="m 484,477.3203 v 8.5 a 1.5,1.5 0 0 0 1.5,1.5 h 8.5 l -10,-10"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     id="path53" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="171.82471"
+     x="308"
+     y="494.38721"
+     id="text53">DetectSurvivor (BT action,</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="125.4614"
+     x="308"
+     y="509.51999"
+     id="text54">sync service client)</text>
+  <polygon
+     fill="#ffffff"
+     points="817.7471,539.7188 827.7471,543.7188 817.7471,547.7188 821.7471,543.7188 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon54" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="823.74707"
+     y1="543.71881"
+     y2="543.71881"
+     id="line54" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="160.26559"
+     x="483.54739"
+     y="538.65277"
+     id="text55">detect_survivor(zone_id)</text>
+  <polygon
+     fill="#ffffff"
+     points="308.6133,568.8516 298.6133,572.8516 308.6133,576.8516 304.6133,572.8516 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon55" />
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="302.61331"
+     x2="833.74707"
+     y1="572.85162"
+     y2="572.85162"
+     id="line55" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="197.6279"
+     x="467.36621"
+     y="567.78558"
+     id="text56">(found, survivor_x, survivor_y)</text>
+  <path
+     d="m 193.2676,587.8516 h 61.4428 v 7.1328 l -10,10 h -54.4428 v -14.1328 a 3,3 0 0 1 3,-3"
+     fill="#ffffff"
+     id="path56" />
+  <rect
+     fill="none"
+     height="161.4688"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1"
+     width="1193.8862"
+     x="190.26759"
+     y="587.85162"
+     id="rect56" />
+  <text
+     fill="#0b58a8"
+     font-family="Verdana"
+     font-size="13px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="19.4429"
+     x="205.26759"
+     y="600.91852"
+     id="text57"
+     style="fill:#000000;fill-opacity:1">alt</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="11px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="218.2222"
+     x="269.71039"
+     y="600.06201"
+     id="text58"
+     style="fill:#75b8ec;fill-opacity:1">[IsSurvivorDetected? == SUCCESS]</text>
+  <polygon
+     fill="#ffffff"
+     points="1046.0503,622.1172 1056.0503,626.1172 1046.0503,630.1172 1050.0503,626.1172 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon58" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="1052.0503"
+     y1="626.11719"
+     y2="626.11719"
+     id="line58" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="229.81689"
+     x="562.92328"
+     y="621.05127"
+     id="text59">sendTransform(map -&gt; survivor_N)</text>
+  <polygon
+     fill="#ffffff"
+     points="1264.5313,651.25 1274.5313,655.25 1264.5313,659.25 1268.5313,655.25 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon59" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="1270.5312"
+     y1="655.25"
+     y2="655.25"
+     id="line59" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="240.15089"
+     x="666.99683"
+     y="650.18408"
+     id="text60">report_survivor(survivor_id, location)</text>
+  <polygon
+     fill="#ffffff"
+     points="308.6133,680.3828 298.6133,684.3828 308.6133,688.3828 304.6133,684.3828 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon60" />
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="302.61331"
+     x2="1280.5312"
+     y1="684.38281"
+     y2="684.38281"
+     id="line60" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="139.6675"
+     x="719.73853"
+     y="679.31689"
+     id="text61">acknowledged = true</text>
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="190.26759"
+     x2="1384.1538"
+     y1="693.38281"
+     y2="693.38281"
+     id="line61" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="11px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="213.90919"
+     x="195.26759"
+     y="703.59332"
+     id="text62"
+     style="fill:#75b8ec;fill-opacity:1">[IsSurvivorDetected? == FAILURE]</text>
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="339.61331"
+     y1="728.32031"
+     y2="728.32031"
+     id="line62" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="339.61331"
+     x2="339.61331"
+     y1="728.32031"
+     y2="741.32031"
+     id="line63" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="298.61331"
+     x2="339.61331"
+     y1="741.32031"
+     y2="741.32031"
+     id="line64" />
+  <polygon
+     fill="#ffffff"
+     points="308.6133,737.3203 298.6133,741.3203 308.6133,745.3203 304.6133,741.3203 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon64" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="104.2793"
+     x="304.61331"
+     y="723.25439"
+     id="text64">LogNoDetection</text>
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="339.61331"
+     y1="792.58588"
+     y2="792.58588"
+     id="line65" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="339.61331"
+     x2="339.61331"
+     y1="792.58588"
+     y2="805.58588"
+     id="line66" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="298.61331"
+     x2="339.61331"
+     y1="805.58588"
+     y2="805.58588"
+     id="line67" />
+  <polygon
+     fill="#ffffff"
+     points="308.6133,801.5859 298.6133,805.5859 308.6133,809.5859 304.6133,805.5859 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon67" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="89.286102"
+     x="347.78369"
+     y="772.38721"
+     id="text67">AdvanceZone</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="175.627"
+     x="304.61331"
+     y="787.52002"
+     id="text68">(zone_manager.advance())</text>
+  <rect
+     fill="#ffffff"
+     height="3"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1"
+     width="1399.1538"
+     x="5"
+     y="841.15228"
+     id="rect68" />
+  <line
+     style="stroke:#ffffff;stroke-width:0.5"
+     x1="5"
+     x2="1404.1538"
+     y1="841.15228"
+     y2="841.15228"
+     id="line68" />
+  <line
+     style="stroke:#ffffff;stroke-width:0.5"
+     x1="5"
+     x2="1404.1538"
+     y1="844.15228"
+     y2="844.15228"
+     id="line69" />
+  <rect
+     fill="#ffffff"
+     height="23.132799"
+     rx="3"
+     ry="3"
+     style="stroke:#ffffff;stroke-width:1"
+     width="127.3184"
+     x="640.91772"
+     y="830.58588"
+     id="rect69" />
+  <text
+     fill="#0b58a8"
+     font-family="Verdana"
+     font-size="13px"
+     font-weight="700"
+     lengthAdjust="spacing"
+     textLength="108.7925"
+     x="646.91772"
+     y="846.65277"
+     id="text69"
+     style="fill:#000000;fill-opacity:1">Return to base</text>
+  <path
+     d="m 302,871.7188 v 34 a 3,3 0 0 0 3,3 h 320 a 3,3 0 0 0 3,-3 v -27 l -10,-10 H 305 a 3,3 0 0 0 -3,3"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:none"
+     id="path69" />
+  <path
+     d="m 618,868.7188 v 8.5 a 1.5,1.5 0 0 0 1.5,1.5 h 8.5 l -10,-10"
+     fill="#0b58a8"
+     style="stroke:#ffffff;stroke-width:1;fill:#ffffff;fill-opacity:1"
+     id="path70" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="238.67821"
+     x="308"
+     y="885.78558"
+     id="text70">Patrol Sequence fails (no zones left).</text>
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="305.04929"
+     x="308"
+     y="900.91852"
+     id="text71">Root Selector falls through to NavigateToBase.</text>
+  <polygon
+     fill="#ffffff"
+     points="588.271,931.1172 598.271,935.1172 588.271,939.1172 592.271,935.1172 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon71" />
+  <line
+     style="stroke:#ffffff;stroke-width:1"
+     x1="297.61331"
+     x2="594.271"
+     y1="935.11719"
+     y2="935.11719"
+     id="line71" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="202.2363"
+     x="347.82401"
+     y="930.05127"
+     id="text72">send_goal_async(base_station)</text>
+  <polygon
+     fill="#ffffff"
+     points="308.6133,960.25 298.6133,964.25 308.6133,968.25 304.6133,964.25 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon72" />
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="302.61331"
+     x2="604.271"
+     y1="964.25"
+     y2="964.25"
+     id="line72" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="101.8354"
+     x="400.52441"
+     y="959.18408"
+     id="text73">result SUCCESS</text>
+  <polygon
+     fill="#ffffff"
+     points="59.5674,989.3828 49.5674,993.3828 59.5674,997.3828 55.5674,993.3828 "
+     style="stroke:#ffffff;stroke-width:1"
+     id="polygon73" />
+  <line
+     style="stroke:#ffffff;stroke-width:1;stroke-dasharray:2, 2"
+     x1="53.567402"
+     x2="291.61331"
+     y1="993.38281"
+     y2="993.38281"
+     id="line73" />
+  <text
+     fill="#ffffff"
+     font-family="Verdana"
+     font-size="13px"
+     lengthAdjust="spacing"
+     textLength="215.0459"
+     x="63.067402"
+     y="988.31689"
+     id="text74"
+     inkscape:export-filename="../../images/final_project/final_project_dark.png"
+     inkscape:export-xdpi="350"
+     inkscape:export-ydpi="350">mission complete (Ctrl-C to stop)</text>
+</svg>

@@ -24,10 +24,14 @@ fail at submission time typically also fail at grading time.
 - |box| Survivors are detected and TF frames are broadcast
   (verify with ``ros2 run tf2_ros tf2_echo map survivor_1``).
 - |box| Report service is called for each found survivor.
-- |box| Navigation failure triggers recovery (wait + retry + skip).
-- |box| Low battery causes the robot to return to base.
+- |box| After every zone is visited, the robot drives back to the
+  base station.
 - |box| Launch arguments work: ``--show-args`` and override.
 - |box| Parameters load from ``mission_params.yaml``.
+- |box| ``maps/final_project_map.pgm`` and
+  ``maps/final_project_map.yaml`` (built with ``slam_toolbox``)
+  are present inside ``group<N>_final/`` and Nav2 launches cleanly
+  against them.
 
 **Documentation**
 
@@ -45,7 +49,7 @@ fail at submission time typically also fail at grading time.
 
 **Packaging**
 
-- |box| Removed ``__pycache__/``, ``*.pyc``, ``.ruff_cache/``.
+- |box| Removed ``__pycache__/``, ``*.pyc``, ``.ruff_cache/``, ``.vscode/``, etc 
 - |box| ZIP file is named ``group<N>_final_project.zip``.
 - |box| ZIP contains the ``final_project/`` folder with **both**
   ``group<N>_final_interfaces/`` and ``group<N>_final/`` inside it.
@@ -58,14 +62,7 @@ How to Submit
 
 1. Zip the ``~/enpm605_ws/src/final_project/`` folder and submit it
    on Canvas, renamed to ``group<N>_final_project.zip`` (e.g.,
-   ``group3_final_project.zip``). For example:
-
-   .. code-block:: console
-
-      cd ~/enpm605_ws/src
-      zip -r group3_final_project.zip final_project \
-          -x "*/build/*" "*/install/*" "*/log/*" \
-             "*/__pycache__/*" "*.pyc" "*/.ruff_cache/*"
+   ``group3_final_project.zip``). 
 
 2. The ZIP must contain the ``final_project/`` folder, with **both**
    package folders inside it:
@@ -73,6 +70,6 @@ How to Submit
    ``final_project/group<N>_final/``.
 
 3. The ZIP must not contain ``build/``, ``install/``, ``log/``,
-   ``__pycache__/``, ``.pyc``, or ``.ruff_cache/`` files.
+   ``__pycache__/``, ``.pyc``, ``.ruff_cache/``, or any other artifacts.
 
 4. Only one submission per group.

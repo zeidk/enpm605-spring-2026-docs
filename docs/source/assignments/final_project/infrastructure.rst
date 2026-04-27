@@ -20,24 +20,31 @@ the origin. Debris obstacles are scattered inside the rooms.
    as a visual cue for you and the instructor to confirm the zone
    poses at a glance.
 
+
+   .. only:: html
+
+      .. figure:: /_static/images/final_project/final_project_world.png
+         :alt: Simulation environment for the Final Project
+         :width: 90%
+         :align: center
+         :class: only-light
+
+         Simulation environment for the Final Project.
+
+      .. figure:: /_static/images/final_project/final_project_world.png
+         :alt: Simulation environment for the Final Project
+         :width: 90%
+         :align: center
+         :class: only-dark
+
+         Simulation environment for the Final Project.
+
 You will use **Nav2** for autonomous navigation, which requires a
-pre-built map. A pre-built map is provided for download so you do
-not need to run SLAM yourself.
-
-.. important::
-
-   Download the pre-built map files and place them in a known
-   location (e.g., ``~/enpm605_ws/src/final_project/group<N>_final/maps/``):
-
-   - `final_project_world.yaml <#>`_
-   - `final_project_world.pgm <#>`_
-
-   Then launch Nav2 with the map:
-
-   .. code-block:: console
-
-      ros2 launch rosbot_gazebo navigation.launch.py \
-          map:=/path/to/final_project_world.yaml
+pre-built occupancy grid map. **Each group must build their own map**
+of the final project world using ``slam_toolbox`` and save it with
+``nav2_map_server``. No map is provided. The full map-building
+procedure is documented in :ref:`final-project-build-the-map` under
+:doc:`requirements`.
 
 
 Build and Launch
@@ -103,11 +110,13 @@ should see the four color-coded zone markers (red, green, blue,
 yellow) in the four rooms and a white base station marker with a
 red cross at the center.
 
-**6. Launch Nav2** (in a second terminal):
+**6. Launch Nav2** (in a second terminal). Pass the path to the map
+your group built and saved under ``group<N>_final/maps/``:
 
 .. code-block:: console
 
-   ros2 launch rosbot_gazebo navigation.launch.py map:=/path/to/your/map.yaml
+   ros2 launch rosbot_gazebo navigation.launch.py \
+       map:=/path/to/group<N>_final/maps/final_project_world.yaml
 
 **7. Launch the search and rescue mission** (in a third terminal):
 
@@ -221,10 +230,6 @@ Topics and Frames
       * - Direction
         - Topic / Type
         - Description
-      * - **Subscribe**
-        - ``/battery_state`` (``sensor_msgs/BatteryState``)
-        - Simulated battery level. Published by your battery
-          simulator node.
       * - **Action client**
         - ``navigate_to_pose`` (``nav2_msgs/NavigateToPose``)
         - Nav2 action for autonomous navigation to a goal pose.

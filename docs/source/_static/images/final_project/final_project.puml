@@ -1,0 +1,63 @@
+@startuml
+title Final Project — Search-and-Rescue Mission Sequence
+
+skinparam shadowing false
+skinparam sequenceMessageAlign center
+skinparam sequenceArrowThickness 1
+skinparam roundCorner 6
+
+actor "User\n(operator)" as User
+participant "search_and_rescue\n(BT entry-point node)" as BT
+participant "Nav2\n(NavigateToPose action server)" as Nav2
+participant "DetectSurvivorServer" as Detect
+participant "tf2_static\n(StaticTransformBroadcaster)" as TF
+participant "ReportSurvivorServer" as Report
+
+User -> BT : ros2 launch group<N>_final\nsearch_and_rescue.launch.py
+activate BT
+
+BT -> BT : load mission_params.yaml\n(zones, base_station, tick_rate_hz)
+BT -> BT : build behavior tree\n(Selector / Patrol / HandleDetection)
+
+== Mission ==
+
+loop while ZonesRemaining? == SUCCESS
+
+    note right of BT : NavigateToZone (BT action,\nasync NavigateToPose client)
+    BT -> Nav2 : send_goal_async(zone.x, zone.y, zone.yaw)
+    activate Nav2
+    Nav2 --> BT : feedback (RUNNING)
+    Nav2 --> BT : result SUCCESS
+    deactivate Nav2
+
+    note right of BT : DetectSurvivor (BT action,\nsync service client)
+    BT -> Detect : detect_survivor(zone_id)
+    activate Detect
+    Detect --> BT : (found, survivor_x, survivor_y)
+    deactivate Detect
+
+    alt IsSurvivorDetected? == SUCCESS
+        BT -> TF : sendTransform(map -> survivor_N)
+        BT -> Report : report_survivor(survivor_id, location)
+        activate Report
+        Report --> BT : acknowledged = true
+        deactivate Report
+    else IsSurvivorDetected? == FAILURE
+        BT -> BT : LogNoDetection
+    end
+
+    BT -> BT : AdvanceZone\n(zone_manager.advance())
+end
+
+== Return to base ==
+
+note right of BT : Patrol Sequence fails (no zones left).\nRoot Selector falls through to NavigateToBase.
+BT -> Nav2 : send_goal_async(base_station)
+activate Nav2
+Nav2 --> BT : result SUCCESS
+deactivate Nav2
+
+BT --> User : mission complete (Ctrl-C to stop)
+deactivate BT
+
+@enduml

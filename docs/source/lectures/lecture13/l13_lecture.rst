@@ -564,7 +564,7 @@ a YAML parameter file. The most important parameters for this course:
       * -
         - Command
       * - T1
-        - ``ros2 launch rosbot_gazebo husarion_world.launch.py``
+        - ``ros2 launch rosbot_gazebo husarion_world.launch.py rviz:=False``
       * - T2
         - ``ros2 launch nav_demo map_nav.launch.py mode:=mapping``
       * - Gazebo

@@ -18,10 +18,8 @@ Exact numeric values will vary.
 
    [INFO] [search_and_rescue]: Loaded 4 search zones from parameters.
    [INFO] [search_and_rescue]: Base station at (0.00, 0.00, yaw=0.00).
-   [INFO] [search_and_rescue]: Battery threshold: 20.0%
    [INFO] [detect_survivor_server]: DetectSurvivor service ready.
    [INFO] [report_survivor_server]: ReportSurvivor service ready.
-   [INFO] [battery_simulator]: Publishing battery state at 1 Hz. Drain rate: 0.5%/s
 
    [INFO] [search_and_rescue]: --- Zone 1/4: zone_a (-3.00, 3.00) ---
    [INFO] [search_and_rescue]: Navigating to zone_a...
@@ -64,39 +62,6 @@ Exact numeric values will vary.
    [INFO] [search_and_rescue]: Reached base station. Mission complete.
 
 
-Navigation Failure and Recovery
-===============================
-
-If Nav2 fails to reach a zone within the timeout, the recovery
-strategy activates:
-
-.. code-block:: text
-
-   [INFO] [search_and_rescue]: --- Zone 2/4: zone_b (3.50, 3.00) ---
-   [INFO] [search_and_rescue]: Navigating to zone_b...
-   [WARN] [search_and_rescue]: Navigation to zone_b timed out after 30.0s.
-   [INFO] [search_and_rescue]: Recovery: waiting 5.0s before retry...
-   [INFO] [search_and_rescue]: Retrying navigation to zone_b...
-   [WARN] [search_and_rescue]: Retry navigation to zone_b timed out.
-   [WARN] [search_and_rescue]: Skipping zone_b after failed recovery.
-   [INFO] [search_and_rescue]: --- Zone 3/4: zone_c (4.00, -3.00) ---
-   ...
-
-
-Low Battery Return
-==================
-
-If the battery drops below the threshold mid-mission, the robot
-abandons the remaining zones and returns to base:
-
-.. code-block:: text
-
-   [INFO] [search_and_rescue]: --- Zone 3/4: zone_c (4.00, -3.00) ---
-   [WARN] [search_and_rescue]: Battery low (18.5%). Returning to base.
-   [INFO] [search_and_rescue]: Navigating to base station...
-   [INFO] [search_and_rescue]: Reached base station. Mission aborted due to low battery.
-
-
 Verification Commands
 =====================
 
@@ -104,9 +69,12 @@ Use these commands to test individual components.
 
 .. code-block:: console
 
-   # 1. Launch simulation + Nav2 (separate terminals)
+   # 1. Launch simulation + Nav2 (separate terminals). The map file
+   # is the one you built with slam_toolbox and saved under
+   # group<N>_final/maps/.
    ros2 launch rosbot_gazebo final_project_world.launch.py
-   ros2 launch rosbot_gazebo navigation.launch.py map:=/path/to/map.yaml
+   ros2 launch rosbot_gazebo navigation.launch.py \
+       map:=/path/to/group<N>_final/maps/final_project_world.yaml
 
    # 2. Launch the mission
    ros2 launch group<N>_final search_and_rescue.launch.py
@@ -118,16 +86,13 @@ Use these commands to test individual components.
    # 4. List all static transforms
    ros2 topic echo /tf_static --once
 
-   # 5. Check battery state
-   ros2 topic echo /battery_state --field percentage
-
-   # 6. List available services
+   # 5. List available services
    ros2 service list | grep -E "detect|report"
 
-   # 7. Test detection service manually
+   # 6. Test detection service manually
    ros2 service call /detect_survivor \
        group<N>_final_interfaces/srv/DetectSurvivor \
        "{zone_id: 'zone_a'}"
 
-   # 8. Show launch arguments
+   # 7. Show launch arguments
    ros2 launch group<N>_final search_and_rescue.launch.py --show-args

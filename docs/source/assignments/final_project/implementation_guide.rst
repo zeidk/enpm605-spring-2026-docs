@@ -43,13 +43,19 @@ to avoid blocking your partner and to enable testing at each step.
      - Plain Python class. Test it with a simple script that calls
        its methods. No ROS 2 needed.
    * - 5
-     - Implement battery simulator
-     - Write the ``BatterySimulator`` node. Test with
-       ``ros2 topic echo /battery_state``.
-   * - 6
      - Create ``mission_params.yaml``
-     - Define zones, base station, thresholds. Reference:
+     - Define zones, base station, and the BT tick rate. Reference:
        ``lecture10/parameters_demo/config/``.
+   * - 6
+     - Build the map
+     - Run ``slam_toolbox`` against ``final_project_world.launch.py``,
+       drive the robot through every room (with at least one loop
+       closure), and save the result with
+       ``ros2 run nav2_map_server map_saver_cli`` into
+       ``group<N>_final/maps/final_project_world.{pgm,yaml}``. See
+       :ref:`final-project-build-the-map` and Lecture 13 Exercise 1.
+       The map is required for Nav2 to localize -- you cannot test
+       ``NavigateToZone`` without it.
 
 **Phase 2: BT Leaf Nodes (Days 4-7)**
 
@@ -79,15 +85,13 @@ isolation before assembling the full tree.
        ``zone_manager.base_pose()``. Can reuse most of the code.
    * - 9
      - Implement simple action nodes
-     - ``Wait``, ``SkipZone``, ``AdvanceZone``, ``LogNoDetection``.
-       These are straightforward (a few lines each).
+     - ``AdvanceZone`` and ``LogNoDetection``. These are
+       straightforward (a few lines each).
    * - 10
      - Implement condition nodes
-     - ``CheckBattery`` (subscribes to ``/battery_state``),
-       ``ZonesRemaining`` (queries ``ZoneManager``),
-       ``IsSurvivorDetected`` (reads from ``DetectSurvivor``
-       node). Reference:
-       ``lecture12/bt_demo/goal_not_reached.py``.
+     - ``ZonesRemaining`` (queries ``ZoneManager``) and
+       ``IsSurvivorDetected`` (reads from ``DetectSurvivor`` node).
+       Reference: ``lecture12/bt_demo/goal_not_reached.py``.
    * - 11
      - Implement ``DetectSurvivor`` (BT node)
      - Calls the ``detect_survivor`` service synchronously using
@@ -124,16 +128,16 @@ isolation before assembling the full tree.
        ``lecture12/bt_demo/scripts/main_drive_to_goal.py``.
    * - 15
      - Write the launch file
-     - Start all four nodes (BT, two servers, battery simulator).
-       Load ``mission_params.yaml``. Declare launch arguments.
-       Reference:
+     - Start the three mission nodes (BT + two service servers).
+       Load ``mission_params.yaml``. Declare at least one launch
+       argument. Reference:
        ``lecture12/bt_demo/launch/drive_to_goal.py`` and
        ``lecture13/mapping_navigation_demo/launch/navigation.launch.py``.
    * - 16
      - End-to-end testing
      - Launch Gazebo + Nav2 + your mission. Verify: all zones
        visited, survivors detected, TF frames broadcast, report
-       service called, battery return works. Use
+       service called, robot returns to base. Use
        ``ros2 run tf2_ros tf2_echo map survivor_1`` to verify
        TF frames.
 
@@ -149,10 +153,10 @@ isolation before assembling the full tree.
      - Details
    * - 17
      - Test edge cases
-     - Navigation failure (blocked path) triggers recovery (wait
-       + retry + skip). Low battery mid-mission returns to base.
-       Adjust ``battery_drain_rate`` to trigger low battery at
-       the right time.
+     - Survivor present at multiple zones, no survivor at others
+       (verify ``LogNoDetection``), all four zones visited and the
+       robot returns to base. Confirm TF frames persist after the
+       mission completes (``ros2 topic echo /tf_static --once``).
    * - 18
      - Code quality
      - Add docstrings, type hints, inline comments. Run Ruff.
@@ -183,9 +187,10 @@ the full system, but each focuses on their area.
      - Student B: Behavior Tree
    * - **Phase 1**
      - Create both package skeletons and the CMake interfaces
-       package. Write ``DetectSurvivorServer``,
-       ``ReportSurvivorServer``, and ``BatterySimulator``.
-       Create ``mission_params.yaml``.
+       package. Write ``DetectSurvivorServer`` and
+       ``ReportSurvivorServer``. Create ``mission_params.yaml``.
+       Build and save the map with ``slam_toolbox`` /
+       ``nav2_map_server``.
      - Write ``ZoneManager``. Review Lecture 12 BT code and
        Lecture 13 Nav2 code. Start ``NavigateToZone`` (the
        hardest node).
@@ -193,10 +198,9 @@ the full system, but each focuses on their area.
      - Write ``DetectSurvivor`` (BT node, calls the service A
        wrote), ``BroadcastSurvivorTF``, and ``NotifyBase``.
        These depend on the service interfaces from Phase 1.
-     - Write ``NavigateToBase``, ``Wait``, ``SkipZone``,
-       ``AdvanceZone``, ``LogNoDetection``, and all three
-       condition nodes (``CheckBattery``, ``ZonesRemaining``,
-       ``IsSurvivorDetected``).
+     - Write ``NavigateToBase``, ``AdvanceZone``,
+       ``LogNoDetection``, and the two condition nodes
+       (``ZonesRemaining``, ``IsSurvivorDetected``).
    * - **Phase 3**
      - Write the launch file. Help with integration testing.
      - Assemble the full BT in the entry point script. Integrate
@@ -314,15 +318,13 @@ shared via **constructor injection**:
 Memory Flag Choices
 --------------------
 
-- **Root Sequence** (``memory=False``): Reactive. ``CheckBattery``
-  is re-evaluated every tick. If battery drops mid-mission, the
-  tree reacts immediately.
+- **Root Selector** (``memory=False``): Reactive. The Selector
+  re-evaluates the Patrol Sequence on every tick. Once Patrol
+  fails (no zones remaining), it falls through to
+  ``NavigateToBase``.
 - **Patrol Sequence** (``memory=True``): Resuming. Once the robot
   reaches a zone and starts detection, the tree does not restart
   navigation on the next tick.
-- **NavigateWithRecovery Selector** (``memory=True``): Once the
-  primary navigation times out, the Selector stays on recovery
-  (Wait + retry) rather than retrying immediately.
 - **HandleDetection Selector** (``memory=False``): The detection
   result is checked fresh each time.
 
@@ -341,10 +343,6 @@ testing individual nodes.
        group<N>_final_interfaces/srv/DetectSurvivor \
        "{zone_id: 'zone_a'}"
 
-   # Test battery simulator
-   ros2 run group<N>_final battery_simulator_exe &
-   ros2 topic echo /battery_state --field percentage
-
    # Test a minimal BT with just NavigateToZone
    # (requires Gazebo + Nav2 running)
 
@@ -359,9 +357,10 @@ testing individual nodes.
    # Terminal 1: Gazebo
    ros2 launch rosbot_gazebo final_project_world.launch.py
 
-   # Terminal 2: Nav2
+   # Terminal 2: Nav2 (use the map your group built and saved
+   # under group<N>_final/maps/)
    ros2 launch rosbot_gazebo navigation.launch.py \
-       map:=/path/to/final_project_world.yaml
+       map:=/path/to/group<N>_final/maps/final_project_world.yaml
 
    # Terminal 3: Mission
    ros2 launch group<N>_final search_and_rescue.launch.py

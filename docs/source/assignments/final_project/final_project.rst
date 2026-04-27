@@ -11,7 +11,7 @@ Overview
    :class: compact-table
 
    * - **Due Date**
-     - May 9, 2026, 11:59 PM EST
+     - May 9, 2026, 11:59 PM EST (preferred); May 12, 2026, 11:59 PM EST (hard deadline)
    * - **Total Points**
      - 100 points
    * - **Submission**
@@ -38,15 +38,12 @@ Overview
       vision -- a simple dictionary lookup) to check for survivors.
    3. If a survivor is found, **broadcast a TF frame** marking their
       location and call a **notification service** to report the find.
-   4. Monitor a simulated **battery level** and return to base when
-      the battery is low.
-   5. Handle **navigation failures** with a recovery strategy
-      (wait and retry, then skip).
+   4. After visiting every zone, **return to the base station**.
 
    The robot's decision-making is orchestrated by a **behavior tree**
    built with ``py_trees`` and ``py_trees_ros``. All mission
-   parameters (search zones, battery threshold, timeouts) are loaded
-   from a **YAML parameter file**.
+   parameters (search zones, base station pose, BT tick rate) are
+   loaded from a **YAML parameter file**.
 
 
 .. dropdown:: Learning Objectives
@@ -59,16 +56,16 @@ Overview
            :class-card: sd-border-info
 
            Design and implement a multi-level behavior tree with
-           conditions, actions, composites (Sequence and Selector),
-           and decorators (Timeout). Understand ``memory=True`` vs
-           ``memory=False`` for reactive and resuming behavior.
+           conditions, actions, and composites (Sequence and
+           Selector). Understand ``memory=True`` vs ``memory=False``
+           for reactive and resuming behavior.
 
        .. grid-item-card:: Nav2 Integration
            :class-card: sd-border-info
 
            Use the ``NavigateToPose`` action to send the robot to
-           goal poses on a known map. Handle navigation success,
-           failure, and timeout within the behavior tree.
+           goal poses on a known map. Handle navigation success and
+           failure within the behavior tree.
 
        .. grid-item-card:: Custom Services
            :class-card: sd-border-info
@@ -89,9 +86,8 @@ Overview
            :class-card: sd-border-info
 
            Load mission parameters (search zones, base station pose,
-           battery threshold, navigation timeout) from a YAML file.
-           Expose key values as launch arguments for runtime
-           override.
+           BT tick rate) from a YAML file. Expose at least one value
+           as a launch argument for runtime override.
 
        .. grid-item-card:: Launch File Integration
            :class-card: sd-border-info
@@ -106,8 +102,9 @@ Overview
 .. dropdown:: Suggested Timeline
    :open:
 
-   You have **two weeks** (April 27 |rarr| May 9). The schedule below
-   is a suggestion; adjust based on your group's pace.
+   You have **two weeks** (April 27 |rarr| May 9, preferred; May 12
+   hard deadline). The schedule below is a suggestion; adjust based
+   on your group's pace.
 
    .. list-table::
       :widths: 18 12 70
@@ -120,31 +117,33 @@ Overview
       * - **Days 1 to 3**
         - 3 days
         - Read the assignment carefully. Review Lectures 12 and 13
-          (behavior trees, Nav2). Launch the simulation and confirm
-          the map loads correctly. Create the package skeletons.
-          Define the service interfaces. Implement the
-          ``ZoneManager`` class and the simulated service servers
-          (``DetectSurvivor`` and ``ReportSurvivor``).
+          (behavior trees, Nav2). Launch the simulation, **build a
+          map of the world with** ``slam_toolbox`` and save it under
+          ``group<N>_final/maps/`` (see :ref:`final-project-build-the-map`), then
+          confirm Nav2 localizes against your saved map. Create the
+          package skeletons. Define the service interfaces.
+          Implement the ``ZoneManager`` class and the simulated
+          service servers (``DetectSurvivor`` and ``ReportSurvivor``).
       * - **Days 4 to 7**
         - 4 days
         - Implement the behavior tree leaf nodes: ``NavigateToZone``,
-          ``NavigateToBase``, ``DetectSurvivor``, ``BroadcastSurvivorTF``,
-          ``NotifyBase``, ``Wait``, ``SkipZone``, ``AdvanceZone``,
+          ``NavigateToBase``, ``DetectSurvivor``,
+          ``BroadcastSurvivorTF``, ``NotifyBase``, ``AdvanceZone``,
           ``LogNoDetection``. Implement condition nodes:
-          ``CheckBattery``, ``ZonesRemaining``, ``IsSurvivorDetected``.
-          Test each node individually.
+          ``ZonesRemaining``, ``IsSurvivorDetected``. Test each node
+          individually.
       * - **Days 8 to 11**
         - 4 days
         - Assemble the full behavior tree in the entry point script.
           Write the launch file. Integrate with Nav2. Test the full
           pipeline end to end: all zones visited, survivors detected
-          and reported, TF frames broadcast, battery return works.
+          and reported, TF frames broadcast, robot returns to base.
       * - **Days 12 to 14**
         - 3 days
         - Write ``README.md``. Code quality pass (docstrings, type
-          hints, comments, Ruff). Test edge cases (navigation
-          failure, skip zone, low battery mid-mission). Remove cache
-          directories. Package and submit.
+          hints, comments, Ruff). Test edge cases (no survivor at
+          a zone, all four zones visited, return to base). Remove
+          cache directories. Package and submit.
 
 ----
 

@@ -50,20 +50,15 @@ This rubric details how the 100 points are allocated.
    * - Class implementation
      - 5
      - All required methods implemented (``current_zone``,
-       ``has_remaining``, ``advance``, ``skip``, ``base_pose``,
+       ``has_remaining``, ``advance``, ``base_pose``,
        ``next_survivor_id``). State is managed correctly.
    * - Integration with BT nodes
      - 3
      - ``ZoneManager`` instance is shared via constructor injection.
        BT nodes correctly read and modify zone state.
-   * - **Condition Nodes (9 pts)**
+   * - **Condition Nodes (6 pts)**
      -
      -
-   * - ``CheckBattery``
-     - 3
-     - Subscribes to ``/battery_state`` in ``setup()``. Returns
-       SUCCESS when battery is above threshold, FAILURE otherwise.
-       Never returns RUNNING.
    * - ``ZonesRemaining``
      - 3
      - Queries ``zone_manager.has_remaining()``. Returns correct
@@ -72,24 +67,21 @@ This rubric details how the 100 points are allocated.
      - 3
      - Reads detection result from the ``DetectSurvivor`` action
        node via direct reference. Returns correct status.
-   * - **Action Nodes (30 pts)**
+   * - **Action Nodes (28 pts)**
      -
      -
    * - ``NavigateToZone``
-     - 6
+     - 8
      - Sends ``NavigateToPose`` goal to Nav2 for the current zone.
        Returns RUNNING while navigating, SUCCESS on arrival,
-       FAILURE on Nav2 failure. Publishes zero-velocity on
+       FAILURE on Nav2 failure. Cancels the goal on
        ``terminate()``.
    * - ``NavigateToBase``
      - 4
      - Same as ``NavigateToZone`` but targets
        ``zone_manager.base_pose()``.
-   * - ``Wait``
-     - 3
-     - Returns RUNNING for the configured duration, then SUCCESS.
    * - ``DetectSurvivor`` (BT node)
-     - 5
+     - 6
      - Calls the ``detect_survivor`` service with the current zone
        ID. Stores result internally. Exposes ``was_found()`` and
        ``survivor_pose()`` methods. Returns SUCCESS after the
@@ -104,10 +96,6 @@ This rubric details how the 100 points are allocated.
      - 3
      - Calls the ``report_survivor`` service with the survivor ID
        and location. Returns SUCCESS if acknowledged.
-   * - ``SkipZone``
-     - 2
-     - Logs a warning. Calls ``zone_manager.skip()``. Returns
-       SUCCESS.
    * - ``AdvanceZone`` and ``LogNoDetection``
      - 2
      - ``AdvanceZone`` calls ``zone_manager.advance()``.
@@ -117,40 +105,38 @@ This rubric details how the 100 points are allocated.
      -
      -
    * - Correct tree structure
-     - 5
-     - Tree matches the specified structure: root Sequence, Mission
-       Selector, Patrol Sequence, NavigateWithRecovery Selector,
-       HandleDetection Selector. Correct parent-child relationships.
+     - 7
+     - Tree matches the specified structure: root Selector,
+       Patrol Sequence, HandleDetection Selector, SurvivorFound
+       Sequence, terminal NavigateToBase. Correct parent-child
+       relationships.
    * - ``memory`` flags
      - 3
-     - Root Sequence uses ``memory=False`` (reactive). Patrol and
-       NavigateWithRecovery use ``memory=True`` (resuming).
+     - Root Selector uses ``memory=False`` (reactive). Patrol
+       Sequence uses ``memory=True`` (resuming).
+       HandleDetection Selector uses ``memory=False``.
        Justification provided in README.
-   * - Timeout decorators
-     - 2
-     - Two Timeout decorators correctly wrap the two
-       ``NavigateToZone`` instances. Duration loaded from
-       parameters.
-   * - **Battery Simulation (5 pts)**
+   * - **Map (5 pts)**
      -
      -
-   * - Battery simulator node
+   * - Saved map files
      - 3
-     - Publishes ``sensor_msgs/BatteryState`` on ``/battery_state``
-       at 1 Hz. ``percentage`` decreases over time at a
-       configurable rate.
-   * - Low battery behavior
+     - ``group<N>_final/maps/`` contains a valid
+       ``final_project_world.pgm`` plus matching ``.yaml``,
+       produced by ``slam_toolbox`` + ``nav2_map_server``. Free,
+       occupied, and unknown regions look correct.
+   * - AMCL localization against the saved map
      - 2
-     - When battery drops below threshold, the BT correctly aborts
-       the patrol and navigates to base.
+     - ``ros2 launch rosbot_gazebo navigation.launch.py
+       map:=...`` loads cleanly and AMCL converges after a single
+       2D Pose Estimate click in RViz2.
    * - **Launch File (8 pts)**
      -
      -
    * - All nodes started
      - 3
-     - Launch file starts the BT node, both service servers, and
-       the battery simulator. All use ``output="screen"`` and
-       ``emulate_tty=True``.
+     - Launch file starts the BT node and both service servers.
+       All use ``output="screen"`` and ``emulate_tty=True``.
    * - Parameter file loading
      - 3
      - ``config/mission_params.yaml`` is loaded for the BT node
@@ -158,18 +144,17 @@ This rubric details how the 100 points are allocated.
        ``parameters`` field.
    * - Launch arguments
      - 2
-     - At least ``battery_threshold`` and ``navigation_timeout``
-       declared and passed to the BT node. ``--show-args`` displays
-       them correctly.
-   * - **Documentation and Code Quality (12 pts)**
+     - At least one launch argument declared and forwarded to the
+       BT node. ``--show-args`` displays it correctly.
+   * - **Documentation and Code Quality (17 pts)**
      -
      -
    * - README.md contributions
-     - 4
+     - 5
      - ``README.md`` contains a contributions section with every
        group member listed and a short, specific summary.
    * - README.md BT design
-     - 2
+     - 3
      - Brief explanation of ``memory`` flag choices and tree design
        rationale.
    * - Docstrings and type hints
@@ -177,7 +162,7 @@ This rubric details how the 100 points are allocated.
      - Every class and method has a Google-style docstring. All
        method parameters and return types have type annotations.
    * - Logging and code quality
-     - 3
+     - 6
      - ROS 2 logger used exclusively (no ``print()``). Correct
        severity levels. Consistent ``snake_case`` naming. No Ruff
        linting errors.
