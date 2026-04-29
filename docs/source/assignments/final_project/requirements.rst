@@ -597,16 +597,68 @@ Create ``config/mission_params.yaml`` with the following structure:
 
    /**:
      ros__parameters:
+       # Patrol order. Edit this string array to change the visit
+       # order without touching any pose values below.
+       zone_order: ["zone_a", "zone_b", "zone_c", "zone_d"]
+
+       # Per-zone poses (metres + radians) in the map frame.
        zones:
-         - {id: "zone_a", x: -3.0, y: 3.0, yaw: 0.0}
-         - {id: "zone_b", x: 3.5, y: 3.0, yaw: 1.57}
-         - {id: "zone_c", x: 4.0, y: -3.0, yaw: 3.14}
-         - {id: "zone_d", x: -3.5, y: -3.0, yaw: -1.57}
+         zone_a: {x: -3.0, y:  3.0, yaw:  0.0}
+         zone_b: {x:  3.5, y:  3.0, yaw:  1.57}
+         zone_c: {x:  4.0, y: -3.0, yaw:  3.14}
+         zone_d: {x: -3.5, y: -3.0, yaw: -1.57}
+
        base_station:
          x: 0.0
          y: 0.0
          yaw: 0.0
+
        tick_rate_hz: 2.0
+
+.. important::
+
+   **Why two keys (``zone_order`` + ``zones``) instead of a list of
+   dicts?** ROS 2 YAML parameter files require every list element to
+   be the **same primitive type**. A list of dicts -- the most
+   intuitive way to express ordered named records -- fails to load:
+
+   .. code-block:: text
+
+      Couldn't parse params file ... Sequence should be of same type.
+      Value type 'double' do not belong ...
+
+   Splitting the data into a string array (``zone_order``, which
+   carries the patrol sequence) plus a nested dict (``zones.<id>``,
+   which groups each zone's pose fields) sidesteps this restriction
+   and keeps each zone's fields visually grouped.
+
+**Reading the parameters back.** Because the patrol order is encoded
+in ``zone_order`` rather than YAML insertion order, the entry point
+joins the two halves back into the natural list-of-dicts:
+
+.. code-block:: python
+
+   # Read the patrol order
+   zone_order = (
+       node.get_parameter("zone_order")
+           .get_parameter_value()
+           .string_array_value
+   )
+
+   # Look up each zone's pose under zones.<id>.{x, y, yaw}
+   zones = []
+   for zone_id in zone_order:
+       zones.append({
+           "id": zone_id,
+           "x":   node.get_parameter(f"zones.{zone_id}.x").value,
+           "y":   node.get_parameter(f"zones.{zone_id}.y").value,
+           "yaw": node.get_parameter(f"zones.{zone_id}.yaw").value,
+       })
+
+If you create the temporary parameter node with
+``automatically_declare_parameters_from_overrides=True`` and
+``allow_undeclared_parameters=True``, every key under the YAML's
+``ros__parameters`` block is auto-declared and can be read directly.
 
 **The** ``/**:`` **wildcard.** The top-level key ``/**`` is a ROS 2
 parameter-file glob: a single ``*`` matches one node-name token, and
@@ -636,10 +688,12 @@ Why this matters in practice:
 
      search_and_rescue:
        ros__parameters:
-         zones: [...]
+         zone_order: [...]
+         zones: {...}
 
-  Here ``tick_rate_hz`` is shared by every node, while ``zones``
-  only loads into a node literally named ``search_and_rescue``.
+  Here ``tick_rate_hz`` is shared by every node, while
+  ``zone_order`` and ``zones`` only load into a node literally
+  named ``search_and_rescue``.
 
 For this assignment, the simple ``/**`` block above is enough --
 all parameters belong to the BT node, and there is only one

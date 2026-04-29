@@ -4,6 +4,29 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.6.1 -- Final Project Parameter File Format (2026-04-29)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/requirements.rst)
+
+   - Replaced the ``zones:`` list-of-dicts YAML in the Parameter File
+     section with a ``zone_order`` string array plus a nested
+     ``zones.<id>`` mapping. ROS 2 YAML parameter files require every
+     list element to share a primitive type, so the previous
+     list-of-dicts form failed to load with
+     ``Sequence should be of same type``.
+   - Added an "Important" admonition explaining *why* the schema is
+     split into two collaborating fields.
+   - Added a "Reading the parameters back" Python snippet showing
+     how the entry point joins ``zone_order`` and
+     ``zones.<id>.{x,y,yaw}`` into the ``list[dict]`` consumed by
+     ``ZoneManager`` (the ``ZoneManager`` constructor signature is
+     unchanged).
+   - Updated the "selective scoping" example so the
+     namespace-specific block references ``zone_order`` and
+     ``zones`` instead of the old ``zones`` list.
+
 .. dropdown:: v1.6.0 -- L13 Documentation Released (2026-04-26)
    :icon: tag
    :class-container: sd-border-warning
