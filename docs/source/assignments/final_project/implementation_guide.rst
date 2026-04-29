@@ -385,10 +385,16 @@ Memory Flag Choices
   navigation on the next tick.
 - **HandleDetection Selector** (``memory=False``): The detection
   result is checked fresh each time.
-- **SurvivorFound Sequence** (``memory=False``): All three children
-  (``IsSurvivorDetected?``, ``BroadcastSurvivorTF``, ``NotifyBase``)
-  are synchronous and complete in a single tick, so there is no
-  RUNNING child to resume.
+- **SurvivorFound Sequence** (``memory=True``): Resuming.
+  ``NotifyBase`` calls ``report_survivor`` via the async-poll
+  pattern (``call_async`` + ``future.done()``) and returns
+  ``RUNNING`` for one or more ticks before succeeding. With
+  ``memory=False``, every ``RUNNING`` tick would re-tick the
+  earlier siblings -- and re-ticking ``BroadcastSurvivorTF``
+  calls ``zone_manager.next_survivor_id()`` again, allocating a
+  fresh ``survivor_N`` ID and broadcasting a duplicate static
+  TF frame. ``memory=True`` makes the Sequence resume from the
+  running child without re-evaluating earlier siblings.
 
 
 Wrapping ``NavigateToBase`` in a ``OneShot``
@@ -615,3 +621,20 @@ testing individual nodes.
    # group<N>_final/maps/final_project_map.yaml, the two service
    # servers, and the BT node)
    ros2 launch group<N>_final search_and_rescue.launch.py
+
+.. tip::
+
+   **Killing hanging processes between iterations.** ``Ctrl-C`` in
+   the launch terminal sometimes leaves Nav2 lifecycle nodes,
+   ``rviz2``, or the BT process running in the background. They
+   then re-bind to action servers / TF / topics on the next
+   ``ros2 launch`` and you get bizarre symptoms (duplicate logs,
+   "node already exists", AMCL refusing the new
+   ``/initialpose``). One-liner to clean up:
+
+   .. code-block:: console
+
+      pkill -9 -f "nav2|amcl|map_server|lifecycle|controller_server|planner_server|bt_navigator|behavior_server|smoother_server|route_server|opennav|collision_monitor|velocity_smoother|waypoint_follower|rviz2"
+
+   Verify the cleanup with ``ros2 node list`` -- it should print
+   nothing (or only what Gazebo brings up). Then re-launch.

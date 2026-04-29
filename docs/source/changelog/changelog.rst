@@ -4,6 +4,53 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.6.6 -- Final Project Walkthrough Videos (2026-04-29)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/)
+
+   - Embedded ``structure_final_project.mp4`` in
+     ``requirements.rst`` (right after the Package Structure
+     section): a file-by-file walkthrough of a working
+     ``group<N>_final/`` and ``group<N>_final_interfaces/``
+     layout.
+   - Embedded ``demo_final_project.mp4`` in ``outputs.rst``
+     (top of "Nominal Run"): full mission recording showing
+     Gazebo, RViz, the launch terminal, and a filtered
+     ``ros2 topic echo /rosout`` of just the
+     ``search_and_rescue`` logs.
+   - Both videos use a native HTML5 ``<video>`` tag with
+     ``controls`` and ``preload="metadata"`` -- they do not
+     autoplay (saves bandwidth and avoids surprise audio).
+     Wrapped in collapsible ``.. admonition:: ... :class: dropdown tip``
+     blocks so they are visible-on-demand rather than always
+     expanded.
+   - Videos live under
+     ``docs/source/_static/videos/final_project/`` and are
+     copied verbatim by Sphinx via ``html_static_path``.
+
+.. dropdown:: v1.6.5 -- Final Project SurvivorFound memory flip (2026-04-29)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/)
+
+   - Flipped ``SurvivorFound Sequence`` from ``memory=False`` to
+     ``memory=True``. The original justification ("all three
+     children are synchronous, single-tick") stopped being true
+     once ``NotifyBase`` was refactored to the async-poll pattern
+     in v1.6.2 -- ``NotifyBase.update()`` now returns ``RUNNING``
+     for one or more ticks while waiting on the
+     ``report_survivor`` future. With ``memory=False``, each
+     ``RUNNING`` tick re-evaluated the entire Sequence; re-ticking
+     ``BroadcastSurvivorTF`` called ``zone_manager.next_survivor_id()``
+     and broadcast a fresh static TF frame, so a 2-survivor
+     mission produced ``survivor_1`` through ``survivor_4`` (or
+     more) entries in ``/tf_static``.
+   - Updated ``implementation_guide.rst`` "Memory Flag Choices"
+     and ``rubric.rst`` "memory flags" criterion to match.
+
 .. dropdown:: v1.6.4 -- Final Project Idiom + Spec Reconciliation (2026-04-29)
    :icon: tag
    :class-container: sd-border-warning

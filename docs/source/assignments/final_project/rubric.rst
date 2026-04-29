@@ -115,9 +115,10 @@ This rubric details how the 100 points are allocated.
      - Root Selector uses ``memory=False`` (reactive). Patrol
        Sequence uses ``memory=True`` (resuming).
        HandleDetection Selector uses ``memory=False``.
-       SurvivorFound Sequence uses ``memory=False`` (all children
-       are synchronous, single-tick). Justification provided in
-       README.
+       SurvivorFound Sequence uses ``memory=True`` (resuming, so
+       ``BroadcastSurvivorTF`` does not re-allocate a survivor ID
+       on the ``RUNNING`` ticks while ``NotifyBase`` is waiting on
+       its service future). Justification provided in README.
    * - **Map (5 pts)**
      -
      -

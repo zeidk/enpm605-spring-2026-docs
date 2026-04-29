@@ -107,6 +107,26 @@ inside the pre-existing ``~/enpm605_ws/src/final_project/`` folder.
    |-- setup.cfg
    |-- README.md
 
+.. only:: html
+
+   .. admonition:: Walkthrough video: package structure
+      :class: dropdown tip
+
+      The video below walks through a working ``group<N>_final/``
+      and ``group<N>_final_interfaces/`` layout file by file.
+      Click the play button to start it -- the video does not
+      autoplay.
+
+      .. raw:: html
+
+         <video controls preload="metadata" width="100%"
+                style="max-width: 900px; display: block; margin: 0 auto;">
+           <source src="../../_static/videos/final_project/structure_final_project.mp4"
+                   type="video/mp4">
+           Your browser does not support embedded MP4 video.
+           <a href="../../_static/videos/final_project/structure_final_project.mp4">Download the video</a>.
+         </video>
+
 
 .. _final-project-build-the-map:
 

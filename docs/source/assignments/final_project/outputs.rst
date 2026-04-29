@@ -14,6 +14,27 @@ detects survivors in zones A and C, broadcasts TF frames, reports
 findings, and completes the mission. Timestamps are abbreviated.
 Exact numeric values will vary.
 
+.. only:: html
+
+   .. admonition:: Walkthrough video: nominal run
+      :class: dropdown tip
+
+      The video below shows a complete mission end-to-end: Gazebo,
+      RViz, the launch terminal, and a filtered ``ros2 topic
+      echo /rosout`` (only ``search_and_rescue``-prefixed log
+      lines). Click the play button to start it -- the video does
+      not autoplay.
+
+      .. raw:: html
+
+         <video controls preload="metadata" width="100%"
+                style="max-width: 1100px; display: block; margin: 0 auto;">
+           <source src="../../_static/videos/final_project/demo_final_project.mp4"
+                   type="video/mp4">
+           Your browser does not support embedded MP4 video.
+           <a href="../../_static/videos/final_project/demo_final_project.mp4">Download the video</a>.
+         </video>
+
 .. code-block:: text
 
    [INFO] [detect_survivor_server]: DetectSurvivor service ready.
