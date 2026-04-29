@@ -43,7 +43,9 @@ Overview
    The robot's decision-making is orchestrated by a **behavior tree**
    built with ``py_trees`` and ``py_trees_ros``. All mission
    parameters (search zones, base station pose, BT tick rate) are
-   loaded from a **YAML parameter file**.
+   loaded from a **YAML parameter file** -- see the
+   :ref:`final-project-parameter-file` section in
+   :doc:`requirements` for the exact schema.
 
 
 .. dropdown:: Learning Objectives

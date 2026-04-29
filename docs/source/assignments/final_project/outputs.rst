@@ -16,10 +16,17 @@ Exact numeric values will vary.
 
 .. code-block:: text
 
-   [INFO] [search_and_rescue]: Loaded 4 search zones from parameters.
-   [INFO] [search_and_rescue]: Base station at (0.00, 0.00, yaw=0.00).
    [INFO] [detect_survivor_server]: DetectSurvivor service ready.
    [INFO] [report_survivor_server]: ReportSurvivor service ready.
+   [INFO] [search_and_rescue]: Loaded 4 search zones from parameters.
+   [INFO] [search_and_rescue]: Base station at (0.00, 0.00, yaw=0.00).
+
+   [INFO] [basic_navigator]: Seeding AMCL with initial pose (0.00, 0.00, yaw=0.00)...
+   [INFO] [basic_navigator]: Waiting for Nav2 (AMCL + BT navigator) to become active...
+   [INFO] [basic_navigator]: Setting initial pose
+   [INFO] [basic_navigator]: Waiting for amcl_pose to be received
+   [INFO] [basic_navigator]: Nav2 is ready for use!
+   [INFO] [search_and_rescue]: Nav2 is active.
 
    [INFO] [search_and_rescue]: --- Zone 1/4: zone_a (-3.00, 3.00) ---
    [INFO] [search_and_rescue]: Navigating to zone_a...
@@ -59,7 +66,8 @@ Exact numeric values will vary.
 
    [INFO] [search_and_rescue]: All zones visited. Returning to base.
    [INFO] [search_and_rescue]: Navigating to base station...
-   [INFO] [search_and_rescue]: Reached base station. Mission complete.
+   [INFO] [search_and_rescue]: Reached base station.
+   [INFO] [search_and_rescue]: Mission complete.
 
 
 Verification Commands

@@ -131,8 +131,12 @@ This rubric details how the 100 points are allocated.
    * - AMCL localization against the saved map
      - 2
      - ``ros2 launch group<N>_final search_and_rescue.launch.py``
-       brings up Nav2 with the saved map and AMCL converges after
-       a single 2D Pose Estimate click in RViz2.
+       brings up Nav2 with the saved map and the BT entry point
+       auto-seeds AMCL at the spawn pose
+       (``BasicNavigator.setInitialPose``) and waits for Nav2 to
+       reach ACTIVE
+       (``waitUntilNav2Active``) before ticking the tree -- no
+       manual ``2D Pose Estimate`` click required.
    * - **Launch File (8 pts)**
      -
      -

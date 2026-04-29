@@ -94,10 +94,12 @@ isolation before assembling the full tree.
        Reference: ``lecture12/bt_demo/goal_not_reached.py``.
    * - 11
      - Implement ``DetectSurvivor`` (BT node)
-     - Calls the ``detect_survivor`` service synchronously using
-       ``call_async`` + ``spin_until_future_complete``. Stores
-       the result internally. Reference:
-       ``lecture10/service_demo/`` for service client patterns.
+     - Calls the ``detect_survivor`` service using the async-poll
+       pattern: ``call_async`` once, yield ``RUNNING`` until
+       ``future.done()``, then read the response. **Do not**
+       ``spin_until_future_complete`` inside ``update()`` -- the BT's
+       executor is already spinning. Stores the result internally.
+       See :ref:`final-project-bt-service-calls` for the full pattern.
    * - 12
      - Implement ``BroadcastSurvivorTF``
      - Creates a ``tf2_ros.StaticTransformBroadcaster`` in
@@ -251,25 +253,77 @@ in a loop).
    freezes the entire behavior tree. Use the asynchronous
    ``ActionClient`` pattern with callbacks instead.
 
+.. _final-project-bt-service-calls:
+
 Service Calls in BT Nodes
 --------------------------
 
 For ``DetectSurvivor`` and ``NotifyBase``, you need to call a
-service from within ``update()``. Use
-``call_async()`` + ``rclpy.spin_until_future_complete()`` for a
-synchronous-style call:
+service from within ``update()``. **Do not use**
+``rclpy.spin_until_future_complete()`` here -- it raises
+``RuntimeError: Executor is already spinning``.
+
+.. important::
+
+   ``py_trees_ros.trees.BehaviourTree.tick_tock()`` schedules ticks on
+   a timer that runs *inside* the executor that is already spinning
+   ``tree.node`` (via ``rclpy.spin(tree.node)`` in your entry point).
+   ``rclpy.spin_until_future_complete()`` tries to enter that same
+   executor a second time, which is illegal. The classic
+   "block-until-done" service idiom from a standalone client therefore
+   does **not** work inside a BT leaf.
+
+The fix is the canonical asynchronous-BT pattern: submit
+``call_async`` once, yield ``RUNNING`` until the future is done, then
+process the response on the tick when it resolves. The future is
+resolved by the same executor that drives ticks, so the BT just has
+to hand control back until ``future.done()`` is ``True``.
 
 .. code-block:: python
 
-   future = self._client.call_async(request)
-   rclpy.spin_until_future_complete(self._node, future, timeout_sec=5.0)
-   if future.result() is not None:
-       response = future.result()
-       # process response
-   else:
-       # service call failed
+   def initialise(self):
+       # Reset cached state for a fresh active period.
+       self._future = None
+       self._response = None
 
-This blocks briefly but is acceptable for a quick service call.
+   def update(self):
+       # First tick: submit the request, then yield.
+       if self._future is None:
+           if not self._client.service_is_ready():
+               # Don't block; retry on the next tick.
+               return py_trees.common.Status.RUNNING
+
+           request = MyService.Request()
+           # ... populate request ...
+           self._future = self._client.call_async(request)
+           return py_trees.common.Status.RUNNING
+
+       # Subsequent ticks: poll the future.
+       if not self._future.done():
+           return py_trees.common.Status.RUNNING
+
+       response = self._future.result()
+       self._future = None  # ready for the next active period
+
+       if response is None:
+           return py_trees.common.Status.FAILURE
+
+       # ... process response, store any results on self ...
+       return py_trees.common.Status.SUCCESS
+
+Why this works:
+
+- ``service_is_ready()`` is a non-blocking check (unlike
+  ``wait_for_service`` with a timeout, which can stall the tick).
+- ``call_async`` returns immediately; the executor that is already
+  spinning ``tree.node`` will deliver the response to the future
+  whenever it arrives.
+- Returning ``RUNNING`` hands control back to py_trees, which
+  resumes ticking on the next timer fire. The future is checked
+  again then.
+- Resetting ``self._future = None`` after consuming the response
+  ensures a follow-up active period (e.g., re-entering the same
+  zone) submits a fresh request.
 
 TF Broadcasting
 ----------------
@@ -335,6 +389,197 @@ Memory Flag Choices
   (``IsSurvivorDetected?``, ``BroadcastSurvivorTF``, ``NotifyBase``)
   are synchronous and complete in a single tick, so there is no
   RUNNING child to resume.
+
+
+Wrapping ``NavigateToBase`` in a ``OneShot``
+---------------------------------------------
+
+Because the root Selector is reactive (``memory=False``), it
+re-evaluates the Patrol Sequence on every tick *forever*. Once
+every zone has been visited, ``ZonesRemaining?`` returns ``FAILURE``
+on every tick, the Patrol Sequence keeps failing, and the Selector
+keeps falling through to the second child. Without protection,
+``NavigateToBase.initialise()`` re-sends a fresh Nav2 goal at
+``(0, 0)`` every tick: the controller reports "Reached the goal!"
+instantly because the robot is already there, aborts, resets, and
+the cycle repeats indefinitely.
+
+Wrap ``NavigateToBase`` in
+``py_trees.decorators.OneShot`` with policy
+``OneShotPolicy.ON_COMPLETION`` so the decorator caches the first
+terminal status of its child:
+
+.. code-block:: python
+
+   import py_trees
+
+   navigate_to_base = NavigateToBase(
+       name="NavigateToBase", zone_manager=zone_manager
+   )
+   navigate_to_base_oneshot = py_trees.decorators.OneShot(
+       name="NavigateToBaseOneShot",
+       child=navigate_to_base,
+       policy=py_trees.common.OneShotPolicy.ON_COMPLETION,
+   )
+
+   root = py_trees.composites.Selector(
+       name="MissionOrReturnToBase", memory=False
+   )
+   root.add_children([patrol, navigate_to_base_oneshot])
+
+After ``NavigateToBase`` returns ``SUCCESS`` the first time,
+``OneShot`` returns the cached ``SUCCESS`` on every subsequent tick
+without re-initialising the child. The robot drives home exactly
+once and the BT idles at ``SUCCESS`` until the operator presses
+Ctrl-C.
+
+
+.. _final-project-auto-seed-amcl:
+
+Auto-Seeding AMCL with ``BasicNavigator``
+------------------------------------------
+
+AMCL refuses to publish ``map -> odom`` until it receives an initial
+pose. The classic workaround is to click "2D Pose Estimate" in
+RViz, but that requires manual interaction every launch and is
+fragile to grade. The robust pattern is to **publish the initial
+pose programmatically** at the top of the BT entry point, using
+``BasicNavigator`` from ``nav2_simple_commander``.
+
+The rosbot spawns at ``(0, 0, yaw=0)`` in the final-project world,
+so the seed pose is hardcoded:
+
+.. code-block:: python
+
+   import math
+   import rclpy
+   from geometry_msgs.msg import PoseStamped
+   from nav2_simple_commander.robot_navigator import BasicNavigator
+   from rclpy.parameter import Parameter
+
+   def _seed_amcl_and_wait_for_nav2() -> None:
+       """Publish initialpose and block until Nav2 is ACTIVE."""
+       navigator = BasicNavigator()
+
+       # Match the rest of the mission stack: Gazebo publishes /clock,
+       # so every Nav2-touching node must read it instead of system time.
+       navigator.set_parameters([
+           Parameter("use_sim_time", Parameter.Type.BOOL, True)
+       ])
+
+       initial_pose = PoseStamped()
+       initial_pose.header.frame_id = "map"
+       initial_pose.header.stamp = navigator.get_clock().now().to_msg()
+       initial_pose.pose.position.x = 0.0
+       initial_pose.pose.position.y = 0.0
+       # yaw = 0 -> identity quaternion
+       initial_pose.pose.orientation.w = 1.0
+
+       navigator.setInitialPose(initial_pose)
+       navigator.waitUntilNav2Active()
+       navigator.destroy_node()
+
+Call ``_seed_amcl_and_wait_for_nav2()`` from ``main()`` *after*
+parameter loading and *before* ``tree.setup(...)``. ``BasicNavigator``
+is itself an ``rclpy`` node with its own publishers/subscribers; it
+does not conflict with the BT's own ``ActionClient`` because the two
+are independent action clients. Destroying the navigator after the
+seed call keeps the runtime tidy.
+
+What ``waitUntilNav2Active`` does:
+
+1. Waits for AMCL's lifecycle node to reach ``ACTIVE``.
+2. Loops -- publishing ``/initialpose`` and spinning briefly --
+   until ``/amcl_pose`` is received (i.e., AMCL has actually
+   incorporated the seed).
+3. Waits for ``bt_navigator`` to reach ``ACTIVE``.
+
+Only after step 3 does the BT start ticking; ``NavigateToZone`` is
+guaranteed to find a working Nav2 stack on its first tick.
+
+.. important::
+
+   Reference: ``lecture13/mapping_navigation_demo/navigation_demo_interface.py``
+   uses the same ``BasicNavigator`` + ``setInitialPose`` +
+   ``waitUntilNav2Active`` recipe. Adapt the
+   ``localize()`` method's TF-fallback strategy if you ever need to
+   seed AMCL when the spawn pose is not the origin.
+
+
+.. _final-project-auto-declared-params:
+
+Reading Auto-Declared YAML Parameters
+--------------------------------------
+
+The Parameter File uses a nested layout
+(``zones.<id>.{x, y, yaw}``) that you cannot enumerate up front
+because the per-zone keys are data, not code. The clean approach is
+to have ROS auto-declare every key in the YAML by passing two flags
+when constructing the parameter-reading node:
+
+.. code-block:: python
+
+   from rclpy.node import Node
+
+   param_node = Node(
+       "search_and_rescue_params",
+       automatically_declare_parameters_from_overrides=True,
+       allow_undeclared_parameters=True,
+   )
+
+The first flag declares every parameter loaded from
+``mission_params.yaml`` (so ``zones.zone_a.x``,
+``base_station.yaw``, ``tick_rate_hz`` all become readable
+without explicit ``declare_parameter`` calls). The second tolerates
+``get_parameter`` calls for keys that *might* not be present in
+the YAML.
+
+.. warning::
+
+   With ``automatically_declare_parameters_from_overrides=True``,
+   calling ``declare_parameter("foo", default)`` for a name
+   already declared by the YAML raises::
+
+       rclpy.exceptions.ParameterAlreadyDeclaredException:
+       Parameter(s) already declared: ['foo']
+
+   This is the single most common cause of "my BT script crashes
+   silently before printing anything" in this assignment. **Guard
+   every explicit ``declare_parameter`` call with**
+   ``has_parameter`` so the explicit declaration acts as a fallback
+   default rather than a re-declaration:
+
+   .. code-block:: python
+
+       if not param_node.has_parameter("tick_rate_hz"):
+           param_node.declare_parameter("tick_rate_hz", 2.0)
+       tick_rate_hz = param_node.get_parameter("tick_rate_hz").value
+
+   Apply this idiom anywhere you need to provide a default for a
+   parameter that the YAML *might* also supply (``zone_order``,
+   ``base_station.x/y/yaw``, ``tick_rate_hz``).
+
+Reading the zone list back into the natural ``list[dict]`` shape
+``ZoneManager`` expects:
+
+.. code-block:: python
+
+   if not param_node.has_parameter("zone_order"):
+       param_node.declare_parameter("zone_order", [""])
+   zone_order = (
+       param_node.get_parameter("zone_order")
+                 .get_parameter_value()
+                 .string_array_value
+   )
+
+   zones = []
+   for zone_id in zone_order:
+       zones.append({
+           "id":  zone_id,
+           "x":   param_node.get_parameter(f"zones.{zone_id}.x").value,
+           "y":   param_node.get_parameter(f"zones.{zone_id}.y").value,
+           "yaw": param_node.get_parameter(f"zones.{zone_id}.yaw").value,
+       })
 
 
 Testing Tips

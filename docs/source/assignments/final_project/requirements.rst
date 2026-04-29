@@ -307,8 +307,29 @@ Behavior Tree
 =============
 
 The full behavior tree must be assembled in
-``scripts/main_search_and_rescue.py``. The **static structure** of
-the tree (composites, conditions, actions) is shown below.
+``scripts/main_search_and_rescue.py``. The entry point must:
+
+1. Load mission parameters from ``mission_params.yaml`` (see
+   :ref:`final-project-auto-declared-params` for the
+   ``has_parameter`` guard pattern that avoids the
+   ``ParameterAlreadyDeclaredException`` trap when reading
+   auto-declared YAML keys).
+2. Build the ``ZoneManager`` and the BT leaves.
+3. **Auto-seed AMCL with the rosbot's spawn pose
+   (``x=0, y=0, yaw=0``) using
+   ``BasicNavigator.setInitialPose()`` and block until Nav2 is
+   ACTIVE via ``waitUntilNav2Active()``.** See
+   :ref:`final-project-auto-seed-amcl` for the full snippet.
+   Without this step the BT would tick against an idle Nav2 stack
+   forever, since AMCL never publishes ``map -> odom`` without an
+   initial pose.
+4. Wrap the assembled tree in
+   ``py_trees_ros.trees.BehaviourTree`` and call
+   ``tick_tock(period_ms=...)``.
+5. Spin until shutdown.
+
+The **static structure** of the tree (composites, conditions,
+actions) is shown below.
 
 .. only:: html
 
@@ -389,6 +410,27 @@ diagram lives at
    FAILURE, so the Patrol Sequence fails and the Selector ticks
    ``NavigateToBase``. After the robot reaches the base station,
    the mission is complete -- stop the BT node with ``Ctrl-C``.
+
+.. important::
+
+   Wrap ``NavigateToBase`` in
+   ``py_trees.decorators.OneShot(policy=ON_COMPLETION)`` before
+   adding it to the root Selector. The root Selector is
+   ``memory=False`` (reactive), so once Patrol fails it ticks
+   ``NavigateToBase`` *every tick forever* -- without ``OneShot``,
+   ``initialise()`` re-sends a fresh Nav2 goal at the base each
+   tick, the controller instantly reports "Reached the goal!"
+   because the robot is already there, and the cycle repeats
+   indefinitely (visible in the launch terminal as a flood of
+   ``Begin navigating from current location ... Goal succeeded``
+   pairs every few seconds).
+
+   ``OneShot.ON_COMPLETION`` caches the first terminal status of
+   its child, so once ``NavigateToBase`` succeeds the decorator
+   keeps returning ``SUCCESS`` on every subsequent tick without
+   re-entering the child. The robot drives home exactly once and
+   the BT idles at ``SUCCESS`` until ``Ctrl-C``. See
+   :doc:`implementation_guide` for the full snippet.
 
 
 Condition Nodes
@@ -551,6 +593,18 @@ overall structure and a code skeleton.
    * - ``Node`` -- ``report_survivor_server_exe``
      - ``group<N>_final``
      - Simulated report service server.
+   * - ``Node`` -- ``rviz2``
+     - ``rviz2``
+     - Optional but recommended. Load
+       ``rviz/nav2.rviz`` (copy from
+       ``lecture13/nav_demo/rviz/nav2.rviz`` into your package's
+       ``rviz/`` directory and install it via ``data_files``).
+       Gate it on a launch argument
+       (``rviz:=true`` by default) so headless graders can disable
+       it. With auto-seeding (see
+       :ref:`final-project-auto-seed-amcl`), RViz is purely for
+       situational awareness; AMCL no longer requires a manual
+       "2D Pose Estimate" click.
 
 **Launch file requirements:**
 
@@ -587,6 +641,8 @@ overall structure and a code skeleton.
    the user runs ``ros2 launch rosbot_gazebo
    final_project_world.launch.py`` in a separate terminal first.
 
+
+.. _final-project-parameter-file:
 
 Parameter File
 ==============

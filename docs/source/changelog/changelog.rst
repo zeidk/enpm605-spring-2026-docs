@@ -4,6 +4,128 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.6.4 -- Final Project Idiom + Spec Reconciliation (2026-04-29)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/implementation_guide.rst)
+
+   - Added new "Auto-Seeding AMCL with ``BasicNavigator``" section
+     under "Key Patterns and Pitfalls" with the full hardcoded
+     ``(0, 0, yaw=0)`` ``setInitialPose`` +
+     ``waitUntilNav2Active`` recipe and a cross-ref to the
+     lecture-13 ``navigation_demo_interface`` reference.
+   - Added new "Reading Auto-Declared YAML Parameters" section
+     documenting the ``automatically_declare_parameters_from_overrides=True`` +
+     ``has_parameter`` guard idiom. Without this, students hit
+     ``ParameterAlreadyDeclaredException`` three times in a row
+     (one per explicit ``declare_parameter`` call) and the BT
+     script crashes silently before any logs print.
+   - Both sections expose ``:ref:`` anchors
+     (``final-project-auto-seed-amcl`` and
+     ``final-project-auto-declared-params``).
+
+   .. rubric:: Final Project (assignments/final_project/requirements.rst)
+
+   - Added a numbered list to the "Behavior Tree" section spelling
+     out the five things the entry point must do, including a
+     **mandatory** auto-seed step that cross-refs the implementation
+     guide.
+   - Added a fourth row to the launch-file actions table: ``rviz2``
+     gated on a ``rviz`` launch arg, with a note that auto-seeding
+     makes RViz situational rather than required.
+   - Added a ``final-project-parameter-file`` label so other pages
+     can link to the schema.
+
+   .. rubric:: Final Project (assignments/final_project/infrastructure.rst)
+
+   - Replaced the launch-file code skeleton: fixed the wrong
+     executable name (``search_and_rescue`` ->
+     ``search_and_rescue_exe``), added the two service-server
+     ``Node``\\ s that were previously missing, added the optional
+     ``rviz2`` ``Node`` gated on a launch arg, switched
+     ``launch_arguments`` from ``dict.items()`` to a list of
+     tuples (avoids the MyPy union-type complaint), and added
+     ``output="screen"`` + ``emulate_tty=True`` everywhere.
+   - Added a ``.. note::`` after the "important" admonition
+     pointing at :ref:`final-project-parameter-file` and
+     :ref:`final-project-auto-declared-params`.
+
+   .. rubric:: Final Project (assignments/final_project/final_project.rst)
+
+   - Added a cross-ref from the overview's "YAML parameter file"
+     mention to :ref:`final-project-parameter-file` so students
+     reading the project landing page know where to find the
+     schema.
+
+   .. rubric:: Final Project (assignments/final_project/outputs.rst)
+
+   - Reordered the "Nominal Run" expected output so service-server
+     ready logs appear before the BT loaded-zones logs (matches
+     what students actually see now that the BT seed step blocks
+     until Nav2 is active).
+   - Inserted the ``basic_navigator`` seed/wait/ready logs between
+     parameter loading and the first zone, plus a final
+     "Mission complete." line after "Reached base station." to
+     match the new ``OneShot``-wrapped ``NavigateToBase`` flow.
+
+   .. rubric:: Final Project (assignments/final_project/rubric.rst)
+
+   - Updated the "AMCL localization against the saved map" item:
+     no longer expects a manual ``2D Pose Estimate`` click;
+     instead grades that the BT entry point auto-seeds AMCL via
+     ``setInitialPose`` and waits for ``waitUntilNav2Active``
+     before ticking the tree.
+
+.. dropdown:: v1.6.3 -- Final Project NavigateToBase OneShot (2026-04-29)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/requirements.rst)
+
+   - Added an "Important" admonition to the Behavior Tree section
+     explaining that ``NavigateToBase`` must be wrapped in
+     ``py_trees.decorators.OneShot(policy=ON_COMPLETION)``. Without
+     it, the reactive root Selector keeps re-ticking
+     ``NavigateToBase`` after Patrol fails: ``initialise()``
+     re-sends a Nav2 goal each tick, the controller instantly
+     reports "Reached the goal!" because the robot is already
+     there, and the loop never settles.
+
+   .. rubric:: Final Project (assignments/final_project/implementation_guide.rst)
+
+   - Added a new subsection "Wrapping ``NavigateToBase`` in a
+     ``OneShot``" under "Memory Flag Choices" with the full code
+     snippet showing how to compose the decorator with the root
+     Selector.
+   - Cross-referenced from the new admonition in
+     ``requirements.rst`` so students reading the BT spec can
+     jump straight to the working pattern.
+
+.. dropdown:: v1.6.2 -- Final Project Service-Call Pattern in BT (2026-04-29)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/implementation_guide.rst)
+
+   - Replaced the "Service Calls in BT Nodes" snippet. The previous
+     example used ``call_async`` + ``rclpy.spin_until_future_complete``,
+     which raises ``RuntimeError: Executor is already spinning``
+     when invoked from inside a ``py_trees_ros.trees.BehaviourTree``
+     tick callback (the BT's executor is already spinning
+     ``tree.node`` via ``rclpy.spin``).
+   - The new snippet teaches the canonical async-BT pattern:
+     submit ``call_async`` once on first tick, yield ``RUNNING``
+     until ``future.done()``, then process the response on the
+     resolving tick.
+   - Added an "Important" admonition explaining *why*
+     ``spin_until_future_complete`` cannot be reused here.
+   - Updated step 11 of the recommended order to point at the new
+     pattern (added a ``:ref:`` cross-ref to the service-calls
+     section).
+   - Added a ``final-project-bt-service-calls`` label so other
+     pages can link to the pattern.
+
 .. dropdown:: v1.6.1 -- Final Project Parameter File Format (2026-04-29)
    :icon: tag
    :class-container: sd-border-warning

@@ -134,36 +134,87 @@ A typical structure looks like:
 
 .. code-block:: python
 
+   import os
+
    from ament_index_python.packages import get_package_share_directory
    from launch import LaunchDescription
-   from launch.actions import IncludeLaunchDescription
+   from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+   from launch.conditions import IfCondition
    from launch.launch_description_sources import PythonLaunchDescriptionSource
+   from launch.substitutions import LaunchConfiguration
    from launch_ros.actions import Node
-   import os
+
 
    def generate_launch_description():
        pkg_share = get_package_share_directory('group<N>_final')
        map_file = os.path.join(pkg_share, 'maps', 'final_project_map.yaml')
        nav2_params = os.path.join(pkg_share, 'config', 'nav2_params.yaml')
+       mission_params = os.path.join(pkg_share, 'config', 'mission_params.yaml')
+       rviz_config = os.path.join(pkg_share, 'rviz', 'nav2.rviz')
 
-       # --- adapted from map_nav.launch.py ---
+       rviz_arg = DeclareLaunchArgument(
+           'rviz', default_value='true',
+           description="Start RViz with the package's nav2 view.",
+       )
+
+       # --- Nav2 bringup, adapted from map_nav.launch.py ---
+       # Pass launch_arguments as a list of tuples (NOT dict.items())
+       # so each value's static type is narrowed independently.
        nav2_bringup = IncludeLaunchDescription(
            PythonLaunchDescriptionSource(...),  # nav2_bringup launch
-           launch_arguments={
-               'map': map_file,
-               'params_file': nav2_params,
-               'use_sim_time': 'true',
-           }.items(),
+           launch_arguments=[
+               ('map', map_file),
+               ('params_file', nav2_params),
+               ('use_sim_time', 'true'),
+               ('autostart', 'true'),
+           ],
        )
 
-       # --- your own behavior tree node ---
+       # --- behaviour tree entry point ---
        bt_node = Node(
            package='group<N>_final',
-           executable='search_and_rescue',
+           executable='search_and_rescue_exe',     # registered in setup.py
+           name='search_and_rescue',
            output='screen',
+           emulate_tty=True,
+           parameters=[mission_params],
        )
 
-       return LaunchDescription([nav2_bringup, bt_node])
+       # --- simulated service servers ---
+       detect_server = Node(
+           package='group<N>_final',
+           executable='detect_survivor_server_exe',
+           name='detect_survivor_server',
+           output='screen',
+           emulate_tty=True,
+       )
+       report_server = Node(
+           package='group<N>_final',
+           executable='report_survivor_server_exe',
+           name='report_survivor_server',
+           output='screen',
+           emulate_tty=True,
+       )
+
+       # --- RViz (optional, gated on a launch arg) ---
+       rviz_node = Node(
+           package='rviz2',
+           executable='rviz2',
+           name='rviz2',
+           arguments=['-d', rviz_config],
+           output='screen',
+           emulate_tty=True,
+           condition=IfCondition(LaunchConfiguration('rviz')),
+       )
+
+       return LaunchDescription([
+           rviz_arg,
+           nav2_bringup,
+           rviz_node,
+           detect_server,
+           report_server,
+           bt_node,
+       ])
 
 .. important::
 
@@ -173,6 +224,14 @@ A typical structure looks like:
    package (add the ``maps/`` directory to ``data_files`` in
    ``setup.py``), otherwise ``get_package_share_directory()`` will
    not find them at runtime.
+
+.. note::
+
+   The ``mission_params.yaml`` schema (zones, base station, tick
+   rate) is documented in
+   :ref:`final-project-parameter-file`. The behaviour-tree entry
+   point reads it using the auto-declare pattern described in
+   :ref:`final-project-auto-declared-params`.
 
 
 How Detection Works
