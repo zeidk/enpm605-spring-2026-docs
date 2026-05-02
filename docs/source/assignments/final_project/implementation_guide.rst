@@ -221,6 +221,8 @@ the full system, but each focuses on their area.
 Key Patterns and Pitfalls
 ==========================
 
+.. _final-project-navigate-to-zone:
+
 NavigateToZone: The Hardest Node
 ---------------------------------
 
@@ -239,19 +241,123 @@ Nav2 action client inside a synchronous BT ``update()`` method.
    or ``FAILURE`` when done.
 4. In ``terminate()``, cancel the Nav2 goal if still active.
 
-**Study:**
-``lecture13/mapping_navigation_demo/navigation_demo_interface.py``
-shows the high-level Nav2 pattern with ``BasicNavigator``. For BT
-nodes, you need the lower-level ``ActionClient`` approach because
-``update()`` must be non-blocking (return immediately, not wait
-in a loop).
+.. warning::
 
-.. important::
+   **Lecture 13 vs. the final project: two different navigation
+   patterns.**
 
-   Do **not** call ``BasicNavigator.goToPose()`` inside a BT
-   ``update()`` — it blocks until the goal completes, which
-   freezes the entire behavior tree. Use the asynchronous
-   ``ActionClient`` pattern with callbacks instead.
+   Lecture 13 (``lecture13/nav_demo/navigation_demo.py``)
+   demonstrates the high-level ``BasicNavigator`` from
+   ``nav2_simple_commander``. Its idiomatic usage is:
+
+   .. code-block:: python
+
+      self._navigator.goToPose(goal)
+      while not self._navigator.isTaskComplete():
+          feedback = self._navigator.getFeedback()
+          ...
+
+   That ``while`` loop **blocks** the calling thread until Nav2
+   reports a terminal status. This is fine in a standalone script,
+   but it is fatal inside a behavior tree — a BT's ``update()`` is
+   called once per tick and must return immediately. Blocking inside
+   ``update()`` freezes the entire tree: no preemption, no parallel
+   branches, no reactive root Selector.
+
+   For ``NavigateToZone`` and ``NavigateToBase`` you must therefore
+   use the **lower-level** ``rclpy.action.ActionClient`` directly:
+   call ``send_goal_async()`` once in ``initialise()``, store the
+   returned future, and **poll** it across ticks (return
+   ``RUNNING`` until ``future.done()``). Do **not** call
+   ``BasicNavigator.goToPose()`` inside a BT ``update()``.
+
+   ``BasicNavigator`` is **still used** in the final project, but
+   only once, at startup, to seed AMCL with the rosbot's spawn pose
+   and to block ``main()`` until Nav2 is ``ACTIVE`` (see
+   :ref:`final-project-auto-seed-amcl`). Blocking is acceptable
+   there because the BT has not started ticking yet.
+
+   In short:
+
+   - **L13 pattern (``BasicNavigator`` + blocking loop):** OK in a
+     standalone node, OK for the one-shot AMCL seed at startup.
+   - **Final-project BT nodes (``ActionClient`` + async polling):**
+     required for any goal sent from inside a behavior tree.
+
+.. _final-project-state-flags:
+
+State flags: ``_done`` and ``_success``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Step 2 of the pattern above asks you to reset two boolean
+attributes -- ``_done`` and ``_success`` -- at the start of every
+active period. Students often ask why *two* flags are needed and
+how they relate to the goal/result futures. The short answer is
+that the flags act as a **terminal latch**: once Nav2 has produced
+a verdict, the flags remember that verdict so the rest of the BT
+sees a stable answer until the leaf is re-initialised.
+
+**What each flag means.** ``_done`` answers "has the goal reached a
+terminal status yet?" -- it transitions from ``False`` to ``True``
+exactly once per active period and never goes back. ``_success``
+answers "if it is done, did it succeed?" -- its value is only
+meaningful when ``_done`` is ``True``. Together the two flags
+encode three valid runtime states: still in flight (``_done`` is
+``False``), succeeded (both ``True``), and failed/rejected/cancelled
+(``_done`` is ``True``, ``_success`` is ``False``). One boolean is
+not enough, because "not yet finished" and "finished and failed"
+must be distinguishable -- otherwise ``update()`` cannot tell
+whether to return ``RUNNING`` or ``FAILURE``.
+
+**Why latch them at all -- can't ``update()`` just re-read the
+futures?** In principle, yes, but that creates two problems. First,
+``update()`` is called many times *after* Nav2 finishes -- the BT
+keeps ticking until the parent composite observes the terminal
+status and transitions away. Re-parsing the result future on each
+of those extra ticks would re-emit log messages ("Reached zone 1.")
+and waste cycles. Second, not every terminal path produces a
+result future at all: a goal that Nav2 *rejects* never reaches the
+result-polling phase, yet ``update()`` still needs a way to
+remember "we already failed, stop sending goals." A pair of flags
+gives ``update()`` a single source of truth for the verdict that
+works the same regardless of *which* phase produced it.
+
+**Lifecycle of the flags.** Both flags are written and read in a
+small number of well-defined places:
+
+- In ``initialise()`` they are both reset to ``False``. This is
+  what makes a fresh active period start cleanly. If you forget
+  this reset, the second navigation in a mission (zone 2 after
+  zone 1) inherits the prior verdict and ``update()`` reports
+  success instantly without ever sending a goal -- a classic
+  symptom is "only the first zone is visited."
+- In ``update()`` they are written exactly once per active period,
+  at the terminal exit point: when the goal is rejected, when the
+  result future reports a non-success status, or when it reports
+  success. Always write **both** flags at every terminal exit;
+  setting only ``_done`` leaves ``_success`` holding a stale value
+  from the previous goal.
+- Also in ``update()``, they are read *first* on every tick: if
+  ``_done`` is ``True``, the method returns the cached
+  ``SUCCESS``/``FAILURE`` immediately without touching any
+  futures. This is the "fast path" that handles the post-terminal
+  ticks described above.
+- In ``terminate()`` they are read to decide whether cancellation
+  is needed. If ``_done`` is already ``True`` the goal has ended
+  on its own, so there is nothing to cancel; this avoids issuing
+  a ``cancel_goal_async`` call against an already-finished
+  handle.
+
+**Relationship to the futures.** The two futures
+(``_send_future`` for goal acceptance, ``_result_future`` for the
+final outcome) track the *transient* phases of an in-flight goal:
+once consumed, each future has done its job and can be discarded.
+``_done`` and ``_success`` track the *persistent* verdict that
+must outlive the futures -- they survive across all the ticks that
+happen between Nav2 reporting a status and the BT scheduler
+noticing it. Keeping the two roles separate (futures for "are we
+still working?", flags for "what was the answer?") is what lets
+``update()`` stay both non-blocking and idempotent on extra ticks.
 
 .. _final-project-bt-service-calls:
 

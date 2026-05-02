@@ -4,6 +4,53 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.6.7 -- Final Project NavigateToZone Clarifications (2026-05-01)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/implementation_guide.rst)
+
+   - Jump to the affected sections:
+     :ref:`final-project-navigate-to-zone` and
+     :ref:`final-project-state-flags`.
+   - Replaced the brief ``**Study:**`` paragraph and the
+     ``.. important::`` block at the top of
+     :ref:`final-project-navigate-to-zone` with a more explicit
+     ``.. warning::`` admonition contrasting Lecture 13's
+     ``BasicNavigator`` + blocking-loop pattern with the final
+     project's ``rclpy.action.ActionClient`` + async-polling
+     pattern. The warning calls out that
+     ``BasicNavigator.goToPose()`` must **not** be used inside a BT
+     ``update()`` (it freezes the entire tree) and notes that
+     ``BasicNavigator`` is still legitimately used at startup for
+     the one-shot AMCL seed in
+     :ref:`final-project-auto-seed-amcl`. Closes a recurring
+     student question about whether the L13 demo applies directly
+     to the BT nodes.
+   - Corrected the L13 reference path inside the new warning from
+     the stale ``lecture13/mapping_navigation_demo/navigation_demo_interface.py``
+     to the actual workspace path
+     ``lecture13/nav_demo/navigation_demo.py``. Two other
+     occurrences of the stale path remain in
+     ``implementation_guide.rst`` (Auto-Seeding AMCL section) and
+     ``requirements.rst`` (NavigateToZone table row); these are
+     scheduled for a follow-up pass.
+   - Added a new sub-subsection
+     :ref:`final-project-state-flags` under
+     :ref:`final-project-navigate-to-zone` explaining, in prose
+     only, why two boolean attributes are needed and how they
+     relate to the goal/result futures. Covers: what each flag
+     means and why one boolean is insufficient (three valid
+     runtime states must be distinguishable), why the verdict is
+     latched rather than re-derived from the futures on every
+     tick, the lifecycle of the flags across
+     ``initialise`` / ``update`` / ``terminate``, and the
+     relationship between the *transient* futures and the
+     *persistent* verdict. Also flags the most common student bug
+     (forgetting to reset the flags in ``initialise``) by its
+     observable symptom -- "only the first zone gets visited" --
+     so students can recognise the mistake in their own code.
+
 .. dropdown:: v1.6.6 -- Final Project Walkthrough Videos (2026-04-29)
    :icon: tag
    :class-container: sd-border-warning
