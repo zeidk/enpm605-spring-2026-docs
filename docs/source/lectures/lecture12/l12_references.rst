@@ -9,16 +9,13 @@ References
     .. card::
         :class-card: sd-border-secondary
 
-        **ENPM605 -- L12: Namespaces, Remapping, Lifecycle Nodes, and Behavior Trees**
+        **ENPM605 -- L12: Namespaces, Remapping, and Behavior Trees**
 
         Covers namespaces (topic isolation, CLI ``__ns``, launch file
         ``namespace`` argument), remapping (node, topic, and parameter
-        remapping via CLI and launch files), lifecycle nodes (state
-        machine, primary states, transition commands, callbacks,
-        ``LifecycleNode``, ``create_lifecycle_publisher``, programmatic
-        state changes), and behavior trees (composites, conditions,
-        actions, decorators, ``py_trees``, ``py_trees_ros``, tick
-        mechanism, terminal debug output).
+        remapping via CLI and launch files), and behavior trees
+        (composites, conditions, actions, decorators, ``py_trees``,
+        ``py_trees_ros``, tick mechanism, terminal debug output).
 
 
 .. dropdown:: Namespaces and Remapping
@@ -62,44 +59,6 @@ References
 
             Comprehensive guide to all ``--ros-args`` options:
             remapping, parameters, logging configuration.
-
-
-.. dropdown:: Lifecycle Nodes
-    :class-container: sd-border-secondary
-
-    .. grid:: 1 1 2 2
-        :gutter: 2
-
-        .. grid-item-card:: ROS 2 Design: Managed Nodes
-            :link: https://design.ros2.org/articles/node_lifecycle.html
-            :class-card: sd-border-secondary
-
-            **ROS 2 Design Article**
-
-            The original design document for lifecycle (managed) nodes.
-            Defines the state machine, transition commands, and error
-            handling semantics.
-
-            +++
-
-            - State machine diagram
-            - Transition callbacks
-            - Error processing
-
-        .. grid-item-card:: ROS 2: Managing a Robot
-            :link: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Managing-A-Robot-Introduction.html
-            :class-card: sd-border-secondary
-
-            **ROS 2 Jazzy: Tutorial**
-
-            Introduction to managing lifecycle nodes using the CLI
-            tools ``ros2 lifecycle get`` and ``ros2 lifecycle set``.
-
-            +++
-
-            - CLI state transitions
-            - ``ros2 lifecycle`` commands
-            - Lifecycle manager concept
 
 
 .. dropdown:: Behavior Trees

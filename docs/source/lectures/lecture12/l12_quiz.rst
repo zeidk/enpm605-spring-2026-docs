@@ -3,9 +3,8 @@ Quiz
 ====================================================
 
 This quiz covers the key concepts from Lecture 12: Namespaces,
-Remapping, Lifecycle Nodes, and Behavior Trees. Topics include
-namespace isolation, node/topic/parameter remapping, the lifecycle
-state machine and its callbacks, behavior tree composites (Sequence,
+Remapping, and Behavior Trees. Topics include namespace isolation,
+node/topic/parameter remapping, behavior tree composites (Sequence,
 Selector), decorators, conditions, actions, and the tick mechanism.
 
 .. note::
@@ -54,30 +53,6 @@ Multiple Choice
 .. admonition:: Question 2
    :class: hint
 
-   What is the correct order of transitions to bring a lifecycle node
-   from Unconfigured to Active?
-
-   A. ``activate`` then ``configure``
-
-   B. ``configure`` then ``activate``
-
-   C. ``shutdown`` then ``activate``
-
-   D. ``configure`` then ``cleanup`` then ``activate``
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **B** -- ``configure`` then ``activate``.
-
-   The lifecycle state machine requires Unconfigured -> Inactive
-   (via ``configure``) -> Active (via ``activate``). Skipping
-   ``configure`` causes a transition failure.
-
-
-.. admonition:: Question 3
-   :class: hint
-
    In a behavior tree, what does a **Sequence** node do when one of
    its children returns FAILURE?
 
@@ -98,7 +73,7 @@ Multiple Choice
    It does not tick the remaining children.
 
 
-.. admonition:: Question 4
+.. admonition:: Question 3
    :class: hint
 
    In ``py_trees``, what is the difference between a **Selector** and
@@ -121,7 +96,7 @@ Multiple Choice
    (logical AND).
 
 
-.. admonition:: Question 5
+.. admonition:: Question 4
    :class: hint
 
    What does a ``py_trees.decorators.Timeout`` decorator do?
@@ -143,31 +118,7 @@ Multiple Choice
    driving action is taking too long.
 
 
-.. admonition:: Question 6
-   :class: hint
-
-   In a lifecycle node, which method should you use to create a
-   publisher that respects the node's active/inactive state?
-
-   A. ``self.create_publisher()``
-
-   B. ``self.create_lifecycle_publisher()``
-
-   C. ``self.create_timer()``
-
-   D. ``rclpy.create_publisher()``
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **B** -- ``create_lifecycle_publisher()``.
-
-   A lifecycle publisher silently discards messages when the node is
-   Inactive. It is automatically enabled by ``super().on_activate()``
-   and disabled by ``super().on_deactivate()``.
-
-
-.. admonition:: Question 7
+.. admonition:: Question 5
    :class: hint
 
    What does ``memory=False`` mean on a ``py_trees`` Sequence?
@@ -190,7 +141,7 @@ Multiple Choice
    immediately to changes (e.g., goal reached, battery low).
 
 
-.. admonition:: Question 8
+.. admonition:: Question 6
    :class: hint
 
    You run the same executable twice in the same namespace without
@@ -218,7 +169,7 @@ Multiple Choice
 True/False
 ==========
 
-.. admonition:: Question 9
+.. admonition:: Question 7
    :class: hint
 
    A namespace affects **absolute** topic names (those starting with
@@ -231,7 +182,7 @@ True/False
    names bypass the namespace entirely.
 
 
-.. admonition:: Question 10
+.. admonition:: Question 8
    :class: hint
 
    A condition node in a behavior tree should never return RUNNING.
@@ -243,21 +194,7 @@ True/False
    answer: SUCCESS or FAILURE. Only action nodes return RUNNING.
 
 
-.. admonition:: Question 11
-   :class: hint
-
-   Calling ``super().on_activate(state)`` is optional in a lifecycle
-   node's ``on_activate`` callback.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **False** -- ``super().on_activate(state)`` enables the lifecycle
-   publisher. Without it, any messages published by the node are
-   silently dropped.
-
-
-.. admonition:: Question 12
+.. admonition:: Question 9
    :class: hint
 
    A ``py_trees`` Selector with ``memory=True`` always starts from the
@@ -272,27 +209,13 @@ True/False
    starting over.
 
 
-.. admonition:: Question 13
-   :class: hint
-
-   In a lifecycle node, ``on_deactivate`` can return FAILURE to prevent
-   the node from leaving the Active state.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   **False** -- Deactivation must always succeed. There is no FAILURE
-   path for ``on_deactivate``. The node will end up Inactive
-   regardless of what the callback returns.
-
-
 ----
 
 
 Essay Questions
 ===============
 
-.. admonition:: Question 14
+.. admonition:: Question 10
    :class: hint
 
    Explain the difference between a **namespace** and **remapping** in
@@ -311,7 +234,7 @@ Essay Questions
    does not handle correctly.
 
 
-.. admonition:: Question 15
+.. admonition:: Question 11
    :class: hint
 
    In the ``bt_demo`` behavior tree, the root Sequence uses
@@ -330,26 +253,3 @@ Essay Questions
    recovery child rather than retrying DriveForward immediately on the
    next tick. Spin runs until it reaches the target yaw (SUCCESS),
    then the Selector resets and gives DriveForward a fresh attempt.
-
-
-.. admonition:: Question 16
-   :class: hint
-
-   Describe the four primary states of a ROS 2 lifecycle node and
-   explain why resources (publishers, timers) are created in
-   ``on_configure`` rather than in ``__init__``.
-
-.. dropdown:: Answer
-   :class-container: sd-border-success
-
-   The four states are: **Unconfigured** (exists but holds no
-   resources), **Inactive** (resources allocated but not processing),
-   **Active** (fully operational), and **Finalized** (cleaned up,
-   no further transitions). Resources are created in ``on_configure``
-   rather than ``__init__`` because the lifecycle model demands
-   explicit control over when resources are allocated. This prevents
-   publishers from being created before the system is ready (e.g.,
-   before a dependent node has configured), and allows resources to
-   be released via ``on_cleanup`` and re-created by calling
-   ``configure`` again -- something that would not be possible if
-   resources were allocated in the constructor.
