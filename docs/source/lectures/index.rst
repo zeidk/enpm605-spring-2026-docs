@@ -57,11 +57,14 @@ Schedule
      - Coordinate Frames, TF2, and Mobile Robot Control
      - Pose representation (position, Euler angles, quaternions, gimbal lock), coordinate frames (REP 105), TF2 transform tree, static and dynamic broadcasters, transform listeners, ``Buffer`` and ``lookup_transform``, Gazebo Harmonic simulation, RViz2 visualization, differential drive kinematics, ``cmd_vel``/``TwistStamped``, odometry, proportional controllers, KDL frame composition, ArUco marker detection with PnP
    * - L12
-     - Namespaces, Remapping, Lifecycle Nodes, and Behavior Trees
-     - Namespaces (topic isolation, CLI ``__ns``, launch file ``namespace``), remapping (node, topic, parameter, CLI and launch file), lifecycle nodes (state machine, primary states, transition commands, callbacks, ``LifecycleNode``, ``create_lifecycle_publisher``, programmatic state changes), behavior trees (composites, conditions, actions, decorators, ``py_trees``, ``py_trees_ros``, tick mechanism, ``memory`` flag, proportional controller integration)
+     - Namespaces, Remapping, and Behavior Trees
+     - Namespaces (topic isolation, CLI ``__ns``, launch file ``namespace``), remapping (node, topic, parameter, CLI and launch file), behavior trees (composites, conditions, actions, decorators, ``py_trees``, ``py_trees_ros``, tick mechanism, ``memory`` flag, proportional controller integration)
    * - L13
      - Mapping and Navigation with Nav2
      - Occupancy grid maps, ``map`` frame, SLAM with ``slam_toolbox``, localization with AMCL, Nav2 stack (planner, controller, behavior tree, recovery), ``NavigateToPose`` action
+   * - L14
+     - Lifecycle Nodes & ROS 2 Bags
+     - Lifecycle node state machine (Unconfigured, Inactive, Active, Finalized), transition commands and callbacks, ``LifecycleNode``, ``create_lifecycle_publisher``, ``TransitionCallbackReturn`` (``SUCCESS``/``FAILURE``/``ERROR``), CLI-driven and programmatic transitions via the ``change_state`` service, ROS 2 bags (SQLite3 vs.\ MCAP storage, ``ros2 bag record`` / ``info`` / ``play``, recording a Nav2 navigation run), Foxglove Studio for multi-panel offline visualization
 
 Contents
 --------
@@ -84,3 +87,4 @@ Contents
    lecture11/l11_index
    lecture12/l12_index
    lecture13/l13_index
+   lecture14/l14_index

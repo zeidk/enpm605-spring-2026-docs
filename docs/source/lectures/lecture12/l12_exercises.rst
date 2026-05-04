@@ -2,13 +2,13 @@
 Exercises
 ====================================================
 
-This page contains four take-home exercises that reinforce the concepts
-from Lecture 12. Each exercise asks you to **write code from scratch**
-based on a specification -- no starter code is provided.
+This page contains three take-home exercises that reinforce the
+concepts from Lecture 12. Each exercise asks you to **write code from
+scratch** based on a specification -- no starter code is provided.
 
 All files should be created inside your ``~/enpm605_ws/src/`` workspace
 in the appropriate packages (``namespace_demo``, ``remapping_demo``,
-``lifecycle_demo``, or ``bt_demo``).
+or ``bt_demo``).
 
 
 .. dropdown:: Exercise 1 -- Multi-Camera Namespace Launch
@@ -57,58 +57,7 @@ in the appropriate packages (``namespace_demo``, ``remapping_demo``,
        # Three isolated publisher nodes, no cross-talk
 
 
-.. dropdown:: Exercise 2 -- Lifecycle Node with on_shutdown
-    :icon: gear
-    :class-container: sd-border-primary
-    :class-title: sd-font-weight-bold
-
-    **Goal**
-
-    Extend the ``SensorPublisher`` lifecycle node to implement the
-    ``on_shutdown`` callback and test the full lifecycle including
-    shutdown.
-
-
-    .. raw:: html
-
-       <hr>
-
-
-    **Specification**
-
-    Modify ``lifecycle_demo/lifecycle_demo/sensor_publisher.py`` to add:
-
-    1. An ``on_shutdown(self, state)`` callback that:
-
-       - Cancels the timer if it exists.
-       - Sets the publisher to ``None``.
-       - Logs ``"Shutting down from: {state.label}"``.
-       - Returns ``TransitionCallbackReturn.SUCCESS``.
-
-    **Verification:**
-
-    .. code-block:: console
-
-       # T1:
-       ros2 run lifecycle_demo sensor_pub_exe
-       # T2:
-       ros2 lifecycle set /sensor_publisher configure
-       ros2 lifecycle set /sensor_publisher activate
-       ros2 lifecycle set /sensor_publisher shutdown
-       ros2 lifecycle get /sensor_publisher
-       # Expected: finalized
-
-    Test ``shutdown`` from different states:
-
-    - From Unconfigured (immediately after starting the node).
-    - From Inactive (after configure but before activate).
-    - From Active (after activate).
-
-    In all cases, the node should reach **Finalized** and log the
-    shutdown message.
-
-
-.. dropdown:: Exercise 3 -- Add a New Condition Node to the BT
+.. dropdown:: Exercise 2 -- Add a New Condition Node to the BT
     :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold
@@ -164,7 +113,7 @@ in the appropriate packages (``namespace_demo``, ``remapping_demo``,
     goal is 100 meters away.
 
 
-.. dropdown:: Exercise 4 -- Topic Remapping with Multiple Subscribers
+.. dropdown:: Exercise 3 -- Topic Remapping with Multiple Subscribers
     :icon: gear
     :class-container: sd-border-primary
     :class-title: sd-font-weight-bold

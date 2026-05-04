@@ -46,6 +46,166 @@ All notable changes to the ENPM605 Spring 2026 course documentation are recorded
      template ``_templates/api-toc-sidebar.html``. Both artifacts
      are committed; the script is run locally before pushing
      whenever ``group0_final/`` changes.
+.. dropdown:: v1.7.0 -- L14 Documentation Released, L12 Refactor (2026-05-03)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Lecture Notes (l14_lecture.rst)
+
+   - Added "Prerequisites" section: workspace cleanup, ``rosdep``
+     install, ``--packages-up-to lecture14_meta`` build, and a
+     Gazebo smoke-test launch.
+   - Added "Lifecycle Nodes" section: motivation for managed
+     nodes, the four primary states (Unconfigured, Inactive,
+     Active, Finalized) with a what-the-node-does table, and a
+     transition-command table (``configure``, ``activate``,
+     ``deactivate``, ``cleanup``, ``shutdown``) mapping each
+     command to its ``on_*`` callback. Includes a "Why use
+     lifecycle nodes" rationale (controlled init order, resource
+     management, runtime pause/resume, system coordination via
+     Nav2's ``lifecycle_manager``).
+   - Added "Implementing a Lifecycle Node" subsection: full
+     ``sensor_publisher`` walkthrough -- class declaration with
+     ``rclpy_lifecycle.LifecycleNode``, ``on_configure`` allocating
+     a ``create_lifecycle_publisher``, a ``SUCCESS`` /
+     ``FAILURE`` / ``ERROR`` return-value table, and the four
+     transition callbacks with ``super().on_activate(state)`` /
+     ``super().on_deactivate(state)`` placement notes. Closes
+     with a CLI demonstration table (``ros2 lifecycle list`` /
+     ``get`` / ``set``) and an experiment prompt.
+   - Added "Programmatic State Changes" subsection: scenario for
+     ``self_cycling_node``, the auto-advertised ``change_state``
+     service, ``ChangeState.Request`` payload structure, the
+     async ``call_async`` + done-callback pattern (including a
+     deadlock warning for blocking ``call``), and a demonstration
+     table of the 5-second cycle.
+   - Added "ROS 2 Bags" section: motivation, common use cases
+     (algorithm dev, debugging, regression testing, dataset
+     creation, remote ops), SQLite3 vs.\ MCAP comparison table,
+     MCAP plugin install command, ``--storage`` switching for
+     ``record`` and ``convert``, useful ``ros2 bag record`` flags
+     table, and an end-to-end "Recording a Navigation Run" demo
+     listing the six topics (``/odometry/filtered``, ``/scan``,
+     ``/cmd_vel``, ``/tf``, ``/tf_static``, ``/map``).
+   - Added "Inspecting" and "Replaying" subsections:
+     ``ros2 bag info`` walkthrough, ``ros2 bag play`` flag table
+     (``--rate``, ``--start-offset``, ``--loop``, ``--topics``,
+     ``--remap``, ``--clock``), and a warning about live-system
+     conflicts on ``/tf`` and ``/cmd_vel``.
+   - Added "Foxglove Studio" section: what/why, three install
+     options (Debian, Snap, browser), loading the ``nav_run``
+     bag, and a layout-import note.
+
+   .. rubric:: Index (l14_index.rst)
+
+   - Overview, learning objectives, toctree, and next steps for
+     L14 (final regular lecture; remaining classes are status
+     check + office hours).
+
+   .. rubric:: Exercises (l14_exercises.rst)
+
+   - Exercise 1: implement a CLI-driven ``counter_publisher``
+     lifecycle node publishing ``"count=<n>"`` at 2 Hz only while
+     Active, with a verification flow that confirms
+     publish/pause/restart behavior across transitions.
+   - Exercise 2: extend Exercise 1 with a programmatic self-cycle
+     -- 5 s timer, ``[CONFIGURE, ACTIVATE, DEACTIVATE, CLEANUP]``
+     index, async ``change_state`` call with done-callback
+     logging, and a launch file that starts the node already
+     cycling.
+   - Exercise 3: record a Nav2 navigation run as an MCAP bag,
+     verify all six topics + non-zero ``/tf_static`` count via
+     ``ros2 bag info``, and confirm the bag directory contains a
+     ``metadata.yaml`` and ``.mcap`` file(s).
+   - Exercise 4: open the bag in Foxglove Studio and build a
+     three-panel layout (3D with ``/scan`` + ``/tf`` + ``/map``,
+     XY trajectory Plot, ``/cmd_vel`` Raw Messages), then export
+     ``nav_run_layout.json``.
+
+   .. rubric:: Quiz (l14_quiz.rst)
+
+   - 8 multiple choice questions covering initial state,
+     ``activate`` semantics, ``FAILURE`` return effect,
+     ``create_lifecycle_publisher`` rationale, the auto-advertised
+     ``change_state`` service, MCAP recommendation, the
+     ``--clock`` flag, and ``/tf_static`` recording.
+   - 4 true/false questions: skipping ``configure``, whether
+     ``ros2 bag info`` needs the storage plugin, publish-before-
+     ``super().on_activate()``, and the Foxglove browser upload
+     myth.
+   - 3 short-answer questions: timer placement in ``on_activate``
+     vs.\ ``__init__``, why ``call_async`` for self-driven
+     transitions (single-threaded executor deadlock), and the
+     missing-mesh-in-Foxglove diagnostic
+     (``robot_description`` + ``/tf_static``).
+
+   .. rubric:: References (l14_references.rst)
+
+   - Lecture 14 card summarizing all topics covered.
+   - Lifecycle Nodes: ROS 2 design article, ``rclpy`` lifecycle
+     source, ``lifecycle_msgs`` API, Nav2 lifecycle manager.
+   - ROS 2 Bags: Jazzy "Recording and Playing Back Data"
+     tutorial, ``rosbag2`` GitHub, MCAP file format,
+     ``rosbag2_storage_mcap`` plugin source.
+   - Foxglove Studio: project site, top-level docs, panel
+     reference, desktop downloads, web app, pricing /
+     academic-access page.
+   - Recommended Reading: Mataric *A Concise Introduction to
+     Robot Programming with ROS2*, Quigley *Programming Robots
+     with ROS*.
+
+   .. rubric:: Lecture 12 -- Refactor (lifecycle moved out)
+
+   - Renamed the lecture from "Namespaces, Remapping, Lifecycle
+     Nodes, and Behavior Trees" to **"Namespaces, Remapping, and
+     Behavior Trees"**. Lifecycle-node coverage was moved to the
+     new L14 to give it room to grow alongside the new
+     programmatic-transition + ``change_state`` material.
+   - Updated ``l12_index.rst`` overview ("three topics" instead
+     of four; dropped ``lifecycle_demo`` from the package list)
+     and the schedule entry / blurb in
+     ``lectures/index.rst``.
+   - ``l12_exercises.rst``: deleted Exercise 2 ("Lifecycle Node
+     with on_shutdown"), renumbered the remaining two so the
+     page now contains three exercises, and dropped
+     ``lifecycle_demo`` from the workspace-package list.
+   - ``l12_quiz.rst``: removed all five lifecycle questions
+     (Q2/Q6/Q11/Q13/Q16) and renumbered the remaining 11.
+     Updated the topic blurb to drop "Lifecycle Nodes."
+   - ``l12_references.rst``: removed the entire **Lifecycle
+     Nodes** dropdown (ROS 2 design article + "Managing a Robot"
+     tutorial); both now appear in ``l14_references.rst``.
+     Updated the Lecture 12 summary card to drop the lifecycle
+     bullet from the description.
+
+   .. rubric:: Lectures Index (lectures/index.rst)
+
+   - Added ``lecture14/l14_index`` to the toctree.
+   - Updated the L12 schedule row title and key-concepts cell.
+   - Added an L14 schedule row covering lifecycle nodes
+     (state machine, transition commands, ``LifecycleNode``,
+     ``create_lifecycle_publisher``, ``TransitionCallbackReturn``,
+     CLI / programmatic transitions) and ROS 2 bags
+     (SQLite3 vs.\ MCAP, ``ros2 bag record``/``info``/``play``,
+     Foxglove visualization).
+
+   .. rubric:: Glossary (glossary.rst)
+
+   - 14 new terms tied to **L12** (now that lifecycle has moved
+     to L14): Action Node (BT), Composite Node (BT), Condition
+     Node, Decorator Node (BT), Fallback (BT) / Selector (BT),
+     Leaf Node (BT), Memory Flag (BT), Namespace (ROS 2),
+     ``py_trees_ros``, Remapping, Sequence Node, Tick (BT). The
+     existing **Behavior Tree** entry was extended with a
+     composite/leaf summary.
+   - 17 new terms tied to **L14**: Bag (ROS 2) / ROS 2 Bag,
+     ``change_state`` Service, ``create_lifecycle_publisher``,
+     Foxglove Studio, Lifecycle Manager, Lifecycle Node,
+     Lifecycle Publisher, ``LifecycleNode``, MCAP,
+     ``on_activate``, ``on_cleanup``, ``on_configure``,
+     ``on_deactivate``, ``on_shutdown``, Primary State
+     (Lifecycle), ``rosbag2``, SQLite3 Storage,
+     ``TransitionCallbackReturn``.
 
 .. dropdown:: v1.6.7 -- Final Project NavigateToZone Clarifications (2026-05-01)
    :icon: tag

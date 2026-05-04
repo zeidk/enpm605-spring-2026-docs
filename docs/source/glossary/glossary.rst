@@ -8,7 +8,7 @@ Glossary
 
    .. raw:: html
 
-      <div id="glossary-search-wrap" style="margin: 1.2em 0 1.4em 0;">
+      <div id="glossary-search-wrap" style="margin: 1.2em 0 0.6em 0;">
         <input
           id="glossary-search"
           type="search"
@@ -31,24 +31,63 @@ Glossary
         ></span>
       </div>
 
+      <div id="glossary-lecture-filter"
+           style="margin: 0 0 1.4em 0; display: flex; flex-wrap: wrap; gap: 0.35em; align-items: center;">
+        <span style="font-size: 0.88em; color: #666; margin-right: 0.3em;">Lecture:</span>
+        <button type="button" data-lecture="all"
+                style="padding: 0.25em 0.7em; font-size: 0.85em; border: 1px solid #888;
+                       background: #444; color: #fff; border-radius: 3px; cursor: pointer;">
+          All
+        </button>
+        <!-- L1..L14 buttons inserted by JS -->
+      </div>
+
       <script>
       (function () {
         /* Run after the DOM is ready. */
         function initGlossarySearch() {
           var input  = document.getElementById('glossary-search');
           var count  = document.getElementById('glossary-search-count');
-          if (!input) return;
+          var filterBar = document.getElementById('glossary-lecture-filter');
+          if (!input || !filterBar) return;
 
-          /* Collect every letter section.
-             Each section has the pattern:
-               <section id="glossary-X"> or <div id="glossary-X">
-                 <h2>X</h2>
-                 <dl class="glossary"> ... </dl>
-               </section>
-             We work at the <dt> level and bubble up to hide empty sections. */
+          var TOTAL_LECTURES = 14;
+          var activeLecture = null;  /* null = "All" */
+
+          /* Build L1..L14 buttons. */
+          for (var i = 1; i <= TOTAL_LECTURES; i++) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.dataset.lecture = 'L' + i;
+            btn.textContent = 'L' + i;
+            btn.style.cssText =
+              'padding: 0.25em 0.6em; font-size: 0.85em; ' +
+              'border: 1px solid #ccc; background: #fff; color: #333; ' +
+              'border-radius: 3px; cursor: pointer;';
+            filterBar.appendChild(btn);
+          }
+
+          /* Cache lecture tags per <dt> so we don't rescan the DOM on every keystroke.
+             A "tag" is the visible text of any link inside the dd block matching ^L\d+$. */
+          var dtIndex = [];  /* { dt, dds, tags: Set<string>, text: lowercased dt text } */
+          document.querySelectorAll('dl.glossary dt').forEach(function (dt) {
+            var dds = [];
+            var node = dt.nextElementSibling;
+            while (node && node.tagName === 'DD') {
+              dds.push(node);
+              node = node.nextElementSibling;
+            }
+            var tags = new Set();
+            dds.forEach(function (dd) {
+              dd.querySelectorAll('a').forEach(function (a) {
+                var t = a.textContent.trim();
+                if (/^L\d+$/.test(t)) tags.add(t);
+              });
+            });
+            dtIndex.push({ dt: dt, dds: dds, tags: tags, text: dt.textContent.toLowerCase() });
+          });
 
           function getLetterSection(el) {
-            /* Walk up until we find the element whose id starts with "glossary-" */
             var node = el;
             while (node && node !== document.body) {
               if (node.id && /^glossary-[a-z]$/i.test(node.id)) return node;
@@ -57,47 +96,48 @@ Glossary
             return null;
           }
 
+          function paintButtons() {
+            filterBar.querySelectorAll('button').forEach(function (b) {
+              var isActive = (b.dataset.lecture === 'all' && activeLecture === null) ||
+                             (b.dataset.lecture === activeLecture);
+              if (isActive) {
+                b.style.background = '#444';
+                b.style.color = '#fff';
+                b.style.borderColor = '#888';
+              } else {
+                b.style.background = '#fff';
+                b.style.color = '#333';
+                b.style.borderColor = '#ccc';
+              }
+            });
+          }
+
           function run() {
             var query = input.value.trim().toLowerCase();
-
-            /* All term headings rendered by .. glossary:: */
-            var allDt = document.querySelectorAll('dl.glossary dt');
             var visible = 0;
 
-            allDt.forEach(function (dt) {
-              /* Each <dt> may have one or more <dd> siblings that follow it
-                 until the next <dt>. Collect them so we hide/show together. */
-              var siblings = [];
-              var node = dt.nextElementSibling;
-              while (node && node.tagName === 'DD') {
-                siblings.push(node);
-                node = node.nextElementSibling;
-              }
+            dtIndex.forEach(function (entry) {
+              var textMatch = !query || entry.text.indexOf(query) !== -1;
+              var lectureMatch = !activeLecture || entry.tags.has(activeLecture);
+              var match = textMatch && lectureMatch;
 
-              var text = dt.textContent.toLowerCase();
-              var match = !query || text.indexOf(query) !== -1;
-
-              dt.style.display = match ? '' : 'none';
-              siblings.forEach(function (dd) { dd.style.display = match ? '' : 'none'; });
+              entry.dt.style.display = match ? '' : 'none';
+              entry.dds.forEach(function (dd) { dd.style.display = match ? '' : 'none'; });
               if (match) visible++;
             });
 
-            /* Hide letter-section headings and their <dl> when every term
-               inside them is hidden. */
-            var allDl = document.querySelectorAll('dl.glossary');
-            allDl.forEach(function (dl) {
+            /* Hide letter-section headings + dl when every term inside is hidden. */
+            document.querySelectorAll('dl.glossary').forEach(function (dl) {
               var anyVisible = Array.prototype.some.call(
                 dl.querySelectorAll('dt'),
                 function (dt) { return dt.style.display !== 'none'; }
               );
               dl.style.display = anyVisible ? '' : 'none';
 
-              /* Hide the heading (h2) that immediately precedes the dl */
               var section = getLetterSection(dl);
               if (section) {
                 section.style.display = anyVisible ? '' : 'none';
               } else {
-                /* Fallback: hide the nearest preceding h2 */
                 var prev = dl.previousElementSibling;
                 while (prev) {
                   if (prev.tagName === 'H2' || prev.tagName === 'H1') {
@@ -109,8 +149,8 @@ Glossary
               }
             });
 
-            /* Update result count */
-            if (query) {
+            /* Result count: show whenever a filter is active. */
+            if (query || activeLecture) {
               count.textContent = visible === 1
                 ? '1 term found'
                 : visible + ' terms found';
@@ -119,12 +159,22 @@ Glossary
             }
           }
 
-          input.addEventListener('input', run);
+          /* Wire up the lecture-chip clicks (event delegation). */
+          filterBar.addEventListener('click', function (e) {
+            var btn = e.target.closest('button[data-lecture]');
+            if (!btn) return;
+            var lec = btn.dataset.lecture;
+            activeLecture = (lec === 'all') ? null : lec;
+            paintButtons();
+            run();
+          });
 
-          /* Also clear on Escape */
+          input.addEventListener('input', run);
           input.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') { input.value = ''; run(); input.blur(); }
           });
+
+          paintButtons();
         }
 
         if (document.readyState === 'loading') {
@@ -175,6 +225,15 @@ A
       can cancel the goal at any time. Defined in ``.action`` files
       containing a goal, result, and feedback section. Example use:
       navigating a robot to a goal pose. :doc:`L8 </lectures/lecture8/l8_lecture>`
+
+   Action Node (BT)
+      A leaf node in a :term:`behavior tree <Behavior Tree>` that
+      performs work and returns ``SUCCESS``, ``FAILURE``, or
+      ``RUNNING``. Action nodes are the only nodes allowed to return
+      ``RUNNING``: they may take many ticks to complete (e.g.,
+      driving the robot, calling a service, waiting for a Nav2
+      action). Contrast with a :term:`Condition Node`, which must
+      give an instantaneous yes/no answer. :doc:`L12 </lectures/lecture12/l12_lecture>`
 
    Adaptive Monte Carlo Localization
    AMCL
@@ -258,6 +317,19 @@ B
 
 .. glossary::
 
+   Bag (ROS 2)
+   ROS 2 Bag
+      A directory of recorded ROS 2 messages produced by
+      ``ros2 bag record`` and replayed with ``ros2 bag play``. Each
+      bag preserves the original topic name, message type, and
+      timestamp so downstream nodes receive the data exactly as if
+      the original publishers were still running. The directory
+      contains a ``metadata.yaml`` describing topics and message
+      counts plus one or more storage files (``.db3`` for SQLite3
+      or ``.mcap`` for MCAP). Bags are used for offline debugging,
+      regression testing, dataset creation, and remote-run
+      analysis. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
    Base Case
       The condition in a recursive function that stops the recursion.
       Without a base case, the function will recurse until Python raises
@@ -274,12 +346,17 @@ B
       ``rclpy`` node. :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    Behavior Tree
-      A tree-structured model for task execution used in robotics and
-      game AI. In this course, students build application-level
-      behavior trees with the *py_trees* library to coordinate Nav2
-      navigation actions; Nav2 itself uses an internal behavior tree
-      (BehaviorTree.CPP) to orchestrate planning, control, and
-      recovery. :doc:`L12 </lectures/lecture12/l12_lecture>` · :doc:`L13 </lectures/lecture13/l13_lecture>`
+      A hierarchical model for task execution used in robotics and
+      game AI. Internal nodes are :term:`composites <Composite Node (BT)>`
+      (Sequence, Fallback) that decide *how* the tree branches; leaf
+      nodes are :term:`actions <Action Node (BT)>` and
+      :term:`conditions <Condition Node>` that do the work. Every
+      tick propagates from the root and each node returns
+      ``SUCCESS``, ``FAILURE``, or ``RUNNING``. In this course,
+      students build application-level behavior trees with the
+      *py_trees* library to coordinate Nav2 navigation actions;
+      Nav2 itself uses an internal behavior tree (BehaviorTree.CPP)
+      to orchestrate planning, control, and recovery. :doc:`L12 </lectures/lecture12/l12_lecture>` · :doc:`L13 </lectures/lecture13/l13_lecture>`
 
    bool
       Python's Boolean type, a subclass of ``int`` with exactly two
@@ -373,6 +450,17 @@ C
       single expression, e.g., ``1 < x < 10`` is equivalent to
       ``1 < x and x < 10``. Each operand is evaluated at most once. :doc:`L2 </lectures/lecture2/l2_lecture>`
 
+   ``change_state`` Service
+      The service of type ``lifecycle_msgs/srv/ChangeState`` that
+      every :term:`lifecycle node <Lifecycle Node>` automatically
+      advertises at ``/<node_name>/change_state``. Clients submit a
+      ``Transition`` request whose ``id`` field selects the desired
+      transition (``TRANSITION_CONFIGURE``, ``TRANSITION_ACTIVATE``,
+      etc.); the response carries a ``success`` boolean. The
+      ``ros2 lifecycle set`` CLI is just one client of this
+      service -- a node can also call it on itself to drive its own
+      transitions programmatically. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
    Circumscribed Radius
       The radius of the smallest circle that **encloses** the robot's
       footprint. Any cell at distance greater than this radius from an
@@ -437,6 +525,16 @@ C
       (``{x for x in iter}``), and generator expressions
       (``(x for x in iter)``). :doc:`L3 </lectures/lecture3/l3_lecture>`
 
+   Composite Node (BT)
+      An internal node in a :term:`behavior tree <Behavior Tree>`
+      that has one or more children and decides how their results
+      are combined. The two primary composites are the
+      :term:`Sequence Node` (logical AND -- fail on first failure)
+      and the :term:`Fallback (BT)` / Selector (logical OR --
+      succeed on first success). Composites are the only nodes
+      with children; leaves (actions and conditions) do the actual
+      work. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
    Composition
       A "has-a" relationship where the contained objects (the parts)
       cannot exist independently of the container (the whole). Parts are
@@ -454,6 +552,15 @@ C
       A class that provides implementations for all abstract methods it
       inherits and can therefore be instantiated directly. Shown in UML
       with a circled **C** marker. :doc:`L6 </lectures/lecture6/l6_lecture>` · :doc:`L7 </lectures/lecture7/l7_lecture>`
+
+   Condition Node
+      A leaf node in a :term:`behavior tree <Behavior Tree>` that
+      checks a predicate and returns ``SUCCESS`` (true) or
+      ``FAILURE`` (false). Condition nodes never return ``RUNNING``
+      -- they must give an instantaneous yes/no answer. Typical
+      examples: ``GoalNotReached?``, ``BatteryLow?``,
+      ``ObstacleDetected?``. Combined with composites, they make
+      the tree reactive to changing conditions. :doc:`L12 </lectures/lecture12/l12_lecture>`
 
    Conditional Expression
    Ternary Expression
@@ -482,6 +589,16 @@ C
       A statement that skips the rest of the current loop iteration and
       proceeds to the next iteration. Unlike ``break``, the loop
       continues running.
+
+   ``create_lifecycle_publisher``
+      The lifecycle-aware factory used inside a
+      :term:`LifecycleNode` to create a publisher that respects
+      the node's active/inactive state. Unlike
+      ``create_publisher``, the returned publisher silently
+      discards messages while the node is not Active, preventing
+      premature data from being delivered. The publisher is
+      enabled by ``super().on_activate(state)`` and disabled by
+      ``super().on_deactivate(state)``. :doc:`L14 </lectures/lecture14/l14_lecture>`
 
    CPython
       The reference (default) implementation of Python, written in C.
@@ -589,6 +706,17 @@ D
       a decorator itself needs to be parameterized. Requires three levels
       of nesting: ``factory(args) -> decorator(func) -> wrapper(*args, **kwargs)``.
       Example: ``@repeat(3)`` where ``repeat`` is the factory. :doc:`L5 </lectures/lecture5/l5_lecture>`
+
+   Decorator Node (BT)
+      A node in a :term:`behavior tree <Behavior Tree>` that wraps
+      a single child and modifies how its return status is
+      reported. Common ``py_trees.decorators`` examples include
+      ``Timeout`` (returns ``FAILURE`` if the child stays
+      ``RUNNING`` longer than a duration), ``Inverter`` (flips
+      ``SUCCESS`` and ``FAILURE``), ``Retry`` (re-ticks on
+      ``FAILURE``), and ``OneShot`` (returns the same status
+      forever after the child completes). Distinct from a Python
+      ``@decorator`` function. :doc:`L12 </lectures/lecture12/l12_lecture>`
 
    Dictionary
    dict
@@ -740,11 +868,31 @@ F
       configured as a scout without the caller needing to know the default
       values. Factory methods can also return collections of instances. :doc:`L7 </lectures/lecture7/l7_lecture>`
 
+   Fallback (BT)
+   Selector (BT)
+      A :term:`composite node <Composite Node (BT)>` (also called
+      a Selector) that ticks its children left to right and
+      returns ``SUCCESS`` as soon as any child succeeds. If every
+      child fails, the Fallback returns ``FAILURE``. Logical OR.
+      Used to express "try this; if it fails, try that" recovery
+      strategies. Compare with :term:`Sequence Node`. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
    Falsy
       A value that evaluates to ``False`` when passed to ``bool()``.
       Python's falsy values are: ``0``, ``0.0``, ``""``, ``[]``,
       ``()``, ``{}``, ``set()``, ``None``, and ``False`` itself.
       Contrast with :term:`Truthy`. :doc:`L2 </lectures/lecture2/l2_lecture>` · :doc:`L3 </lectures/lecture3/l3_lecture>`
+
+   Foxglove Studio
+      A free, cross-platform robotics visualization tool that opens
+      MCAP bags directly (no transcoding) and renders multi-panel
+      layouts (3D, Plot, Image, Raw Messages, Diagnostics) driven
+      from a shared timeline. Available as desktop apps for Linux
+      / macOS / Windows and as a browser app at
+      ``app.foxglove.dev`` (bag stays local; nothing is uploaded).
+      Can also connect to a live ROS 2 system over the Foxglove
+      WebSocket bridge. Used in this course for offline analysis of
+      navigation runs recorded as MCAP bags. :doc:`L14 </lectures/lecture14/l14_lecture>`
 
    First-Class Object
       An entity that can be assigned to a variable, passed as an argument,
@@ -1173,6 +1321,58 @@ L
       the first match found. This is the fundamental mechanism for
       variable name resolution in Python. :doc:`L4 </lectures/lecture4/l4_lecture>`
 
+   Leaf Node (BT)
+      A node in a :term:`behavior tree <Behavior Tree>` with no
+      children. Leaves do the actual work and are split into two
+      kinds: :term:`action nodes <Action Node (BT)>` (perform a
+      task; may return ``RUNNING``) and :term:`condition nodes
+      <Condition Node>` (check a predicate; never return
+      ``RUNNING``). All other BT nodes are composites or
+      decorators. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
+   Lifecycle Manager
+      A coordinator node (e.g., Nav2's ``lifecycle_manager``) that
+      drives a fixed set of :term:`lifecycle nodes <Lifecycle
+      Node>` through their transitions in a defined order, can
+      pause and resume the stack at runtime, and shuts everything
+      down cleanly on error. Nav2 manages ``map_server``,
+      ``amcl``, ``planner_server``, ``controller_server``, and
+      ``bt_navigator`` this way. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   Lifecycle Node
+      A ROS 2 node that follows the standardized state machine
+      defined by REP 2002: **Unconfigured**, **Inactive**,
+      **Active**, and **Finalized**. Rather than starting work the
+      moment it is constructed, the node waits for explicit
+      transition commands (``configure``, ``activate``,
+      ``deactivate``, ``cleanup``, ``shutdown``) issued via the
+      ``ros2 lifecycle`` CLI or programmatically through the
+      ``change_state`` service.
+      Resources are allocated in transition callbacks
+      (``on_configure``, ``on_activate``) and released in their
+      counterparts, which gives the system precise control over
+      initialization order, runtime pause/resume, and clean
+      shutdown. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   LifecycleNode
+      The Python base class (``rclpy_lifecycle.LifecycleNode``)
+      that students extend to implement a :term:`lifecycle node
+      <Lifecycle Node>`. Provides hooks for the four primary
+      transition callbacks (``on_configure``, ``on_activate``,
+      ``on_deactivate``, ``on_cleanup``) plus optional
+      ``on_shutdown`` and ``on_error``. Used together with
+      ``create_lifecycle_publisher``. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   Lifecycle Publisher
+      A publisher created via
+      ``create_lifecycle_publisher`` inside a
+      :term:`LifecycleNode`. It exists in an *inactive* state by
+      default and silently discards published messages until
+      ``super().on_activate(state)`` enables it; a subsequent
+      ``super().on_deactivate(state)`` disables it again without
+      destroying the publisher object. Prevents data from being
+      sent before the node is fully ready. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
    Loop Closure
       A SLAM mechanism that detects when the robot returns near a
       previously visited area and adds a constraint between the current
@@ -1247,6 +1447,27 @@ M
       on ``/map`` for AMCL and the costmaps to consume. The companion
       ``map_saver_cli`` tool serializes a live map (e.g., from
       ``slam_toolbox``) to disk in the same format. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   MCAP
+      An open, vendor-neutral container format for log files of
+      timestamped, heterogeneous messages. The recommended ROS 2
+      bag storage backend for sensor-heavy or long-running
+      navigation recordings: it compresses better than SQLite3,
+      supports fast random-access seeks, and is opened natively by
+      :term:`Foxglove Studio` and the ``mcap`` CLI. Selected with
+      ``ros2 bag record --storage mcap`` once the
+      ``ros-jazzy-rosbag2-storage-mcap`` plugin is installed. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   Memory Flag (BT)
+      The ``memory`` argument on a ``py_trees`` Sequence or
+      Selector that decides whether the composite remembers which
+      child was last ticked. With ``memory=False`` (reactive), the
+      composite restarts from its first child on every tick, so
+      condition nodes are re-checked continuously. With
+      ``memory=True``, the composite resumes from the next
+      unfinished child, which is useful when re-running an
+      already-completed action would be incorrect (e.g.,
+      re-issuing a Nav2 goal that has already succeeded). :doc:`L12 </lectures/lecture12/l12_lecture>`
 
    Membership Operator
       The ``in`` and ``not in`` operators, which test whether an
@@ -1357,6 +1578,17 @@ N
       increasing the risk of accidental name collisions. Caused
       primarily by :term:`wildcard imports <Wildcard Import>`. :doc:`L2 </lectures/lecture2/l2_lecture>`
 
+   Namespace (ROS 2)
+      A path-style prefix applied to a ROS 2 node and to every
+      relative name (topics, services, parameters) it owns.
+      Running the same node twice in different namespaces (e.g.,
+      ``/front`` and ``/rear``) isolates their topics
+      automatically: ``image_raw`` becomes ``/front/image_raw``
+      and ``/rear/image_raw``. Namespaces affect only **relative**
+      names; absolute names (starting with ``/``) bypass them.
+      Applied via ``--ros-args -r __ns:=/front`` or the
+      ``namespace`` argument of a launch ``Node`` action. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
    Nav2
       The ROS 2 Navigation Stack. Provides autonomous navigation
       capabilities including localization (AMCL), costmaps, global
@@ -1441,6 +1673,48 @@ O
       values for partial evidence. Defined by a resolution (typical
       ``0.05 m``), width, height, and origin pose. Updated by SLAM via
       Bayesian (log-odds) ray tracing of LiDAR scans. :doc:`L13 </lectures/lecture13/l13_lecture>`
+
+   ``on_activate``
+      The :term:`lifecycle <Lifecycle Node>` transition callback
+      invoked when a node moves from **Inactive** to **Active**.
+      Must call ``super().on_activate(state)`` first to enable the
+      :term:`lifecycle publishers <Lifecycle Publisher>`, then
+      start any timers or work that should only run while Active.
+      Returns ``TransitionCallbackReturn.SUCCESS`` or
+      ``FAILURE``. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   ``on_cleanup``
+      The :term:`lifecycle <Lifecycle Node>` transition callback
+      invoked when a node moves from **Inactive** back to
+      **Unconfigured**. Drops references to publishers, subscribers,
+      and other resources allocated in ``on_configure``, allowing
+      garbage collection. After ``on_cleanup``, the node can be
+      reconfigured fresh. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   ``on_configure``
+      The :term:`lifecycle <Lifecycle Node>` transition callback
+      invoked when a node moves from **Unconfigured** to
+      **Inactive**. Allocates persistent resources -- typically
+      :term:`lifecycle publishers <Lifecycle Publisher>`,
+      subscribers, parameters, and connections. Timers are
+      **not** created here; they belong in ``on_activate`` so
+      callbacks do not fire while the node is Inactive. Returns
+      ``TransitionCallbackReturn.SUCCESS`` or ``FAILURE``. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   ``on_deactivate``
+      The :term:`lifecycle <Lifecycle Node>` transition callback
+      invoked when a node moves from **Active** back to
+      **Inactive**. Cancels any timers started in ``on_activate``,
+      then calls ``super().on_deactivate(state)`` to disable the
+      lifecycle publishers. The publisher objects are kept alive
+      and re-enabled by the next ``on_activate``. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
+   ``on_shutdown``
+      The :term:`lifecycle <Lifecycle Node>` transition callback
+      invoked when ``shutdown`` is requested from any state. The
+      node ends up in **Finalized**, after which no further
+      transitions are possible. Used to release any final
+      resources before the node is destroyed. :doc:`L14 </lectures/lecture14/l14_lecture>`
 
    Operator Overloading
       A form of polymorphism in which the same operator (``+``, ``==``,
@@ -1531,6 +1805,17 @@ P
       Python code. Prescribes ``snake_case`` for variables and
       functions, ``UPPER_CASE`` for constants, and ``PascalCase``
       for classes. :doc:`L1 </lectures/lecture1/l1_lecture>` · :doc:`L2 </lectures/lecture2/l2_lecture>`
+
+   Primary State (Lifecycle)
+      One of the four stable states a :term:`lifecycle node
+      <Lifecycle Node>` can rest in: **Unconfigured** (no
+      resources held), **Inactive** (resources allocated but not
+      processing), **Active** (fully operational), and
+      **Finalized** (cleaned up; no further transitions).
+      Movement between primary states is performed by transition
+      commands (``configure``, ``activate``, ``deactivate``,
+      ``cleanup``, ``shutdown``), each of which invokes the
+      corresponding ``on_*`` callback. :doc:`L14 </lectures/lecture14/l14_lecture>`
 
    Pose Graph
       The internal representation used by graph-based SLAM (e.g.,
@@ -1643,7 +1928,16 @@ P
       A Python library for building :term:`behavior trees <Behavior
       Tree>`. Used in the final project to coordinate high-level robot
       tasks (waypoint patrol, event response) by calling Nav2 action
-      servers.
+      servers. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
+   py_trees_ros
+      The ROS 2 companion to :term:`py_trees`. Wraps a tree in a
+      ROS 2 node with a timer-driven tick loop
+      (``BehaviourTree.tick_tock``), provides ROS-aware leaf
+      classes (``Subscriber``, ``ActionClient``, ...), and exposes
+      tree state on standard topics so the tick stream can be
+      visualized. Enables BTs to send Nav2 goals and consume
+      sensor topics directly. :doc:`L12 </lectures/lecture12/l12_lecture>`
 
    PyPy
       A Python implementation written in RPython that uses :term:`JIT
@@ -1742,6 +2036,18 @@ R
       ``RELIABLE`` subscriber will not connect to a ``BEST_EFFORT``
       publisher. :doc:`L8 </lectures/lecture8/l8_lecture>`
 
+   Remapping
+      A surgical, per-name redirection mechanism that changes a
+      single ROS 2 node, topic, service, or parameter name without
+      modifying source code. Applied via ``--ros-args -r
+      old:=new`` on the CLI, the ``remappings`` argument of a
+      launch ``Node`` action, or the ``-r`` flag on
+      ``ros2 bag play``. Useful for connecting a node written
+      against a generic name (``image_raw``) to a specific
+      pipeline (``/sensors/front/image``) or for renaming a node
+      so a second instance can coexist with the first. Compare
+      with the bulk operation of a :term:`Namespace (ROS 2)`. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
    Reentrant Callback Group
    ReentrantCallbackGroup
       A ROS 2 callback group in which multiple callbacks (or multiple
@@ -1798,6 +2104,14 @@ R
       including ``setup.bash``), and ``log/`` (build logs). Always run
       ``colcon build`` from the workspace root, not from inside
       ``src/``. :doc:`L8 </lectures/lecture8/l8_lecture>`
+
+   rosbag2
+      The ROS 2 message recording / replay subsystem. Provides the
+      ``ros2 bag`` CLI (``record``, ``play``, ``info``,
+      ``convert``) and the ``rosbag2_py`` Python API for reading
+      and writing :term:`bags <Bag (ROS 2)>` programmatically.
+      Supports pluggable storage backends; the two used in this
+      course are SQLite3 (default) and :term:`MCAP`. :doc:`L14 </lectures/lecture14/l14_lecture>`
 
    rosdep
       A command-line tool that reads ``package.xml`` files and
@@ -1857,6 +2171,16 @@ S
       Refers to the specific instance that called the method. Python
       passes it automatically: ``obj.method(arg)`` is translated to
       ``ClassName.method(obj, arg)``.
+
+   Sequence Node
+      A :term:`composite node <Composite Node (BT)>` that ticks
+      its children left to right and returns ``SUCCESS`` only if
+      every child succeeds. Aborts and returns ``FAILURE`` on the
+      first child that fails. Logical AND. With
+      :term:`memory <Memory Flag (BT)>` set to ``False``, the
+      Sequence restarts from the first child on every tick, which
+      makes upstream conditions reactive to changing world state.
+      Compare with :term:`Fallback (BT)`. :doc:`L12 </lectures/lecture12/l12_lecture>`
 
    Sequence Type
       A container that stores elements in a specific order and supports
@@ -1961,6 +2285,14 @@ S
       methods unique to that type, avoiding ``None`` placeholders for
       inapplicable fields. Contrast with generalization. :doc:`L7 </lectures/lecture7/l7_lecture>`
 
+   SQLite3 Storage
+      The default :term:`rosbag2` storage backend. Bag data is
+      written to one or more ``.db3`` files inside the bag
+      directory. Adequate for short runs and low-bandwidth topics
+      (parameters, text data) but degrades on long runs with
+      high-rate topics due to indexing overhead. Switch to
+      :term:`MCAP` for sensor-heavy navigation bags. :doc:`L14 </lectures/lecture14/l14_lecture>`
+
    Spinning
       The act of activating the ROS 2 executor so it can process
       incoming callbacks. ``rclpy.spin(node)`` blocks the calling
@@ -2064,6 +2396,16 @@ T
       runs it in a loop dispatching callbacks. A slow callback blocks
       this thread and delays all other pending callbacks. :doc:`L8 </lectures/lecture8/l8_lecture>` · :doc:`L9 </lectures/lecture9/l9_lecture>`
 
+   Tick (BT)
+      The fundamental signal in a :term:`behavior tree <Behavior
+      Tree>`. The root receives a tick at a fixed rate and
+      propagates it depth-first down the tree according to each
+      composite's logic; children that are reached return
+      ``SUCCESS``, ``FAILURE``, or ``RUNNING``, and the result
+      bubbles back up. Tick frequency determines how reactive the
+      tree is; slow ticks make recovery feel sluggish, while fast
+      ticks waste CPU on conditions that haven't changed. :doc:`L12 </lectures/lecture12/l12_lecture>`
+
    Timer (ROS 2)
       A ROS 2 object that fires a callback at a fixed interval. Created
       with ``self.create_timer(period_seconds, callback)``. The timer
@@ -2083,6 +2425,17 @@ T
       identity. A topic has a fixed name (e.g., ``/scan``) and a fixed
       message type; both must match for a publisher-subscriber pair to
       exchange data. :doc:`L8 </lectures/lecture8/l8_lecture>`
+
+   ``TransitionCallbackReturn``
+      The enum returned by every :term:`lifecycle <Lifecycle
+      Node>` transition callback to tell the state machine what
+      happened. ``SUCCESS`` advances to the target state.
+      ``FAILURE`` keeps the node in its previous state and lets
+      the operator retry the transition (use it when nothing was
+      half-allocated). ``ERROR`` invokes ``on_error``; the default
+      handler returns ``FAILURE``, which sends the node straight
+      to **Finalized**, so reserve ``ERROR`` for genuinely
+      inconsistent partial-setup situations. :doc:`L14 </lectures/lecture14/l14_lecture>`
 
    Truthy
       A value that evaluates to ``True`` when passed to ``bool()``.

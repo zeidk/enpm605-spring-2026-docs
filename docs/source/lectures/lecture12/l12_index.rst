@@ -1,23 +1,20 @@
 ====================================================================
-L12: Namespaces, Remapping, Lifecycle Nodes, and Behavior Trees
+L12: Namespaces, Remapping, and Behavior Trees
 ====================================================================
 
 Overview
 --------
 
-This lecture covers four topics that are essential for building
+This lecture covers three topics that are essential for building
 production-quality ROS 2 systems. **Namespaces** isolate multiple
 instances of the same node by prefixing all their topics, services, and
 parameters. **Remapping** lets you redirect individual names (node,
-topic, service) at runtime without modifying source code. **Lifecycle
-nodes** follow a standardized state machine (Unconfigured, Inactive,
-Active, Finalized) that gives the system precise control over
-initialization order, resource allocation, and shutdown. **Behavior
+topic, service) at runtime without modifying source code. **Behavior
 trees** organize robot behaviors into a modular, hierarchical structure
 where leaf nodes (actions and conditions) do the work and composite
 nodes (Sequences and Selectors) make the decisions. All hands-on
-examples use the ``namespace_demo``, ``remapping_demo``,
-``lifecycle_demo``, and ``bt_demo`` packages.
+examples use the ``namespace_demo``, ``remapping_demo``, and
+``bt_demo`` packages.
 
 
 .. admonition:: Learning Objectives
@@ -28,9 +25,6 @@ examples use the ``namespace_demo``, ``remapping_demo``,
    - Apply namespaces to isolate multiple instances of the same node.
    - Remap node names, topic names, and parameters at runtime and from
      launch files.
-   - Implement a lifecycle node in Python using ``rclpy_lifecycle``.
-   - Perform manual state transitions via the CLI and verify node
-     behavior in each state.
    - Explain the structure of a behavior tree: nodes, ticks, and return
      statuses.
    - Implement a simple robot behavior tree in Python using
