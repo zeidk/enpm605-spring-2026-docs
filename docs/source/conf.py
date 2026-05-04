@@ -1,6 +1,32 @@
 import os, sys
 from datetime import date
 
+# Make the reference implementation in the workspace importable so
+# autodoc can pull docstrings from group0_final.* for code.rst.
+# This path is local to the maintainer's machine; for Read the Docs
+# the package would need to be vendored or installed via pip.
+sys.path.insert(
+    0,
+    os.path.expanduser(
+        "~/enpm605_ws_old/src/final_project/group0_final"
+    ),
+)
+
+# autodoc imports each module to read its docstrings. ROS 2 packages
+# are not pip-installable, so mock them out -- napoleon still
+# renders the Google-style docstrings without the real imports.
+autodoc_mock_imports = [
+    "rclpy",
+    "py_trees",
+    "py_trees_ros",
+    "tf2_ros",
+    "action_msgs",
+    "geometry_msgs",
+    "nav2_msgs",
+    "nav2_simple_commander",
+    "group0_final_interfaces",
+]
+
 project = "ENPM605 Spring 2026"
 author = "Z. Kootbally"
 copyright = f"{date.today().year}, {author}"
@@ -19,7 +45,10 @@ extensions = [
     "sphinx_proof",
     "sphinx.ext.todo",
     "sphinx.ext.mathjax",
-    "sphinx.ext.viewcode",
+    # sphinx.ext.viewcode intentionally disabled: it would emit
+    # _modules/* source pages and "[source]" links for autodoc'd
+    # symbols, which would expose the group0_final reference
+    # implementation to anyone reading the rendered docs.
 ]
 
 plantuml = 'https://www.plantuml.com/plantuml/png/'
@@ -42,6 +71,15 @@ todo_include_todos = True
 
 templates_path = ["_templates"]
 exclude_patterns = ["assignments/gp2_bak/**"]
+
+# _code_source.rst runs autodoc against the local-only group0_final
+# package; on RTD that package is unavailable, so skip the file.
+# code.rst (which embeds the pre-rendered _code_api.html fragment)
+# stays in the build on both sides.
+if os.environ.get("READTHEDOCS"):
+    exclude_patterns.append(
+        "assignments/final_project/_code_source.rst"
+    )
 
 # ---------------------------------------------------------------------------
 # PyData Sphinx Theme
@@ -81,6 +119,16 @@ html_theme_options = {
 }
 
 # Edit on GitHub button
+# Per-page primary (left) sidebar overrides. The code page gets the
+# auto-generated API contents tree (from tools/render_api.py) added
+# below the normal navigation.
+html_sidebars = {
+    "assignments/final_project/code": [
+        "sidebar-nav-bs",
+        "api-toc-sidebar",
+    ],
+}
+
 html_context = {
     "github_user": "zeidk",
     "github_repo": "enpm605-spring-2026-docs",

@@ -3,6 +3,153 @@
   max-width: 90rem;  /* default is ~60rem */
 }
 
+/* ------------------------------------------------------------
+ * API contents sidebar (rendered into
+ * _templates/api-toc-sidebar.html by tools/render_api.py and
+ * mounted on the code page via conf.py's html_sidebars).
+ * ------------------------------------------------------------ */
+.api-toc-sidebar {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--pst-color-border, #ccc);
+  font-size: 0.85rem;
+}
+
+.api-toc-sidebar .sidebar-header-items__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--pst-color-text-base, #222);
+}
+
+.api-toc-search-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+#api-toc-search {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.3em 0.55em;
+  font-size: 0.85rem;
+  border: 1px solid var(--pst-color-border, #ccc);
+  border-radius: 4px;
+  background-color: var(--pst-color-background, #fff);
+  color: var(--pst-color-text-base, #222);
+  box-sizing: border-box;
+}
+
+#api-toc-search:focus {
+  outline: 2px solid var(--pst-color-primary, #4078c0);
+  outline-offset: -1px;
+}
+
+#api-toc-search-count {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--pst-color-text-muted, #777);
+}
+
+.api-toc-tree,
+.api-toc-tree ul {
+  list-style: none;
+  padding-left: 0.9rem;
+  margin: 0;
+}
+
+.api-toc-tree {
+  padding-left: 0;
+}
+
+.api-toc-tree li {
+  margin: 0.1rem 0;
+  line-height: 1.35;
+}
+
+.api-toc-tree a {
+  text-decoration: none;
+  color: var(--pst-color-link, #2962ff);
+}
+
+.api-toc-tree a:hover {
+  text-decoration: underline;
+}
+
+.api-toc-tree code.api-toc-module-name {
+  font-size: 0.78rem;
+  color: var(--pst-color-text-muted, #555);
+  background: none;
+  padding: 0;
+}
+
+.api-toc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  flex-wrap: nowrap;
+}
+
+.api-toc-toggle,
+.api-toc-toggle-spacer {
+  flex: 0 0 auto;
+  width: 0.9em;
+  height: 0.9em;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+}
+
+.api-toc-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--pst-color-text-muted, #777);
+  font-size: 0.7em;
+}
+
+.api-toc-toggle::before {
+  content: "\25B6";  /* ▶ */
+  display: inline-block;
+  transition: transform 0.15s ease-out;
+}
+
+.api-toc-toggle[aria-expanded="true"]::before {
+  transform: rotate(90deg);
+}
+
+.api-toc-toggle:focus-visible {
+  outline: 2px solid var(--pst-color-primary, #4078c0);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.api-toc-tree .api-toc-kind {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-style: normal;
+  margin-left: 0.25rem;
+  padding: 0 0.3em;
+  border-radius: 0.2rem;
+  vertical-align: baseline;
+  color: #555;
+  background-color: #e7eaee;
+}
+
+html[data-theme="dark"] .api-toc-tree .api-toc-kind {
+  color: #c4c4c4;
+  background-color: #2b3038;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] .api-toc-tree .api-toc-kind {
+    color: #c4c4c4;
+    background-color: #2b3038;
+  }
+}
+
 /* Base font size */
 html {
   font-size: 16px;

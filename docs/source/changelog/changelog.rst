@@ -4,6 +4,49 @@ Changelog
 
 All notable changes to the ENPM605 Spring 2026 course documentation are recorded here.
 
+.. dropdown:: v1.6.8 -- Final Project Reference API Page (2026-05-04)
+   :icon: tag
+   :class-container: sd-border-warning
+
+   .. rubric:: Final Project (assignments/final_project/code.rst)
+
+   - Added a new ``Reference Implementation: group0_final`` page
+     under :doc:`/assignments/final_project/final_project` that
+     publishes the API reference (class signatures, method
+     signatures, attributes, and Google-style docstrings) for the
+     ``group0_final`` example package. Provided as a *style and
+     structure reference*: the depth of docstring detail expected
+     for the final project, and how to organise a ROS 2 package
+     that combines a ``py_trees`` behavior tree, Nav2 action
+     clients, custom services, TF broadcasting, and YAML-driven
+     parameters.
+   - The page **does not expose the source code**: the reference
+     implementation is built locally with autodoc and the rendered
+     article body is committed as a static HTML fragment
+     (``_code_api.html``) embedded by ``code.rst`` via
+     ``.. raw:: html``. ``sphinx.ext.viewcode`` is disabled to
+     suppress ``[source]`` links and ``_modules/`` source pages,
+     and a ``READTHEDOCS`` env-var check in ``conf.py`` excludes
+     the autodoc-driving ``_code_source.rst`` from RTD's build so
+     the published site never imports the missing source modules.
+   - Added a left-sidebar contents tree (configured per-page via
+     ``html_sidebars``) that lists every module → class →
+     method/attribute. Classes are collapsed by default with a
+     caret toggle. A search box at the top of the sidebar
+     substring-matches the FQN: matching symbols stay visible,
+     parent classes auto-expand, and non-matching ``<dl>`` blocks
+     hide in the body too. Clearing the query collapses every
+     class back. Mirrors the inline filter pattern used in the
+     glossary search.
+   - New maintenance script ``tools/render_api.py`` walks the
+     locally-built ``_code_source.html``, extracts the article
+     body (stripping the wrapper ``<section>`` and page-title
+     ``<h1>`` so the embedded fragment doesn't introduce a second
+     H1), and emits both ``_code_api.html`` and the Jinja sidebar
+     template ``_templates/api-toc-sidebar.html``. Both artifacts
+     are committed; the script is run locally before pushing
+     whenever ``group0_final/`` changes.
+
 .. dropdown:: v1.6.7 -- Final Project NavigateToZone Clarifications (2026-05-01)
    :icon: tag
    :class-container: sd-border-warning
