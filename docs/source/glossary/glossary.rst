@@ -8,7 +8,7 @@ Glossary
 
    .. raw:: html
 
-      <div id="glossary-search-wrap" style="margin: 1.2em 0 1.4em 0;">
+      <div id="glossary-search-wrap" style="margin: 1.2em 0 0.6em 0;">
         <input
           id="glossary-search"
           type="search"
@@ -31,24 +31,63 @@ Glossary
         ></span>
       </div>
 
+      <div id="glossary-lecture-filter"
+           style="margin: 0 0 1.4em 0; display: flex; flex-wrap: wrap; gap: 0.35em; align-items: center;">
+        <span style="font-size: 0.88em; color: #666; margin-right: 0.3em;">Lecture:</span>
+        <button type="button" data-lecture="all"
+                style="padding: 0.25em 0.7em; font-size: 0.85em; border: 1px solid #888;
+                       background: #444; color: #fff; border-radius: 3px; cursor: pointer;">
+          All
+        </button>
+        <!-- L1..L14 buttons inserted by JS -->
+      </div>
+
       <script>
       (function () {
         /* Run after the DOM is ready. */
         function initGlossarySearch() {
           var input  = document.getElementById('glossary-search');
           var count  = document.getElementById('glossary-search-count');
-          if (!input) return;
+          var filterBar = document.getElementById('glossary-lecture-filter');
+          if (!input || !filterBar) return;
 
-          /* Collect every letter section.
-             Each section has the pattern:
-               <section id="glossary-X"> or <div id="glossary-X">
-                 <h2>X</h2>
-                 <dl class="glossary"> ... </dl>
-               </section>
-             We work at the <dt> level and bubble up to hide empty sections. */
+          var TOTAL_LECTURES = 14;
+          var activeLecture = null;  /* null = "All" */
+
+          /* Build L1..L14 buttons. */
+          for (var i = 1; i <= TOTAL_LECTURES; i++) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.dataset.lecture = 'L' + i;
+            btn.textContent = 'L' + i;
+            btn.style.cssText =
+              'padding: 0.25em 0.6em; font-size: 0.85em; ' +
+              'border: 1px solid #ccc; background: #fff; color: #333; ' +
+              'border-radius: 3px; cursor: pointer;';
+            filterBar.appendChild(btn);
+          }
+
+          /* Cache lecture tags per <dt> so we don't rescan the DOM on every keystroke.
+             A "tag" is the visible text of any link inside the dd block matching ^L\d+$. */
+          var dtIndex = [];  /* { dt, dds, tags: Set<string>, text: lowercased dt text } */
+          document.querySelectorAll('dl.glossary dt').forEach(function (dt) {
+            var dds = [];
+            var node = dt.nextElementSibling;
+            while (node && node.tagName === 'DD') {
+              dds.push(node);
+              node = node.nextElementSibling;
+            }
+            var tags = new Set();
+            dds.forEach(function (dd) {
+              dd.querySelectorAll('a').forEach(function (a) {
+                var t = a.textContent.trim();
+                if (/^L\d+$/.test(t)) tags.add(t);
+              });
+            });
+            dtIndex.push({ dt: dt, dds: dds, tags: tags, text: dt.textContent.toLowerCase() });
+          });
 
           function getLetterSection(el) {
-            /* Walk up until we find the element whose id starts with "glossary-" */
             var node = el;
             while (node && node !== document.body) {
               if (node.id && /^glossary-[a-z]$/i.test(node.id)) return node;
@@ -57,47 +96,48 @@ Glossary
             return null;
           }
 
+          function paintButtons() {
+            filterBar.querySelectorAll('button').forEach(function (b) {
+              var isActive = (b.dataset.lecture === 'all' && activeLecture === null) ||
+                             (b.dataset.lecture === activeLecture);
+              if (isActive) {
+                b.style.background = '#444';
+                b.style.color = '#fff';
+                b.style.borderColor = '#888';
+              } else {
+                b.style.background = '#fff';
+                b.style.color = '#333';
+                b.style.borderColor = '#ccc';
+              }
+            });
+          }
+
           function run() {
             var query = input.value.trim().toLowerCase();
-
-            /* All term headings rendered by .. glossary:: */
-            var allDt = document.querySelectorAll('dl.glossary dt');
             var visible = 0;
 
-            allDt.forEach(function (dt) {
-              /* Each <dt> may have one or more <dd> siblings that follow it
-                 until the next <dt>. Collect them so we hide/show together. */
-              var siblings = [];
-              var node = dt.nextElementSibling;
-              while (node && node.tagName === 'DD') {
-                siblings.push(node);
-                node = node.nextElementSibling;
-              }
+            dtIndex.forEach(function (entry) {
+              var textMatch = !query || entry.text.indexOf(query) !== -1;
+              var lectureMatch = !activeLecture || entry.tags.has(activeLecture);
+              var match = textMatch && lectureMatch;
 
-              var text = dt.textContent.toLowerCase();
-              var match = !query || text.indexOf(query) !== -1;
-
-              dt.style.display = match ? '' : 'none';
-              siblings.forEach(function (dd) { dd.style.display = match ? '' : 'none'; });
+              entry.dt.style.display = match ? '' : 'none';
+              entry.dds.forEach(function (dd) { dd.style.display = match ? '' : 'none'; });
               if (match) visible++;
             });
 
-            /* Hide letter-section headings and their <dl> when every term
-               inside them is hidden. */
-            var allDl = document.querySelectorAll('dl.glossary');
-            allDl.forEach(function (dl) {
+            /* Hide letter-section headings + dl when every term inside is hidden. */
+            document.querySelectorAll('dl.glossary').forEach(function (dl) {
               var anyVisible = Array.prototype.some.call(
                 dl.querySelectorAll('dt'),
                 function (dt) { return dt.style.display !== 'none'; }
               );
               dl.style.display = anyVisible ? '' : 'none';
 
-              /* Hide the heading (h2) that immediately precedes the dl */
               var section = getLetterSection(dl);
               if (section) {
                 section.style.display = anyVisible ? '' : 'none';
               } else {
-                /* Fallback: hide the nearest preceding h2 */
                 var prev = dl.previousElementSibling;
                 while (prev) {
                   if (prev.tagName === 'H2' || prev.tagName === 'H1') {
@@ -109,8 +149,8 @@ Glossary
               }
             });
 
-            /* Update result count */
-            if (query) {
+            /* Result count: show whenever a filter is active. */
+            if (query || activeLecture) {
               count.textContent = visible === 1
                 ? '1 term found'
                 : visible + ' terms found';
@@ -119,12 +159,22 @@ Glossary
             }
           }
 
-          input.addEventListener('input', run);
+          /* Wire up the lecture-chip clicks (event delegation). */
+          filterBar.addEventListener('click', function (e) {
+            var btn = e.target.closest('button[data-lecture]');
+            if (!btn) return;
+            var lec = btn.dataset.lecture;
+            activeLecture = (lec === 'all') ? null : lec;
+            paintButtons();
+            run();
+          });
 
-          /* Also clear on Escape */
+          input.addEventListener('input', run);
           input.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') { input.value = ''; run(); input.blur(); }
           });
+
+          paintButtons();
         }
 
         if (document.readyState === 'loading') {
